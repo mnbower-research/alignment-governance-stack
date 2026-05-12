@@ -1,4 +1,5 @@
 import { evaluateAag } from "@alignment-governance-stack/aag-core";
+import { validateApproval } from "@alignment-governance-stack/authority-map";
 import {
   resolvePolicyForAction,
   validatePolicyProfile
@@ -14,7 +15,8 @@ import type {
 export function evaluateGovernedAction(
   input: AgentActionProposal | EvaluateGovernedActionInput
 ): GovernancePacket {
-  const { proposal, policyProfile } = normalizeInput(input);
+  const normalizedInput = normalizeInput(input);
+  const { proposal, policyProfile, authorityMap, approvalEvidence } = normalizedInput;
 
   if (policyProfile !== undefined) {
     const policyProfileValidation = validatePolicyProfile(policyProfile);
@@ -85,6 +87,47 @@ export function evaluateGovernedAction(
       };
     }
 
+    if (authorityMap !== undefined) {
+      const approvalValidation = validateApproval(
+        authorityMap,
+        proposalSentToAag,
+        approvalEvidence,
+        {
+          policyRequiresApproval: resolvedPolicy.requiresApproval,
+          policyReasons: resolvedPolicy.reasons
+        }
+      );
+
+      if (!approvalValidation.valid) {
+        return {
+          originalProposal: proposal,
+          pgdl,
+          proposalSentToAag,
+          resolvedPolicy,
+          approvalValidation,
+          finalDecision: "approval_required_by_authority",
+          reasonForDecision:
+            `Authority validation stopped the proposal before AAG: ${approvalValidation.decision}. ${approvalValidation.reasons.join(" ")}`
+        };
+      }
+
+      const policyAwareProposal = resolvedPolicy.requiresApproval
+        ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
+        : proposalSentToAag;
+      const aag = evaluateAag(policyAwareProposal);
+
+      return {
+        originalProposal: proposal,
+        pgdl,
+        proposalSentToAag: policyAwareProposal,
+        resolvedPolicy,
+        approvalValidation,
+        aag,
+        finalDecision: mapAagDecision(aag),
+        reasonForDecision: `PGDL allowed a proposal to reach AAG. Policy profile resolved before AAG. Authority validation passed before AAG. ${aag.reasonForDecision}`
+      };
+    }
+
     const policyAwareProposal = resolvedPolicy.requiresApproval
       ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
       : proposalSentToAag;
@@ -98,6 +141,38 @@ export function evaluateGovernedAction(
       aag,
       finalDecision: mapAagDecision(aag),
       reasonForDecision: `PGDL allowed a proposal to reach AAG. Policy profile resolved before AAG. ${aag.reasonForDecision}`
+    };
+  }
+
+  if (authorityMap !== undefined) {
+    const approvalValidation = validateApproval(
+      authorityMap,
+      proposalSentToAag,
+      approvalEvidence
+    );
+
+    if (!approvalValidation.valid) {
+      return {
+        originalProposal: proposal,
+        pgdl,
+        proposalSentToAag,
+        approvalValidation,
+        finalDecision: "approval_required_by_authority",
+        reasonForDecision:
+          `Authority validation stopped the proposal before AAG: ${approvalValidation.decision}. ${approvalValidation.reasons.join(" ")}`
+      };
+    }
+
+    const aag = evaluateAag(proposalSentToAag);
+
+    return {
+      originalProposal: proposal,
+      pgdl,
+      proposalSentToAag,
+      approvalValidation,
+      aag,
+      finalDecision: mapAagDecision(aag),
+      reasonForDecision: `PGDL allowed a proposal to reach AAG. Authority validation passed before AAG. ${aag.reasonForDecision}`
     };
   }
 

@@ -15,10 +15,16 @@ import type {
   PolicyProfileValidationResult,
   ResolvedActionPolicy
 } from "@alignment-governance-stack/policy-profiles";
+import type {
+  ApprovalEvidence,
+  ApprovalValidationResult,
+  AuthorityMap
+} from "@alignment-governance-stack/authority-map";
 
 export type GovernanceFinalDecision =
   | "policy_invalid"
   | "blocked_by_policy"
+  | "approval_required_by_authority"
   | "rejected_before_gate"
   | "escalated_before_gate"
   | "blocked_by_aag"
@@ -31,6 +37,8 @@ export type GovernanceFinalDecision =
 export interface EvaluateGovernedActionInput {
   proposal: AgentActionProposal;
   policyProfile?: PolicyProfile;
+  authorityMap?: AuthorityMap;
+  approvalEvidence?: ApprovalEvidence;
 }
 
 export interface GovernancePacket {
@@ -39,6 +47,7 @@ export interface GovernancePacket {
   proposalSentToAag?: AgentActionProposal;
   resolvedPolicy?: ResolvedActionPolicy;
   policyProfileValidation?: PolicyProfileValidationResult;
+  approvalValidation?: ApprovalValidationResult;
   aag?: AagPacket;
   finalDecision: GovernanceFinalDecision;
   reasonForDecision: string;
@@ -47,6 +56,8 @@ export interface GovernancePacket {
 export interface EvaluateGovernedRuntimeActionInput {
   proposal: AgentActionProposal;
   policyProfile?: PolicyProfile;
+  authorityMap?: AuthorityMap;
+  approvalEvidence?: ApprovalEvidence;
   runtimeAction?: AgentActionProposal;
   permitOptions?: CreateRuntimePermitOptions;
   validationOptions?: ValidateRuntimePermitOptions;
@@ -67,6 +78,7 @@ export interface GovernanceRuntimePacket {
   proposalSentToAag?: AgentActionProposal;
   resolvedPolicy?: ResolvedActionPolicy;
   policyProfileValidation?: PolicyProfileValidationResult;
+  approvalValidation?: ApprovalValidationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;

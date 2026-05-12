@@ -13,7 +13,9 @@ export function evaluateGovernedRuntimeAction(
 ): GovernanceRuntimePacket {
   const governedPacket = evaluateGovernedAction({
     proposal: input.proposal,
-    ...(input.policyProfile !== undefined ? { policyProfile: input.policyProfile } : {})
+    ...(input.policyProfile !== undefined ? { policyProfile: input.policyProfile } : {}),
+    ...(input.authorityMap !== undefined ? { authorityMap: input.authorityMap } : {}),
+    ...(input.approvalEvidence !== undefined ? { approvalEvidence: input.approvalEvidence } : {})
   });
 
   if (governedPacket.finalDecision !== "allowed_by_aag") {

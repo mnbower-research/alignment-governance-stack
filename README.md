@@ -1,6 +1,6 @@
 # Alignment Governance Stack
 
-Alignment Governance Stack is a full-stack governance architecture for agentic AI systems. It preserves human agency across the action lifecycle by separating proposal maturation, organization policy, execution gating, runtime authorization, and proof.
+Alignment Governance Stack is a full-stack governance architecture for agentic AI systems. It preserves human agency across the action lifecycle by separating company policy, authority validation, proposal maturation, execution gating, runtime authorization, and proof.
 
 Core thesis:
 
@@ -13,23 +13,20 @@ Action must not outrun discernment.
 
 ```text
 Company Alignment Profile Generator
-↓
-Policy Profile with Hard Boundaries
-↓
-PGDL
-↓
-Policy Resolution
-↓
-AAG
-↓
-Runtime Binding
-↓
-Receipt
+-> Policy Profile with Hard Boundaries
+-> Authority Map / Approval Validation
+-> PGDL
+-> Policy Resolution
+-> AAG
+-> Runtime Binding
+-> Receipt
 ```
 
-- Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles.
+- Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles and draft Authority Maps.
 - Policy Profiles define organization-specific governance rules.
 - Hard Boundaries enforce explicit "never automate" rules before actions reach AAG.
+- Authority Map defines who is allowed to approve which actions, scopes, environments, and risk categories.
+- Approval Validation checks whether supplied approval evidence is valid, current, and in scope.
 - PGDL matures agent proposals before execution gating.
 - Policy Resolution applies organization-specific rules to the proposal that PGDL intends to send to AAG.
 - AAG evaluates whether a proposed action should be allowed before execution.
@@ -44,8 +41,9 @@ Receipt
 - Runtime Binding exact-action permit validation
 - Tamper-evident governance receipts
 - Policy Profiles with deterministic policy resolution
-- Company Alignment Profile Generator
 - Hard Boundary Policy Compiler for explicit `neverAutomate` rules
+- Authority Map and scoped approval validation
+- Company Alignment Profile Generator
 
 ## Package Map
 
@@ -53,10 +51,11 @@ Receipt
 - `@alignment-governance-stack/pgdl-core`: deterministic Pre-Gate Deliberation Layer proposal maturation.
 - `@alignment-governance-stack/aag-core`: canonical Agent Action Gate integration.
 - `@alignment-governance-stack/runtime-binding`: exact-action permit creation and runtime validation.
-- `@alignment-governance-stack/governance-core`: orchestration for PGDL, optional policy resolution, AAG, Runtime Binding, and receipts.
+- `@alignment-governance-stack/governance-core`: orchestration for PGDL, optional policy resolution, optional authority validation, AAG, Runtime Binding, and receipts.
 - `@alignment-governance-stack/receipts`: tamper-evident governance receipts and stable receipt hashing.
 - `@alignment-governance-stack/policy-profiles`: organization-specific governance rules, hard boundaries, and deterministic policy resolution.
-- `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile generation from structured company governance inputs.
+- `@alignment-governance-stack/authority-map`: role, scope, and approval evidence validation for governed actions.
+- `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs.
 
 ## Basic Commands
 
@@ -77,17 +76,19 @@ corepack pnpm -r exec npm pack --dry-run
 - Receipts do not execute or approve actions.
 - Policy Profiles do not replace PGDL or AAG.
 - Hard Boundaries stop explicit organization-defined "never automate" actions before AAG.
-- The Company Alignment Profile Generator creates draft Policy Profiles, not legal or compliance guarantees.
+- Authority Map validates scoped approval evidence; it does not store approvals or replace AAG.
+- Approval cannot override hard boundaries in v0.5.
+- The Company Alignment Profile Generator creates draft Policy Profiles and draft Authority Maps, not legal or compliance guarantees.
 
 ## Current Status
 
-Current version: v0.4.0
+Current version: v0.5.0
 
 The core AGS spine is working:
 
 ```text
-Company Alignment Profile Generator → Policy Profile with Hard Boundaries → PGDL → Policy Resolution → AAG → Runtime Binding → Receipt
+Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt
 ```
 
-No UI, database, auth, dashboard, LLM ingestion, SOP parser, or persistent storage is included yet.
+No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, or persistent storage is included yet.
 

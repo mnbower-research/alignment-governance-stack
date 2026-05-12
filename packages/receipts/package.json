@@ -20,6 +20,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@alignment-governance-stack/authority-map": "workspace:*",
     "@alignment-governance-stack/policy-profiles": "workspace:*",
     "@alignment-governance-stack/runtime-binding": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*"

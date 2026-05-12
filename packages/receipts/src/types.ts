@@ -11,6 +11,7 @@ import type {
   PolicyProfileValidationResult,
   ResolvedActionPolicy
 } from "@alignment-governance-stack/policy-profiles";
+import type { ApprovalValidationResult } from "@alignment-governance-stack/authority-map";
 
 export type GovernanceReceiptVersion = "ags.receipt.v0.1";
 
@@ -20,6 +21,7 @@ export interface ReceiptGovernancePacket {
   proposalSentToAag?: AgentActionProposal;
   resolvedPolicy?: ResolvedActionPolicy;
   policyProfileValidation?: PolicyProfileValidationResult;
+  approvalValidation?: ApprovalValidationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;
@@ -46,6 +48,7 @@ export interface GovernanceReceipt {
   proposalSentToAag?: AgentActionProposal;
   resolvedPolicy?: ResolvedActionPolicy;
   policyProfileValidation?: PolicyProfileValidationResult;
+  approvalValidation?: ApprovalValidationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;

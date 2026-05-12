@@ -35,6 +35,9 @@ function buildReceiptBody(
     ...(packet.policyProfileValidation !== undefined
       ? { policyProfileValidation: packet.policyProfileValidation }
       : {}),
+    ...(packet.approvalValidation !== undefined
+      ? { approvalValidation: packet.approvalValidation }
+      : {}),
     ...(packet.aag !== undefined ? { aag: packet.aag } : {}),
     ...(packet.permit !== undefined ? { permit: packet.permit } : {}),
     ...(packet.runtimeAction !== undefined ? { runtimeAction: packet.runtimeAction } : {}),

@@ -34,8 +34,24 @@ importers:
         specifier: ^4.1.6
         version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
 
+  packages/authority-map:
+    dependencies:
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.12(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
+
   packages/company-profile-generator:
     dependencies:
+      '@alignment-governance-stack/authority-map':
+        specifier: workspace:*
+        version: link:../authority-map
       '@alignment-governance-stack/policy-profiles':
         specifier: workspace:*
         version: link:../policy-profiles
@@ -55,6 +71,9 @@ importers:
       '@alignment-governance-stack/aag-core':
         specifier: workspace:*
         version: link:../aag-core
+      '@alignment-governance-stack/authority-map':
+        specifier: workspace:*
+        version: link:../authority-map
       '@alignment-governance-stack/pgdl-core':
         specifier: workspace:*
         version: link:../pgdl-core
@@ -106,6 +125,9 @@ importers:
 
   packages/receipts:
     dependencies:
+      '@alignment-governance-stack/authority-map':
+        specifier: workspace:*
+        version: link:../authority-map
       '@alignment-governance-stack/policy-profiles':
         specifier: workspace:*
         version: link:../policy-profiles

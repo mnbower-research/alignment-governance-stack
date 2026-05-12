@@ -8,6 +8,7 @@ User goal
 -> Draft Policy Profile
 -> Agent proposal
 -> Policy Profile with Hard Boundaries
+-> Authority Map / Approval Validation
 -> PGDL
 -> Policy resolution on proposal sent to AAG
 -> Resolved proposal or escalation
@@ -27,6 +28,8 @@ Company Alignment Profile Generator sits above Policy Profiles. It translates st
 Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2, `governance-core` can validate a supplied profile, run PGDL, then resolve policy against the proposal that would be sent to AAG.
 
 Hard boundaries are deterministic block rules inside Policy Profiles. They are used for organization-defined "never automate" cases and other hard stops. Explicit policy blocks, including hard boundary matches, stop before AAG. Policy approval requirements are carried as context into AAG; they do not replace AAG decisions.
+
+Authority Map validates whether approval evidence comes from a role with scope for the proposal that would reach AAG. Missing, expired, unknown, or out-of-scope approval can stop before AAG when authority validation is supplied. Approval cannot override hard boundaries in v0.5.
 
 PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves are sent to AAG.
 

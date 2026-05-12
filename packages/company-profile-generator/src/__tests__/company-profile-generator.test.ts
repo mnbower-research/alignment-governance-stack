@@ -4,9 +4,11 @@ import {
   resolvePolicyForAction,
   validatePolicyProfile
 } from "@alignment-governance-stack/policy-profiles";
+import { validateAuthorityMap } from "@alignment-governance-stack/authority-map";
 import {
   createCompanyAlignmentProfile,
   exampleCompanyAlignmentInput,
+  generateAuthorityMap,
   generatePolicyProfile,
   validateCompanyAlignmentInput
 } from "../index.js";
@@ -205,6 +207,30 @@ describe("company profile generator", () => {
       }
     ]);
     expect(validatePolicyProfile(policy).valid).toBe(true);
+  });
+
+  it("generates authority maps from company roles", () => {
+    const authorityMap = generateAuthorityMap({
+      id: "authority-company",
+      name: "Authority Company",
+      roles: [
+        {
+          id: "security_admin",
+          label: "Security Admin",
+          canApprove: ["high_sensitivity", "production", "irreversible"]
+        }
+      ]
+    });
+
+    const role = authorityMap.roles.find((entry) => entry.id === "security_admin");
+
+    expect(role).toBeDefined();
+    expect(role?.scopes.map((scope) => scope.id)).toEqual([
+      "high_sensitivity",
+      "production",
+      "irreversible"
+    ]);
+    expect(validateAuthorityMap(authorityMap).valid).toBe(true);
   });
 });
 

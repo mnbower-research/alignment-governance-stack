@@ -1,5 +1,5 @@
 {
-  "name": "@alignment-governance-stack/company-profile-generator",
+  "name": "@alignment-governance-stack/authority-map",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -20,8 +20,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@alignment-governance-stack/authority-map": "workspace:*",
-    "@alignment-governance-stack/policy-profiles": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*"
   },
   "devDependencies": {
