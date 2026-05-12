@@ -16,6 +16,7 @@ User goal
 -> Agent proposal
 -> Policy Profile
 -> PGDL
+-> Policy resolution on proposal sent to AAG
 -> Resolved proposal or escalation
 -> AAG
 -> Permit decision
@@ -75,7 +76,7 @@ corepack pnpm -r test
 - `packages/shared-types`: shared TypeScript types for proposals, decisions, risk, packets, and receipts.
 - `packages/pgdl-core`: Pre-Gate Deliberation Layer scaffold.
 - `packages/aag-core`: Agent Action Gate scaffold.
-- `packages/governance-core`: orchestration layer that connects PGDL packet generation to AAG gate evaluation and optional Runtime Binding validation.
+- `packages/governance-core`: orchestration layer that connects optional Policy Profile resolution, PGDL packet generation, AAG gate evaluation, and optional Runtime Binding validation.
 - `packages/runtime-binding`: permit creation and runtime validation scaffold.
 - `packages/receipts`: creates tamper-evident governance receipts.
 - `packages/policy-profiles`: company-specific governance rules and policy resolution.

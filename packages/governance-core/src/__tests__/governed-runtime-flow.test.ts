@@ -8,7 +8,7 @@ describe("runtime-bound governed flow", () => {
 
     const packet = evaluateGovernedRuntimeAction({ proposal });
 
-    expect(packet.pgdl.decision).toBe("forward_to_aag");
+    expect(packet.pgdl?.decision).toBe("forward_to_aag");
     expect(packet.aag?.decision).toBe("allow");
     expect(packet.permit).toBeDefined();
     expect(packet.runtimeBinding).toBeUndefined();
@@ -68,8 +68,8 @@ describe("runtime-bound governed flow", () => {
       runtimeAction: proposal
     });
 
-    expect(packet.pgdl.decision).toBe("revise_before_aag");
-    expect(packet.proposalSentToAag).toEqual(packet.pgdl.resolvedProposal);
+    expect(packet.pgdl?.decision).toBe("revise_before_aag");
+    expect(packet.proposalSentToAag).toEqual(packet.pgdl?.resolvedProposal);
     expect(packet.proposalSentToAag?.tool).toBe("draft.create");
     expect(packet.proposalSentToAag?.actionType).toBe("create_draft_for_review");
     expect(packet.permit).toBeDefined();
@@ -104,7 +104,7 @@ describe("runtime-bound governed flow", () => {
 
     const packet = evaluateGovernedRuntimeAction({ proposal, runtimeAction: proposal });
 
-    expect(packet.pgdl.decision).toBe("escalate_to_human");
+    expect(packet.pgdl?.decision).toBe("escalate_to_human");
     expect(packet.finalDecision).toBe("escalated_before_gate");
     expect(packet.permit).toBeUndefined();
     expect(packet.runtimeBinding).toBeUndefined();
@@ -128,7 +128,7 @@ describe("runtime-bound governed flow", () => {
 
     const packet = evaluateGovernedRuntimeAction({ proposal, runtimeAction: proposal });
 
-    expect(packet.pgdl.decision).toBe("forward_to_aag");
+    expect(packet.pgdl?.decision).toBe("forward_to_aag");
     expect(packet.aag).toBeDefined();
     expect(packet.finalDecision).toBe("approval_required_by_aag");
     expect(packet.permit).toBeUndefined();

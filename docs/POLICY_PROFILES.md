@@ -33,6 +33,20 @@ The resolver returns a `ResolvedActionPolicy` with whether the action is allowed
 
 Policy Profiles do not execute actions. They do not approve execution. They do not replace PGDL, AAG, Runtime Binding, or Receipts.
 
+## Governance-Core Integration
+
+`governance-core` can now optionally accept a `PolicyProfile`.
+
+When a profile is supplied, governance-core validates it before the governance spine runs. Invalid profiles produce `policy_invalid` and do not run PGDL, AAG, Runtime Binding, or permit creation.
+
+For valid profiles, PGDL still runs first. Policy resolution is applied to the proposal that would be sent to AAG:
+
+- `forward_to_aag` resolves policy against the original proposal.
+- `revise_before_aag` resolves policy against PGDL's resolved proposal.
+- PGDL escalation and rejection still stop before AAG.
+
+If policy resolution explicitly blocks the proposal, governance-core returns `blocked_by_policy` and does not run AAG. If policy resolution requires approval, governance-core includes policy context on the cloned AAG proposal metadata and continues to AAG. Policy approval requirements do not replace AAG.
+
 ## Future Work
 
 Future tasks can wire resolved policy into `governance-core`, add a company alignment profile generator, add policy profile export/import, and eventually expose dashboard views. Those additions should preserve the existing PGDL -> AAG -> Runtime Binding -> Receipts boundary.

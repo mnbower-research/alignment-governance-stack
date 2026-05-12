@@ -29,8 +29,12 @@ function buildReceiptBody(
     createdAt,
     ...(input.previousReceiptHash !== undefined ? { previousReceiptHash: input.previousReceiptHash } : {}),
     originalProposal: packet.originalProposal,
-    pgdl: packet.pgdl,
+    ...(packet.pgdl !== undefined ? { pgdl: packet.pgdl } : {}),
     ...(packet.proposalSentToAag !== undefined ? { proposalSentToAag: packet.proposalSentToAag } : {}),
+    ...(packet.resolvedPolicy !== undefined ? { resolvedPolicy: packet.resolvedPolicy } : {}),
+    ...(packet.policyProfileValidation !== undefined
+      ? { policyProfileValidation: packet.policyProfileValidation }
+      : {}),
     ...(packet.aag !== undefined ? { aag: packet.aag } : {}),
     ...(packet.permit !== undefined ? { permit: packet.permit } : {}),
     ...(packet.runtimeAction !== undefined ? { runtimeAction: packet.runtimeAction } : {}),

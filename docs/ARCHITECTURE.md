@@ -7,6 +7,7 @@ User goal
 -> Agent proposal
 -> Policy Profile
 -> PGDL
+-> Policy resolution on proposal sent to AAG
 -> Resolved proposal or escalation
 -> AAG
 -> Permit decision
@@ -19,7 +20,9 @@ User goal
 
 `governance-core` connects the first real AGS flow.
 
-Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2 they can be validated and resolved against an action proposal, but they do not yet change PGDL, AAG, Runtime Binding, or Receipt decisions.
+Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2, `governance-core` can validate a supplied profile, run PGDL, then resolve policy against the proposal that would be sent to AAG.
+
+Explicit policy blocks stop before AAG. Policy approval requirements are carried as context into AAG; they do not replace AAG decisions.
 
 PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves are sent to AAG.
 

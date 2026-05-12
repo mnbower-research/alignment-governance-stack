@@ -11,7 +11,10 @@ import type {
 export function evaluateGovernedRuntimeAction(
   input: EvaluateGovernedRuntimeActionInput
 ): GovernanceRuntimePacket {
-  const governedPacket = evaluateGovernedAction(input.proposal);
+  const governedPacket = evaluateGovernedAction({
+    proposal: input.proposal,
+    ...(input.policyProfile !== undefined ? { policyProfile: input.policyProfile } : {})
+  });
 
   if (governedPacket.finalDecision !== "allowed_by_aag") {
     return {

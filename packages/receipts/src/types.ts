@@ -7,13 +7,19 @@ import type {
   RuntimeBindingResult,
   RuntimePermit
 } from "@alignment-governance-stack/runtime-binding";
+import type {
+  PolicyProfileValidationResult,
+  ResolvedActionPolicy
+} from "@alignment-governance-stack/policy-profiles";
 
 export type GovernanceReceiptVersion = "ags.receipt.v0.1";
 
 export interface ReceiptGovernancePacket {
   originalProposal: AgentActionProposal;
-  pgdl: PgdlPacket;
+  pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;
+  resolvedPolicy?: ResolvedActionPolicy;
+  policyProfileValidation?: PolicyProfileValidationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;
@@ -36,8 +42,10 @@ export interface GovernanceReceipt {
   createdAt: string;
   previousReceiptHash?: string;
   originalProposal: AgentActionProposal;
-  pgdl: PgdlPacket;
+  pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;
+  resolvedPolicy?: ResolvedActionPolicy;
+  policyProfileValidation?: PolicyProfileValidationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;

@@ -10,8 +10,15 @@ import type {
   ValidateRuntimePermitOptions
 } from "@alignment-governance-stack/runtime-binding";
 import type { GovernanceReceipt } from "@alignment-governance-stack/receipts";
+import type {
+  PolicyProfile,
+  PolicyProfileValidationResult,
+  ResolvedActionPolicy
+} from "@alignment-governance-stack/policy-profiles";
 
 export type GovernanceFinalDecision =
+  | "policy_invalid"
+  | "blocked_by_policy"
   | "rejected_before_gate"
   | "escalated_before_gate"
   | "blocked_by_aag"
@@ -21,10 +28,17 @@ export type GovernanceFinalDecision =
   | "execution_allowed"
   | "execution_denied";
 
+export interface EvaluateGovernedActionInput {
+  proposal: AgentActionProposal;
+  policyProfile?: PolicyProfile;
+}
+
 export interface GovernancePacket {
   originalProposal: AgentActionProposal;
-  pgdl: PgdlPacket;
+  pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;
+  resolvedPolicy?: ResolvedActionPolicy;
+  policyProfileValidation?: PolicyProfileValidationResult;
   aag?: AagPacket;
   finalDecision: GovernanceFinalDecision;
   reasonForDecision: string;
@@ -32,6 +46,7 @@ export interface GovernancePacket {
 
 export interface EvaluateGovernedRuntimeActionInput {
   proposal: AgentActionProposal;
+  policyProfile?: PolicyProfile;
   runtimeAction?: AgentActionProposal;
   permitOptions?: CreateRuntimePermitOptions;
   validationOptions?: ValidateRuntimePermitOptions;
@@ -48,8 +63,10 @@ export interface EvaluateGovernedRuntimeActionWithReceiptInput extends EvaluateG
 
 export interface GovernanceRuntimePacket {
   originalProposal: AgentActionProposal;
-  pgdl: PgdlPacket;
+  pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;
+  resolvedPolicy?: ResolvedActionPolicy;
+  policyProfileValidation?: PolicyProfileValidationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;

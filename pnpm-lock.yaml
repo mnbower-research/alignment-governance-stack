@@ -42,6 +42,9 @@ importers:
       '@alignment-governance-stack/pgdl-core':
         specifier: workspace:*
         version: link:../pgdl-core
+      '@alignment-governance-stack/policy-profiles':
+        specifier: workspace:*
+        version: link:../policy-profiles
       '@alignment-governance-stack/receipts':
         specifier: workspace:*
         version: link:../receipts
@@ -87,6 +90,9 @@ importers:
 
   packages/receipts:
     dependencies:
+      '@alignment-governance-stack/policy-profiles':
+        specifier: workspace:*
+        version: link:../policy-profiles
       '@alignment-governance-stack/runtime-binding':
         specifier: workspace:*
         version: link:../runtime-binding

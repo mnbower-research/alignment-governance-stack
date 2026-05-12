@@ -21,7 +21,7 @@ describe("PGDL to AAG governed flow", () => {
 
     const packet = evaluateGovernedAction(proposal);
 
-    expect(packet.pgdl.decision).toBe("forward_to_aag");
+    expect(packet.pgdl?.decision).toBe("forward_to_aag");
     expect(packet.proposalSentToAag).toEqual(proposal);
     expect(packet.aag).toBeDefined();
     expect(packet.finalDecision).toBe("allowed_by_aag");
@@ -46,9 +46,9 @@ describe("PGDL to AAG governed flow", () => {
 
     const packet = evaluateGovernedAction(proposal);
 
-    expect(packet.pgdl.decision).toBe("revise_before_aag");
-    expect(packet.pgdl.resolvedProposal).toBeDefined();
-    expect(packet.proposalSentToAag).toEqual(packet.pgdl.resolvedProposal);
+    expect(packet.pgdl?.decision).toBe("revise_before_aag");
+    expect(packet.pgdl?.resolvedProposal).toBeDefined();
+    expect(packet.proposalSentToAag).toEqual(packet.pgdl?.resolvedProposal);
     expect(packet.proposalSentToAag?.tool).toBe("review.generate");
     expect(packet.proposalSentToAag?.actionType).toBe("generate_review_packet");
     expect(packet.proposalSentToAag?.tool).not.toBe(proposal.tool);
@@ -74,7 +74,7 @@ describe("PGDL to AAG governed flow", () => {
 
     const packet = evaluateGovernedAction(proposal);
 
-    expect(packet.pgdl.decision).toBe("revise_before_aag");
+    expect(packet.pgdl?.decision).toBe("revise_before_aag");
     expect(packet.proposalSentToAag?.tool).toBe("draft.create");
     expect(packet.proposalSentToAag?.actionType).toBe("create_draft_for_review");
     expect(packet.proposalSentToAag?.externalFacing).toBe(false);
@@ -105,9 +105,9 @@ describe("PGDL to AAG governed flow", () => {
 
     const packet = evaluateGovernedAction(proposal);
 
-    expect(packet.pgdl.objections.map((objection) => objection.category)).toContain("compliance_theater");
-    expect(packet.pgdl.decision).toBe("revise_before_aag");
-    expect(packet.proposalSentToAag).toEqual(packet.pgdl.resolvedProposal);
+    expect(packet.pgdl?.objections.map((objection) => objection.category)).toContain("compliance_theater");
+    expect(packet.pgdl?.decision).toBe("revise_before_aag");
+    expect(packet.proposalSentToAag).toEqual(packet.pgdl?.resolvedProposal);
     expect(packet.aag).toBeDefined();
   });
 
@@ -129,7 +129,7 @@ describe("PGDL to AAG governed flow", () => {
 
     const packet = evaluateGovernedAction(proposal);
 
-    expect(packet.pgdl.decision).toBe("escalate_to_human");
+    expect(packet.pgdl?.decision).toBe("escalate_to_human");
     expect(packet.finalDecision).toBe("escalated_before_gate");
     expect(packet.proposalSentToAag).toBeUndefined();
     expect(packet.aag).toBeUndefined();
