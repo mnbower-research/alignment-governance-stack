@@ -14,4 +14,6 @@ The permit hash uses deterministic SHA-256 over enforcement-relevant fields: too
 
 Runtime Binding denies missing permits, expired permits, hash mismatches, tool or action substitution, target or environment substitution, external-facing escalation, sensitive-data escalation, and approval-state changes.
 
+`governance-core` can issue a runtime permit only after AAG returns `allow`, then validate a supplied runtime action against that permit.
+
 Runtime Binding does not execute actions and does not replace AAG. Receipts come next.

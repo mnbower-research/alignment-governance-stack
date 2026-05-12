@@ -70,7 +70,7 @@ corepack pnpm -r test
 - `packages/shared-types`: shared TypeScript types for proposals, decisions, risk, packets, and receipts.
 - `packages/pgdl-core`: Pre-Gate Deliberation Layer scaffold.
 - `packages/aag-core`: Agent Action Gate scaffold.
-- `packages/governance-core`: orchestration layer that connects PGDL packet generation to AAG gate evaluation.
+- `packages/governance-core`: orchestration layer that connects PGDL packet generation to AAG gate evaluation and optional Runtime Binding validation.
 - `packages/runtime-binding`: permit creation and runtime validation scaffold.
 - `examples/pgdl-to-aag`: example inputs and a placeholder pipeline runner.
 - `docs`: architecture notes and component documentation.

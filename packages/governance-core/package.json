@@ -18,6 +18,7 @@
   "dependencies": {
     "@alignment-governance-stack/aag-core": "workspace:*",
     "@alignment-governance-stack/pgdl-core": "workspace:*",
+    "@alignment-governance-stack/runtime-binding": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*"
   },
   "devDependencies": {

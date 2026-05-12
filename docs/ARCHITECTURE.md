@@ -23,3 +23,15 @@ PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves 
 AAG evaluates execution permission for the proposal it receives. It does not mature proposals and does not execute actions.
 
 Runtime Binding and receipts are next in the enforcement and proof chain.
+
+## Runtime-Bound Governance Flow
+
+PGDL matures the proposal.
+
+AAG decides whether the proposal may proceed.
+
+If AAG allows, `governance-core` can issue a runtime permit for the exact proposal AAG allowed.
+
+Runtime Binding verifies the exact runtime action against that permit. It prevents the original dangerous action from running when PGDL revised it into a safer proposal.
+
+Receipts come next.

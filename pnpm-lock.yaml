@@ -36,6 +36,9 @@ importers:
       '@alignment-governance-stack/pgdl-core':
         specifier: workspace:*
         version: link:../pgdl-core
+      '@alignment-governance-stack/runtime-binding':
+        specifier: workspace:*
+        version: link:../runtime-binding
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
