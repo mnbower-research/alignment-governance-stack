@@ -9,6 +9,7 @@ import type {
   RuntimePermit,
   ValidateRuntimePermitOptions
 } from "@alignment-governance-stack/runtime-binding";
+import type { GovernanceReceipt } from "@alignment-governance-stack/receipts";
 
 export type GovernanceFinalDecision =
   | "rejected_before_gate"
@@ -36,6 +37,15 @@ export interface EvaluateGovernedRuntimeActionInput {
   validationOptions?: ValidateRuntimePermitOptions;
 }
 
+export interface EvaluateGovernedRuntimeActionWithReceiptInput extends EvaluateGovernedRuntimeActionInput {
+  receiptOptions?: {
+    id?: string;
+    createdAt?: string;
+    previousReceiptHash?: string;
+    metadata?: Record<string, unknown>;
+  };
+}
+
 export interface GovernanceRuntimePacket {
   originalProposal: AgentActionProposal;
   pgdl: PgdlPacket;
@@ -46,4 +56,9 @@ export interface GovernanceRuntimePacket {
   runtimeBinding?: RuntimeBindingResult;
   finalDecision: GovernanceFinalDecision;
   reasonForDecision: string;
+}
+
+export interface GovernanceRuntimePacketWithReceipt {
+  governance: GovernanceRuntimePacket;
+  receipt: GovernanceReceipt;
 }

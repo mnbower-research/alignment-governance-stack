@@ -36,6 +36,9 @@ importers:
       '@alignment-governance-stack/pgdl-core':
         specifier: workspace:*
         version: link:../pgdl-core
+      '@alignment-governance-stack/receipts':
+        specifier: workspace:*
+        version: link:../receipts
       '@alignment-governance-stack/runtime-binding':
         specifier: workspace:*
         version: link:../runtime-binding
@@ -49,6 +52,19 @@ importers:
 
   packages/pgdl-core:
     dependencies:
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@25.7.0)
+
+  packages/receipts:
+    dependencies:
+      '@alignment-governance-stack/runtime-binding':
+        specifier: workspace:*
+        version: link:../runtime-binding
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types

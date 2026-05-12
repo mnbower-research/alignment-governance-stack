@@ -19,8 +19,8 @@ User goal
 -> AAG
 -> Permit decision
 -> Runtime Binding
--> Execution
 -> Receipt / audit trail
+-> Execution
 ```
 
 ## PGDL
@@ -49,7 +49,7 @@ Runtime Binding validates that the exact action being executed matches a valid p
 
 ## Receipts
 
-Receipts preserve proof after decisions. They should eventually capture what was proposed, what objections were raised, what changed, who approved it, what was allowed or blocked, what action actually ran, and whether runtime execution matched the permit.
+Receipts preserve proof after decisions. Receipt v0.1 captures what was originally proposed, what PGDL decided, what reached AAG, what AAG decided, whether a runtime permit was issued, whether a runtime action matched the permit, and the final governance decision. Receipts are tamper-evident through a stable SHA-256 hash.
 
 ## Proposal Maturation vs Execution Approval
 
@@ -72,6 +72,7 @@ corepack pnpm -r test
 - `packages/aag-core`: Agent Action Gate scaffold.
 - `packages/governance-core`: orchestration layer that connects PGDL packet generation to AAG gate evaluation and optional Runtime Binding validation.
 - `packages/runtime-binding`: permit creation and runtime validation scaffold.
+- `packages/receipts`: creates tamper-evident governance receipts.
 - `examples/pgdl-to-aag`: example inputs and a placeholder pipeline runner.
 - `docs`: architecture notes and component documentation.
 - `evals`: fixture directory for future evaluation cases.

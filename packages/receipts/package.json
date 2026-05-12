@@ -1,5 +1,5 @@
 {
-  "name": "@alignment-governance-stack/governance-core",
+  "name": "@alignment-governance-stack/receipts",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,9 +16,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@alignment-governance-stack/aag-core": "workspace:*",
-    "@alignment-governance-stack/pgdl-core": "workspace:*",
-    "@alignment-governance-stack/receipts": "workspace:*",
     "@alignment-governance-stack/runtime-binding": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*"
   },

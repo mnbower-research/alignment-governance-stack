@@ -10,8 +10,8 @@ User goal
 -> AAG
 -> Permit decision
 -> Runtime Binding
+-> Receipt
 -> Execution
--> Receipt / audit trail
 ```
 
 ## First End-to-End Spine
@@ -22,7 +22,7 @@ PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves 
 
 AAG evaluates execution permission for the proposal it receives. It does not mature proposals and does not execute actions.
 
-Runtime Binding and receipts are next in the enforcement and proof chain.
+Runtime Binding verifies the exact permitted action. Receipts preserve proof for the full governance path after the governance decision has been reached.
 
 ## Runtime-Bound Governance Flow
 
@@ -34,4 +34,20 @@ If AAG allows, `governance-core` can issue a runtime permit for the exact propos
 
 Runtime Binding verifies the exact runtime action against that permit. It prevents the original dangerous action from running when PGDL revised it into a safer proposal.
 
-Receipts come next.
+## Receipt Proof Chain
+
+The v0.1 proof chain is:
+
+```text
+Original proposal
+-> PGDL packet
+-> Proposal sent to AAG
+-> AAG decision
+-> Runtime permit, if issued
+-> Runtime Binding result, if a runtime action is supplied
+-> Final governance decision
+-> Governance receipt
+-> Receipt hash
+```
+
+Receipts do not execute actions and do not approve execution. They answer the audit question: what proof remains?
