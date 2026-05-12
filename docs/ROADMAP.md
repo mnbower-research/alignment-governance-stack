@@ -1,5 +1,7 @@
 # Roadmap
 
+Alignment Governance Stack is currently scaffold-only. The roadmap below names likely growth areas without adding them before they are requested.
+
 ## Scaffold
 
 - TypeScript pnpm monorepo

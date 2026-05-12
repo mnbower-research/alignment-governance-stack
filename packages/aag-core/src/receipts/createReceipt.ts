@@ -1,4 +1,4 @@
-import type { AagPacket, DecisionReceipt } from "@agent-action-governance/shared-types";
+import type { AagPacket, DecisionReceipt } from "@alignment-governance-stack/shared-types";
 
 export function createReceipt(packet: AagPacket): DecisionReceipt {
   // TODO: Add durable receipt fields, actor identity, approvals, and runtime binding proof.

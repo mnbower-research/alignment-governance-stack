@@ -5,7 +5,7 @@ export type {
   AagPacket,
   AgentActionProposal,
   DecisionReceipt
-} from "@agent-action-governance/shared-types";
+} from "@alignment-governance-stack/shared-types";
 
 export interface AagPolicy {
   name: string;

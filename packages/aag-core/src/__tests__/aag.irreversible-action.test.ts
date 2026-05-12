@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { AgentActionProposal } from "@agent-action-governance/shared-types";
+import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
 import { evaluateAag } from "../evaluateAag.js";
 
 const irreversibleProposal: AgentActionProposal = {

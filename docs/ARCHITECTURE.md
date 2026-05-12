@@ -1,6 +1,6 @@
 # Architecture
 
-The stack separates proposal maturation from execution approval.
+Alignment Governance Stack separates proposal maturation from execution approval and runtime authorization.
 
 ```text
 User goal

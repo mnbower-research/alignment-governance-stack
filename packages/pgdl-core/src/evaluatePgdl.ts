@@ -1,4 +1,4 @@
-import type { AgentActionProposal, PgdlPacket } from "@agent-action-governance/shared-types";
+import type { AgentActionProposal, PgdlPacket } from "@alignment-governance-stack/shared-types";
 import { detectComplianceTheater } from "./modules/complianceTheaterDetector.js";
 import { resolveDiscernment } from "./modules/discernmentResolver.js";
 import { rewriteForInternalization } from "./modules/internalizationRewriter.js";

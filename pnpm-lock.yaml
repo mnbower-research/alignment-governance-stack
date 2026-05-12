@@ -17,7 +17,7 @@ importers:
 
   packages/aag-core:
     dependencies:
-      '@agent-action-governance/shared-types':
+      '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
     devDependencies:
@@ -27,7 +27,7 @@ importers:
 
   packages/pgdl-core:
     dependencies:
-      '@agent-action-governance/shared-types':
+      '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
     devDependencies:
@@ -37,7 +37,7 @@ importers:
 
   packages/runtime-binding:
     dependencies:
-      '@agent-action-governance/shared-types':
+      '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
     devDependencies:

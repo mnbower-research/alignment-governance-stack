@@ -163,7 +163,6 @@ Receipts should eventually answer:
 - Runtime Binding must validate exact permitted execution.
 - Receipts must preserve evidence after the decision.
 - Do not describe PGDL as conscious, sentient, alive, or self-aware.
-- Use "Pre-Gate Deliberation Layer" instead of "synthetic consciousness."
 - Describe PGDL as a proposal maturation, objection, and discernment layer.
 
 ## Initial Repository Target

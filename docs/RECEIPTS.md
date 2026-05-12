@@ -4,4 +4,6 @@ Receipts preserve proof after PGDL, AAG, runtime binding, and execution decision
 
 Receipts should eventually answer what was proposed, what objections were raised, what changed, who approved it, what was allowed or blocked, what action ran, and whether runtime execution matched the permit.
 
+Receipts are audit evidence, not execution approval.
+
 TODO: Define canonical receipt schema and hashing rules.

@@ -1,4 +1,4 @@
-import type { AagDetectorResult, AgentActionProposal } from "@agent-action-governance/shared-types";
+import type { AagDetectorResult, AgentActionProposal } from "@alignment-governance-stack/shared-types";
 
 export function detectUnauthorizedScope(_proposal: AgentActionProposal): AagDetectorResult {
   // TODO: Verify the action scope is authorized.

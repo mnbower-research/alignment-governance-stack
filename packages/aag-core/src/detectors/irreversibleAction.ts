@@ -1,4 +1,4 @@
-import type { AagDetectorResult, AgentActionProposal } from "@agent-action-governance/shared-types";
+import type { AagDetectorResult, AgentActionProposal } from "@alignment-governance-stack/shared-types";
 
 export function detectIrreversibleAction(proposal: AgentActionProposal): AagDetectorResult {
   // TODO: Evaluate irreversible action policy by environment, scope, and approval.

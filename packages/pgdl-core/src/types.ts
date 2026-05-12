@@ -4,7 +4,7 @@ export type {
   PgdlObjection,
   PgdlObjectionCategory,
   PgdlPacket
-} from "@agent-action-governance/shared-types";
+} from "@alignment-governance-stack/shared-types";
 
 export interface PgdlPolicy {
   name: string;

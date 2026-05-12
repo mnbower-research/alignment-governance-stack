@@ -2,7 +2,7 @@ import type {
   AgentActionProposal,
   PgdlDecision,
   PgdlObjection
-} from "@agent-action-governance/shared-types";
+} from "@alignment-governance-stack/shared-types";
 
 export function resolveDiscernment(
   _proposal: AgentActionProposal,

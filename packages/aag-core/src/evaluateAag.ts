@@ -2,7 +2,7 @@ import type {
   AagDetectorResult,
   AagPacket,
   AgentActionProposal
-} from "@agent-action-governance/shared-types";
+} from "@alignment-governance-stack/shared-types";
 import { detectIrreversibleAction } from "./detectors/irreversibleAction.js";
 import { detectMissingApproval } from "./detectors/missingApproval.js";
 import { detectObjectiveDrift } from "./detectors/objectiveDrift.js";

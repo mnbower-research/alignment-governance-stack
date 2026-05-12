@@ -1,4 +1,4 @@
-import type { AagDetectorResult, AgentActionProposal } from "@agent-action-governance/shared-types";
+import type { AagDetectorResult, AgentActionProposal } from "@alignment-governance-stack/shared-types";
 
 export function detectSensitiveDataExposure(_proposal: AgentActionProposal): AagDetectorResult {
   // TODO: Evaluate sensitive data exposure against policy and destination.

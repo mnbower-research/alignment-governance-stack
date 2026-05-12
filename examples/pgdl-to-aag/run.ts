@@ -1,6 +1,6 @@
-import { evaluateAag } from "@agent-action-governance/aag-core";
-import { evaluatePgdl } from "@agent-action-governance/pgdl-core";
-import type { AgentActionProposal } from "@agent-action-governance/shared-types";
+import { evaluateAag } from "@alignment-governance-stack/aag-core";
+import { evaluatePgdl } from "@alignment-governance-stack/pgdl-core";
+import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
 
 export function runPgdlToAagExample(proposal: AgentActionProposal): void {
   const pgdlPacket = evaluatePgdl(proposal);

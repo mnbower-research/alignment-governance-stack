@@ -1,5 +1,5 @@
 {
-  "name": "@agent-action-governance/aag-core",
+  "name": "@alignment-governance-stack/aag-core",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agent-action-governance/shared-types": "workspace:*"
+    "@alignment-governance-stack/shared-types": "workspace:*"
   },
   "devDependencies": {
     "vitest": "^2.1.4"

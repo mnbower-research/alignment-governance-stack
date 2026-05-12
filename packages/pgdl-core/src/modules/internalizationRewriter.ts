@@ -1,4 +1,4 @@
-import type { AgentActionProposal, PgdlObjection } from "@agent-action-governance/shared-types";
+import type { AgentActionProposal, PgdlObjection } from "@alignment-governance-stack/shared-types";
 
 export function rewriteForInternalization(
   _proposal: AgentActionProposal,

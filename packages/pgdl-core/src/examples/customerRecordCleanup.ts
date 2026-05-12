@@ -1,4 +1,4 @@
-import type { AgentActionProposal } from "@agent-action-governance/shared-types";
+import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
 
 export const customerRecordCleanupProposal: AgentActionProposal = {
   id: "example-customer-record-cleanup",

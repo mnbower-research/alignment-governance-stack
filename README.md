@@ -1,8 +1,29 @@
-# Agent Action Governance
+# Alignment Governance Stack
 
-Initial scaffold for a TypeScript monorepo that separates proposal maturation from execution approval for agentic AI systems.
+Alignment Governance Stack is a TypeScript monorepo scaffold for agentic AI governance. It separates proposal maturation, execution gating, runtime authorization, receipts, docs, examples, and evaluation fixtures into clear package boundaries.
 
-## What PGDL Is
+Core thesis:
+
+```text
+Proposal must not outrun objection.
+Action must not outrun discernment.
+```
+
+## Architecture Flow
+
+```text
+User goal
+-> Agent proposal
+-> PGDL
+-> Resolved proposal or escalation
+-> AAG
+-> Permit decision
+-> Runtime Binding
+-> Execution
+-> Receipt / audit trail
+```
+
+## PGDL
 
 PGDL means Pre-Gate Deliberation Layer.
 
@@ -12,28 +33,36 @@ PGDL runs before AAG and asks:
 
 PGDL matures an agent proposal through objection, compliance theater detection, internalized principle extraction, safer revision, and discernment resolution. PGDL does not execute actions and does not approve execution.
 
-## What AAG Is
+## AAG
 
 AAG means Agent Action Gate.
 
-AAG is the execution gate and asks:
+AAG is the hard execution gate and asks:
 
 > Should this action be allowed before execution?
 
 AAG evaluates authority, scope, reversibility, approval, sensitive data exposure, wrong target risk, tool mismatch, objective drift, runtime safety, and receipt requirements.
 
-## Why PGDL Comes Before AAG
+## Runtime Binding
 
-PGDL improves the proposal before it reaches the execution gate. AAG then evaluates whether the proposed action should be allowed, revised, approved by a human, or blocked.
+Runtime Binding validates that the exact action being executed matches a valid permit. It is intended to prevent approved proposal drift, tool substitution, target substitution, scope expansion, stale approvals, and execution without a valid permit.
 
-Proposal maturation is not execution approval. PGDL may forward, revise, escalate, or reject a proposal before AAG. AAG remains the hard execution gate.
+## Receipts
 
-## Installation
+Receipts preserve proof after decisions. They should eventually capture what was proposed, what objections were raised, what changed, who approved it, what was allowed or blocked, what action actually ran, and whether runtime execution matched the permit.
+
+## Proposal Maturation vs Execution Approval
+
+Proposal maturation happens in PGDL before the execution gate. PGDL may forward, revise, escalate, or reject a proposal before AAG.
+
+Execution approval happens in AAG. AAG decides whether a proposed action should be allowed, require approval, be revised, or be blocked before execution.
+
+## Commands
 
 ```bash
-pnpm install
-pnpm build
-pnpm test
+corepack pnpm install
+corepack pnpm -r build
+corepack pnpm -r test
 ```
 
 ## Package Map
@@ -48,4 +77,6 @@ pnpm test
 
 ## Current Status
 
-Scaffold only. The repository contains minimal placeholder implementations, clean exports, test stubs, and TODO comments where real governance logic belongs. No UI, database, auth, LLM provider, or production business logic is included yet.
+Scaffold only. The repository contains minimal placeholder implementations, clean exports, test stubs, and TODO comments where real governance logic belongs.
+
+No UI, database, auth, dashboard, LLM provider, or production business logic is included yet. PGDL is described only as a proposal maturation, objection, and discernment layer, not as a conscious, sentient, alive, or self-aware system.
