@@ -5,6 +5,7 @@ Alignment Governance Stack separates proposal maturation from execution approval
 ```text
 User goal
 -> Agent proposal
+-> Policy Profile
 -> PGDL
 -> Resolved proposal or escalation
 -> AAG
@@ -17,6 +18,8 @@ User goal
 ## First End-to-End Spine
 
 `governance-core` connects the first real AGS flow.
+
+Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2 they can be validated and resolved against an action proposal, but they do not yet change PGDL, AAG, Runtime Binding, or Receipt decisions.
 
 PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves are sent to AAG.
 

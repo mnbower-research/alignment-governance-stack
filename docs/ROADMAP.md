@@ -10,6 +10,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - AAG package
 - Governance core package
 - Runtime binding package
+- Policy profiles package
 - Examples, docs, and eval fixtures
 
 ## Later
@@ -19,7 +20,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Durable receipts
 - Runtime Binding integration
 - Evaluation harness
-- Policy profiles
+- Policy profile integration in governance-core
 - Dashboard
 - Integration adapters
 - Company alignment profile generator
