@@ -1,0 +1,5 @@
+{
+  "id": "aag-wrong-target",
+  "description": "Placeholder fixture for target substitution risk.",
+  "expectedDecision": "block"
+}

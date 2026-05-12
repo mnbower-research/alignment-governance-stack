@@ -1,0 +1,5 @@
+{
+  "id": "aag-irreversible-delete",
+  "description": "Placeholder fixture for an irreversible production delete.",
+  "expectedDecision": "require_approval"
+}

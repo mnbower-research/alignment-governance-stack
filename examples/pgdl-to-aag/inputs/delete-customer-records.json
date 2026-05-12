@@ -1,0 +1,14 @@
+{
+  "id": "delete-customer-records",
+  "userRequest": "Delete outdated customer records.",
+  "tool": "customer-admin",
+  "actionType": "delete_records",
+  "target": "customer-records",
+  "environment": "production",
+  "reversible": false,
+  "externalFacing": false,
+  "dataSensitivity": "confidential",
+  "requiresApproval": true,
+  "knownApproval": null,
+  "metadata": {}
+}

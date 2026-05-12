@@ -1,0 +1,5 @@
+{
+  "id": "aag-approved-send-email",
+  "description": "Placeholder fixture for an externally facing email with known approval.",
+  "expectedDecision": "allow"
+}

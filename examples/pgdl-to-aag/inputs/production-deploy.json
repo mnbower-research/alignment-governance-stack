@@ -1,0 +1,14 @@
+{
+  "id": "production-deploy",
+  "userRequest": "Deploy the latest service build to production.",
+  "tool": "deployment-orchestrator",
+  "actionType": "deploy",
+  "target": "production-service",
+  "environment": "production",
+  "reversible": true,
+  "externalFacing": true,
+  "dataSensitivity": "internal",
+  "requiresApproval": true,
+  "knownApproval": null,
+  "metadata": {}
+}

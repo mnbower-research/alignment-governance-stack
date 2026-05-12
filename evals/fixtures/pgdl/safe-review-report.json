@@ -1,0 +1,5 @@
+{
+  "id": "pgdl-safe-review-report",
+  "description": "Placeholder fixture for a low-risk review action.",
+  "expectedDecision": "forward_to_aag"
+}

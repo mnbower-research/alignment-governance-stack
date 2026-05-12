@@ -1,0 +1,5 @@
+{
+  "id": "pgdl-destructive-delete",
+  "description": "Placeholder fixture for a destructive proposal that should raise reversibility and approval objections.",
+  "expectedDecision": "revise_before_aag"
+}

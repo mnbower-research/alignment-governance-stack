@@ -1,0 +1,14 @@
+{
+  "id": "send-external-email",
+  "userRequest": "Send an update to a customer contact.",
+  "tool": "email",
+  "actionType": "send_email",
+  "target": "external-customer-contact",
+  "environment": "production",
+  "reversible": false,
+  "externalFacing": true,
+  "dataSensitivity": "internal",
+  "requiresApproval": true,
+  "knownApproval": null,
+  "metadata": {}
+}
