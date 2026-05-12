@@ -36,19 +36,15 @@ export interface PgdlPacket {
   reasonForDecision: string;
 }
 
-export type AagDetectorName =
-  | "wrongTarget"
-  | "unauthorizedScope"
-  | "missingApproval"
-  | "irreversibleAction"
-  | "sensitiveDataExposure"
-  | "toolMismatch"
-  | "objectiveDrift";
+export type AagDetectorName = string;
 
 export interface AagDetectorResult {
   detector: AagDetectorName;
-  passed: boolean;
+  triggered: boolean;
+  severity: RiskLevel;
+  recommendedDecision: AagDecision;
   reason: string;
+  evidence?: string[] | Record<string, unknown>;
 }
 
 export interface AagPacket {

@@ -41,7 +41,7 @@ AAG is the hard execution gate and asks:
 
 > Should this action be allowed before execution?
 
-AAG evaluates authority, scope, reversibility, approval, sensitive data exposure, wrong target risk, tool mismatch, objective drift, runtime safety, and receipt requirements.
+AAG evaluates authority, scope, reversibility, approval, sensitive data exposure, wrong target risk, tool mismatch, objective drift, runtime safety, and receipt requirements. `aag-core` is adapted from the existing Agent Action Gate implementation.
 
 ## Runtime Binding
 

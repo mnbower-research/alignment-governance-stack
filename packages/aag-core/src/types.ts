@@ -5,9 +5,15 @@ export type {
   AagPacket,
   AgentActionProposal,
   DecisionReceipt
-} from "@alignment-governance-stack/shared-types";
+} from "@alignment-governance-stack/shared-types" with { "resolution-mode": "import" };
 
-export interface AagPolicy {
-  name: string;
-  description: string;
-}
+export type {
+  ActionGateInput,
+  ActionGateResult,
+  GateDecision,
+  GateDetectorResult,
+  GateDetectorType,
+  GateSeverity,
+  PolicyProfile,
+  ReviewPacket
+} from "./actionGate/types";
