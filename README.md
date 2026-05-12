@@ -70,6 +70,7 @@ corepack pnpm -r test
 - `packages/shared-types`: shared TypeScript types for proposals, decisions, risk, packets, and receipts.
 - `packages/pgdl-core`: Pre-Gate Deliberation Layer scaffold.
 - `packages/aag-core`: Agent Action Gate scaffold.
+- `packages/governance-core`: orchestration layer that connects PGDL packet generation to AAG gate evaluation.
 - `packages/runtime-binding`: permit creation and runtime validation scaffold.
 - `examples/pgdl-to-aag`: example inputs and a placeholder pipeline runner.
 - `docs`: architecture notes and component documentation.
@@ -77,6 +78,6 @@ corepack pnpm -r test
 
 ## Current Status
 
-Scaffold only. The repository contains minimal placeholder implementations, clean exports, test stubs, and TODO comments where real governance logic belongs.
+Early scaffold with first deterministic PGDL to AAG flow. The repository still avoids UI, databases, auth, dashboard code, LLM providers, and production business logic.
 
 No UI, database, auth, dashboard, LLM provider, or production business logic is included yet. PGDL is described only as a proposal maturation, objection, and discernment layer, not as a conscious, sentient, alive, or self-aware system.

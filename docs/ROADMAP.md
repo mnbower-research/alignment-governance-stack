@@ -8,6 +8,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Shared types
 - PGDL package
 - AAG package
+- Governance core package
 - Runtime binding package
 - Examples, docs, and eval fixtures
 
@@ -16,6 +17,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Real PGDL modules
 - Real AAG detector policies
 - Durable receipts
+- Runtime Binding integration
 - Evaluation harness
 - Policy profiles
 - Dashboard

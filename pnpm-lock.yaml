@@ -28,6 +28,22 @@ importers:
         specifier: ^2.1.4
         version: 2.1.9(@types/node@25.7.0)
 
+  packages/governance-core:
+    dependencies:
+      '@alignment-governance-stack/aag-core':
+        specifier: workspace:*
+        version: link:../aag-core
+      '@alignment-governance-stack/pgdl-core':
+        specifier: workspace:*
+        version: link:../pgdl-core
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@25.7.0)
+
   packages/pgdl-core:
     dependencies:
       '@alignment-governance-stack/shared-types':

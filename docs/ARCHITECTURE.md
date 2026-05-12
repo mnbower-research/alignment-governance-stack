@@ -14,4 +14,12 @@ User goal
 -> Receipt / audit trail
 ```
 
-TODO: Expand this document as package behavior becomes real.
+## First End-to-End Spine
+
+`governance-core` connects the first real AGS flow.
+
+PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves are sent to AAG.
+
+AAG evaluates execution permission for the proposal it receives. It does not mature proposals and does not execute actions.
+
+Runtime Binding and receipts are next in the enforcement and proof chain.
