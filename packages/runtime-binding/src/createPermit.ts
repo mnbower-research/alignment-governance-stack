@@ -1,14 +1,29 @@
-import type { ActionPermit, PermitSourceProposal } from "./types.js";
+import { randomUUID } from "node:crypto";
+import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
+import { createActionHash } from "./hashAction.js";
+import type { CreateRuntimePermitOptions, RuntimePermit } from "./types.js";
 
-export function createPermit(proposal: PermitSourceProposal): ActionPermit {
-  // TODO: Bind permit creation to an allowed AAG packet and approval metadata.
-  return {
-    id: `permit-${proposal.id}`,
-    proposalId: proposal.id,
-    tool: proposal.tool,
-    actionType: proposal.actionType,
-    target: proposal.target,
-    environment: proposal.environment,
-    expiresAt: new Date(0).toISOString()
+export function createRuntimePermit(
+  action: AgentActionProposal,
+  options: CreateRuntimePermitOptions = {}
+): RuntimePermit {
+  const permit: RuntimePermit = {
+    id: `permit-${action.id}-${randomUUID()}`,
+    proposalId: action.id,
+    actionHash: createActionHash(action),
+    allowedAction: { ...action, metadata: { ...action.metadata } },
+    issuedAt: options.issuedAt ?? new Date().toISOString(),
+    source: "aag",
+    aagDecision: "allow"
   };
+
+  if (options.expiresAt !== undefined) {
+    permit.expiresAt = options.expiresAt;
+  }
+
+  if (options.metadata !== undefined) {
+    permit.metadata = { ...options.metadata };
+  }
+
+  return permit;
 }

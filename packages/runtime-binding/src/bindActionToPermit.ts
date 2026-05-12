@@ -1,19 +1,11 @@
-import type { ActionPermit, PermitValidationResult, RuntimeAction } from "./types.js";
+import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
+import type { RuntimeBindingResult, RuntimePermit, ValidateRuntimePermitOptions } from "./types.js";
+import { validateRuntimePermit } from "./validatePermit.js";
 
 export function bindActionToPermit(
-  action: RuntimeAction,
-  permit: ActionPermit
-): PermitValidationResult {
-  // TODO: Prevent approved proposal drift, tool substitution, target substitution, and scope expansion.
-  const matches =
-    action.proposalId === permit.proposalId &&
-    action.tool === permit.tool &&
-    action.actionType === permit.actionType &&
-    action.target === permit.target &&
-    action.environment === permit.environment;
-
-  return {
-    valid: matches,
-    reason: matches ? "Runtime action matches permit." : "Runtime action does not match permit."
-  };
+  action: AgentActionProposal,
+  permit?: RuntimePermit,
+  options: ValidateRuntimePermitOptions = {}
+): RuntimeBindingResult {
+  return validateRuntimePermit(action, permit, options);
 }
