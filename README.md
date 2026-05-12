@@ -1,6 +1,6 @@
 # Alignment Governance Stack
 
-Alignment Governance Stack is a TypeScript monorepo scaffold for agentic AI governance. It separates proposal maturation, execution gating, runtime authorization, receipts, docs, examples, and evaluation fixtures into clear package boundaries.
+Alignment Governance Stack is a full-stack governance architecture for agentic AI systems. It preserves human agency across the action lifecycle by separating proposal maturation, organization policy, execution gating, runtime authorization, and proof.
 
 Core thesis:
 
@@ -9,90 +9,85 @@ Proposal must not outrun objection.
 Action must not outrun discernment.
 ```
 
-## Architecture Flow
+## Current Stack
 
 ```text
-User goal
--> Company Alignment Profile Generator
--> Draft Policy Profile
--> Agent proposal
--> Policy Profile with Hard Boundaries
--> PGDL
--> Policy resolution on proposal sent to AAG
--> Resolved proposal or escalation
--> AAG
--> Permit decision
--> Runtime Binding
--> Receipt / audit trail
--> Execution
+Company Alignment Profile Generator
+↓
+Policy Profile with Hard Boundaries
+↓
+PGDL
+↓
+Policy Resolution
+↓
+AAG
+↓
+Runtime Binding
+↓
+Receipt
 ```
 
-## PGDL
+- Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles.
+- Policy Profiles define organization-specific governance rules.
+- Hard Boundaries enforce explicit "never automate" rules before actions reach AAG.
+- PGDL matures agent proposals before execution gating.
+- Policy Resolution applies organization-specific rules to the proposal that PGDL intends to send to AAG.
+- AAG evaluates whether a proposed action should be allowed before execution.
+- Runtime Binding verifies the exact runtime action matches the permitted action.
+- Receipts preserve tamper-evident proof of the governance path.
 
-PGDL means Pre-Gate Deliberation Layer.
+## Current Features
 
-PGDL runs before AAG and asks:
+- Deterministic PGDL proposal maturation
+- Canonical Agent Action Gate integration
+- Governance Core orchestration
+- Runtime Binding exact-action permit validation
+- Tamper-evident governance receipts
+- Policy Profiles with deterministic policy resolution
+- Company Alignment Profile Generator
+- Hard Boundary Policy Compiler for explicit `neverAutomate` rules
 
-> What kind of action should be proposed in the first place?
+## Package Map
 
-PGDL matures an agent proposal through objection, compliance theater detection, internalized principle extraction, safer revision, and discernment resolution. PGDL v0.1 does this with deterministic rule-based packet generation. PGDL does not execute actions and does not approve execution.
+- `@alignment-governance-stack/shared-types`: shared TypeScript types for proposals, decisions, risk, packets, and receipts.
+- `@alignment-governance-stack/pgdl-core`: deterministic Pre-Gate Deliberation Layer proposal maturation.
+- `@alignment-governance-stack/aag-core`: canonical Agent Action Gate integration.
+- `@alignment-governance-stack/runtime-binding`: exact-action permit creation and runtime validation.
+- `@alignment-governance-stack/governance-core`: orchestration for PGDL, optional policy resolution, AAG, Runtime Binding, and receipts.
+- `@alignment-governance-stack/receipts`: tamper-evident governance receipts and stable receipt hashing.
+- `@alignment-governance-stack/policy-profiles`: organization-specific governance rules, hard boundaries, and deterministic policy resolution.
+- `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile generation from structured company governance inputs.
 
-## Policy Profiles
-
-Policy Profiles describe organization-specific governance constraints such as allowed tools, restricted environments, approval rules, hard boundaries, data sensitivity policies, and receipt requirements. Policy Profiles are a configuration layer above the governance spine; they do not execute actions and do not replace PGDL, AAG, Runtime Binding, or Receipts.
-
-## Company Alignment Profiles
-
-Company Alignment Profile Generator turns structured company context into a draft Policy Profile. Inputs can include values, roles, tool inventory, data classes, environments, and decision boundaries. `neverAutomate` decision boundaries with explicit match fields compile into hard boundary policy rules. The generator is deterministic and rule-based; it does not execute actions, ingest SOPs, call LLMs, store data, or make legal completeness claims.
-
-## AAG
-
-AAG means Agent Action Gate.
-
-AAG is the hard execution gate and asks:
-
-> Should this action be allowed before execution?
-
-AAG evaluates authority, scope, reversibility, approval, sensitive data exposure, wrong target risk, tool mismatch, objective drift, runtime safety, and receipt requirements. `aag-core` is adapted from the existing Agent Action Gate implementation.
-
-## Runtime Binding
-
-Runtime Binding validates that the exact action being executed matches a valid permit. It is intended to prevent approved proposal drift, tool substitution, target substitution, scope expansion, stale approvals, and execution without a valid permit.
-
-## Receipts
-
-Receipts preserve proof after decisions. Receipt v0.1 captures what was originally proposed, what PGDL decided, what reached AAG, what AAG decided, whether a runtime permit was issued, whether a runtime action matched the permit, and the final governance decision. Receipts are tamper-evident through a stable SHA-256 hash.
-
-## Proposal Maturation vs Execution Approval
-
-Proposal maturation happens in PGDL before the execution gate. PGDL may forward, revise, escalate, or reject a proposal before AAG.
-
-Execution approval happens in AAG. AAG decides whether a proposed action should be allowed, require approval, be revised, or be blocked before execution.
-
-## Commands
+## Basic Commands
 
 ```bash
 corepack pnpm install
 corepack pnpm -r build
 corepack pnpm -r test
+corepack pnpm -r typecheck
+corepack pnpm audit --audit-level moderate
+corepack pnpm -r exec npm pack --dry-run
 ```
 
-## Package Map
+## Boundaries
 
-- `packages/shared-types`: shared TypeScript types for proposals, decisions, risk, packets, and receipts.
-- `packages/pgdl-core`: Pre-Gate Deliberation Layer scaffold.
-- `packages/aag-core`: Agent Action Gate scaffold.
-- `packages/governance-core`: orchestration layer that connects optional Policy Profile resolution, PGDL packet generation, AAG gate evaluation, and optional Runtime Binding validation.
-- `packages/runtime-binding`: permit creation and runtime validation scaffold.
-- `packages/receipts`: creates tamper-evident governance receipts.
-- `packages/policy-profiles`: company-specific governance rules, hard boundaries, and policy resolution.
-- `packages/company-profile-generator`: turns structured company governance inputs into draft PolicyProfiles.
-- `examples/pgdl-to-aag`: example inputs and a placeholder pipeline runner.
-- `docs`: architecture notes and component documentation.
-- `evals`: fixture directory for future evaluation cases.
+- PGDL does not execute actions.
+- AAG does not mature proposals.
+- Runtime Binding does not decide wisdom or policy.
+- Receipts do not execute or approve actions.
+- Policy Profiles do not replace PGDL or AAG.
+- Hard Boundaries stop explicit organization-defined "never automate" actions before AAG.
+- The Company Alignment Profile Generator creates draft Policy Profiles, not legal or compliance guarantees.
 
 ## Current Status
 
-Early scaffold with first deterministic PGDL to AAG flow. The repository still avoids UI, databases, auth, dashboard code, LLM providers, and production business logic.
+Current version: v0.4.0
 
-No UI, database, auth, dashboard, LLM provider, or production business logic is included yet. PGDL is described only as a proposal maturation, objection, and discernment layer, not as a conscious, sentient, alive, or self-aware system.
+The core AGS spine is working:
+
+```text
+Company Alignment Profile Generator → Policy Profile with Hard Boundaries → PGDL → Policy Resolution → AAG → Runtime Binding → Receipt
+```
+
+No UI, database, auth, dashboard, LLM ingestion, SOP parser, or persistent storage is included yet.
+
