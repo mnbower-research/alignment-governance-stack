@@ -4,6 +4,10 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -11,7 +15,7 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
@@ -20,6 +24,8 @@
     "@alignment-governance-stack/shared-types": "workspace:*"
   },
   "devDependencies": {
-    "vitest": "^2.1.4"
+    "@types/node": "^25.6.0",
+    "vite": "^8.0.12",
+    "vitest": "^4.1.6"
   }
 }
