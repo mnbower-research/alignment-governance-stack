@@ -13,6 +13,8 @@ Action must not outrun discernment.
 
 ```text
 User goal
+-> Company Alignment Profile Generator
+-> Draft Policy Profile
 -> Agent proposal
 -> Policy Profile
 -> PGDL
@@ -38,6 +40,10 @@ PGDL matures an agent proposal through objection, compliance theater detection, 
 ## Policy Profiles
 
 Policy Profiles describe organization-specific governance constraints such as allowed tools, restricted environments, approval rules, data sensitivity policies, and receipt requirements. Policy Profiles are a configuration layer above the governance spine; they do not execute actions and do not replace PGDL, AAG, Runtime Binding, or Receipts.
+
+## Company Alignment Profiles
+
+Company Alignment Profile Generator turns structured company context into a draft Policy Profile. Inputs can include values, roles, tool inventory, data classes, environments, and decision boundaries. It is deterministic and rule-based; it does not execute actions, ingest SOPs, call LLMs, store data, or make legal completeness claims.
 
 ## AAG
 
@@ -80,6 +86,7 @@ corepack pnpm -r test
 - `packages/runtime-binding`: permit creation and runtime validation scaffold.
 - `packages/receipts`: creates tamper-evident governance receipts.
 - `packages/policy-profiles`: company-specific governance rules and policy resolution.
+- `packages/company-profile-generator`: turns structured company governance inputs into draft PolicyProfiles.
 - `examples/pgdl-to-aag`: example inputs and a placeholder pipeline runner.
 - `docs`: architecture notes and component documentation.
 - `evals`: fixture directory for future evaluation cases.

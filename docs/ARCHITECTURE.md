@@ -4,6 +4,8 @@ Alignment Governance Stack separates proposal maturation from execution approval
 
 ```text
 User goal
+-> Company Alignment Profile Generator
+-> Draft Policy Profile
 -> Agent proposal
 -> Policy Profile
 -> PGDL
@@ -19,6 +21,8 @@ User goal
 ## First End-to-End Spine
 
 `governance-core` connects the first real AGS flow.
+
+Company Alignment Profile Generator sits above Policy Profiles. It translates structured company context into a draft `PolicyProfile` for human review.
 
 Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2, `governance-core` can validate a supplied profile, run PGDL, then resolve policy against the proposal that would be sent to AAG.
 

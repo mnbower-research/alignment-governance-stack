@@ -11,6 +11,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Governance core package
 - Runtime binding package
 - Policy profiles package
+- Company alignment profile generator package
 - Examples, docs, and eval fixtures
 
 ## Later
@@ -20,7 +21,8 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Durable receipts
 - Runtime Binding integration
 - Evaluation harness
-- Policy profile integration in governance-core
+- Policy compiler
+- Human review workflow for generated company profiles
 - Dashboard
 - Integration adapters
-- Company alignment profile generator
+- SOP and policy import for company alignment profiles
