@@ -33,6 +33,10 @@ export interface ApprovalRuleWhen {
   dataSensitivity?: DataSensitivity;
 }
 
+export interface HardBoundaryRuleWhen extends ApprovalRuleWhen {
+  targetIncludes?: string;
+}
+
 export interface ApprovalRule {
   id: string;
   when: ApprovalRuleWhen;
@@ -49,6 +53,17 @@ export interface DataSensitivityPolicy {
   notes?: string;
 }
 
+export interface HardBoundaryRule {
+  id: string;
+  label: string;
+  description?: string;
+  when: HardBoundaryRuleWhen;
+  effect: "block";
+  reason: string;
+  source?: "company_alignment_profile" | "manual_policy";
+  metadata?: Record<string, unknown>;
+}
+
 export interface PolicyProfile {
   id: string;
   name: string;
@@ -60,6 +75,7 @@ export interface PolicyProfile {
   environments?: EnvironmentPolicy[];
   approvalRules?: ApprovalRule[];
   dataSensitivity?: DataSensitivityPolicy[];
+  hardBoundaries?: HardBoundaryRule[];
   receiptRequired?: boolean;
   metadata?: Record<string, unknown>;
 }
@@ -71,6 +87,8 @@ export interface ResolvedActionPolicy {
   reasons: string[];
   matchedRules: string[];
   suggestedDecision?: SuggestedPolicyDecision;
+  hardBoundaryTriggered?: boolean;
+  blockingBoundaryIds?: string[];
 }
 
 export interface PolicyProfileValidationResult {

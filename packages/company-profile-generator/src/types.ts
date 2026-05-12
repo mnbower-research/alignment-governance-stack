@@ -55,6 +55,7 @@ export interface CompanyDecisionBoundary {
   tool?: string;
   environment?: string;
   dataSensitivity?: DataSensitivity;
+  targetIncludes?: string;
   externalFacing?: boolean;
   reversible?: boolean;
   requiresHumanApproval: boolean;

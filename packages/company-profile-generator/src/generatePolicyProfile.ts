@@ -2,6 +2,7 @@ import type {
   ApprovalRule,
   DataSensitivityPolicy,
   EnvironmentPolicy,
+  HardBoundaryRule,
   PolicyProfile,
   ToolPolicy
 } from "@alignment-governance-stack/policy-profiles";
@@ -33,6 +34,9 @@ export function generatePolicyProfile(
     environments: profile.environments.map(mapEnvironmentPolicy),
     approvalRules: profile.decisionBoundaries.map(mapApprovalRule),
     dataSensitivity: mergeDataSensitivityPolicies(profile.dataClasses.map(mapDataSensitivityPolicy)),
+    hardBoundaries: profile.decisionBoundaries
+      .filter((boundary) => boundary.neverAutomate === true && hasBoundaryMatchFields(boundary))
+      .map(mapHardBoundaryRule),
     receiptRequired: true,
     metadata: {
       generator: "company-profile-generator.v0.3",
@@ -54,6 +58,13 @@ export function generatePolicyProfile(
       neverAutomateBoundaries: profile.decisionBoundaries
         .filter((boundary) => boundary.neverAutomate === true)
         .map((boundary) => boundary.id),
+      uncompiledNeverAutomateBoundaries: profile.decisionBoundaries
+        .filter((boundary) => boundary.neverAutomate === true && !hasBoundaryMatchFields(boundary))
+        .map((boundary) => ({
+          id: boundary.id,
+          label: boundary.label,
+          reason: "No explicit match fields were supplied, so this was not compiled into a global hard boundary."
+        })),
       ...(profile.metadata !== undefined ? { sourceMetadata: profile.metadata } : {})
     }
   };
@@ -121,6 +132,43 @@ function mapApprovalRule(boundary: CompanyDecisionBoundary): ApprovalRule {
     ...(boundary.approverRole !== undefined ? { approverRole: boundary.approverRole } : {}),
     reason: boundary.description ?? boundary.label
   };
+}
+
+function mapHardBoundaryRule(boundary: CompanyDecisionBoundary): HardBoundaryRule {
+  return {
+    id: boundary.id,
+    label: boundary.label,
+    ...(boundary.description !== undefined ? { description: boundary.description } : {}),
+    when: {
+      ...(boundary.tool !== undefined ? { tool: boundary.tool } : {}),
+      ...(boundary.actionType !== undefined ? { actionType: boundary.actionType } : {}),
+      ...(boundary.environment !== undefined ? { environment: boundary.environment } : {}),
+      ...(boundary.dataSensitivity !== undefined ? { dataSensitivity: boundary.dataSensitivity } : {}),
+      ...(boundary.targetIncludes !== undefined ? { targetIncludes: boundary.targetIncludes } : {}),
+      ...(boundary.externalFacing !== undefined ? { externalFacing: boundary.externalFacing } : {}),
+      ...(boundary.reversible !== undefined ? { reversible: boundary.reversible } : {})
+    },
+    effect: "block",
+    reason: boundary.description ?? boundary.label,
+    source: "company_alignment_profile",
+    metadata: {
+      sourceBoundaryId: boundary.id,
+      requiresHumanApproval: boundary.requiresHumanApproval,
+      ...(boundary.approverRole !== undefined ? { approverRole: boundary.approverRole } : {})
+    }
+  };
+}
+
+function hasBoundaryMatchFields(boundary: CompanyDecisionBoundary): boolean {
+  return (
+    boundary.tool !== undefined ||
+    boundary.actionType !== undefined ||
+    boundary.environment !== undefined ||
+    boundary.dataSensitivity !== undefined ||
+    boundary.targetIncludes !== undefined ||
+    boundary.externalFacing !== undefined ||
+    boundary.reversible !== undefined
+  );
 }
 
 function mergeDataSensitivityPolicies(

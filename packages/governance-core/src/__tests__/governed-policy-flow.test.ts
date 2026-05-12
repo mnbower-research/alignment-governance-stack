@@ -138,6 +138,35 @@ describe("governed flow with policy profiles", () => {
     expect(result.receipt.resolvedPolicy).toEqual(result.governance.resolvedPolicy);
     expect(verifyGovernanceReceipt(result.receipt).valid).toBe(true);
   });
+
+  it("stops before AAG when a hard boundary matches", () => {
+    const packet = evaluateGovernedRuntimeAction({
+      proposal: createSafeReportProposal(),
+      policyProfile: {
+        ...defaultPolicyProfile,
+        hardBoundaries: [
+          {
+            id: "never_auto_weekly_usage_report",
+            label: "Never auto-generate weekly usage report",
+            when: {
+              actionType: "generate_internal_report",
+              targetIncludes: "weekly_usage"
+            },
+            effect: "block",
+            reason: "Weekly usage reports require explicit human-owned preparation."
+          }
+        ]
+      },
+      runtimeAction: createSafeReportProposal()
+    });
+
+    expect(packet.finalDecision).toBe("blocked_by_policy");
+    expect(packet.resolvedPolicy?.hardBoundaryTriggered).toBe(true);
+    expect(packet.resolvedPolicy?.blockingBoundaryIds).toContain("never_auto_weekly_usage_report");
+    expect(packet.aag).toBeUndefined();
+    expect(packet.permit).toBeUndefined();
+    expect(packet.runtimeBinding).toBeUndefined();
+  });
 });
 
 function createSafeReportProposal(): AgentActionProposal {

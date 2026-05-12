@@ -49,6 +49,32 @@ export function validatePolicyProfile(profile: PolicyProfile): PolicyProfileVali
     }
   }
 
+  const hardBoundaryIds = new Set<string>();
+  for (const hardBoundary of profile.hardBoundaries ?? []) {
+    if (typeof hardBoundary.id !== "string" || hardBoundary.id.trim() === "") {
+      errors.push("Hard boundary is missing required id.");
+      continue;
+    }
+
+    if (hardBoundaryIds.has(hardBoundary.id)) {
+      errors.push(`Hard boundary id must be unique: ${hardBoundary.id}.`);
+    }
+
+    hardBoundaryIds.add(hardBoundary.id);
+
+    if (typeof hardBoundary.label !== "string" || hardBoundary.label.trim() === "") {
+      errors.push(`Hard boundary is missing required label: ${hardBoundary.id}.`);
+    }
+
+    if (hardBoundary.effect !== "block") {
+      errors.push(`Hard boundary effect must be block: ${hardBoundary.id}.`);
+    }
+
+    if (typeof hardBoundary.reason !== "string" || hardBoundary.reason.trim() === "") {
+      errors.push(`Hard boundary is missing required reason: ${hardBoundary.id}.`);
+    }
+  }
+
   return {
     valid: errors.length === 0,
     errors

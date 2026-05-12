@@ -7,7 +7,7 @@ User goal
 -> Company Alignment Profile Generator
 -> Draft Policy Profile
 -> Agent proposal
--> Policy Profile
+-> Policy Profile with Hard Boundaries
 -> PGDL
 -> Policy resolution on proposal sent to AAG
 -> Resolved proposal or escalation
@@ -26,7 +26,7 @@ Company Alignment Profile Generator sits above Policy Profiles. It translates st
 
 Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2, `governance-core` can validate a supplied profile, run PGDL, then resolve policy against the proposal that would be sent to AAG.
 
-Explicit policy blocks stop before AAG. Policy approval requirements are carried as context into AAG; they do not replace AAG decisions.
+Hard boundaries are deterministic block rules inside Policy Profiles. They are used for organization-defined "never automate" cases and other hard stops. Explicit policy blocks, including hard boundary matches, stop before AAG. Policy approval requirements are carried as context into AAG; they do not replace AAG decisions.
 
 PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves are sent to AAG.
 

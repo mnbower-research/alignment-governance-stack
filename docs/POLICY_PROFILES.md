@@ -33,6 +33,19 @@ The resolver returns a `ResolvedActionPolicy` with whether the action is allowed
 
 Policy Profiles do not execute actions. They do not approve execution. They do not replace PGDL, AAG, Runtime Binding, or Receipts.
 
+## Hard Boundaries
+
+Policy Profiles can include hard boundary rules. Hard boundaries are deterministic block rules for actions an organization has decided should not be automated.
+
+They are intended for cases such as:
+
+- never automate this action
+- block a specific tool, action, environment, or target combination
+- prevent sensitive decisions from becoming rubber-stamp approval flows
+- enforce organization-defined hard stops before execution gating
+
+Hard boundaries are evaluated during policy resolution before normal approval rules. When a hard boundary matches the proposal that would be sent to AAG, governance-core returns `blocked_by_policy` and stops before AAG. A matched hard boundary does not replace PGDL or AAG; it prevents an explicitly prohibited proposal from reaching the execution gate.
+
 ## Governance-Core Integration
 
 `governance-core` can now optionally accept a `PolicyProfile`.
@@ -49,4 +62,4 @@ If policy resolution explicitly blocks the proposal, governance-core returns `bl
 
 ## Future Work
 
-Future tasks can wire resolved policy into `governance-core`, add a company alignment profile generator, add policy profile export/import, and eventually expose dashboard views. Those additions should preserve the existing PGDL -> AAG -> Runtime Binding -> Receipts boundary.
+Future tasks can add richer import/export, policy review workflows, and eventually dashboard views. Those additions should preserve the existing PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipts boundary.

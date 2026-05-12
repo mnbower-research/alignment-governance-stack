@@ -121,7 +121,87 @@ describe("policy profiles", () => {
     expect(result.requiresApproval).toBe(true);
     expect(result.matchedRules).toContain("production-export-review");
   });
+
+  it("blocks matching actions with hard boundaries", () => {
+    const profile = createHardBoundaryProfile();
+
+    const result = resolvePolicyForAction(profile, {
+      ...createSafeInternalReport(),
+      id: "delete-employee-records",
+      actionType: "delete_records",
+      target: "employee_records"
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.suggestedDecision).toBe("block");
+    expect(result.hardBoundaryTriggered).toBe(true);
+    expect(result.blockingBoundaryIds).toContain("never_auto_delete_employee_records");
+    expect(result.matchedRules).toContain("never_auto_delete_employee_records");
+    expect(result.reasons.join(" ")).toContain("Employee records must not be automatically deleted.");
+  });
+
+  it("does not block nonmatching hard boundary actions", () => {
+    const profile = createHardBoundaryProfile();
+
+    const result = resolvePolicyForAction(profile, {
+      ...createSafeInternalReport(),
+      id: "report-employee-records",
+      actionType: "generate_report",
+      target: "employee_records"
+    });
+
+    expect(result.allowed).toBe(true);
+    expect(result.hardBoundaryTriggered).toBeUndefined();
+    expect(result.blockingBoundaryIds).toBeUndefined();
+    expect(result.matchedRules).not.toContain("never_auto_delete_employee_records");
+  });
+
+  it("matches hard boundary targetIncludes case-insensitively", () => {
+    const profile: PolicyProfile = {
+      ...defaultPolicyProfile,
+      hardBoundaries: [
+        {
+          id: "never_auto_delete_employee_records",
+          label: "Never auto-delete employee records",
+          when: {
+            actionType: "delete_records",
+            targetIncludes: "Employee"
+          },
+          effect: "block",
+          reason: "Employee records must not be automatically deleted."
+        }
+      ]
+    };
+
+    const result = resolvePolicyForAction(profile, {
+      ...createSafeInternalReport(),
+      id: "delete-employee-records",
+      actionType: "delete_records",
+      target: "employee_records"
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.hardBoundaryTriggered).toBe(true);
+  });
 });
+
+function createHardBoundaryProfile(): PolicyProfile {
+  return {
+    ...defaultPolicyProfile,
+    hardBoundaries: [
+      {
+        id: "never_auto_delete_employee_records",
+        label: "Never auto-delete employee records",
+        when: {
+          actionType: "delete_records",
+          targetIncludes: "employee"
+        },
+        effect: "block",
+        reason: "Employee records must not be automatically deleted."
+      }
+    ]
+  };
+}
 
 function createSafeInternalReport(): AgentActionProposal {
   return {

@@ -4,6 +4,8 @@ import type {
   ApprovalRuleWhen,
   DataSensitivityPolicy,
   EnvironmentPolicy,
+  HardBoundaryRule,
+  HardBoundaryRuleWhen,
   PolicyProfile,
   ResolvedActionPolicy,
   SuggestedPolicyDecision,
@@ -25,9 +27,11 @@ export function resolvePolicyForAction(
     requiresApproval: false,
     receiptRequired: profile.receiptRequired === true,
     reasons: [],
-    matchedRules: []
+    matchedRules: [],
+    blockingBoundaryIds: []
   };
 
+  applyHardBoundaries(profile.hardBoundaries ?? [], action, context);
   applyDefaultMode(profile, action, context);
   applyToolPolicies(profile.tools ?? [], action, context);
   applyEnvironmentPolicies(profile.environments ?? [], action, context);
@@ -40,7 +44,9 @@ export function resolvePolicyForAction(
     receiptRequired: context.receiptRequired,
     reasons: context.reasons,
     matchedRules: context.matchedRules,
-    suggestedDecision: context.suggestedDecision ?? suggestDecision(context)
+    suggestedDecision: context.suggestedDecision ?? suggestDecision(context),
+    ...(context.hardBoundaryTriggered === true ? { hardBoundaryTriggered: true } : {}),
+    ...(context.blockingBoundaryIds.length > 0 ? { blockingBoundaryIds: context.blockingBoundaryIds } : {})
   };
 }
 
@@ -51,6 +57,25 @@ interface ResolutionContext {
   reasons: string[];
   matchedRules: string[];
   suggestedDecision?: SuggestedPolicyDecision;
+  hardBoundaryTriggered?: boolean;
+  blockingBoundaryIds: string[];
+}
+
+function applyHardBoundaries(
+  rules: HardBoundaryRule[],
+  action: AgentActionProposal,
+  context: ResolutionContext
+): void {
+  for (const rule of rules) {
+    if (!matchesHardBoundaryWhen(rule.when, action)) {
+      continue;
+    }
+
+    context.hardBoundaryTriggered = true;
+    context.blockingBoundaryIds.push(rule.id);
+    context.matchedRules.push(rule.id);
+    block(context, rule.reason);
+  }
 }
 
 function applyDefaultMode(
@@ -222,8 +247,19 @@ function matchesWhen(when: ApprovalRuleWhen, action: AgentActionProposal): boole
   );
 }
 
+function matchesHardBoundaryWhen(
+  when: HardBoundaryRuleWhen,
+  action: AgentActionProposal
+): boolean {
+  return matchesWhen(when, action) && matchesTargetIncludes(when.targetIncludes, action.target);
+}
+
 function matchesString(expected: string | undefined, actual: string): boolean {
   return expected === undefined || expected === actual;
+}
+
+function matchesTargetIncludes(expected: string | undefined, actual: string): boolean {
+  return expected === undefined || actual.toLowerCase().includes(expected.toLowerCase());
 }
 
 function matchesBoolean(expected: boolean | undefined, actual: boolean): boolean {

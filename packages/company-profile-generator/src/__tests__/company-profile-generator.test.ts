@@ -149,7 +149,83 @@ describe("company profile generator", () => {
     expect(result.requiresApproval).toBe(true);
     expect(result.matchedRules).toContain("approve_exports");
   });
+
+  it("compiles neverAutomate decision boundaries into hard boundaries", () => {
+    const policy = generatePolicyProfile(createNeverAutomateInput());
+    const hardBoundary = policy.hardBoundaries?.find(
+      (entry) => entry.id === "never_auto_delete_employee_records"
+    );
+
+    expect(hardBoundary).toBeDefined();
+    expect(hardBoundary?.effect).toBe("block");
+    expect(hardBoundary?.source).toBe("company_alignment_profile");
+    expect(hardBoundary?.when.actionType).toBe("delete_records");
+    expect(hardBoundary?.when.targetIncludes).toBe("employee");
+  });
+
+  it("generated hard boundaries block through policy resolution", () => {
+    const policy = generatePolicyProfile(createNeverAutomateInput());
+    const result = resolvePolicyForAction(policy, {
+      ...createProductionExportAction(),
+      id: "delete-employee-records",
+      tool: "database.delete",
+      actionType: "delete_records",
+      target: "employee_records",
+      dataSensitivity: "medium"
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.suggestedDecision).toBe("block");
+    expect(result.hardBoundaryTriggered).toBe(true);
+    expect(result.blockingBoundaryIds).toContain("never_auto_delete_employee_records");
+  });
+
+  it("preserves generic neverAutomate boundaries without compiling overbroad hard boundaries", () => {
+    const policy = generatePolicyProfile({
+      id: "generic-boundary-company",
+      name: "Generic Boundary Company",
+      decisionBoundaries: [
+        {
+          id: "never_auto_values_tradeoff",
+          label: "Never automate values tradeoff",
+          description: "Human leadership must decide values tradeoffs.",
+          requiresHumanApproval: true,
+          neverAutomate: true
+        }
+      ]
+    });
+
+    expect(policy.hardBoundaries).toEqual([]);
+    expect(policy.metadata?.neverAutomateBoundaries).toEqual(["never_auto_values_tradeoff"]);
+    expect(policy.metadata?.uncompiledNeverAutomateBoundaries).toEqual([
+      {
+        id: "never_auto_values_tradeoff",
+        label: "Never automate values tradeoff",
+        reason: "No explicit match fields were supplied, so this was not compiled into a global hard boundary."
+      }
+    ]);
+    expect(validatePolicyProfile(policy).valid).toBe(true);
+  });
 });
+
+function createNeverAutomateInput(): CompanyAlignmentInput {
+  return {
+    id: "hard-boundary-company",
+    name: "Hard Boundary Company",
+    decisionBoundaries: [
+      {
+        id: "never_auto_delete_employee_records",
+        label: "Never auto-delete employee records",
+        description: "Employee records require explicit human-owned handling.",
+        actionType: "delete_records",
+        targetIncludes: "employee",
+        requiresHumanApproval: true,
+        approverRole: "hr_admin",
+        neverAutomate: true
+      }
+    ]
+  };
+}
 
 function createProductionExportAction(): AgentActionProposal {
   return {
