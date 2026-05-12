@@ -7,8 +7,8 @@
   "environment": "production",
   "reversible": false,
   "externalFacing": true,
-  "dataSensitivity": "internal",
+  "dataSensitivity": "medium",
   "requiresApproval": true,
-  "knownApproval": null,
+  "knownApproval": false,
   "metadata": {}
 }

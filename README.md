@@ -31,7 +31,7 @@ PGDL runs before AAG and asks:
 
 > What kind of action should be proposed in the first place?
 
-PGDL matures an agent proposal through objection, compliance theater detection, internalized principle extraction, safer revision, and discernment resolution. PGDL does not execute actions and does not approve execution.
+PGDL matures an agent proposal through objection, compliance theater detection, internalized principle extraction, safer revision, and discernment resolution. PGDL v0.1 does this with deterministic rule-based packet generation. PGDL does not execute actions and does not approve execution.
 
 ## AAG
 

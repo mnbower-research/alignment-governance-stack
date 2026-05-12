@@ -1,4 +1,9 @@
-import type { AgentActionProposal, PgdlPacket } from "@alignment-governance-stack/shared-types";
+import type {
+  AgentActionProposal,
+  PgdlDecision,
+  PgdlObjection,
+  PgdlPacket
+} from "@alignment-governance-stack/shared-types";
 import { detectComplianceTheater } from "./modules/complianceTheaterDetector.js";
 import { resolveDiscernment } from "./modules/discernmentResolver.js";
 import { rewriteForInternalization } from "./modules/internalizationRewriter.js";
@@ -7,19 +12,103 @@ import { analyzeProposal } from "./modules/proposalAnalyzer.js";
 import { defaultPgdlPolicy } from "./policies/defaultPgdlPolicy.js";
 
 export function evaluatePgdl(proposal: AgentActionProposal): PgdlPacket {
-  analyzeProposal(proposal, defaultPgdlPolicy);
-  detectComplianceTheater(proposal);
+  const analysis = analyzeProposal(proposal, defaultPgdlPolicy);
+  const objections = generateObjections(proposal, analysis);
+  const complianceTheaterObjection = detectComplianceTheater(proposal);
 
-  const objections = generateObjections(proposal);
+  if (complianceTheaterObjection !== undefined) {
+    objections.push(complianceTheaterObjection);
+  }
+
+  const resolvedProposal = createResolvedProposal(proposal);
   const internalizedPrinciple = rewriteForInternalization(proposal, objections);
-  const decision = resolveDiscernment(proposal, objections);
+  const decision = resolveDiscernment(proposal, objections, resolvedProposal);
 
-  return {
+  const packet: PgdlPacket = {
     originalProposal: proposal,
     objections,
-    internalizedPrinciple,
-    resolvedProposal: decision === "forward_to_aag" ? proposal : null,
     decision,
-    reasonForDecision: "Placeholder PGDL decision. TODO: implement proposal maturation logic."
+    reasonForDecision: buildReasonForDecision(decision, objections, resolvedProposal)
   };
+
+  if (internalizedPrinciple !== undefined) {
+    packet.internalizedPrinciple = internalizedPrinciple;
+  }
+
+  if (resolvedProposal !== undefined && decision !== "forward_to_aag") {
+    packet.resolvedProposal = resolvedProposal;
+  }
+
+  return packet;
+}
+
+function createResolvedProposal(proposal: AgentActionProposal): AgentActionProposal | undefined {
+  const tool = proposal.tool.toLowerCase();
+  const actionType = proposal.actionType.toLowerCase();
+
+  if (tool.includes("delete") || actionType.includes("delete")) {
+    return {
+      ...proposal,
+      tool: "review.generate",
+      actionType: "generate_review_packet",
+      reversible: true,
+      externalFacing: false,
+      requiresApproval: proposal.dataSensitivity === "high",
+      knownApproval: false,
+      metadata: {
+        ...proposal.metadata,
+        pgdlRevision: true,
+        originalTool: proposal.tool,
+        originalActionType: proposal.actionType,
+        revisionReason: "Changed destructive action into a non-destructive review packet."
+      }
+    };
+  }
+
+  if (proposal.externalFacing && (actionType.includes("send") || actionType.includes("publish"))) {
+    return {
+      ...proposal,
+      tool: "draft.create",
+      actionType: "create_draft_for_review",
+      reversible: true,
+      externalFacing: false,
+      requiresApproval: false,
+      knownApproval: false,
+      metadata: {
+        ...proposal.metadata,
+        pgdlRevision: true,
+        originalTool: proposal.tool,
+        originalActionType: proposal.actionType,
+        revisionReason: "Changed external-facing execution into a draft for review."
+      }
+    };
+  }
+
+  return undefined;
+}
+
+function buildReasonForDecision(
+  decision: PgdlDecision,
+  objections: PgdlObjection[],
+  resolvedProposal: AgentActionProposal | undefined
+): string {
+  if (decision === "forward_to_aag") {
+    return "The proposal has no PGDL objections and can be forwarded to AAG.";
+  }
+
+  const categories = objections.map((objection) => objection.category).join(", ");
+
+  if (decision === "revise_before_aag" && resolvedProposal !== undefined) {
+    if (objections.some((objection) => objection.category === "compliance_theater")) {
+      return "PGDL detected wording changes without meaningful risk reduction and produced a materially safer revised proposal before AAG.";
+    }
+
+    return `PGDL found objections (${categories}) and produced a safer revised proposal before AAG.`;
+  }
+
+  if (decision === "reject_before_aag") {
+    return "PGDL detected compliance theater: wording changed but risk did not meaningfully change.";
+  }
+
+  return `PGDL found objections (${categories}) without a deterministic safe rewrite, so human escalation is required.`;
 }

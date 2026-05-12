@@ -1,4 +1,4 @@
-export type DataSensitivity = "public" | "internal" | "confidential" | "restricted";
+export type DataSensitivity = "low" | "medium" | "high";
 
 export interface AgentActionProposal {
   id: string;
@@ -11,6 +11,6 @@ export interface AgentActionProposal {
   externalFacing: boolean;
   dataSensitivity: DataSensitivity;
   requiresApproval: boolean;
-  knownApproval: string | null;
+  knownApproval: boolean;
   metadata: Record<string, unknown>;
 }

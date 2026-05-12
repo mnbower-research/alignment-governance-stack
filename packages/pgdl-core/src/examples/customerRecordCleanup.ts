@@ -9,8 +9,8 @@ export const customerRecordCleanupProposal: AgentActionProposal = {
   environment: "sandbox",
   reversible: false,
   externalFacing: false,
-  dataSensitivity: "confidential",
+  dataSensitivity: "high",
   requiresApproval: true,
-  knownApproval: null,
+  knownApproval: false,
   metadata: {}
 };

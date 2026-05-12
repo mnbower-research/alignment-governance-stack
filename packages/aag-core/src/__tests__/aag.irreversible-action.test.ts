@@ -11,9 +11,9 @@ const irreversibleProposal: AgentActionProposal = {
   environment: "production",
   reversible: false,
   externalFacing: false,
-  dataSensitivity: "confidential",
+  dataSensitivity: "high",
   requiresApproval: true,
-  knownApproval: null,
+  knownApproval: false,
   metadata: {}
 };
 

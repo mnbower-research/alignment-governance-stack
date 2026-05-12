@@ -10,3 +10,12 @@ export interface PgdlPolicy {
   name: string;
   description: string;
 }
+
+export interface PgdlProposalAnalysis {
+  proposalId: string;
+  policyName: string;
+  destructive: boolean;
+  externalSendOrPublish: boolean;
+  broadScope: boolean;
+  production: boolean;
+}

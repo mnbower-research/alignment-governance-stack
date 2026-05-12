@@ -22,13 +22,16 @@ export interface PgdlObjection {
   category: PgdlObjectionCategory;
   message: string;
   severity: RiskLevel;
+  question: string;
+  reason: string;
+  suggestedRevision: string;
 }
 
 export interface PgdlPacket {
   originalProposal: AgentActionProposal;
   objections: PgdlObjection[];
-  internalizedPrinciple: string | null;
-  resolvedProposal: AgentActionProposal | null;
+  internalizedPrinciple?: string;
+  resolvedProposal?: AgentActionProposal;
   decision: PgdlDecision;
   reasonForDecision: string;
 }

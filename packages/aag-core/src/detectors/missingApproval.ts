@@ -2,7 +2,7 @@ import type { AagDetectorResult, AgentActionProposal } from "@alignment-governan
 
 export function detectMissingApproval(proposal: AgentActionProposal): AagDetectorResult {
   // TODO: Replace placeholder approval check with policy-aware approval validation.
-  const passed = !proposal.requiresApproval || proposal.knownApproval !== null;
+  const passed = !proposal.requiresApproval || proposal.knownApproval === true;
 
   return {
     detector: "missingApproval",
