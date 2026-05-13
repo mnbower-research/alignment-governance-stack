@@ -13,6 +13,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Policy profiles package
 - Company alignment profile generator package
 - Authority map package
+- Human participation package
 - Examples, docs, and eval fixtures
 
 ## v0.5.0
@@ -21,6 +22,13 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Deterministic approval validation
 - Role and scope based approval evidence checks
 - Optional governance-core approval validation before AAG
+
+## v0.6.0
+
+- Human Participation Quality foundation
+- Deterministic rubber-stamp detection signals
+- Optional governance-core participation quality checks before AAG
+- Receipt preservation for participation quality results
 
 ## Later
 
@@ -32,6 +40,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Policy compiler
 - Human review workflow for generated company profiles
 - Durable approval storage and signatures
+- Richer participation analytics
 - Dashboard
 - Integration adapters
 - SOP and policy import for company alignment profiles

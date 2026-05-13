@@ -38,6 +38,9 @@ function buildReceiptBody(
     ...(packet.approvalValidation !== undefined
       ? { approvalValidation: packet.approvalValidation }
       : {}),
+    ...(packet.participationQuality !== undefined
+      ? { participationQuality: packet.participationQuality }
+      : {}),
     ...(packet.aag !== undefined ? { aag: packet.aag } : {}),
     ...(packet.permit !== undefined ? { permit: packet.permit } : {}),
     ...(packet.runtimeAction !== undefined ? { runtimeAction: packet.runtimeAction } : {}),

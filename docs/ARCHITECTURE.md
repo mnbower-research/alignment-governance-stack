@@ -9,6 +9,7 @@ User goal
 -> Agent proposal
 -> Policy Profile with Hard Boundaries
 -> Authority Map / Approval Validation
+-> Human Participation Quality
 -> PGDL
 -> Policy resolution on proposal sent to AAG
 -> Resolved proposal or escalation
@@ -29,7 +30,9 @@ Policy Profiles are the configuration layer above the governance spine. They des
 
 Hard boundaries are deterministic block rules inside Policy Profiles. They are used for organization-defined "never automate" cases and other hard stops. Explicit policy blocks, including hard boundary matches, stop before AAG. Policy approval requirements are carried as context into AAG; they do not replace AAG decisions.
 
-Authority Map validates whether approval evidence comes from a role with scope for the proposal that would reach AAG. Missing, expired, unknown, or out-of-scope approval can stop before AAG when authority validation is supplied. Approval cannot override hard boundaries in v0.5.
+Authority Map validates whether approval evidence comes from a role with scope for the proposal that would reach AAG. Missing, expired, unknown, or out-of-scope approval can stop before AAG when authority validation is supplied. Approval cannot override hard boundaries in v0.6.
+
+Human Participation Quality evaluates whether human approval looked like meaningful participation or likely rubber-stamping. It considers context, review time, reason-giving, objections, alternatives, and active engagement. It does not replace Authority Map or AAG, and it cannot approve around hard boundaries.
 
 PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves are sent to AAG.
 

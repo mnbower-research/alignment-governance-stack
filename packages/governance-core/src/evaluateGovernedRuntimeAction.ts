@@ -15,7 +15,8 @@ export function evaluateGovernedRuntimeAction(
     proposal: input.proposal,
     ...(input.policyProfile !== undefined ? { policyProfile: input.policyProfile } : {}),
     ...(input.authorityMap !== undefined ? { authorityMap: input.authorityMap } : {}),
-    ...(input.approvalEvidence !== undefined ? { approvalEvidence: input.approvalEvidence } : {})
+    ...(input.approvalEvidence !== undefined ? { approvalEvidence: input.approvalEvidence } : {}),
+    ...(input.humanParticipation !== undefined ? { humanParticipation: input.humanParticipation } : {})
   });
 
   if (governedPacket.finalDecision !== "allowed_by_aag") {

@@ -20,11 +20,17 @@ import type {
   ApprovalValidationResult,
   AuthorityMap
 } from "@alignment-governance-stack/authority-map";
+import type {
+  HumanParticipationInput,
+  HumanParticipationPolicy,
+  HumanParticipationResult
+} from "@alignment-governance-stack/human-participation";
 
 export type GovernanceFinalDecision =
   | "policy_invalid"
   | "blocked_by_policy"
   | "approval_required_by_authority"
+  | "insufficient_human_participation"
   | "rejected_before_gate"
   | "escalated_before_gate"
   | "blocked_by_aag"
@@ -39,6 +45,10 @@ export interface EvaluateGovernedActionInput {
   policyProfile?: PolicyProfile;
   authorityMap?: AuthorityMap;
   approvalEvidence?: ApprovalEvidence;
+  humanParticipation?: {
+    input?: Omit<HumanParticipationInput, "action">;
+    policy?: HumanParticipationPolicy;
+  };
 }
 
 export interface GovernancePacket {
@@ -48,6 +58,7 @@ export interface GovernancePacket {
   resolvedPolicy?: ResolvedActionPolicy;
   policyProfileValidation?: PolicyProfileValidationResult;
   approvalValidation?: ApprovalValidationResult;
+  participationQuality?: HumanParticipationResult;
   aag?: AagPacket;
   finalDecision: GovernanceFinalDecision;
   reasonForDecision: string;
@@ -58,6 +69,10 @@ export interface EvaluateGovernedRuntimeActionInput {
   policyProfile?: PolicyProfile;
   authorityMap?: AuthorityMap;
   approvalEvidence?: ApprovalEvidence;
+  humanParticipation?: {
+    input?: Omit<HumanParticipationInput, "action">;
+    policy?: HumanParticipationPolicy;
+  };
   runtimeAction?: AgentActionProposal;
   permitOptions?: CreateRuntimePermitOptions;
   validationOptions?: ValidateRuntimePermitOptions;
@@ -79,6 +94,7 @@ export interface GovernanceRuntimePacket {
   resolvedPolicy?: ResolvedActionPolicy;
   policyProfileValidation?: PolicyProfileValidationResult;
   approvalValidation?: ApprovalValidationResult;
+  participationQuality?: HumanParticipationResult;
   aag?: AagPacket;
   permit?: RuntimePermit;
   runtimeAction?: AgentActionProposal;

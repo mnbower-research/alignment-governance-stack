@@ -1,5 +1,6 @@
 import { evaluateAag } from "@alignment-governance-stack/aag-core";
 import { validateApproval } from "@alignment-governance-stack/authority-map";
+import { evaluateParticipationQuality } from "@alignment-governance-stack/human-participation";
 import {
   resolvePolicyForAction,
   validatePolicyProfile
@@ -11,12 +12,21 @@ import type {
   GovernanceFinalDecision,
   GovernancePacket
 } from "./types.js";
+import type {
+  ApprovalEvidence,
+  ApprovalValidationResult
+} from "@alignment-governance-stack/authority-map";
+import type {
+  HumanParticipationInput,
+  HumanParticipationResult
+} from "@alignment-governance-stack/human-participation";
+import type { ResolvedActionPolicy } from "@alignment-governance-stack/policy-profiles";
 
 export function evaluateGovernedAction(
   input: AgentActionProposal | EvaluateGovernedActionInput
 ): GovernancePacket {
   const normalizedInput = normalizeInput(input);
-  const { proposal, policyProfile, authorityMap, approvalEvidence } = normalizedInput;
+  const { proposal, policyProfile, authorityMap, approvalEvidence, humanParticipation } = normalizedInput;
 
   if (policyProfile !== undefined) {
     const policyProfileValidation = validatePolicyProfile(policyProfile);
@@ -111,6 +121,28 @@ export function evaluateGovernedAction(
         };
       }
 
+      const participationQuality = evaluateParticipationIfSupplied({
+        humanParticipation,
+        proposal: proposalSentToAag,
+        approvalEvidence,
+        approvalValidation,
+        resolvedPolicy
+      });
+
+      if (participationQuality !== undefined && shouldStopForParticipation(participationQuality)) {
+        return {
+          originalProposal: proposal,
+          pgdl,
+          proposalSentToAag,
+          resolvedPolicy,
+          approvalValidation,
+          participationQuality,
+          finalDecision: "insufficient_human_participation",
+          reasonForDecision:
+            `Human participation quality stopped the proposal before AAG: ${participationQuality.decision}. ${participationQuality.reasons.join(" ")}`
+        };
+      }
+
       const policyAwareProposal = resolvedPolicy.requiresApproval
         ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
         : proposalSentToAag;
@@ -122,6 +154,7 @@ export function evaluateGovernedAction(
         proposalSentToAag: policyAwareProposal,
         resolvedPolicy,
         approvalValidation,
+        ...(participationQuality !== undefined ? { participationQuality } : {}),
         aag,
         finalDecision: mapAagDecision(aag),
         reasonForDecision: `PGDL allowed a proposal to reach AAG. Policy profile resolved before AAG. Authority validation passed before AAG. ${aag.reasonForDecision}`
@@ -131,6 +164,27 @@ export function evaluateGovernedAction(
     const policyAwareProposal = resolvedPolicy.requiresApproval
       ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
       : proposalSentToAag;
+
+    const participationQuality = evaluateParticipationIfSupplied({
+      humanParticipation,
+      proposal: proposalSentToAag,
+      approvalEvidence,
+      resolvedPolicy
+    });
+
+    if (participationQuality !== undefined && shouldStopForParticipation(participationQuality)) {
+      return {
+        originalProposal: proposal,
+        pgdl,
+        proposalSentToAag,
+        resolvedPolicy,
+        participationQuality,
+        finalDecision: "insufficient_human_participation",
+        reasonForDecision:
+          `Human participation quality stopped the proposal before AAG: ${participationQuality.decision}. ${participationQuality.reasons.join(" ")}`
+      };
+    }
+
     const aag = evaluateAag(policyAwareProposal);
 
     return {
@@ -138,6 +192,7 @@ export function evaluateGovernedAction(
       pgdl,
       proposalSentToAag: policyAwareProposal,
       resolvedPolicy,
+      ...(participationQuality !== undefined ? { participationQuality } : {}),
       aag,
       finalDecision: mapAagDecision(aag),
       reasonForDecision: `PGDL allowed a proposal to reach AAG. Policy profile resolved before AAG. ${aag.reasonForDecision}`
@@ -163,6 +218,26 @@ export function evaluateGovernedAction(
       };
     }
 
+    const participationQuality = evaluateParticipationIfSupplied({
+      humanParticipation,
+      proposal: proposalSentToAag,
+      approvalEvidence,
+      approvalValidation
+    });
+
+    if (participationQuality !== undefined && shouldStopForParticipation(participationQuality)) {
+      return {
+        originalProposal: proposal,
+        pgdl,
+        proposalSentToAag,
+        approvalValidation,
+        participationQuality,
+        finalDecision: "insufficient_human_participation",
+        reasonForDecision:
+          `Human participation quality stopped the proposal before AAG: ${participationQuality.decision}. ${participationQuality.reasons.join(" ")}`
+      };
+    }
+
     const aag = evaluateAag(proposalSentToAag);
 
     return {
@@ -170,9 +245,28 @@ export function evaluateGovernedAction(
       pgdl,
       proposalSentToAag,
       approvalValidation,
+      ...(participationQuality !== undefined ? { participationQuality } : {}),
       aag,
       finalDecision: mapAagDecision(aag),
       reasonForDecision: `PGDL allowed a proposal to reach AAG. Authority validation passed before AAG. ${aag.reasonForDecision}`
+    };
+  }
+
+  const participationQuality = evaluateParticipationIfSupplied({
+    humanParticipation,
+    proposal: proposalSentToAag,
+    approvalEvidence
+  });
+
+  if (participationQuality !== undefined && shouldStopForParticipation(participationQuality)) {
+    return {
+      originalProposal: proposal,
+      pgdl,
+      proposalSentToAag,
+      participationQuality,
+      finalDecision: "insufficient_human_participation",
+      reasonForDecision:
+        `Human participation quality stopped the proposal before AAG: ${participationQuality.decision}. ${participationQuality.reasons.join(" ")}`
     };
   }
 
@@ -182,6 +276,7 @@ export function evaluateGovernedAction(
     originalProposal: proposal,
     pgdl,
     proposalSentToAag,
+    ...(participationQuality !== undefined ? { participationQuality } : {}),
     aag,
     finalDecision: mapAagDecision(aag),
     reasonForDecision: `PGDL allowed a proposal to reach AAG. ${aag.reasonForDecision}`
@@ -219,6 +314,52 @@ function addPolicyMetadata(
       policyMatchedRules: [...resolvedPolicy.matchedRules]
     }
   };
+}
+
+function evaluateParticipationIfSupplied(input: {
+  humanParticipation: EvaluateGovernedActionInput["humanParticipation"];
+  proposal: AgentActionProposal;
+  approvalEvidence: ApprovalEvidence | undefined;
+  approvalValidation?: ApprovalValidationResult;
+  resolvedPolicy?: ResolvedActionPolicy;
+}): HumanParticipationResult | undefined {
+  if (input.humanParticipation === undefined) {
+    return undefined;
+  }
+
+  const suppliedInput = input.humanParticipation.input;
+  const suppliedContext = suppliedInput?.context ?? {};
+  const requiredApproval =
+    suppliedContext.requiredApproval ??
+    (input.proposal.requiresApproval || input.resolvedPolicy?.requiresApproval === true);
+  const authorityValid =
+    suppliedContext.authorityValid ?? input.approvalValidation?.valid;
+  const participationInput: HumanParticipationInput = {
+    ...(suppliedInput ?? {}),
+    action: input.proposal,
+    ...(suppliedInput?.approvalEvidence !== undefined
+      ? { approvalEvidence: suppliedInput.approvalEvidence }
+      : input.approvalEvidence !== undefined
+        ? { approvalEvidence: input.approvalEvidence }
+        : {}),
+    context: {
+      ...suppliedContext,
+      requiredApproval,
+      ...(authorityValid !== undefined ? { authorityValid } : {})
+    }
+  };
+
+  return evaluateParticipationQuality(participationInput, input.humanParticipation.policy);
+}
+
+function shouldStopForParticipation(
+  participationQuality: HumanParticipationResult
+): boolean {
+  return (
+    participationQuality.decision === "likely_rubber_stamp" ||
+    participationQuality.decision === "insufficient_participation" ||
+    participationQuality.decision === "participation_input_invalid"
+  );
 }
 
 function mapAagDecision(aag: AagPacket): GovernanceFinalDecision {

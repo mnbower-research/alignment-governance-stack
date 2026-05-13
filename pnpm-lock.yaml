@@ -74,6 +74,9 @@ importers:
       '@alignment-governance-stack/authority-map':
         specifier: workspace:*
         version: link:../authority-map
+      '@alignment-governance-stack/human-participation':
+        specifier: workspace:*
+        version: link:../human-participation
       '@alignment-governance-stack/pgdl-core':
         specifier: workspace:*
         version: link:../pgdl-core
@@ -86,6 +89,22 @@ importers:
       '@alignment-governance-stack/runtime-binding':
         specifier: workspace:*
         version: link:../runtime-binding
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.12(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
+
+  packages/human-participation:
+    dependencies:
+      '@alignment-governance-stack/authority-map':
+        specifier: workspace:*
+        version: link:../authority-map
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -128,6 +147,9 @@ importers:
       '@alignment-governance-stack/authority-map':
         specifier: workspace:*
         version: link:../authority-map
+      '@alignment-governance-stack/human-participation':
+        specifier: workspace:*
+        version: link:../human-participation
       '@alignment-governance-stack/policy-profiles':
         specifier: workspace:*
         version: link:../policy-profiles
