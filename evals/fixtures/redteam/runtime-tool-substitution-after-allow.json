@@ -1,0 +1,1 @@
+{ "id": "redteam-runtime-tool-substitution-after-allow", "category": "redteam_bypass", "expected": { "finalDecision": "execution_denied", "runtimeFailureCodes": ["action_hash_mismatch", "tool_mismatch"], "receiptValid": true } }

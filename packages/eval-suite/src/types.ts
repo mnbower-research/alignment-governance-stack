@@ -1,6 +1,7 @@
 import type { ApprovalEvidence, AuthorityMap } from "@alignment-governance-stack/authority-map";
 import type { EvaluateGovernedRuntimeActionWithReceiptInput } from "@alignment-governance-stack/governance-core";
 import type { PolicyProfile } from "@alignment-governance-stack/policy-profiles";
+import type { GovernanceReceipt } from "@alignment-governance-stack/receipts";
 import type {
   CreateRuntimePermitOptions,
   ValidateRuntimePermitOptions
@@ -17,7 +18,8 @@ export type AgsEvalCategory =
   | "runtime_binding_failure"
   | "receipt_integrity"
   | "invalid_policy"
-  | "dogfood_workbench";
+  | "dogfood_workbench"
+  | "redteam_bypass";
 
 export interface AgsEvalCase {
   id: string;
@@ -34,13 +36,16 @@ export interface AgsEvalCase {
     permitOptions?: CreateRuntimePermitOptions;
     validationOptions?: ValidateRuntimePermitOptions;
     receiptOptions?: EvaluateGovernedRuntimeActionWithReceiptInput["receiptOptions"];
+    memoryReceipts?: GovernanceReceipt[];
   };
   expected: AgsEvalExpected;
 }
 
 export interface AgsEvalExpected {
   finalDecision?: string;
+  mustNotFinalDecision?: string[];
   pgdlDecision?: string;
+  pgdlObjectionCategories?: string[];
   aagDecision?: string;
   policyBlocked?: boolean;
   authorityDecision?: string;
@@ -53,11 +58,16 @@ export interface AgsEvalExpected {
   proposalSentActionType?: string;
   hardBoundaryTriggered?: boolean;
   runtimeFailureCodes?: string[];
+  receiptTamperDetected?: boolean;
+  memoryRecommendationTypes?: string[];
+  memoryHumanReviewRequired?: boolean;
+  memorySummaryIncludesHumanReview?: boolean;
 }
 
 export interface AgsEvalActual {
   finalDecision?: string;
   pgdlDecision?: string;
+  pgdlObjectionCategories?: string[];
   aagDecision?: string;
   policyBlocked?: boolean;
   authorityDecision?: string;
@@ -69,6 +79,10 @@ export interface AgsEvalActual {
   blockedBeforeAag?: boolean;
   hardBoundaryTriggered?: boolean;
   runtimeFailureCodes?: string[];
+  receiptTamperDetected?: boolean;
+  memoryRecommendationTypes?: string[];
+  memoryHumanReviewRequired?: boolean;
+  memorySummaryIncludesHumanReview?: boolean;
 }
 
 export interface AgsEvalResult {

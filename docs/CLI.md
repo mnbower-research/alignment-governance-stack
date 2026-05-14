@@ -22,6 +22,7 @@ Run commands through the package script:
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
+corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -33,6 +34,7 @@ After build, the compiled binary can also be run directly:
 node packages/cli/dist/cli.js help
 node packages/cli/dist/cli.js eval
 node packages/cli/dist/cli.js dogfood
+node packages/cli/dist/cli.js redteam
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
@@ -46,6 +48,7 @@ node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/rec
 - `ags version`
 - `ags eval`
 - `ags dogfood`
+- `ags redteam`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags receipt verify <receipt.json>`
@@ -81,6 +84,17 @@ Output includes:
 - Enterprise Golden Path passed/total
 - combined passed/total
 - failed dogfood case IDs and reasons, when failures exist
+
+### `ags redteam`
+
+Runs the built-in Adversarial Red-Team Eval Pack from `@alignment-governance-stack/eval-suite`.
+
+Output includes:
+
+- total
+- passed
+- failed
+- failed red-team case IDs and reasons, when failures exist
 
 ### `ags govern <input.json>`
 
@@ -161,7 +175,7 @@ Integration examples that can also be checked with `ags govern` live under `exam
 
 Full-stack demo inputs live under `examples/demo/full-stack`.
 
-Dogfood workbench scenarios live under `examples/dogfood/scenarios` and `examples/dogfood/enterprise-golden-path/scenarios`.
+Dogfood workbench scenarios live under `examples/dogfood/scenarios` and `examples/dogfood/enterprise-golden-path/scenarios`. Red-team scenarios live under `examples/redteam/scenarios`.
 
 ## Exit Codes
 

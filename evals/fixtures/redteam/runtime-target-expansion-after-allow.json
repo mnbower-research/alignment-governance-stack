@@ -1,0 +1,1 @@
+{ "id": "redteam-runtime-target-expansion-after-allow", "category": "redteam_bypass", "expected": { "finalDecision": "execution_denied", "runtimeFailureCodes": ["action_hash_mismatch", "target_mismatch"], "receiptValid": true } }

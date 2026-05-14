@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.2.0 - Adversarial Red-Team Eval Pack
+
+- Adds `builtInRedTeamEvalCases` and `runRedTeamEvalSuite`.
+- Adds `ags redteam` CLI command.
+- Adds adversarial examples under `examples/redteam`.
+- Adds red-team fixture artifacts under `evals/fixtures/redteam`.
+- Extends eval assertions for must-not decisions, PGDL objection categories, receipt tamper detection, runtime failure inclusion, and Governance Memory recommendation checks.
+- Keeps red-team evals deterministic and local; no real actions execute.
+
 ## Unreleased - Enterprise Financial Report Golden Path
 
 - Adds Enterprise Financial Report Golden Path under `examples/dogfood/enterprise-golden-path`.

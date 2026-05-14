@@ -1,0 +1,22 @@
+{
+  "id": "redteam-tampered-receipt",
+  "version": "ags.receipt.v0.1",
+  "createdAt": "2026-05-14T13:30:00.000Z",
+  "originalProposal": {
+    "id": "redteam-tampered-receipt",
+    "userRequest": "Generate a customer summary for customer_123.",
+    "tool": "report.generate",
+    "actionType": "generate_customer_summary",
+    "target": "customer_123",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {}
+  },
+  "finalDecision": "execution_denied",
+  "reasonForDecision": "This receipt body was intentionally tampered for verification demos.",
+  "receiptHash": "not-the-canonical-hash"
+}

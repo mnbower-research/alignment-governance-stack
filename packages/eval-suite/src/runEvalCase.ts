@@ -2,6 +2,10 @@ import {
   evaluateGovernedRuntimeActionWithReceipt,
   type EvaluateGovernedRuntimeActionWithReceiptInput
 } from "@alignment-governance-stack/governance-core";
+import {
+  analyzeReceiptHistory,
+  summarizeGovernanceMemory
+} from "@alignment-governance-stack/governance-memory";
 import { verifyGovernanceReceipt } from "@alignment-governance-stack/receipts";
 import type {
   AgsEvalActual,
@@ -25,6 +29,9 @@ export function runEvalCase(evalCase: AgsEvalCase): AgsEvalResult {
     receiptValid: receiptVerification.valid,
     blockedBeforeAag: governance.aag === undefined,
     ...(governance.pgdl?.decision !== undefined ? { pgdlDecision: governance.pgdl.decision } : {}),
+    ...(governance.pgdl?.objections !== undefined
+      ? { pgdlObjectionCategories: governance.pgdl.objections.map((objection) => objection.category).sort() }
+      : {}),
     ...(governance.aag?.decision !== undefined ? { aagDecision: governance.aag.decision } : {}),
     ...(governance.approvalValidation?.decision !== undefined
       ? { authorityDecision: governance.approvalValidation.decision }
@@ -48,6 +55,28 @@ export function runEvalCase(evalCase: AgsEvalCase): AgsEvalResult {
       ? { runtimeFailureCodes: governance.runtimeBinding.failures.map((failure) => failure.code).sort() }
       : {})
   };
+
+  if (evalCase.expected.receiptTamperDetected !== undefined) {
+    const tamperedReceipt = {
+      ...receipt,
+      finalDecision: receipt.finalDecision === "execution_allowed" ? "execution_denied" : "execution_allowed"
+    };
+    actual.receiptTamperDetected = !verifyGovernanceReceipt(tamperedReceipt).valid;
+  }
+
+  if (evalCase.input.memoryReceipts !== undefined) {
+    const memoryReport = analyzeReceiptHistory({
+      receipts: evalCase.input.memoryReceipts,
+      minOccurrences: 2
+    });
+    const memorySummary = summarizeGovernanceMemory(memoryReport);
+    actual.memoryRecommendationTypes = memoryReport.recommendations.map((recommendation) => recommendation.type).sort();
+    actual.memoryHumanReviewRequired = memoryReport.recommendations.every(
+      (recommendation) => recommendation.humanReviewRequired === true
+    );
+    actual.memorySummaryIncludesHumanReview = /human review/i.test(memorySummary);
+  }
+
   const failures = compareExpected(evalCase.expected, actual);
 
   for (const field of evalCase.expected.requiredReceiptFields ?? []) {
@@ -105,7 +134,15 @@ function compareExpected(
   const failures: string[] = [];
 
   compareField(failures, "finalDecision", expected.finalDecision, actual.finalDecision);
+  if (expected.mustNotFinalDecision !== undefined && actual.finalDecision !== undefined) {
+    for (const blockedDecision of expected.mustNotFinalDecision) {
+      if (actual.finalDecision === blockedDecision) {
+        failures.push(`Expected finalDecision not to be ${blockedDecision}.`);
+      }
+    }
+  }
   compareField(failures, "pgdlDecision", expected.pgdlDecision, actual.pgdlDecision);
+  compareIncludes(failures, "pgdlObjectionCategories", expected.pgdlObjectionCategories, actual.pgdlObjectionCategories);
   compareField(failures, "aagDecision", expected.aagDecision, actual.aagDecision);
   compareField(failures, "policyBlocked", expected.policyBlocked, actual.policyBlocked);
   compareField(failures, "authorityDecision", expected.authorityDecision, actual.authorityDecision);
@@ -121,6 +158,20 @@ function compareExpected(
     actual.proposalSentActionType
   );
   compareField(failures, "hardBoundaryTriggered", expected.hardBoundaryTriggered, actual.hardBoundaryTriggered);
+  compareField(failures, "receiptTamperDetected", expected.receiptTamperDetected, actual.receiptTamperDetected);
+  compareField(failures, "memoryHumanReviewRequired", expected.memoryHumanReviewRequired, actual.memoryHumanReviewRequired);
+  compareField(
+    failures,
+    "memorySummaryIncludesHumanReview",
+    expected.memorySummaryIncludesHumanReview,
+    actual.memorySummaryIncludesHumanReview
+  );
+  compareIncludes(
+    failures,
+    "memoryRecommendationTypes",
+    expected.memoryRecommendationTypes,
+    actual.memoryRecommendationTypes
+  );
 
   if (expected.runtimeFailureCodes !== undefined) {
     const actualCodes = actual.runtimeFailureCodes ?? [];
@@ -132,6 +183,24 @@ function compareExpected(
   }
 
   return failures;
+}
+
+function compareIncludes(
+  failures: string[],
+  label: string,
+  expected: string[] | undefined,
+  actual: string[] | undefined
+): void {
+  if (expected === undefined) {
+    return;
+  }
+
+  const actualValues = actual ?? [];
+  for (const expectedValue of expected) {
+    if (!actualValues.includes(expectedValue)) {
+      failures.push(`Expected ${label} to include ${expectedValue}.`);
+    }
+  }
 }
 
 function compareField<T>(

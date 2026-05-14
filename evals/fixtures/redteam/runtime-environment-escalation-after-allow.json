@@ -1,0 +1,1 @@
+{ "id": "redteam-runtime-environment-escalation-after-allow", "category": "redteam_bypass", "expected": { "finalDecision": "execution_denied", "runtimeFailureCodes": ["action_hash_mismatch", "environment_mismatch"], "receiptValid": true } }

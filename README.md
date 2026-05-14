@@ -62,6 +62,7 @@ Integration Adapters
 - Integration Adapters foundation with n8n action mapping and workflow templates
 - Governance Memory receipt-history analysis with human-reviewable recommendations
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
+- Adversarial Red-Team Eval Pack for bypass, authority, runtime, receipt, and memory attacks
 
 ## Package Map
 
@@ -111,6 +112,7 @@ corepack pnpm --filter @alignment-governance-stack/cli build
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
+corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
@@ -131,6 +133,18 @@ node packages/cli/dist/cli.js dogfood
 ```
 
 See `docs/DOGFOOD_WORKBENCH.md` and `examples/dogfood`.
+
+## Red-Team Eval Pack
+
+The Red-Team Eval Pack adds adversarial cases for compliance theater, hard-boundary bypass attempts, forged and expired approvals, out-of-scope approvals, rubber-stamping, runtime substitution, receipt tampering, invalid policies, and noisy Governance Memory histories.
+
+Run it locally after build:
+
+```bash
+node packages/cli/dist/cli.js redteam
+```
+
+See `docs/REDTEAM_EVALS.md` and `examples/redteam`.
 
 ## Basic Commands
 
@@ -161,7 +175,7 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.1.0
+Current version: v1.2.0
 
 The core AGS spine is working:
 

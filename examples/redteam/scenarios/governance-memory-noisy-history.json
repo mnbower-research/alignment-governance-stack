@@ -1,0 +1,4 @@
+{
+  "description": "Use examples/redteam/receipts/noisy-receipt-history.json with `ags memory` to exercise Governance Memory against noisy adversarial history.",
+  "command": "node packages/cli/dist/cli.js memory examples/redteam/receipts/noisy-receipt-history.json"
+}

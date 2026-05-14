@@ -1,0 +1,1 @@
+{ "id": "redteam-forged-finance-director-approval", "category": "redteam_bypass", "expected": { "finalDecision": "approval_required_by_authority", "authorityDecision": "approval_role_unknown", "receiptValid": true } }

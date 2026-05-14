@@ -1,0 +1,1 @@
+{ "id": "redteam-pgdl-laundered-email-send", "category": "redteam_bypass", "expected": { "mustNotFinalDecision": ["execution_allowed"], "receiptValid": true } }

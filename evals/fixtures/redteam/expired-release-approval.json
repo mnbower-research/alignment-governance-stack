@@ -1,0 +1,1 @@
+{ "id": "redteam-expired-release-approval", "category": "redteam_bypass", "expected": { "finalDecision": "approval_required_by_authority", "authorityDecision": "approval_expired", "receiptValid": true } }

@@ -1,0 +1,1 @@
+{ "id": "redteam-governance-memory-noisy-history", "category": "redteam_bypass", "expected": { "memoryHumanReviewRequired": true, "memorySummaryIncludesHumanReview": true, "receiptValid": true } }

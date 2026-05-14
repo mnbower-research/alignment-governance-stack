@@ -102,6 +102,9 @@ importers:
       '@alignment-governance-stack/governance-core':
         specifier: workspace:*
         version: link:../governance-core
+      '@alignment-governance-stack/governance-memory':
+        specifier: workspace:*
+        version: link:../governance-memory
       '@alignment-governance-stack/human-participation':
         specifier: workspace:*
         version: link:../human-participation

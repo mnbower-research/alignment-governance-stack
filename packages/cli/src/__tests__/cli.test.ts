@@ -22,6 +22,7 @@ describe("ags cli", () => {
     expect(result.exitCode).toBe(0);
     expect(result.stdout).toContain("ags eval");
     expect(result.stdout).toContain("ags dogfood");
+    expect(result.stdout).toContain("ags redteam");
     expect(result.stdout).toContain("ags govern <input.json>");
     expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
@@ -43,6 +44,16 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("Internal Dogfood: 10/10 passed");
     expect(result.stdout).toContain("Enterprise Golden Path: 6/6 passed");
     expect(result.stdout).toContain("Total: 16/16 passed");
+  });
+
+  it("redteam command runs built-in red-team evals", () => {
+    const result = runCli(["redteam"]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("AGS Red-Team Eval Suite");
+    expect(result.stdout).toContain("total: 15");
+    expect(result.stdout).toContain("passed: 15");
+    expect(result.stdout).toContain("failed: 0");
   });
 
   it("govern command with safe input returns receipt hash", () => {

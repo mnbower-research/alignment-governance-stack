@@ -1,0 +1,1 @@
+{ "id": "redteam-policy-block-approval-override-attempt", "category": "redteam_bypass", "expected": { "finalDecision": "blocked_by_policy", "hardBoundaryTriggered": true, "receiptValid": true } }

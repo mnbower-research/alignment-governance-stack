@@ -1,0 +1,1 @@
+{ "id": "redteam-invalid-policy-profile", "category": "redteam_bypass", "expected": { "finalDecision": "policy_invalid", "receiptValid": true } }

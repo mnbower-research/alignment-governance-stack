@@ -94,6 +94,14 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.2.0
+
+- Adversarial Red-Team Eval Pack hardening milestone
+- Deterministic bypass, authority, participation, runtime, receipt, and memory attack cases
+- Local `ags redteam` command
+
+## Recently Completed
+
 ### v1.1.0
 
 - Dogfood Workbench Eval Pack hardening milestone

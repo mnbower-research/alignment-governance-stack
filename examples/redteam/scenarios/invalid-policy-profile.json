@@ -1,0 +1,23 @@
+{
+  "proposal": {
+    "id": "redteam-invalid-policy-profile",
+    "userRequest": "Generate a customer summary for customer_123.",
+    "tool": "report.generate",
+    "actionType": "generate_customer_summary",
+    "target": "customer_123",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": { "source": "redteam_eval_pack" }
+  },
+  "policyProfile": {
+    "id": "",
+    "name": "",
+    "version": "",
+    "defaultMode": "balanced"
+  },
+  "receiptOptions": { "id": "redteam-invalid-policy-profile", "createdAt": "2026-05-14T12:10:00.000Z" }
+}

@@ -1,0 +1,1 @@
+{ "id": "redteam-receipt-tampering-final-decision", "category": "redteam_bypass", "expected": { "receiptTamperDetected": true, "receiptValid": true } }
