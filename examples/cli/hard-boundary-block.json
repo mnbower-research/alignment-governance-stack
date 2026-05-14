@@ -1,0 +1,39 @@
+{
+  "proposal": {
+    "id": "hard-boundary-block",
+    "userRequest": "Delete inactive employee records in production.",
+    "tool": "database.delete",
+    "actionType": "delete_records",
+    "target": "employee_records",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": {}
+  },
+  "policyProfile": {
+    "id": "example-policy",
+    "name": "Example Hard Boundary Policy",
+    "version": "0.8.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "hardBoundaries": [
+      {
+        "id": "never_auto_employee_records",
+        "label": "Never automate employee records",
+        "when": {
+          "targetIncludes": "employee"
+        },
+        "effect": "block",
+        "reason": "Employee record actions require human-owned handling.",
+        "source": "manual_policy"
+      }
+    ]
+  },
+  "receiptOptions": {
+    "id": "example-hard-boundary-block",
+    "createdAt": "2026-05-12T10:02:00.000Z"
+  }
+}

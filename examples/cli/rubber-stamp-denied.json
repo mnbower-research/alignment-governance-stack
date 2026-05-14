@@ -1,0 +1,56 @@
+{
+  "proposal": {
+    "id": "approval-required-report",
+    "userRequest": "Generate a weekly internal usage report.",
+    "tool": "report.generate",
+    "actionType": "generate_internal_report",
+    "target": "weekly_usage_summary",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": true,
+    "knownApproval": true,
+    "metadata": {}
+  },
+  "authorityMap": {
+    "id": "example-authority-map",
+    "name": "Example Authority Map",
+    "version": "0.8.0",
+    "roles": [
+      {
+        "id": "business_owner",
+        "label": "Business Owner",
+        "scopes": [
+          {
+            "id": "business_internal_low_medium",
+            "externalFacing": false,
+            "maxDataSensitivity": "medium"
+          }
+        ]
+      }
+    ]
+  },
+  "approvalEvidence": {
+    "id": "approval-business-owner",
+    "approverId": "human-reviewer-1",
+    "approverRoleId": "business_owner",
+    "approvedAt": "2026-05-14T09:00:00.000Z",
+    "expiresAt": "2026-06-13T09:00:00.000Z"
+  },
+  "humanParticipation": {
+    "input": {
+      "context": {
+        "highRisk": true
+      },
+      "humanResponse": {
+        "decision": "approve",
+        "responseTimeSeconds": 1
+      }
+    }
+  },
+  "receiptOptions": {
+    "id": "example-rubber-stamp-denied",
+    "createdAt": "2026-05-12T10:05:00.000Z"
+  }
+}

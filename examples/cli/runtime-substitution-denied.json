@@ -1,0 +1,37 @@
+{
+  "proposal": {
+    "id": "safe-internal-report",
+    "userRequest": "Generate a weekly internal usage report.",
+    "tool": "report.generate",
+    "actionType": "generate_internal_report",
+    "target": "weekly_usage_summary",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {}
+  },
+  "runtimeAction": {
+    "id": "runtime-substitution-action",
+    "userRequest": "Generate a weekly internal usage report.",
+    "tool": "database.delete",
+    "actionType": "generate_internal_report",
+    "target": "weekly_usage_summary",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {}
+  },
+  "permitOptions": {
+    "issuedAt": "2026-05-12T10:06:00.000Z"
+  },
+  "receiptOptions": {
+    "id": "example-runtime-substitution",
+    "createdAt": "2026-05-12T10:06:01.000Z"
+  }
+}

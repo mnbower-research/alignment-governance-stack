@@ -9,7 +9,9 @@
     "test": "corepack pnpm -r test",
     "typecheck": "corepack pnpm -r typecheck",
     "audit": "corepack pnpm audit --audit-level moderate",
-    "pack:dry-run": "corepack pnpm -r exec npm pack --dry-run"
+    "pack:dry-run": "corepack pnpm -r exec npm pack --dry-run",
+    "cli:help": "corepack pnpm --filter @alignment-governance-stack/cli ags help",
+    "cli:eval": "corepack pnpm --filter @alignment-governance-stack/cli ags eval"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

@@ -15,6 +15,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Authority map package
 - Human participation package
 - Eval suite package
+- Developer CLI package
 - Examples, docs, and eval fixtures
 
 ## v0.5.0
@@ -37,6 +38,14 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Built-in deterministic cross-stack eval cases
 - Eval result summarization
 - Full-stack fixture artifacts under `evals/fixtures/full-stack`
+
+## v0.8.0
+
+- Developer CLI foundation
+- Local `ags eval` command for built-in eval suite runs
+- Local `ags govern <input.json>` command for governed runtime checks with receipts
+- Local receipt verification and hashing commands
+- Example CLI inputs under `examples/cli`
 
 ## Later
 

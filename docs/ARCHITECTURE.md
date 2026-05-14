@@ -17,6 +17,7 @@ User goal
 -> Permit decision
 -> Runtime Binding
 -> Receipt
+-> Evaluation Suite
 -> Execution
 ```
 
@@ -41,6 +42,8 @@ AAG evaluates execution permission for the proposal it receives. It does not mat
 Runtime Binding verifies the exact permitted action. Receipts preserve proof for the full governance path after the governance decision has been reached.
 
 The Eval Suite is a feedback layer around the stack, not an inline execution layer. It runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, and Receipts.
+
+The Developer CLI is a local terminal entry point around the same deterministic packages. It can run evals, evaluate a supplied governance input, and verify or hash receipts. It does not execute actions, host a server, store state, or call providers.
 
 ## Runtime-Bound Governance Flow
 

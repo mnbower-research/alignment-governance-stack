@@ -21,6 +21,7 @@ Company Alignment Profile Generator
 -> AAG
 -> Runtime Binding
 -> Receipt
+-> Evaluation Suite
 ```
 
 - Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles and draft Authority Maps.
@@ -34,6 +35,7 @@ Company Alignment Profile Generator
 - AAG evaluates whether a proposed action should be allowed before execution.
 - Runtime Binding verifies the exact runtime action matches the permitted action.
 - Receipts preserve tamper-evident proof of the governance path.
+- Evaluation Suite runs deterministic cross-stack scenarios.
 
 ## Current Features
 
@@ -48,6 +50,7 @@ Company Alignment Profile Generator
 - Human Participation Quality rubber-stamp detection
 - Cross-stack deterministic eval suite
 - Company Alignment Profile Generator
+- Developer CLI for local evals, governance checks, and receipt verification
 
 ## Package Map
 
@@ -62,6 +65,20 @@ Company Alignment Profile Generator
 - `@alignment-governance-stack/human-participation`: deterministic evaluation of meaningful participation and likely rubber-stamping.
 - `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
 - `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs.
+- `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
+
+## Developer CLI
+
+The CLI is for local governance, eval, and receipt checks. It does not execute governed actions, make network calls, store data, or run a server.
+
+```bash
+corepack pnpm --filter @alignment-governance-stack/cli build
+corepack pnpm --filter @alignment-governance-stack/cli ags help
+corepack pnpm --filter @alignment-governance-stack/cli ags eval
+corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
+```
+
+See `docs/CLI.md` for command details and exit codes.
 
 ## Basic Commands
 
@@ -89,12 +106,12 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v0.7.0
+Current version: v0.8.0
 
 The core AGS spine is working:
 
 ```text
-Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt
+Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Evaluation Suite
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.
