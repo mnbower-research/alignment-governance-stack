@@ -23,6 +23,36 @@ User goal
 -> Execution
 ```
 
+## Core Runtime Spine
+
+The core runtime spine remains:
+
+```text
+PGDL -> AAG -> Runtime Binding -> Receipt
+```
+
+PGDL matures the proposal before execution gating. AAG decides whether the proposed action should be allowed before execution. Runtime Binding verifies that the exact runtime action matches the issued permit. Receipts preserve proof of the governance path.
+
+## Full AGS Stack
+
+The full stack around the runtime spine is:
+
+```text
+Integration Adapters
+-> Company Alignment Profile Generator
+-> Policy Profile with Hard Boundaries
+-> Authority Map / Approval Validation
+-> Human Participation Quality
+-> PGDL
+-> Policy Resolution
+-> AAG
+-> Runtime Binding
+-> Receipt
+-> Governance Memory / Internalization Layer
+-> Evaluation Suite
+-> Developer CLI
+```
+
 ## First End-to-End Spine
 
 `governance-core` connects the first real AGS flow.
@@ -47,9 +77,9 @@ Runtime Binding verifies the exact permitted action. Receipts preserve proof for
 
 Receipts feed Governance Memory. Governance Memory analyzes receipt history over time and produces human-reviewable recommendations for Policy Profiles, Hard Boundaries, Authority Maps, Human Participation policies, Runtime Binding investigation, and eval expansion. It is a feedback loop, not inline action execution, and it does not silently mutate governance behavior.
 
-The Eval Suite is a feedback layer around the stack, not an inline execution layer. It runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, and Receipts.
+The Eval Suite tests the stack. It is a feedback layer around the stack, not an inline execution layer, and it runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, Receipts, and Governance Memory.
 
-The Developer CLI is a local terminal entry point around the same deterministic packages. It can run evals, evaluate a supplied governance input, and verify or hash receipts. It does not execute actions, host a server, store state, or call providers.
+The Developer CLI exposes local developer access to the same deterministic packages. It can run evals, evaluate a supplied governance input, verify or hash receipts, and summarize receipt-history memory. It does not execute actions, host a server, store state, or call providers.
 
 ## Runtime-Bound Governance Flow
 

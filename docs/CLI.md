@@ -22,7 +22,8 @@ Run commands through the package script:
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
-corepack pnpm --filter @alignment-governance-stack/cli ags memory path/to/receipts.json
+corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
+corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
 
 After build, the compiled binary can also be run directly:
@@ -31,10 +32,20 @@ After build, the compiled binary can also be run directly:
 node packages/cli/dist/cli.js help
 node packages/cli/dist/cli.js eval
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
-node packages/cli/dist/cli.js memory path/to/receipts.json
+node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
+node packages/cli/dist/cli.js memory examples/demo/full-stack/receipt-history.json
 ```
 
 ## Commands
+
+- `ags help`
+- `ags version`
+- `ags eval`
+- `ags govern <input.json>`
+- `ags govern <input.json> --json`
+- `ags receipt verify <receipt.json>`
+- `ags receipt hash <receipt.json>`
+- `ags memory <receipts.json>`
 
 ### `ags help`
 
@@ -132,6 +143,8 @@ Example inputs live under `examples/cli`:
 
 Integration examples that can also be checked with `ags govern` live under `examples/integrations/n8n/inputs`.
 
+Full-stack demo inputs live under `examples/demo/full-stack`.
+
 ## Exit Codes
 
 - `0`: command succeeded, evals passed, receipt is valid, or governance result is `execution_allowed` / `allowed_by_aag`
@@ -150,4 +163,4 @@ The CLI does not:
 - run auth
 - start a web server
 - call LLMs or provider APIs
-- provide interactive prompts or config files in v0.8.0
+- provide interactive prompts or config files

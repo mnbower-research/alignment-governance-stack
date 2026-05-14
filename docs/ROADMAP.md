@@ -1,6 +1,6 @@
 # Roadmap
 
-Alignment Governance Stack is currently scaffold-only. The roadmap below names likely growth areas without adding them before they are requested.
+Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. The roadmap below separates completed milestones, the current stabilization pass, and likely future work without adding those future systems before they are requested.
 
 ## Scaffold
 
@@ -20,28 +20,55 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Developer CLI package
 - Examples, docs, and eval fixtures
 
-## v0.5.0
+## Completed
+
+### v0.1.0-scaffold
+
+- Initial TypeScript pnpm monorepo scaffold
+- Package layout, shared build conventions, and first docs
+
+### v0.1.0
+
+- Core spine foundation
+- PGDL, AAG, Runtime Binding, Receipts, and shared types
+
+### v0.2.0
+
+- Policy Profiles
+- Deterministic policy resolution before AAG
+
+### v0.3.0
+
+- Company Alignment Profile Generator
+- Draft PolicyProfile and AuthorityMap generation from structured company inputs
+
+### v0.4.0
+
+- Hard Boundary Policy Compiler
+- Explicit "never automate" policy support
+
+### v0.5.0
 
 - Authority Map foundation
 - Deterministic approval validation
 - Role and scope based approval evidence checks
 - Optional governance-core approval validation before AAG
 
-## v0.6.0
+### v0.6.0
 
 - Human Participation Quality foundation
 - Deterministic rubber-stamp detection signals
 - Optional governance-core participation quality checks before AAG
 - Receipt preservation for participation quality results
 
-## v0.7.0
+### v0.7.0
 
 - Evaluation Suite Expansion
 - Built-in deterministic cross-stack eval cases
 - Eval result summarization
 - Full-stack fixture artifacts under `evals/fixtures/full-stack`
 
-## v0.8.0
+### v0.8.0
 
 - Developer CLI foundation
 - Local `ags eval` command for built-in eval suite runs
@@ -49,7 +76,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Local receipt verification and hashing commands
 - Example CLI inputs under `examples/cli`
 
-## v0.9.0
+### v0.9.0
 
 - Integration Adapters foundation
 - n8n action input normalization into AGS proposals
@@ -57,7 +84,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - n8n webhook helper for local library use
 - Example n8n workflow templates and input payloads under `examples/integrations/n8n`
 
-## v1.0.0
+### v1.0.0
 
 - Governance Memory / Internalization Layer foundation
 - Deterministic receipt-history pattern detection
@@ -65,12 +92,41 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - `ags memory <receipts.json>` CLI summary command
 - Documentation for safe internalization without automatic policy mutation
 
+## Current
+
+### v1.0.1
+
+- Stabilization and release cleanup
+- Release history clarification
+- Full-stack demo examples
+- Documentation alignment after the first complete stack milestone
+
+## Next
+
+### v1.1.0
+
+- End-to-End Demo Pack / Workbench
+
+### v1.2.0
+
+- Local Governance API
+
+### v1.3.0
+
+- Dashboard MVP
+
+### v1.4.0
+
+- Persistent Receipt Store
+
+### v1.5.0
+
+- Approval Workflow UI / Human Review Console
+
 ## Later
 
 - Real PGDL modules
 - Real AAG detector policies
-- Durable receipts
-- Runtime Binding integration
 - Persistent eval history
 - Policy compiler
 - Human review workflow for generated company profiles

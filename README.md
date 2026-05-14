@@ -7,6 +7,8 @@ Core thesis:
 ```text
 Proposal must not outrun objection.
 Action must not outrun discernment.
+Execution must not outrun authorization.
+Memory must not outrun human review.
 ```
 
 ## Current Stack
@@ -83,6 +85,14 @@ Governance Memory analyzes receipts over time and recommends improvements for hu
 
 It does not silently mutate Policy Profiles, Hard Boundaries, Authority Maps, or Human Participation policies.
 
+Core Governance Memory principle:
+
+```text
+A gate that never remembers cannot mature.
+A gate that remembers without oversight can drift.
+A true gate remembers under authority.
+```
+
 ## Integration Adapters
 
 Integration Adapters help external workflow tools send proposed actions into AGS and receive workflow-friendly governance results back. v0.9.0 starts with n8n helpers and example workflow templates.
@@ -100,7 +110,7 @@ corepack pnpm --filter @alignment-governance-stack/cli build
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
-corepack pnpm --filter @alignment-governance-stack/cli ags memory path/to/receipts.json
+corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
 
 See `docs/CLI.md` for command details and exit codes.
@@ -130,10 +140,11 @@ corepack pnpm -r exec npm pack --dry-run
 - Human Participation Quality evaluates participation evidence; it does not identify people, store approvals, or replace Authority Map.
 - Approval and participation cannot override hard boundaries in v0.6.
 - The Company Alignment Profile Generator creates draft Policy Profiles and draft Authority Maps, not legal or compliance guarantees.
+- AGS is governance infrastructure, not a guarantee of safety, correctness, legality, compliance, or successful deployment.
 
 ## Current Status
 
-Current version: v1.0.0
+Current version: v1.0.1
 
 The core AGS spine is working:
 

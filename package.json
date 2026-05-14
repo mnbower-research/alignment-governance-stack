@@ -11,7 +11,8 @@
     "audit": "corepack pnpm audit --audit-level moderate",
     "pack:dry-run": "corepack pnpm -r exec npm pack --dry-run",
     "cli:help": "corepack pnpm --filter @alignment-governance-stack/cli ags help",
-    "cli:eval": "corepack pnpm --filter @alignment-governance-stack/cli ags eval"
+    "cli:eval": "corepack pnpm --filter @alignment-governance-stack/cli ags eval",
+    "demo:eval": "node packages/cli/dist/cli.js eval"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

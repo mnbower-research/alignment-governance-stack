@@ -1,0 +1,82 @@
+[
+  {
+    "id": "demo-memory-safe-1",
+    "version": "ags.receipt.v0.1",
+    "createdAt": "2026-05-14T10:00:01.000Z",
+    "originalProposal": {
+      "id": "demo-safe-1",
+      "userRequest": "Generate a weekly internal usage report.",
+      "tool": "report.generate",
+      "actionType": "generate_internal_report",
+      "target": "weekly_usage_summary",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "demo": "full-stack"
+      }
+    },
+    "proposalSentToAag": {
+      "id": "demo-safe-1",
+      "userRequest": "Generate a weekly internal usage report.",
+      "tool": "report.generate",
+      "actionType": "generate_internal_report",
+      "target": "weekly_usage_summary",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "demo": "full-stack"
+      }
+    },
+    "finalDecision": "execution_allowed",
+    "reasonForDecision": "Demo receipt for repeated safe allow memory analysis.",
+    "receiptHash": "demo-memory-safe-1"
+  },
+  {
+    "id": "demo-memory-safe-2",
+    "version": "ags.receipt.v0.1",
+    "createdAt": "2026-05-14T10:01:01.000Z",
+    "originalProposal": {
+      "id": "demo-safe-2",
+      "userRequest": "Generate a weekly internal usage report.",
+      "tool": "report.generate",
+      "actionType": "generate_internal_report",
+      "target": "weekly_usage_summary",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "demo": "full-stack"
+      }
+    },
+    "proposalSentToAag": {
+      "id": "demo-safe-2",
+      "userRequest": "Generate a weekly internal usage report.",
+      "tool": "report.generate",
+      "actionType": "generate_internal_report",
+      "target": "weekly_usage_summary",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "demo": "full-stack"
+      }
+    },
+    "finalDecision": "execution_allowed",
+    "reasonForDecision": "Demo receipt for repeated safe allow memory analysis.",
+    "receiptHash": "demo-memory-safe-2"
+  }
+]

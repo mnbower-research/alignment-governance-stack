@@ -86,7 +86,7 @@ This is safe internalization: the system can notice repeated patterns, but autho
 The Developer CLI can summarize receipt history:
 
 ```bash
-corepack pnpm --filter @alignment-governance-stack/cli ags memory path/to/receipts.json
+corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
 
 The input file must be a JSON array of governance receipt objects.
