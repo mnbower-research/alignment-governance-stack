@@ -1,0 +1,46 @@
+{
+  "proposal": {
+    "id": "enterprise-quarterly-financial-report-external-domain-send",
+    "userRequest": "Send the Q2 financial report to an external partner domain.",
+    "tool": "email.send",
+    "actionType": "send_financial_report",
+    "target": "external_partner_domain",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": true,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "enterprise_financial_report_golden_path" }
+  },
+  "policyProfile": {
+    "id": "enterprise.financial-report.policy",
+    "name": "Enterprise Financial Report Policy Profile",
+    "version": "1.1.1",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "tools": [
+      { "tool": "draft.create", "allowed": true, "requiresApproval": false }
+    ],
+    "hardBoundaries": [
+      {
+        "id": "never_send_financial_reports_externally",
+        "label": "Never send financial reports to external domains automatically",
+        "when": { "targetIncludes": "external_partner_domain", "dataSensitivity": "high" },
+        "effect": "block",
+        "reason": "External financial report distribution requires explicit human-owned exception handling.",
+        "source": "manual_policy"
+      }
+    ]
+  },
+  "authorityMap": {
+    "id": "enterprise.financial-report.authority",
+    "name": "Enterprise Financial Report Authority Map",
+    "version": "1.1.1",
+    "roles": []
+  },
+  "receiptOptions": {
+    "id": "enterprise-quarterly-financial-report-external-domain-send",
+    "createdAt": "2026-05-14T11:02:00.000Z"
+  }
+}

@@ -23,4 +23,6 @@ The CLI does not execute governed actions. It runs deterministic local checks ag
 - `ags receipt verify <receipt.json>`
 - `ags receipt hash <receipt.json>`
 
+`ags dogfood` reports Internal Dogfood and Enterprise Golden Path counts.
+
 See `docs/CLI.md` for examples and exit codes.

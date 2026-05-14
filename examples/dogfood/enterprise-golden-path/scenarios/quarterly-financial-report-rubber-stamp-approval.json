@@ -1,0 +1,83 @@
+{
+  "proposal": {
+    "id": "enterprise-quarterly-financial-report-rubber-stamp-approval",
+    "userRequest": "Generate the Q2 financial report draft for Finance Director review.",
+    "tool": "report.generate",
+    "actionType": "generate_financial_report_draft",
+    "target": "q2_financial_report",
+    "environment": "production",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": true,
+    "metadata": { "source": "enterprise_financial_report_golden_path" }
+  },
+  "policyProfile": {
+    "id": "enterprise.financial-report.policy",
+    "name": "Enterprise Financial Report Policy Profile",
+    "version": "1.1.1",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "tools": [
+      { "tool": "report.generate", "allowed": true, "requiresApproval": true }
+    ],
+    "dataSensitivity": [
+      { "sensitivity": "high", "requiresApproval": true, "externalFacingAllowed": false, "receiptRequired": true }
+    ]
+  },
+  "authorityMap": {
+    "id": "enterprise.financial-report.authority",
+    "name": "Enterprise Financial Report Authority Map",
+    "version": "1.1.1",
+    "roles": [
+      {
+        "id": "finance_director",
+        "label": "Finance Director",
+        "scopes": [
+          {
+            "id": "finance_director_report_review",
+            "tool": "report.generate",
+            "actionType": "generate_financial_report_draft",
+            "environment": "production",
+            "maxDataSensitivity": "high",
+            "approvalKinds": ["financial_report_review"]
+          }
+        ]
+      }
+    ]
+  },
+  "approvalEvidence": {
+    "id": "enterprise-finance-approval-finance_director",
+    "approverId": "finance-human-reviewer",
+    "approverRoleId": "finance_director",
+    "approvedAt": "2026-05-14T09:00:00.000Z",
+    "expiresAt": "2030-01-01T00:00:00.000Z",
+    "approvalKind": "financial_report_review",
+    "reason": "Finance Director reviewed the Q2 report-generation scope, sensitivity, and audit trail requirements."
+  },
+  "humanParticipation": {
+    "input": {
+      "presentedContext": {
+        "objectionsPresented": false,
+        "alternativesPresented": false,
+        "dataSensitivityPresented": false,
+        "reversibilityPresented": false
+      },
+      "humanResponse": {
+        "decision": "approve",
+        "responseTimeSeconds": 1
+      },
+      "context": {
+        "requiredApproval": true,
+        "highRisk": true,
+        "production": true,
+        "highSensitivity": true
+      }
+    }
+  },
+  "receiptOptions": {
+    "id": "enterprise-quarterly-financial-report-rubber-stamp-approval",
+    "createdAt": "2026-05-14T11:04:00.000Z"
+  }
+}

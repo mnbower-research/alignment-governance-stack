@@ -40,9 +40,9 @@ describe("ags cli", () => {
     const result = runCli(["dogfood"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("total:");
-    expect(result.stdout).toContain("passed:");
-    expect(result.stdout).toContain("failed: 0");
+    expect(result.stdout).toContain("Internal Dogfood: 10/10 passed");
+    expect(result.stdout).toContain("Enterprise Golden Path: 6/6 passed");
+    expect(result.stdout).toContain("Total: 16/16 passed");
   });
 
   it("govern command with safe input returns receipt hash", () => {

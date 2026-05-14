@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased - Enterprise Financial Report Golden Path
+
+- Adds Enterprise Financial Report Golden Path under `examples/dogfood/enterprise-golden-path`.
+- Adds `builtInEnterpriseDogfoodEvalCases` and `runEnterpriseDogfoodEvalSuite`.
+- Updates `ags dogfood` to report Internal Dogfood and Enterprise Golden Path counts.
+- Adds enterprise dogfood fixtures under `evals/fixtures/dogfood/enterprise`.
+- Includes a narrow PGDL fix so approved internal reversible high-sensitivity drafts can reach policy, authority, participation, AAG, and runtime binding.
+
 ## v1.1.0 - Dogfood Workbench Eval Pack
 
 - Adds realistic AGS development workflow scenarios under `examples/dogfood`.

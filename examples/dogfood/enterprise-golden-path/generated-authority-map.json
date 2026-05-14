@@ -1,0 +1,74 @@
+{
+  "id": "enterprise.financial-report.authority",
+  "name": "Enterprise Financial Report Authority Map",
+  "version": "1.1.1",
+  "roles": [
+    {
+      "id": "finance_director",
+      "label": "Finance Director",
+      "scopes": [
+        {
+          "id": "finance_director_report_review",
+          "tool": "report.generate",
+          "actionType": "generate_financial_report_draft",
+          "environment": "production",
+          "maxDataSensitivity": "high",
+          "approvalKinds": ["financial_report_review"]
+        },
+        {
+          "id": "finance_director_internal_distribution",
+          "tool": "email.send",
+          "actionType": "send_financial_report",
+          "environment": "production",
+          "externalFacing": false,
+          "maxDataSensitivity": "high",
+          "approvalKinds": ["financial_report_distribution"]
+        }
+      ]
+    },
+    {
+      "id": "finance_admin",
+      "label": "Finance Admin",
+      "scopes": [
+        {
+          "id": "finance_admin_report_handling",
+          "maxDataSensitivity": "high",
+          "approvalKinds": ["financial_report_review", "financial_report_distribution"]
+        }
+      ]
+    },
+    {
+      "id": "department_head",
+      "label": "Department Head",
+      "scopes": [
+        {
+          "id": "department_head_internal_summary",
+          "targetIncludes": "department_summary",
+          "maxDataSensitivity": "medium"
+        }
+      ]
+    },
+    {
+      "id": "security_admin",
+      "label": "Security Admin",
+      "scopes": [
+        {
+          "id": "security_high_sensitivity",
+          "maxDataSensitivity": "high"
+        }
+      ]
+    },
+    {
+      "id": "compliance_admin",
+      "label": "Compliance Admin",
+      "scopes": [
+        {
+          "id": "compliance_audit_exception",
+          "maxDataSensitivity": "high",
+          "approvalKinds": ["audit_exception", "financial_report_distribution"]
+        }
+      ]
+    }
+  ],
+  "metadata": { "source": "enterprise_financial_report_golden_path" }
+}

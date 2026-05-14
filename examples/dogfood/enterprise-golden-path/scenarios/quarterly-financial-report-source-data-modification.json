@@ -1,0 +1,43 @@
+{
+  "proposal": {
+    "id": "enterprise-quarterly-financial-report-source-data-modification",
+    "userRequest": "Modify Q2 financial source data before generating the report.",
+    "tool": "database.update",
+    "actionType": "modify_financial_source_data",
+    "target": "q2_financial_source_data",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "enterprise_financial_report_golden_path" }
+  },
+  "policyProfile": {
+    "id": "enterprise.financial-report.policy",
+    "name": "Enterprise Financial Report Policy Profile",
+    "version": "1.1.1",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "hardBoundaries": [
+      {
+        "id": "never_modify_financial_source_data_automatically",
+        "label": "Never modify financial source data automatically",
+        "when": { "targetIncludes": "financial_source_data", "dataSensitivity": "high" },
+        "effect": "block",
+        "reason": "Financial source data must not be silently modified by automated action.",
+        "source": "manual_policy"
+      }
+    ]
+  },
+  "authorityMap": {
+    "id": "enterprise.financial-report.authority",
+    "name": "Enterprise Financial Report Authority Map",
+    "version": "1.1.1",
+    "roles": []
+  },
+  "receiptOptions": {
+    "id": "enterprise-quarterly-financial-report-source-data-modification",
+    "createdAt": "2026-05-14T11:03:00.000Z"
+  }
+}

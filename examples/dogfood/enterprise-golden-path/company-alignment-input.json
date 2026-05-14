@@ -1,0 +1,66 @@
+{
+  "organizationName": "Enterprise Finance Demo Company",
+  "values": [
+    "financial integrity",
+    "human approval for sensitive reports",
+    "no silent source data modification",
+    "internal distribution only unless explicitly approved",
+    "auditability before trust"
+  ],
+  "roles": [
+    { "id": "finance_director", "label": "Finance Director" },
+    { "id": "finance_admin", "label": "Finance Admin" },
+    { "id": "department_head", "label": "Department Head" },
+    { "id": "security_admin", "label": "Security Admin" },
+    { "id": "compliance_admin", "label": "Compliance Admin" }
+  ],
+  "tools": [
+    {
+      "tool": "report.generate",
+      "allowed": true,
+      "requiresApproval": "high sensitivity financial data in production"
+    },
+    {
+      "tool": "draft.create",
+      "allowed": true
+    },
+    {
+      "tool": "email.send",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacingRestricted": true
+    },
+    {
+      "tool": "database.update",
+      "allowed": false,
+      "reason": "financial source data must not be silently modified"
+    },
+    {
+      "tool": "file.export",
+      "allowed": true,
+      "requiresApproval": "financial reports"
+    },
+    {
+      "tool": "file.delete",
+      "allowed": false,
+      "reason": "financial records and receipt history are audit evidence"
+    }
+  ],
+  "dataClasses": [
+    { "id": "financial_report", "sensitivity": "high" },
+    { "id": "financial_source_data", "sensitivity": "high" },
+    { "id": "internal_department_summary", "sensitivity": "medium" },
+    { "id": "public_summary", "sensitivity": "low" }
+  ],
+  "environments": [
+    { "id": "staging" },
+    { "id": "production", "productionLike": true }
+  ],
+  "decisionBoundaries": [
+    "never send financial reports to external domains automatically",
+    "never modify financial source data automatically",
+    "never distribute high-sensitivity financial reports without finance authority",
+    "financial reports must preserve audit trail",
+    "direct external distribution of financial reports requires explicit approval"
+  ]
+}

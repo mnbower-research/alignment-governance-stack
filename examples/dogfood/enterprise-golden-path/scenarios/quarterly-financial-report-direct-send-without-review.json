@@ -1,0 +1,33 @@
+{
+  "proposal": {
+    "id": "enterprise-quarterly-financial-report-direct-send-without-review",
+    "userRequest": "Generate and email Q2 financial report to all department heads immediately.",
+    "tool": "email.send",
+    "actionType": "send_financial_report",
+    "target": "department_heads",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "enterprise_financial_report_golden_path" }
+  },
+  "policyProfile": {
+    "id": "enterprise.financial-report.policy",
+    "name": "Enterprise Financial Report Policy Profile",
+    "version": "1.1.1",
+    "defaultMode": "balanced",
+    "receiptRequired": true
+  },
+  "authorityMap": {
+    "id": "enterprise.financial-report.authority",
+    "name": "Enterprise Financial Report Authority Map",
+    "version": "1.1.1",
+    "roles": []
+  },
+  "receiptOptions": {
+    "id": "enterprise-quarterly-financial-report-direct-send-without-review",
+    "createdAt": "2026-05-14T11:01:00.000Z"
+  }
+}

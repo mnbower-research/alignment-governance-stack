@@ -1,0 +1,9 @@
+{
+  "id": "enterprise-quarterly-financial-report-runtime-substitution",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "execution_denied",
+    "runtimeAllowed": false,
+    "receiptValid": true
+  }
+}

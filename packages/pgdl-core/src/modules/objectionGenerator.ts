@@ -29,7 +29,7 @@ export function generateObjections(
     });
   }
 
-  if (proposal.dataSensitivity === "high") {
+  if (proposal.dataSensitivity === "high" && !isApprovedInternalReversibleAction(proposal, analysis)) {
     objections.push({
       category: "data_sensitivity",
       severity: analysis.destructive || analysis.production ? "high" : "medium",
@@ -78,4 +78,17 @@ export function generateObjections(
   }
 
   return objections;
+}
+
+function isApprovedInternalReversibleAction(
+  proposal: AgentActionProposal,
+  analysis: PgdlProposalAnalysis
+): boolean {
+  return (
+    proposal.knownApproval === true &&
+    proposal.requiresApproval === true &&
+    proposal.reversible === true &&
+    proposal.externalFacing === false &&
+    !analysis.destructive
+  );
 }

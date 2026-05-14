@@ -1,0 +1,148 @@
+[
+  {
+    "id": "enterprise-memory-external-financial-report-block-1",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:00:00.000Z",
+    "finalDecision": "blocked_by_policy",
+    "originalProposal": {
+      "id": "external-financial-send-1",
+      "userRequest": "Send the Q2 financial report externally.",
+      "tool": "email.send",
+      "actionType": "send_financial_report",
+      "target": "external_partner_domain",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "high",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {}
+    },
+    "resolvedPolicy": {
+      "allowed": false,
+      "requiresApproval": true,
+      "receiptRequired": true,
+      "reasons": ["External financial report distribution is blocked."],
+      "matchedRules": ["never_send_financial_reports_externally"],
+      "suggestedDecision": "block",
+      "hardBoundaryTriggered": true,
+      "blockingBoundaryIds": ["never_send_financial_reports_externally"]
+    },
+    "receiptHash": "enterprise-memory-placeholder-1"
+  },
+  {
+    "id": "enterprise-memory-external-financial-report-block-2",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:01:00.000Z",
+    "finalDecision": "blocked_by_policy",
+    "originalProposal": {
+      "id": "external-financial-send-2",
+      "userRequest": "Email Q2 financials to an outside partner.",
+      "tool": "email.send",
+      "actionType": "send_financial_report",
+      "target": "external_partner_domain",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "high",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {}
+    },
+    "resolvedPolicy": {
+      "allowed": false,
+      "requiresApproval": true,
+      "receiptRequired": true,
+      "reasons": ["External financial report distribution is blocked."],
+      "matchedRules": ["never_send_financial_reports_externally"],
+      "suggestedDecision": "block",
+      "hardBoundaryTriggered": true,
+      "blockingBoundaryIds": ["never_send_financial_reports_externally"]
+    },
+    "receiptHash": "enterprise-memory-placeholder-2"
+  },
+  {
+    "id": "enterprise-memory-runtime-substitution-1",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:02:00.000Z",
+    "finalDecision": "execution_denied",
+    "originalProposal": {
+      "id": "financial-report-draft-1",
+      "userRequest": "Generate the Q2 financial report draft.",
+      "tool": "report.generate",
+      "actionType": "generate_financial_report_draft",
+      "target": "q2_financial_report",
+      "environment": "production",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "high",
+      "requiresApproval": true,
+      "knownApproval": true,
+      "metadata": {}
+    },
+    "proposalSentToAag": {
+      "id": "financial-report-draft-1",
+      "userRequest": "Generate the Q2 financial report draft.",
+      "tool": "report.generate",
+      "actionType": "generate_financial_report_draft",
+      "target": "q2_financial_report",
+      "environment": "production",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "high",
+      "requiresApproval": true,
+      "knownApproval": true,
+      "metadata": {}
+    },
+    "runtimeBinding": {
+      "allowed": false,
+      "failures": [
+        { "code": "tool_mismatch", "message": "Runtime tool changed." },
+        { "code": "action_hash_mismatch", "message": "Runtime action hash changed." }
+      ]
+    },
+    "receiptHash": "enterprise-memory-placeholder-3"
+  },
+  {
+    "id": "enterprise-memory-runtime-substitution-2",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:03:00.000Z",
+    "finalDecision": "execution_denied",
+    "originalProposal": {
+      "id": "financial-report-draft-2",
+      "userRequest": "Generate the Q2 financial report draft.",
+      "tool": "report.generate",
+      "actionType": "generate_financial_report_draft",
+      "target": "q2_financial_report",
+      "environment": "production",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "high",
+      "requiresApproval": true,
+      "knownApproval": true,
+      "metadata": {}
+    },
+    "proposalSentToAag": {
+      "id": "financial-report-draft-2",
+      "userRequest": "Generate the Q2 financial report draft.",
+      "tool": "report.generate",
+      "actionType": "generate_financial_report_draft",
+      "target": "q2_financial_report",
+      "environment": "production",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "high",
+      "requiresApproval": true,
+      "knownApproval": true,
+      "metadata": {}
+    },
+    "runtimeBinding": {
+      "allowed": false,
+      "failures": [
+        { "code": "tool_mismatch", "message": "Runtime tool changed." },
+        { "code": "action_hash_mismatch", "message": "Runtime action hash changed." }
+      ]
+    },
+    "receiptHash": "enterprise-memory-placeholder-4"
+  }
+]

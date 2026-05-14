@@ -46,7 +46,11 @@ function createResolvedProposal(proposal: AgentActionProposal): AgentActionPropo
   const tool = proposal.tool.toLowerCase();
   const actionType = proposal.actionType.toLowerCase();
 
-  if (tool.includes("delete") || actionType.includes("delete")) {
+  if (
+    tool.includes("delete") ||
+    actionType.includes("delete") ||
+    isFinancialSourceDataMutation(proposal)
+  ) {
     return {
       ...proposal,
       tool: "review.generate",
@@ -85,6 +89,14 @@ function createResolvedProposal(proposal: AgentActionProposal): AgentActionPropo
   }
 
   return undefined;
+}
+
+function isFinancialSourceDataMutation(proposal: AgentActionProposal): boolean {
+  const actionText = `${proposal.tool} ${proposal.actionType} ${proposal.target}`.toLowerCase();
+  const mutation = ["modify", "update", "write", "mutate"].some((term) => actionText.includes(term));
+  const financialSourceData = actionText.includes("financial_source_data");
+
+  return mutation && financialSourceData;
 }
 
 function buildReasonForDecision(

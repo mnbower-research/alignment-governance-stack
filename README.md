@@ -61,7 +61,7 @@ Integration Adapters
 - Developer CLI for local evals, governance checks, and receipt verification
 - Integration Adapters foundation with n8n action mapping and workflow templates
 - Governance Memory receipt-history analysis with human-reviewable recommendations
-- Dogfood Workbench Eval Pack for realistic AGS development workflows
+- Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 
 ## Package Map
 
@@ -119,7 +119,10 @@ See `docs/CLI.md` for command details and exit codes.
 
 ## Dogfood Workbench
 
-The Dogfood Workbench turns realistic AGS development workflows into repeatable eval cases. It covers safe documentation changes, release-note drafts, package deletion, npm publishing, pushing to main, external email draft-first behavior, authority-map edits, receipt deletion, rubber-stamped release approval, and runtime substitution.
+The Dogfood Workbench turns realistic workflows into repeatable eval cases. It has two tracks:
+
+- Internal AGS Development Dogfood: safe documentation changes, release-note drafts, package deletion, npm publishing, pushing to main, external email draft-first behavior, authority-map edits, receipt deletion, rubber-stamped release approval, and runtime substitution.
+- Enterprise Financial Report Golden Path: high-sensitivity Q2 financial report draft generation, direct-send prevention, external-domain hard boundaries, financial source data mutation blocks, finance authority, meaningful participation, runtime substitution denial, receipts, and memory.
 
 Run it locally after build:
 

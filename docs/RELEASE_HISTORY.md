@@ -24,7 +24,7 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.1.0 | Dogfood Workbench Eval Pack | Realistic AGS development evals | Current |
+| v1.1.0 | Dogfood Workbench Eval Pack | Internal AGS development evals plus Enterprise Financial Report Golden Path | Current |
 | v1.0.1 | Stabilization and Release Cleanup | Release history, docs, demo cleanup | Complete |
 | v1.0.0 | First Complete Alignment Governance Stack | Governance Memory / Internalization Layer | Complete |
 | v0.9.0 | Integration Adapters | n8n adapter foundation | Complete |
@@ -39,6 +39,8 @@ Integration Adapters
 | v0.1.0-scaffold | Initial Scaffold | Monorepo foundation | Complete |
 
 ## Shared v0.9.0 / v1.0.0 Commit
+
+The Dogfood Workbench now includes an Enterprise Financial Report Golden Path demo track. This can be released as v1.1.1 or folded into v1.1.0 if v1.1.0 has not been tagged yet.
 
 v0.9.0 and v1.0.0 currently point to the same commit because Integration Adapters and Governance Memory were committed together. This is acceptable for the project history, but the milestones should be read separately:
 

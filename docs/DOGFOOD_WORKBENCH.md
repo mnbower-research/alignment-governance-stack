@@ -1,6 +1,6 @@
 # Dogfood Workbench
 
-The Dogfood Workbench is a hardening pack for AGS itself.
+The Dogfood Workbench is a hardening pack for AGS itself and for realistic buyer-facing workflows.
 
 It answers the wide-but-shallow critique by running realistic AGS development workflows through AGS governance and the Eval Suite.
 
@@ -11,9 +11,11 @@ Receipts = audit memory
 Governance Memory = pattern learning from receipt history
 ```
 
-## What It Covers
+## Tracks
 
-The v1.1.0 dogfood cases cover:
+### Internal AGS Development Dogfood
+
+This track proves AGS governs its own development workflows. It covers:
 
 - safe README documentation update
 - safe release-notes draft
@@ -25,6 +27,22 @@ The v1.1.0 dogfood cases cover:
 - hard boundary for deleting receipt history
 - rubber-stamped release approval denial
 - runtime substitution from draft to npm publish
+
+### Enterprise Financial Report Golden Path
+
+This track proves AGS can govern a sensitive business workflow: generating and distributing a Q2 financial report.
+
+It exercises:
+
+- high-sensitivity financial data
+- direct-send attempts without review
+- external-domain hard boundaries
+- financial source data mutation blocks
+- Finance Director / finance_admin authority
+- meaningful human participation versus rubber-stamping
+- safe internal report draft generation
+- runtime substitution denial
+- receipt history for Governance Memory
 
 ## Commands
 
@@ -45,7 +63,10 @@ Run individual scenarios:
 ```bash
 node packages/cli/dist/cli.js govern examples/dogfood/scenarios/safe-readme-update.json
 node packages/cli/dist/cli.js govern examples/dogfood/scenarios/runtime-substitution-attempt.json
+node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
+node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-runtime-substitution.json
 node packages/cli/dist/cli.js memory examples/dogfood/receipts/sample-dogfood-receipt-history.json
+node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/receipts/sample-enterprise-receipt-history.json
 ```
 
 ## Boundaries

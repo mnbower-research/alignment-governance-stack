@@ -1,0 +1,75 @@
+{
+  "id": "enterprise.financial-report.policy",
+  "name": "Enterprise Financial Report Policy Profile",
+  "version": "1.1.1",
+  "defaultMode": "balanced",
+  "receiptRequired": true,
+  "tools": [
+    { "tool": "report.generate", "allowed": true, "requiresApproval": true },
+    { "tool": "draft.create", "allowed": true, "requiresApproval": false },
+    { "tool": "email.send", "allowed": true, "requiresApproval": true, "externalFacingAllowed": false },
+    { "tool": "database.update", "allowed": true, "requiresApproval": true },
+    { "tool": "file.export", "allowed": true, "requiresApproval": true },
+    { "tool": "file.delete", "allowed": true, "requiresApproval": true }
+  ],
+  "environments": [
+    {
+      "environment": "production",
+      "requiresApprovalForIrreversible": true,
+      "requiresApprovalForExternalFacing": true,
+      "requiresApprovalForHighSensitivity": true
+    }
+  ],
+  "approvalRules": [
+    {
+      "id": "financial_report_generation_requires_finance_authority",
+      "when": { "tool": "report.generate", "actionType": "generate_financial_report_draft", "dataSensitivity": "high" },
+      "requiresApproval": true,
+      "approverRole": "finance_director",
+      "reason": "High-sensitivity financial report drafts require finance authority review."
+    },
+    {
+      "id": "financial_report_distribution_requires_finance_authority",
+      "when": { "tool": "email.send", "actionType": "send_financial_report", "dataSensitivity": "high" },
+      "requiresApproval": true,
+      "approverRole": "finance_admin",
+      "reason": "Financial report distribution requires finance authority."
+    }
+  ],
+  "dataSensitivity": [
+    {
+      "sensitivity": "high",
+      "requiresApproval": true,
+      "externalFacingAllowed": false,
+      "receiptRequired": true,
+      "notes": "Financial reports and financial source data require audit-preserving review."
+    }
+  ],
+  "hardBoundaries": [
+    {
+      "id": "never_send_financial_reports_externally",
+      "label": "Never send financial reports to external domains automatically",
+      "when": { "targetIncludes": "external_partner_domain", "dataSensitivity": "high" },
+      "effect": "block",
+      "reason": "External financial report distribution requires explicit human-owned exception handling.",
+      "source": "manual_policy"
+    },
+    {
+      "id": "never_modify_financial_source_data_automatically",
+      "label": "Never modify financial source data automatically",
+      "when": { "targetIncludes": "financial_source_data", "dataSensitivity": "high" },
+      "effect": "block",
+      "reason": "Financial source data must not be silently modified by automated action.",
+      "source": "manual_policy"
+    },
+    {
+      "id": "never_delete_financial_records_or_receipts",
+      "label": "Never delete financial records or receipt history automatically",
+      "when": { "targetIncludes": "financial_records", "dataSensitivity": "high" },
+      "effect": "block",
+      "reason": "Financial records and receipt history are audit evidence.",
+      "source": "manual_policy"
+    }
+  ],
+  "metadata": { "source": "enterprise_financial_report_golden_path" }
+}

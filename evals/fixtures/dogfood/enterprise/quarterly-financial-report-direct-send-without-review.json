@@ -1,0 +1,8 @@
+{
+  "id": "enterprise-quarterly-financial-report-direct-send-without-review",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "escalated_before_gate",
+    "receiptValid": true
+  }
+}

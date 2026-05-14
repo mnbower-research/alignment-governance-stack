@@ -1,0 +1,112 @@
+{
+  "proposal": {
+    "id": "enterprise-quarterly-financial-report-safe-path",
+    "userRequest": "Generate the Q2 financial report draft for Finance Director review.",
+    "tool": "report.generate",
+    "actionType": "generate_financial_report_draft",
+    "target": "q2_financial_report",
+    "environment": "production",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": true,
+    "metadata": { "source": "enterprise_financial_report_golden_path" }
+  },
+  "runtimeAction": {
+    "id": "enterprise-quarterly-financial-report-runtime-email-send",
+    "userRequest": "Generate the Q2 financial report draft for Finance Director review.",
+    "tool": "email.send",
+    "actionType": "send_financial_report",
+    "target": "external_partner_domain",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": true,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "enterprise_financial_report_golden_path" }
+  },
+  "policyProfile": {
+    "id": "enterprise.financial-report.policy",
+    "name": "Enterprise Financial Report Policy Profile",
+    "version": "1.1.1",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "tools": [
+      { "tool": "report.generate", "allowed": true, "requiresApproval": true }
+    ],
+    "environments": [
+      { "environment": "production", "requiresApprovalForHighSensitivity": true }
+    ],
+    "approvalRules": [
+      {
+        "id": "financial_report_generation_requires_finance_authority",
+        "when": { "tool": "report.generate", "actionType": "generate_financial_report_draft", "dataSensitivity": "high" },
+        "requiresApproval": true,
+        "approverRole": "finance_director",
+        "reason": "High-sensitivity financial report drafts require finance authority review."
+      }
+    ],
+    "dataSensitivity": [
+      { "sensitivity": "high", "requiresApproval": true, "externalFacingAllowed": false, "receiptRequired": true }
+    ]
+  },
+  "authorityMap": {
+    "id": "enterprise.financial-report.authority",
+    "name": "Enterprise Financial Report Authority Map",
+    "version": "1.1.1",
+    "roles": [
+      {
+        "id": "finance_director",
+        "label": "Finance Director",
+        "scopes": [
+          {
+            "id": "finance_director_report_review",
+            "tool": "report.generate",
+            "actionType": "generate_financial_report_draft",
+            "environment": "production",
+            "maxDataSensitivity": "high",
+            "approvalKinds": ["financial_report_review"]
+          }
+        ]
+      }
+    ]
+  },
+  "approvalEvidence": {
+    "id": "enterprise-finance-approval-finance_director",
+    "approverId": "finance-human-reviewer",
+    "approverRoleId": "finance_director",
+    "approvedAt": "2026-05-14T09:00:00.000Z",
+    "expiresAt": "2030-01-01T00:00:00.000Z",
+    "approvalKind": "financial_report_review",
+    "reason": "Finance Director reviewed the Q2 report-generation scope, sensitivity, and audit trail requirements."
+  },
+  "humanParticipation": {
+    "input": {
+      "presentedContext": {
+        "riskSummary": "High-sensitivity Q2 financial report draft for internal Finance Director review only.",
+        "objectionsPresented": true,
+        "alternativesPresented": true,
+        "dataSensitivityPresented": true,
+        "reversibilityPresented": true
+      },
+      "humanResponse": {
+        "decision": "approve",
+        "reason": "Approved only for internal draft generation after reviewing scope, financial sensitivity, and audit trail requirements.",
+        "responseTimeSeconds": 75,
+        "requestedEvidence": true
+      },
+      "context": {
+        "requiredApproval": true,
+        "highRisk": true,
+        "production": true,
+        "highSensitivity": true
+      }
+    }
+  },
+  "receiptOptions": {
+    "id": "enterprise-quarterly-financial-report-runtime-substitution",
+    "createdAt": "2026-05-14T11:05:00.000Z"
+  }
+}

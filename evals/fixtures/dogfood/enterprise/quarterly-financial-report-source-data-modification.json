@@ -1,0 +1,9 @@
+{
+  "id": "enterprise-quarterly-financial-report-source-data-modification",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "blocked_by_policy",
+    "hardBoundaryTriggered": true,
+    "receiptValid": true
+  }
+}

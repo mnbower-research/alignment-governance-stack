@@ -98,6 +98,7 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 - Dogfood Workbench Eval Pack hardening milestone
 - Realistic AGS development workflow scenarios
+- Enterprise Financial Report Golden Path demo track
 - Repeatable dogfood eval suite and CLI command
 - Examples and receipt-history fixture for Governance Memory
 

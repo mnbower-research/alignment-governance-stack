@@ -38,6 +38,29 @@ describe("PGDL v0.1 deterministic packet generation", () => {
     expect(packet.resolvedProposal?.externalFacing).toBe(false);
   });
 
+  it("revises financial source data mutation into a review packet before policy evaluation", () => {
+    const proposal: AgentActionProposal = {
+      id: "financial-source-data-mutation",
+      userRequest: "Modify Q2 financial source data.",
+      tool: "database.update",
+      actionType: "modify_financial_source_data",
+      target: "q2_financial_source_data",
+      environment: "production",
+      reversible: false,
+      externalFacing: false,
+      dataSensitivity: "high",
+      requiresApproval: true,
+      knownApproval: false,
+      metadata: {}
+    };
+
+    const packet = evaluatePgdl(proposal);
+
+    expect(packet.decision).toBe("revise_before_aag");
+    expect(packet.resolvedProposal?.tool).toBe("review.generate");
+    expect(packet.resolvedProposal?.target).toBe("q2_financial_source_data");
+  });
+
   it("revises an external email send without approval into a draft for review", () => {
     const proposal: AgentActionProposal = {
       id: "external-email-send",
@@ -88,6 +111,28 @@ describe("PGDL v0.1 deterministic packet generation", () => {
     expect(packet.objections).toHaveLength(0);
     expect(packet.resolvedProposal).toBeUndefined();
     expect(packet.reasonForDecision).toContain("no PGDL objections");
+  });
+
+  it("forwards a high-sensitivity internal reversible action when approval is already known", () => {
+    const proposal: AgentActionProposal = {
+      id: "approved-financial-report-draft",
+      userRequest: "Generate the Q2 financial report draft for Finance Director review.",
+      tool: "report.generate",
+      actionType: "generate_financial_report_draft",
+      target: "q2_financial_report",
+      environment: "production",
+      reversible: true,
+      externalFacing: false,
+      dataSensitivity: "high",
+      requiresApproval: true,
+      knownApproval: true,
+      metadata: {}
+    };
+
+    const packet = evaluatePgdl(proposal);
+
+    expect(packet.decision).toBe("forward_to_aag");
+    expect(packet.objections).toHaveLength(0);
   });
 
   it("detects compliance theater when wording changes without risk reduction", () => {

@@ -34,8 +34,10 @@ node packages/cli/dist/cli.js help
 node packages/cli/dist/cli.js eval
 node packages/cli/dist/cli.js dogfood
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
+node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
 node packages/cli/dist/cli.js memory examples/demo/full-stack/receipt-history.json
+node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/receipts/sample-enterprise-receipt-history.json
 ```
 
 ## Commands
@@ -75,9 +77,9 @@ Runs the built-in Dogfood Workbench eval suite from `@alignment-governance-stack
 
 Output includes:
 
-- total
-- passed
-- failed
+- Internal Dogfood passed/total
+- Enterprise Golden Path passed/total
+- combined passed/total
 - failed dogfood case IDs and reasons, when failures exist
 
 ### `ags govern <input.json>`
@@ -159,7 +161,7 @@ Integration examples that can also be checked with `ags govern` live under `exam
 
 Full-stack demo inputs live under `examples/demo/full-stack`.
 
-Dogfood workbench scenarios live under `examples/dogfood/scenarios`.
+Dogfood workbench scenarios live under `examples/dogfood/scenarios` and `examples/dogfood/enterprise-golden-path/scenarios`.
 
 ## Exit Codes
 

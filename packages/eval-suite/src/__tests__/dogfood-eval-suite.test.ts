@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   builtInDogfoodEvalCases,
+  builtInEnterpriseDogfoodEvalCases,
   runDogfoodEvalSuite,
   runEvalCase,
   summarizeEvalResults
@@ -63,9 +64,10 @@ describe("dogfood eval suite", () => {
   it("summarizeEvalResults includes dogfood totals", () => {
     const result = runDogfoodEvalSuite();
     const summary = summarizeEvalResults(result);
+    const total = builtInDogfoodEvalCases.length + builtInEnterpriseDogfoodEvalCases.length;
 
-    expect(summary).toContain(`total: ${builtInDogfoodEvalCases.length}`);
-    expect(summary).toContain(`passed: ${builtInDogfoodEvalCases.length}`);
+    expect(summary).toContain(`total: ${total}`);
+    expect(summary).toContain(`passed: ${total}`);
   });
 });
 
