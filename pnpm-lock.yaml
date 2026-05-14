@@ -55,6 +55,9 @@ importers:
       '@alignment-governance-stack/governance-core':
         specifier: workspace:*
         version: link:../governance-core
+      '@alignment-governance-stack/governance-memory':
+        specifier: workspace:*
+        version: link:../governance-memory
       '@alignment-governance-stack/receipts':
         specifier: workspace:*
         version: link:../receipts
@@ -156,6 +159,25 @@ importers:
         specifier: ^4.1.6
         version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
 
+  packages/governance-memory:
+    dependencies:
+      '@alignment-governance-stack/receipts':
+        specifier: workspace:*
+        version: link:../receipts
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.7.0
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.12(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
+
   packages/human-participation:
     dependencies:
       '@alignment-governance-stack/authority-map':
@@ -165,6 +187,25 @@ importers:
         specifier: workspace:*
         version: link:../shared-types
     devDependencies:
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.12(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
+
+  packages/integration-adapters:
+    dependencies:
+      '@alignment-governance-stack/governance-core':
+        specifier: workspace:*
+        version: link:../governance-core
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.7.0
       vite:
         specifier: ^8.0.12
         version: 8.0.12(@types/node@25.7.0)

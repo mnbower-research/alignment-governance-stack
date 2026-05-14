@@ -1,0 +1,108 @@
+{
+  "name": "AGS Before HTTP Request",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { proposal: { id: 'n8n-http-proposal', userRequest: 'Call an internal status endpoint.', tool: 'http.request', actionType: 'http_request', target: 'internal_status_endpoint', environment: 'staging', reversible: true, externalFacing: false, dataSensitivity: 'low', requiresApproval: false, knownApproval: false, metadata: { source: 'n8n' } }, runtimeAction: { id: 'n8n-http-proposal', userRequest: 'Call an internal status endpoint.', tool: 'http.request', actionType: 'http_request', target: 'internal_status_endpoint', environment: 'staging', reversible: true, externalFacing: false, dataSensitivity: 'low', requiresApproval: false, knownApproval: false, metadata: { source: 'n8n' } } } }];"
+      },
+      "id": "prepare-proposal",
+      "name": "Prepare Proposed HTTP Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { allowed: false, nextStep: 'escalate', decision: 'not_evaluated', reason: 'Replace this placeholder with AGS CLI output or a future internal AGS API wrapper. Do not run the HTTP Request node unless allowed is true.', governanceInput: $json } }];"
+      },
+      "id": "ags-check-placeholder",
+      "name": "Run AGS Governance Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.allowed }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "allowed-branch",
+      "name": "Allowed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://example.invalid/replace-with-real-url",
+        "options": {}
+      },
+      "id": "actual-http-request",
+      "name": "Actual HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1080, 220]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { stopped: true, nextStep: $json.nextStep, decision: $json.decision, reason: $json.reason } }];"
+      },
+      "id": "stop-or-escalate",
+      "name": "Stop Or Escalate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1080, 380]
+    }
+  ],
+  "connections": {
+    "Prepare Proposed HTTP Action": {
+      "main": [
+        [
+          {
+            "node": "Run AGS Governance Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run AGS Governance Check": {
+      "main": [
+        [
+          {
+            "node": "Allowed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Allowed?": {
+      "main": [
+        [
+          {
+            "node": "Actual HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop Or Escalate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "ags-template-v0.9.0"
+}

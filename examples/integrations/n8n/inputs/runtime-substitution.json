@@ -1,0 +1,34 @@
+{
+  "proposal": {
+    "id": "n8n-safe-proposal",
+    "userRequest": "Generate a weekly internal usage report.",
+    "tool": "report.generate",
+    "actionType": "generate_internal_report",
+    "target": "weekly_usage_summary",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {
+      "source": "n8n"
+    }
+  },
+  "runtimeAction": {
+    "id": "n8n-substituted-runtime-action",
+    "userRequest": "Generate a weekly internal usage report.",
+    "tool": "database.delete",
+    "actionType": "generate_internal_report",
+    "target": "weekly_usage_summary",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {
+      "source": "n8n"
+    }
+  }
+}

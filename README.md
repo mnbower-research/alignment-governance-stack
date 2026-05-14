@@ -12,7 +12,8 @@ Action must not outrun discernment.
 ## Current Stack
 
 ```text
-Company Alignment Profile Generator
+Integration Adapters
+-> Company Alignment Profile Generator
 -> Policy Profile with Hard Boundaries
 -> Authority Map / Approval Validation
 -> Human Participation Quality
@@ -21,9 +22,12 @@ Company Alignment Profile Generator
 -> AAG
 -> Runtime Binding
 -> Receipt
+-> Governance Memory / Internalization Layer
 -> Evaluation Suite
+-> Developer CLI
 ```
 
+- Integration Adapters translate external workflow and tool payloads into AGS governance inputs.
 - Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles and draft Authority Maps.
 - Policy Profiles define organization-specific governance rules.
 - Hard Boundaries enforce explicit "never automate" rules before actions reach AAG.
@@ -35,7 +39,9 @@ Company Alignment Profile Generator
 - AAG evaluates whether a proposed action should be allowed before execution.
 - Runtime Binding verifies the exact runtime action matches the permitted action.
 - Receipts preserve tamper-evident proof of the governance path.
+- Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
 - Evaluation Suite runs deterministic cross-stack scenarios.
+- Developer CLI runs local eval, governance, and receipt checks.
 
 ## Current Features
 
@@ -51,6 +57,8 @@ Company Alignment Profile Generator
 - Cross-stack deterministic eval suite
 - Company Alignment Profile Generator
 - Developer CLI for local evals, governance checks, and receipt verification
+- Integration Adapters foundation with n8n action mapping and workflow templates
+- Governance Memory receipt-history analysis with human-reviewable recommendations
 
 ## Package Map
 
@@ -66,6 +74,22 @@ Company Alignment Profile Generator
 - `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
 - `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs.
 - `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
+- `@alignment-governance-stack/integration-adapters`: edge adapters for workflow systems, starting with n8n payload mappers and response helpers.
+- `@alignment-governance-stack/governance-memory`: deterministic receipt-history pattern detection and human-reviewable governance recommendations.
+
+## Governance Memory
+
+Governance Memory analyzes receipts over time and recommends improvements for humans to review. It can identify repeated PGDL revisions, hard boundary blocks, missing authority approvals, rubber-stamp signals, runtime substitutions, invalid policies, repeated safe allows, and other governance patterns.
+
+It does not silently mutate Policy Profiles, Hard Boundaries, Authority Maps, or Human Participation policies.
+
+## Integration Adapters
+
+Integration Adapters help external workflow tools send proposed actions into AGS and receive workflow-friendly governance results back. v0.9.0 starts with n8n helpers and example workflow templates.
+
+Adapters do not execute actions, call networks, store data, or host an API. They normalize payloads and map AGS decisions back to integration-friendly JSON.
+
+See `docs/INTEGRATION_ADAPTERS.md` and `examples/integrations/n8n`.
 
 ## Developer CLI
 
@@ -76,6 +100,7 @@ corepack pnpm --filter @alignment-governance-stack/cli build
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
+corepack pnpm --filter @alignment-governance-stack/cli ags memory path/to/receipts.json
 ```
 
 See `docs/CLI.md` for command details and exit codes.
@@ -97,6 +122,8 @@ corepack pnpm -r exec npm pack --dry-run
 - AAG does not mature proposals.
 - Runtime Binding does not decide wisdom or policy.
 - Receipts do not execute or approve actions.
+- Governance Memory does not auto-update governance policy.
+- Integration Adapters do not execute actions or host a service.
 - Policy Profiles do not replace PGDL or AAG.
 - Hard Boundaries stop explicit organization-defined "never automate" actions before AAG.
 - Authority Map validates scoped approval evidence; it does not store approvals or replace AAG.
@@ -106,12 +133,12 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v0.8.0
+Current version: v1.0.0
 
 The core AGS spine is working:
 
 ```text
-Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Evaluation Suite
+Integration Adapters -> Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Governance Memory / Internalization Layer -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

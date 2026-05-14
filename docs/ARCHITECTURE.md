@@ -4,6 +4,7 @@ Alignment Governance Stack separates proposal maturation from execution approval
 
 ```text
 User goal
+-> Integration Adapters
 -> Company Alignment Profile Generator
 -> Draft Policy Profile
 -> Agent proposal
@@ -17,6 +18,7 @@ User goal
 -> Permit decision
 -> Runtime Binding
 -> Receipt
+-> Governance Memory / Internalization Layer
 -> Evaluation Suite
 -> Execution
 ```
@@ -24,6 +26,8 @@ User goal
 ## First End-to-End Spine
 
 `governance-core` connects the first real AGS flow.
+
+Integration Adapters sit at the edge of the stack. They translate workflow and tool payloads into AGS governance inputs, then map AGS governance results back into workflow-friendly responses. They do not execute external actions, store state, host APIs, or weaken any downstream gate.
 
 Company Alignment Profile Generator sits above Policy Profiles. It translates structured company context into a draft `PolicyProfile` for human review.
 
@@ -40,6 +44,8 @@ PGDL evaluates proposal maturity. Only proposals that PGDL forwards or resolves 
 AAG evaluates execution permission for the proposal it receives. It does not mature proposals and does not execute actions.
 
 Runtime Binding verifies the exact permitted action. Receipts preserve proof for the full governance path after the governance decision has been reached.
+
+Receipts feed Governance Memory. Governance Memory analyzes receipt history over time and produces human-reviewable recommendations for Policy Profiles, Hard Boundaries, Authority Maps, Human Participation policies, Runtime Binding investigation, and eval expansion. It is a feedback loop, not inline action execution, and it does not silently mutate governance behavior.
 
 The Eval Suite is a feedback layer around the stack, not an inline execution layer. It runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, and Receipts.
 
@@ -69,6 +75,7 @@ Original proposal
 -> Final governance decision
 -> Governance receipt
 -> Receipt hash
+-> Governance Memory analysis, if receipts are reviewed over time
 ```
 
 Receipts do not execute actions and do not approve execution. They answer the audit question: what proof remains?

@@ -22,6 +22,7 @@ Run commands through the package script:
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
+corepack pnpm --filter @alignment-governance-stack/cli ags memory path/to/receipts.json
 ```
 
 After build, the compiled binary can also be run directly:
@@ -30,6 +31,7 @@ After build, the compiled binary can also be run directly:
 node packages/cli/dist/cli.js help
 node packages/cli/dist/cli.js eval
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
+node packages/cli/dist/cli.js memory path/to/receipts.json
 ```
 
 ## Commands
@@ -107,6 +109,18 @@ Output includes:
 
 Reads a governance receipt JSON file and prints `hashGovernanceReceipt`.
 
+### `ags memory <receipts.json>`
+
+Reads a JSON array of governance receipts and runs Governance Memory analysis.
+
+Output includes:
+
+- receipt count
+- pattern count
+- recommendation count
+- top high-severity recommendations, when present
+- a note that all recommendations require human review
+
 ## Example Inputs
 
 Example inputs live under `examples/cli`:
@@ -115,6 +129,8 @@ Example inputs live under `examples/cli`:
 - `runtime-substitution-denied.json`
 - `hard-boundary-block.json`
 - `rubber-stamp-denied.json`
+
+Integration examples that can also be checked with `ags govern` live under `examples/integrations/n8n/inputs`.
 
 ## Exit Codes
 

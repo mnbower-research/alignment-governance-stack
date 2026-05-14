@@ -22,6 +22,7 @@ describe("ags cli", () => {
     expect(result.exitCode).toBe(0);
     expect(result.stdout).toContain("ags eval");
     expect(result.stdout).toContain("ags govern <input.json>");
+    expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
   });
 
@@ -117,6 +118,29 @@ describe("ags cli", () => {
 
     expect(result.exitCode).toBe(2);
     expect(result.stdout).toContain("valid: false");
+  });
+
+  it("memory command summarizes receipt history", () => {
+    const first = evaluateGovernedRuntimeActionWithReceipt({
+      proposal: safeInternalReport(),
+      runtimeAction: safeInternalReport(),
+      permitOptions: { issuedAt: "2026-05-12T10:00:00.000Z" },
+      receiptOptions: { id: "cli-test-memory-1", createdAt: "2026-05-12T10:00:01.000Z" }
+    });
+    const second = evaluateGovernedRuntimeActionWithReceipt({
+      proposal: safeInternalReport(),
+      runtimeAction: safeInternalReport(),
+      permitOptions: { issuedAt: "2026-05-12T10:01:00.000Z" },
+      receiptOptions: { id: "cli-test-memory-2", createdAt: "2026-05-12T10:01:01.000Z" }
+    });
+    const receiptPath = writeTempJson("receipt-history.json", [first.receipt, second.receipt]);
+
+    const result = runCli(["memory", receiptPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("AGS Governance Memory");
+    expect(result.stdout).toContain("receipt count: 2");
+    expect(result.stdout).toContain("human review");
   });
 
   it("missing file exits 1", () => {

@@ -1,13 +1,9 @@
 {
-  "name": "@alignment-governance-stack/cli",
-  "version": "0.8.0",
+  "name": "@alignment-governance-stack/integration-adapters",
+  "version": "0.9.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "bin": {
-    "ags": "./dist/cli.js",
-    "alignment-governance-stack": "./dist/cli.js"
-  },
   "files": [
     "dist",
     "README.md"
@@ -19,16 +15,12 @@
     }
   },
   "scripts": {
-    "ags": "node ./dist/cli.js",
     "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
-    "@alignment-governance-stack/eval-suite": "workspace:*",
     "@alignment-governance-stack/governance-core": "workspace:*",
-    "@alignment-governance-stack/governance-memory": "workspace:*",
-    "@alignment-governance-stack/receipts": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*"
   },
   "devDependencies": {

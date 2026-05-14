@@ -14,6 +14,8 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Company alignment profile generator package
 - Authority map package
 - Human participation package
+- Integration adapters package
+- Governance memory package
 - Eval suite package
 - Developer CLI package
 - Examples, docs, and eval fixtures
@@ -47,6 +49,22 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Local receipt verification and hashing commands
 - Example CLI inputs under `examples/cli`
 
+## v0.9.0
+
+- Integration Adapters foundation
+- n8n action input normalization into AGS proposals
+- n8n governance response mapping with workflow-friendly `nextStep`
+- n8n webhook helper for local library use
+- Example n8n workflow templates and input payloads under `examples/integrations/n8n`
+
+## v1.0.0
+
+- Governance Memory / Internalization Layer foundation
+- Deterministic receipt-history pattern detection
+- Human-reviewable recommendations for policy, hard boundaries, authority, participation, runtime binding, and evals
+- `ags memory <receipts.json>` CLI summary command
+- Documentation for safe internalization without automatic policy mutation
+
 ## Later
 
 - Real PGDL modules
@@ -59,5 +77,6 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Durable approval storage and signatures
 - Richer participation analytics
 - Dashboard
-- Integration adapters
+- Additional integration adapters
 - SOP and policy import for company alignment profiles
+- v1.1 eval expansion for Governance Memory trend and recommendation cases

@@ -1,0 +1,65 @@
+{
+  "name": "AGS Governance Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ags-governance",
+        "responseMode": "responseNode"
+      },
+      "id": "ags-webhook",
+      "name": "Receive Proposed Action",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { note: 'Pass this payload to AGS locally via CLI or a future internal API wrapper. AGS v0.9.0 does not provide a hosted API.', agsInput: $json } }];"
+      },
+      "id": "shape-payload",
+      "name": "Shape AGS Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { allowed: false, nextStep: 'escalate', decision: 'not_evaluated', reason: 'Wire this node to local AGS CLI output or a future internal AGS API wrapper before executing actions.', agsInput: $json.agsInput } }}"
+      },
+      "id": "respond-placeholder",
+      "name": "Respond With Governance Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [800, 300]
+    }
+  ],
+  "connections": {
+    "Receive Proposed Action": {
+      "main": [
+        [
+          {
+            "node": "Shape AGS Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shape AGS Payload": {
+      "main": [
+        [
+          {
+            "node": "Respond With Governance Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "ags-template-v0.9.0"
+}

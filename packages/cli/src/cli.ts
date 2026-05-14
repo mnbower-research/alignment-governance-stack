@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { runEvalCommand } from "./commands/eval.js";
 import { runGovernCommand } from "./commands/govern.js";
 import { runHelpCommand } from "./commands/help.js";
+import { runMemoryCommand } from "./commands/memory.js";
 import { runReceiptCommand } from "./commands/receipt.js";
 
 export interface CliResult {
@@ -37,6 +38,10 @@ export function runCli(args: string[]): CliResult {
 
     if (command === "receipt") {
       return runReceiptCommand(rest);
+    }
+
+    if (command === "memory") {
+      return runMemoryCommand(rest);
     }
 
     return {
