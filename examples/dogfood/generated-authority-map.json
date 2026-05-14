@@ -1,0 +1,40 @@
+{
+  "id": "ags.dogfood.authority",
+  "name": "AGS Dogfood Authority Map",
+  "version": "1.1.0",
+  "roles": [
+    {
+      "id": "maintainer",
+      "label": "Maintainer",
+      "scopes": [
+        { "id": "maintainer_file_edit", "tool": "file.edit", "maxDataSensitivity": "medium" },
+        { "id": "maintainer_git", "tool": "git.push", "maxDataSensitivity": "medium" }
+      ]
+    },
+    {
+      "id": "release_admin",
+      "label": "Release Admin",
+      "scopes": [
+        { "id": "release_npm_publish", "tool": "npm.publish", "actionType": "publish_package" },
+        { "id": "release_draft_review", "tool": "draft.create", "actionType": "create_draft_for_review" }
+      ]
+    },
+    {
+      "id": "security_admin",
+      "label": "Security Admin",
+      "scopes": [
+        { "id": "security_high_sensitivity", "maxDataSensitivity": "high" },
+        { "id": "security_authority_map", "tool": "file.edit", "actionType": "modify_authority_map" }
+      ]
+    },
+    {
+      "id": "documentation_owner",
+      "label": "Documentation Owner",
+      "scopes": [
+        { "id": "documentation_low_risk", "tool": "file.edit", "actionType": "update_documentation", "maxDataSensitivity": "low" },
+        { "id": "documentation_drafts", "tool": "draft.create", "actionType": "create_notes_draft" }
+      ]
+    }
+  ],
+  "metadata": { "source": "dogfood_workbench" }
+}

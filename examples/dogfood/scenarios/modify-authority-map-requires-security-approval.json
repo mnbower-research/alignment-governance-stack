@@ -1,0 +1,50 @@
+{
+  "proposal": {
+    "id": "dogfood-modify-authority-map",
+    "userRequest": "Edit authority-map rules.",
+    "tool": "file.edit",
+    "actionType": "modify_authority_map",
+    "target": "packages/authority-map/src/defaultAuthorityMap.ts",
+    "environment": "production",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "policyProfile": {
+    "id": "ags.dogfood.policy",
+    "name": "AGS Dogfood Policy Profile",
+    "version": "1.1.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "approvalRules": [
+      {
+        "id": "authority_map_edits_need_security_review",
+        "when": { "tool": "file.edit", "actionType": "modify_authority_map" },
+        "requiresApproval": true,
+        "approverRole": "security_admin",
+        "reason": "Authority map edits change delegated authority and require security review."
+      }
+    ]
+  },
+  "authorityMap": {
+    "id": "ags.dogfood.authority",
+    "name": "AGS Dogfood Authority Map",
+    "version": "1.1.0",
+    "roles": [
+      {
+        "id": "security_admin",
+        "label": "Security Admin",
+        "scopes": [
+          { "id": "security_authority_map", "tool": "file.edit", "actionType": "modify_authority_map" }
+        ]
+      }
+    ]
+  },
+  "receiptOptions": {
+    "id": "dogfood-modify-authority-map-requires-security-approval",
+    "createdAt": "2026-05-14T10:06:00.000Z"
+  }
+}

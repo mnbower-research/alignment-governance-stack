@@ -10,6 +10,7 @@ export function runHelpCommand(): CliResult {
       "  ags help",
       "  ags version",
       "  ags eval",
+      "  ags dogfood",
       "  ags govern <input.json> [--json]",
       "  ags memory <receipts.json>",
       "  ags receipt verify <receipt.json>",

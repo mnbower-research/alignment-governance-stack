@@ -1,6 +1,6 @@
 # Roadmap
 
-Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. The roadmap below separates completed milestones, the current stabilization pass, and likely future work without adding those future systems before they are requested.
+Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. The roadmap below separates completed milestones, the current hardening pass, and likely future work without adding those future systems before they are requested.
 
 ## Scaffold
 
@@ -94,18 +94,14 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
-### v1.0.1
-
-- Stabilization and release cleanup
-- Release history clarification
-- Full-stack demo examples
-- Documentation alignment after the first complete stack milestone
-
-## Next
-
 ### v1.1.0
 
-- End-to-End Demo Pack / Workbench
+- Dogfood Workbench Eval Pack hardening milestone
+- Realistic AGS development workflow scenarios
+- Repeatable dogfood eval suite and CLI command
+- Examples and receipt-history fixture for Governance Memory
+
+## Next
 
 ### v1.2.0
 
@@ -135,4 +131,4 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Dashboard
 - Additional integration adapters
 - SOP and policy import for company alignment profiles
-- v1.1 eval expansion for Governance Memory trend and recommendation cases
+- Governance Memory trend and recommendation eval expansion

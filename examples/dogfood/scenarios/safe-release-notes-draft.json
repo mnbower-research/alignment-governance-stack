@@ -1,0 +1,34 @@
+{
+  "proposal": {
+    "id": "dogfood-safe-release-notes-draft",
+    "userRequest": "Draft release notes for v1.1.0 without publishing.",
+    "tool": "draft.create",
+    "actionType": "create_notes_draft",
+    "target": "notes_v1_1_0",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": true,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "runtimeAction": {
+    "id": "dogfood-safe-release-notes-draft",
+    "userRequest": "Draft release notes for v1.1.0 without publishing.",
+    "tool": "draft.create",
+    "actionType": "create_notes_draft",
+    "target": "notes_v1_1_0",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": true,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "receiptOptions": {
+    "id": "dogfood-safe-release-notes-draft",
+    "createdAt": "2026-05-14T10:01:00.000Z"
+  }
+}

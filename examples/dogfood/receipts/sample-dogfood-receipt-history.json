@@ -1,0 +1,92 @@
+[
+  {
+    "id": "dogfood-memory-runtime-1",
+    "version": "ags.receipt.v0.1",
+    "createdAt": "2026-05-14T10:09:00.000Z",
+    "originalProposal": {
+      "id": "dogfood-safe-release-notes-draft",
+      "userRequest": "Draft release notes for v1.1.0 without publishing.",
+      "tool": "draft.create",
+      "actionType": "create_notes_draft",
+      "target": "notes_v1_1_0",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": { "source": "dogfood_workbench" }
+    },
+    "proposalSentToAag": {
+      "id": "dogfood-safe-release-notes-draft",
+      "userRequest": "Draft release notes for v1.1.0 without publishing.",
+      "tool": "draft.create",
+      "actionType": "create_notes_draft",
+      "target": "notes_v1_1_0",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": { "source": "dogfood_workbench" }
+    },
+    "runtimeBinding": {
+      "decision": "execution_denied",
+      "allowed": false,
+      "failures": [
+        { "code": "action_hash_mismatch", "reason": "Runtime action hash did not match permit." },
+        { "code": "tool_mismatch", "reason": "Runtime tool differed from permit." }
+      ],
+      "reasonForDecision": "Runtime substitution was denied."
+    },
+    "finalDecision": "execution_denied",
+    "reasonForDecision": "Runtime action did not match the issued permit.",
+    "receiptHash": "dogfood-memory-runtime-1"
+  },
+  {
+    "id": "dogfood-memory-runtime-2",
+    "version": "ags.receipt.v0.1",
+    "createdAt": "2026-05-14T10:10:00.000Z",
+    "originalProposal": {
+      "id": "dogfood-safe-release-notes-draft-2",
+      "userRequest": "Draft release notes for v1.1.0 without publishing.",
+      "tool": "draft.create",
+      "actionType": "create_notes_draft",
+      "target": "notes_v1_1_0",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": { "source": "dogfood_workbench" }
+    },
+    "proposalSentToAag": {
+      "id": "dogfood-safe-release-notes-draft-2",
+      "userRequest": "Draft release notes for v1.1.0 without publishing.",
+      "tool": "draft.create",
+      "actionType": "create_notes_draft",
+      "target": "notes_v1_1_0",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": { "source": "dogfood_workbench" }
+    },
+    "runtimeBinding": {
+      "decision": "execution_denied",
+      "allowed": false,
+      "failures": [
+        { "code": "action_hash_mismatch", "reason": "Runtime action hash did not match permit." },
+        { "code": "tool_mismatch", "reason": "Runtime tool differed from permit." }
+      ],
+      "reasonForDecision": "Runtime substitution was denied."
+    },
+    "finalDecision": "execution_denied",
+    "reasonForDecision": "Runtime action did not match the issued permit.",
+    "receiptHash": "dogfood-memory-runtime-2"
+  }
+]

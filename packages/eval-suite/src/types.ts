@@ -16,7 +16,8 @@ export type AgsEvalCategory =
   | "aag_block"
   | "runtime_binding_failure"
   | "receipt_integrity"
-  | "invalid_policy";
+  | "invalid_policy"
+  | "dogfood_workbench";
 
 export interface AgsEvalCase {
   id: string;
@@ -50,6 +51,8 @@ export interface AgsEvalExpected {
   blockedBeforeAag?: boolean;
   proposalSentTool?: string;
   proposalSentActionType?: string;
+  hardBoundaryTriggered?: boolean;
+  runtimeFailureCodes?: string[];
 }
 
 export interface AgsEvalActual {
@@ -64,6 +67,8 @@ export interface AgsEvalActual {
   proposalSentTool?: string;
   proposalSentActionType?: string;
   blockedBeforeAag?: boolean;
+  hardBoundaryTriggered?: boolean;
+  runtimeFailureCodes?: string[];
 }
 
 export interface AgsEvalResult {
@@ -82,4 +87,3 @@ export interface AgsEvalSuiteResult {
   failedCount: number;
   results: AgsEvalResult[];
 }
-

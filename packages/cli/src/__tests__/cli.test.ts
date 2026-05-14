@@ -21,6 +21,7 @@ describe("ags cli", () => {
 
     expect(result.exitCode).toBe(0);
     expect(result.stdout).toContain("ags eval");
+    expect(result.stdout).toContain("ags dogfood");
     expect(result.stdout).toContain("ags govern <input.json>");
     expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
@@ -28,6 +29,15 @@ describe("ags cli", () => {
 
   it("eval command runs built-in evals", () => {
     const result = runCli(["eval"]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("total:");
+    expect(result.stdout).toContain("passed:");
+    expect(result.stdout).toContain("failed: 0");
+  });
+
+  it("dogfood command runs built-in dogfood evals", () => {
+    const result = runCli(["dogfood"]);
 
     expect(result.exitCode).toBe(0);
     expect(result.stdout).toContain("total:");

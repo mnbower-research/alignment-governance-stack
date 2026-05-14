@@ -1,0 +1,9 @@
+{
+  "id": "dogfood-github-push-main-requires-approval",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "escalated_before_gate",
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

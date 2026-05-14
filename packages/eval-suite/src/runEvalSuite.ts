@@ -1,4 +1,5 @@
 import { builtInEvalCases } from "./evalCases.js";
+import { builtInDogfoodEvalCases } from "./dogfoodEvalCases.js";
 import { runEvalCase } from "./runEvalCase.js";
 import type { AgsEvalCase, AgsEvalSuiteResult } from "./types.js";
 
@@ -16,3 +17,8 @@ export function runEvalSuite(cases: AgsEvalCase[] = builtInEvalCases): AgsEvalSu
   };
 }
 
+export function runDogfoodEvalSuite(
+  cases: AgsEvalCase[] = builtInDogfoodEvalCases
+): AgsEvalSuiteResult {
+  return runEvalSuite(cases);
+}

@@ -21,6 +21,7 @@ Run commands through the package script:
 ```bash
 corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
+corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -31,6 +32,7 @@ After build, the compiled binary can also be run directly:
 ```bash
 node packages/cli/dist/cli.js help
 node packages/cli/dist/cli.js eval
+node packages/cli/dist/cli.js dogfood
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
 node packages/cli/dist/cli.js memory examples/demo/full-stack/receipt-history.json
@@ -41,6 +43,7 @@ node packages/cli/dist/cli.js memory examples/demo/full-stack/receipt-history.js
 - `ags help`
 - `ags version`
 - `ags eval`
+- `ags dogfood`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags receipt verify <receipt.json>`
@@ -65,6 +68,17 @@ Output includes:
 - passed
 - failed
 - failed case IDs and failure reasons, when failures exist
+
+### `ags dogfood`
+
+Runs the built-in Dogfood Workbench eval suite from `@alignment-governance-stack/eval-suite`.
+
+Output includes:
+
+- total
+- passed
+- failed
+- failed dogfood case IDs and reasons, when failures exist
 
 ### `ags govern <input.json>`
 
@@ -144,6 +158,8 @@ Example inputs live under `examples/cli`:
 Integration examples that can also be checked with `ags govern` live under `examples/integrations/n8n/inputs`.
 
 Full-stack demo inputs live under `examples/demo/full-stack`.
+
+Dogfood workbench scenarios live under `examples/dogfood/scenarios`.
 
 ## Exit Codes
 

@@ -24,7 +24,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.0.1 | Stabilization and Release Cleanup | Release history, docs, demo cleanup | Current |
+| v1.1.0 | Dogfood Workbench Eval Pack | Realistic AGS development evals | Current |
+| v1.0.1 | Stabilization and Release Cleanup | Release history, docs, demo cleanup | Complete |
 | v1.0.0 | First Complete Alignment Governance Stack | Governance Memory / Internalization Layer | Complete |
 | v0.9.0 | Integration Adapters | n8n adapter foundation | Complete |
 | v0.8.0 | Developer CLI | Local terminal access | Complete |

@@ -1,0 +1,56 @@
+{
+  "id": "ags.dogfood.policy",
+  "name": "AGS Dogfood Policy Profile",
+  "version": "1.1.0",
+  "defaultMode": "balanced",
+  "receiptRequired": true,
+  "tools": [
+    { "tool": "file.edit", "allowed": true, "requiresApproval": false },
+    { "tool": "file.delete", "allowed": true, "requiresApproval": true },
+    { "tool": "npm.publish", "allowed": true, "requiresApproval": true, "externalFacingAllowed": true },
+    { "tool": "git.push", "allowed": true, "requiresApproval": true, "externalFacingAllowed": true },
+    { "tool": "email.send", "allowed": true, "requiresApproval": true, "externalFacingAllowed": true },
+    { "tool": "draft.create", "allowed": true, "requiresApproval": false }
+  ],
+  "approvalRules": [
+    {
+      "id": "release_drafts_need_release_review",
+      "when": { "tool": "draft.create", "actionType": "create_draft_for_review" },
+      "requiresApproval": true,
+      "approverRole": "release_admin",
+      "reason": "External release or communication drafts require release authority review in dogfood workflows."
+    },
+    {
+      "id": "release_notes_drafts_are_low_risk",
+      "when": { "tool": "draft.create", "actionType": "create_notes_draft" },
+      "requiresApproval": false,
+      "reason": "Internal release-note drafts can be created without execution authority."
+    },
+    {
+      "id": "authority_map_edits_need_security_review",
+      "when": { "tool": "file.edit", "actionType": "modify_authority_map" },
+      "requiresApproval": true,
+      "approverRole": "security_admin",
+      "reason": "Authority map edits change delegated authority and require security review."
+    }
+  ],
+  "hardBoundaries": [
+    {
+      "id": "never_auto_delete_receipt_history",
+      "label": "Never auto-delete receipt history",
+      "when": { "targetIncludes": "receipts" },
+      "effect": "block",
+      "reason": "Receipt history is audit evidence and must not be automatically deleted.",
+      "source": "manual_policy"
+    },
+    {
+      "id": "never_auto_delete_ags_packages",
+      "label": "Never auto-delete AGS packages",
+      "when": { "targetIncludes": "packages/" },
+      "effect": "block",
+      "reason": "Package deletion requires explicit human-owned change control.",
+      "source": "manual_policy"
+    }
+  ],
+  "metadata": { "source": "dogfood_workbench" }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "dogfood-external-email-draft-first",
+  "category": "dogfood_workbench",
+  "expected": {
+    "proposalSentTool": "draft.create",
+    "proposalSentActionType": "create_draft_for_review",
+    "receiptValid": true
+  }
+}

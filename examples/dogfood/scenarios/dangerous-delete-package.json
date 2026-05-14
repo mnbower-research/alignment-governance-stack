@@ -1,0 +1,37 @@
+{
+  "proposal": {
+    "id": "dogfood-dangerous-delete-package",
+    "userRequest": "Delete the governance-memory package directory.",
+    "tool": "file.delete",
+    "actionType": "delete_directory",
+    "target": "packages/governance-memory",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": false,
+    "dataSensitivity": "medium",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "policyProfile": {
+    "id": "ags.dogfood.policy",
+    "name": "AGS Dogfood Policy Profile",
+    "version": "1.1.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "hardBoundaries": [
+      {
+        "id": "never_auto_delete_ags_packages",
+        "label": "Never auto-delete AGS packages",
+        "when": { "targetIncludes": "packages/" },
+        "effect": "block",
+        "reason": "Package deletion requires explicit human-owned change control.",
+        "source": "manual_policy"
+      }
+    ]
+  },
+  "receiptOptions": {
+    "id": "dogfood-dangerous-delete-package",
+    "createdAt": "2026-05-14T10:02:00.000Z"
+  }
+}

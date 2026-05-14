@@ -1,0 +1,9 @@
+{
+  "id": "dogfood-modify-authority-map-requires-security-approval",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "escalated_before_gate",
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

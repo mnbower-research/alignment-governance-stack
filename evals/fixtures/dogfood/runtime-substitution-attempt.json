@@ -1,0 +1,10 @@
+{
+  "id": "dogfood-runtime-substitution-attempt",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "execution_denied",
+    "runtimeAllowed": false,
+    "runtimeFailureCodes": ["action_hash_mismatch", "tool_mismatch"],
+    "receiptValid": true
+  }
+}

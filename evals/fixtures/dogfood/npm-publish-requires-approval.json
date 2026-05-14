@@ -1,0 +1,9 @@
+{
+  "id": "dogfood-npm-publish-requires-approval",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "approval_required_by_authority",
+    "authorityDecision": "approval_missing",
+    "receiptValid": true
+  }
+}

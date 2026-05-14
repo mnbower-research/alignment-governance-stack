@@ -1,0 +1,9 @@
+{
+  "id": "dogfood-hard-boundary-delete-receipts",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "blocked_by_policy",
+    "hardBoundaryTriggered": true,
+    "receiptValid": true
+  }
+}

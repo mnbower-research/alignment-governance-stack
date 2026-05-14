@@ -1,0 +1,50 @@
+{
+  "proposal": {
+    "id": "dogfood-npm-publish-requires-approval",
+    "userRequest": "Publish governance-core to npm.",
+    "tool": "npm.publish",
+    "actionType": "publish_package",
+    "target": "@alignment-governance-stack/governance-core",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": true,
+    "dataSensitivity": "low",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "policyProfile": {
+    "id": "ags.dogfood.policy",
+    "name": "AGS Dogfood Policy Profile",
+    "version": "1.1.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "approvalRules": [
+      {
+        "id": "release_drafts_need_release_review",
+        "when": { "tool": "draft.create", "actionType": "create_draft_for_review" },
+        "requiresApproval": true,
+        "approverRole": "release_admin",
+        "reason": "External release or communication drafts require release authority review in dogfood workflows."
+      }
+    ]
+  },
+  "authorityMap": {
+    "id": "ags.dogfood.authority",
+    "name": "AGS Dogfood Authority Map",
+    "version": "1.1.0",
+    "roles": [
+      {
+        "id": "release_admin",
+        "label": "Release Admin",
+        "scopes": [
+          { "id": "release_draft_review", "tool": "draft.create", "actionType": "create_draft_for_review" }
+        ]
+      }
+    ]
+  },
+  "receiptOptions": {
+    "id": "dogfood-npm-publish-requires-approval",
+    "createdAt": "2026-05-14T10:03:00.000Z"
+  }
+}

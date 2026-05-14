@@ -40,6 +40,12 @@ export function runEvalCase(evalCase: AgsEvalCase): AgsEvalResult {
       : {}),
     ...(governance.proposalSentToAag?.actionType !== undefined
       ? { proposalSentActionType: governance.proposalSentToAag.actionType }
+      : {}),
+    ...(governance.resolvedPolicy?.hardBoundaryTriggered !== undefined
+      ? { hardBoundaryTriggered: governance.resolvedPolicy.hardBoundaryTriggered }
+      : {}),
+    ...(governance.runtimeBinding?.failures !== undefined
+      ? { runtimeFailureCodes: governance.runtimeBinding.failures.map((failure) => failure.code).sort() }
       : {})
   };
   const failures = compareExpected(evalCase.expected, actual);
@@ -114,6 +120,16 @@ function compareExpected(
     expected.proposalSentActionType,
     actual.proposalSentActionType
   );
+  compareField(failures, "hardBoundaryTriggered", expected.hardBoundaryTriggered, actual.hardBoundaryTriggered);
+
+  if (expected.runtimeFailureCodes !== undefined) {
+    const actualCodes = actual.runtimeFailureCodes ?? [];
+    for (const expectedCode of expected.runtimeFailureCodes) {
+      if (!actualCodes.includes(expectedCode)) {
+        failures.push(`Expected runtimeFailureCodes to include ${expectedCode}.`);
+      }
+    }
+  }
 
   return failures;
 }

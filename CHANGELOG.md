@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.0 - Dogfood Workbench Eval Pack
+
+- Adds realistic AGS development workflow scenarios under `examples/dogfood`.
+- Adds `builtInDogfoodEvalCases` and `runDogfoodEvalSuite`.
+- Adds `ags dogfood` CLI command.
+- Adds dogfood fixture artifacts under `evals/fixtures/dogfood`.
+- Documents dogfood as repeatable proof that the stack handles realistic internal workflows without executing real actions.
+
 ## v1.0.1 - Stabilization and Release Cleanup
 
 - Clarifies release history after the first complete stack milestone.

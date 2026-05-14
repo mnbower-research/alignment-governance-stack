@@ -1,0 +1,8 @@
+{
+  "id": "dogfood-safe-release-notes-draft",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "execution_allowed",
+    "receiptValid": true
+  }
+}

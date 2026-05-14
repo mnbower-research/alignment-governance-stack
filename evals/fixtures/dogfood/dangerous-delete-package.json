@@ -1,0 +1,10 @@
+{
+  "id": "dogfood-dangerous-delete-package",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "blocked_by_policy",
+    "hardBoundaryTriggered": true,
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

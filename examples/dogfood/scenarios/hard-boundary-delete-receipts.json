@@ -1,0 +1,37 @@
+{
+  "proposal": {
+    "id": "dogfood-hard-boundary-delete-receipts",
+    "userRequest": "Delete receipt history.",
+    "tool": "file.delete",
+    "actionType": "delete_records",
+    "target": "receipts/history",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": false,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "policyProfile": {
+    "id": "ags.dogfood.policy",
+    "name": "AGS Dogfood Policy Profile",
+    "version": "1.1.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "hardBoundaries": [
+      {
+        "id": "never_auto_delete_receipt_history",
+        "label": "Never auto-delete receipt history",
+        "when": { "targetIncludes": "receipts" },
+        "effect": "block",
+        "reason": "Receipt history is audit evidence and must not be automatically deleted.",
+        "source": "manual_policy"
+      }
+    ]
+  },
+  "receiptOptions": {
+    "id": "dogfood-hard-boundary-delete-receipts",
+    "createdAt": "2026-05-14T10:07:00.000Z"
+  }
+}

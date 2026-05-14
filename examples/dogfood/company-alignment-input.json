@@ -1,0 +1,155 @@
+{
+  "id": "ags-dogfood",
+  "name": "AGS Development Governance",
+  "organization": "Alignment Governance Stack",
+  "description": "Dogfood governance profile for AGS development workflows.",
+  "defaultMode": "balanced",
+  "values": [
+    {
+      "id": "preserve_human_agency",
+      "label": "Preserve human agency"
+    },
+    {
+      "id": "proposal_before_action",
+      "label": "Proposal before action"
+    },
+    {
+      "id": "proof_before_trust",
+      "label": "Proof before trust"
+    },
+    {
+      "id": "no_silent_governance_mutation",
+      "label": "No silent governance mutation"
+    }
+  ],
+  "roles": [
+    {
+      "id": "maintainer",
+      "label": "Maintainer",
+      "canApprove": ["file.edit", "git.push"]
+    },
+    {
+      "id": "release_admin",
+      "label": "Release Admin",
+      "canApprove": ["npm.publish", "draft.create"]
+    },
+    {
+      "id": "security_admin",
+      "label": "Security Admin",
+      "canApprove": ["file.edit", "file.delete", "authority_map"]
+    },
+    {
+      "id": "documentation_owner",
+      "label": "Documentation Owner",
+      "canApprove": ["file.edit", "draft.create"]
+    }
+  ],
+  "tools": [
+    {
+      "tool": "file.edit",
+      "allowed": true,
+      "requiresApproval": false,
+      "notes": "Approval required through policy for high-sensitivity governance files."
+    },
+    {
+      "tool": "file.delete",
+      "allowed": true,
+      "requiresApproval": true,
+      "destructive": true
+    },
+    {
+      "tool": "npm.publish",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "destructive": true
+    },
+    {
+      "tool": "git.push",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true
+    },
+    {
+      "tool": "email.send",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true
+    },
+    {
+      "tool": "draft.create",
+      "allowed": true,
+      "requiresApproval": false
+    }
+  ],
+  "dataClasses": [
+    {
+      "id": "public_docs",
+      "label": "Public docs",
+      "sensitivity": "low"
+    },
+    {
+      "id": "governance_policy",
+      "label": "Governance policy",
+      "sensitivity": "high",
+      "requiresApproval": true
+    },
+    {
+      "id": "receipt_history",
+      "label": "Receipt history",
+      "sensitivity": "high",
+      "requiresApproval": true
+    }
+  ],
+  "environments": [
+    {
+      "id": "staging",
+      "label": "Staging"
+    },
+    {
+      "id": "production",
+      "label": "Production",
+      "productionLike": true,
+      "requiresApprovalForIrreversible": true,
+      "requiresApprovalForExternalFacing": true,
+      "requiresApprovalForHighSensitivity": true
+    }
+  ],
+  "decisionBoundaries": [
+    {
+      "id": "never_delete_receipt_history",
+      "label": "Never auto-delete receipt history",
+      "targetIncludes": "receipts",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_delete_ags_packages",
+      "label": "Never auto-delete AGS packages",
+      "targetIncludes": "packages/",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "npm_publish_release_authority",
+      "label": "Never publish npm packages without release authority",
+      "tool": "npm.publish",
+      "requiresHumanApproval": true,
+      "approverRole": "release_admin"
+    },
+    {
+      "id": "authority_map_security_approval",
+      "label": "Never mutate authority maps without security approval",
+      "actionType": "modify_authority_map",
+      "requiresHumanApproval": true,
+      "approverRole": "security_admin"
+    },
+    {
+      "id": "external_email_draft_first",
+      "label": "External emails should draft before send",
+      "tool": "email.send",
+      "externalFacing": true,
+      "requiresHumanApproval": true
+    }
+  ]
+}

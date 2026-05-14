@@ -1,0 +1,8 @@
+{
+  "id": "dogfood-safe-readme-update",
+  "category": "dogfood_workbench",
+  "expected": {
+    "finalDecision": "execution_allowed",
+    "receiptValid": true
+  }
+}

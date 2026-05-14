@@ -1,0 +1,44 @@
+{
+  "proposal": {
+    "id": "dogfood-safe-readme-update",
+    "userRequest": "Update README documentation for the v1.1 dogfood workbench.",
+    "tool": "file.edit",
+    "actionType": "update_documentation",
+    "target": "README.md",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": true,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "runtimeAction": {
+    "id": "dogfood-safe-readme-update",
+    "userRequest": "Update README documentation for the v1.1 dogfood workbench.",
+    "tool": "file.edit",
+    "actionType": "update_documentation",
+    "target": "README.md",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": true,
+    "metadata": { "source": "dogfood_workbench" }
+  },
+  "policyProfile": {
+    "id": "ags.dogfood.policy",
+    "name": "AGS Dogfood Policy Profile",
+    "version": "1.1.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "tools": [
+      { "tool": "file.edit", "allowed": true, "requiresApproval": false }
+    ]
+  },
+  "receiptOptions": {
+    "id": "dogfood-safe-readme-update",
+    "createdAt": "2026-05-14T10:00:00.000Z"
+  }
+}
