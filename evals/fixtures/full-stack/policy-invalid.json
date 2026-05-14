@@ -1,0 +1,9 @@
+{
+  "id": "policy-invalid",
+  "category": "invalid_policy",
+  "expected": {
+    "finalDecision": "policy_invalid",
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

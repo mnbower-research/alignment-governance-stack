@@ -1,0 +1,10 @@
+{
+  "id": "hard-boundary-block",
+  "category": "policy_block",
+  "expected": {
+    "finalDecision": "blocked_by_policy",
+    "policyBlocked": true,
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

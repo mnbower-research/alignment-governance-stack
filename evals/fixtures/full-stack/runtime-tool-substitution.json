@@ -1,0 +1,9 @@
+{
+  "id": "runtime-tool-substitution",
+  "category": "runtime_binding_failure",
+  "expected": {
+    "finalDecision": "execution_denied",
+    "runtimeAllowed": false,
+    "receiptValid": true
+  }
+}

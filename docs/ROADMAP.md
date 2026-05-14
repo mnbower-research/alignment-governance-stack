@@ -14,6 +14,7 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Company alignment profile generator package
 - Authority map package
 - Human participation package
+- Eval suite package
 - Examples, docs, and eval fixtures
 
 ## v0.5.0
@@ -30,13 +31,20 @@ Alignment Governance Stack is currently scaffold-only. The roadmap below names l
 - Optional governance-core participation quality checks before AAG
 - Receipt preservation for participation quality results
 
+## v0.7.0
+
+- Evaluation Suite Expansion
+- Built-in deterministic cross-stack eval cases
+- Eval result summarization
+- Full-stack fixture artifacts under `evals/fixtures/full-stack`
+
 ## Later
 
 - Real PGDL modules
 - Real AAG detector policies
 - Durable receipts
 - Runtime Binding integration
-- Evaluation harness
+- Persistent eval history
 - Policy compiler
 - Human review workflow for generated company profiles
 - Durable approval storage and signatures

@@ -1,0 +1,10 @@
+{
+  "id": "missing-authority-approval",
+  "category": "authority_failure",
+  "expected": {
+    "finalDecision": "approval_required_by_authority",
+    "authorityDecision": "approval_missing",
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "high-sensitive-external-send",
+  "category": "pgdl_revision",
+  "expected": {
+    "finalDecision": "approval_required_by_aag",
+    "pgdlDecision": "revise_before_aag",
+    "proposalSentTool": "draft.create",
+    "proposalSentActionType": "create_draft_for_review",
+    "receiptValid": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "rubber-stamp-approval",
+  "category": "participation_failure",
+  "expected": {
+    "finalDecision": "insufficient_human_participation",
+    "participationDecision": "likely_rubber_stamp",
+    "blockedBeforeAag": true,
+    "receiptValid": true
+  }
+}

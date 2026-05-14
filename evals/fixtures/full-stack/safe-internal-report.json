@@ -1,0 +1,10 @@
+{
+  "id": "safe-internal-report",
+  "category": "safe_path",
+  "expected": {
+    "finalDecision": "execution_allowed",
+    "pgdlDecision": "forward_to_aag",
+    "runtimeAllowed": true,
+    "receiptValid": true
+  }
+}

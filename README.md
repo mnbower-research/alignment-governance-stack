@@ -46,6 +46,7 @@ Company Alignment Profile Generator
 - Hard Boundary Policy Compiler for explicit `neverAutomate` rules
 - Authority Map and scoped approval validation
 - Human Participation Quality rubber-stamp detection
+- Cross-stack deterministic eval suite
 - Company Alignment Profile Generator
 
 ## Package Map
@@ -59,6 +60,7 @@ Company Alignment Profile Generator
 - `@alignment-governance-stack/policy-profiles`: organization-specific governance rules, hard boundaries, and deterministic policy resolution.
 - `@alignment-governance-stack/authority-map`: role, scope, and approval evidence validation for governed actions.
 - `@alignment-governance-stack/human-participation`: deterministic evaluation of meaningful participation and likely rubber-stamping.
+- `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
 - `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs.
 
 ## Basic Commands
@@ -87,7 +89,7 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v0.6.0
+Current version: v0.7.0
 
 The core AGS spine is working:
 
@@ -96,4 +98,3 @@ Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Au
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.
-

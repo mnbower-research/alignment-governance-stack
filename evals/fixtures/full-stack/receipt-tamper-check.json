@@ -1,0 +1,8 @@
+{
+  "id": "receipt-tamper-check",
+  "category": "receipt_integrity",
+  "expected": {
+    "receiptValid": false
+  },
+  "note": "Tamper behavior is covered in eval-suite unit tests through the receipts API."
+}

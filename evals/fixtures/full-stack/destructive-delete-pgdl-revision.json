@@ -1,0 +1,10 @@
+{
+  "id": "destructive-delete-pgdl-revision",
+  "category": "pgdl_revision",
+  "expected": {
+    "pgdlDecision": "revise_before_aag",
+    "proposalSentTool": "review.generate",
+    "proposalSentActionType": "generate_review_packet",
+    "receiptValid": true
+  }
+}

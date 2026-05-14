@@ -40,6 +40,8 @@ AAG evaluates execution permission for the proposal it receives. It does not mat
 
 Runtime Binding verifies the exact permitted action. Receipts preserve proof for the full governance path after the governance decision has been reached.
 
+The Eval Suite is a feedback layer around the stack, not an inline execution layer. It runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, and Receipts.
+
 ## Runtime-Bound Governance Flow
 
 PGDL matures the proposal.
