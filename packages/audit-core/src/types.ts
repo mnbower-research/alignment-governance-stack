@@ -4,6 +4,12 @@ export type TaxonomySeverity = Exclude<AuditSeverity, "info">;
 
 export type AuditConfidence = "low" | "medium" | "high";
 
+export type AuditMode =
+  | "public_source_review"
+  | "client_provided_evidence_review"
+  | "internal_self_audit"
+  | "workflow_review";
+
 export type AuditFindingStatus =
   | "potential_signal"
   | "requires_verification"
@@ -39,8 +45,18 @@ export interface TheaterSignalTaxonomyEntry {
   defaultSeverity: TaxonomySeverity;
   description: string;
   whyItMatters: string;
+  defaultRemediation: string;
   defaultAuditQuestions: string[];
   recommendedRemediations: string[];
+  mapsToControl?:
+    | "PGDL"
+    | "AAG"
+    | "Runtime Binding"
+    | "Receipts"
+    | "Authority Map"
+    | "Human Participation"
+    | "Governance Memory"
+    | "Alignment Gap Detector";
 }
 
 export interface AuditEvidenceRef {
@@ -95,9 +111,35 @@ export interface RemediationPlanItem {
     | "Alignment Gap Detector";
 }
 
+export interface SeverityDefinitions {
+  critical: string;
+  high: string;
+  medium: string;
+  low: string;
+}
+
+export interface ConfidenceDefinitions {
+  high: string;
+  medium: string;
+  low: string;
+}
+
+export interface RemediationSummary {
+  overview: string;
+  items: RemediationPlanItem[];
+}
+
+export interface SelfAuditDisclosure {
+  scopeDisclosure: string;
+  strengths: string[];
+  watchItems: string[];
+  nonCertificationStatement: string;
+}
+
 export interface GovernanceRealityReport {
   reportId: string;
   generatedAt: string;
+  auditMode: AuditMode;
   subject: {
     organizationName?: string;
     systemName?: string;
@@ -106,6 +148,10 @@ export interface GovernanceRealityReport {
   };
   disclaimer: string;
   executiveSummary: string;
+  limitations: string[];
+  methodology: string[];
+  severityDefinitions: SeverityDefinitions;
+  confidenceDefinitions: ConfidenceDefinitions;
   posture: {
     overallStatus:
       | "insufficient_evidence"
@@ -119,6 +165,9 @@ export interface GovernanceRealityReport {
   findings: AuditFinding[];
   agencyChainMap?: AgencyChainMap;
   remediationPlan: RemediationPlanItem[];
+  remediationSummary: RemediationSummary;
+  evidenceAppendix: AuditEvidenceRef[];
+  selfAuditDisclosure?: SelfAuditDisclosure;
   appendices?: {
     evidenceRefs: AuditEvidenceRef[];
     rawInputs?: unknown;
@@ -139,12 +188,20 @@ export interface AuditValidationResult {
 export interface SimplifiedAuditReportInput {
   reportId?: string;
   generatedAt?: string;
+  auditMode?: AuditMode;
   subject: GovernanceRealityReport["subject"];
   executiveSummary?: string;
+  limitations?: string[];
+  methodology?: string[];
+  severityDefinitions?: SeverityDefinitions;
+  confidenceDefinitions?: ConfidenceDefinitions;
   posture?: Partial<GovernanceRealityReport["posture"]>;
   findings: AuditFinding[];
   agencyChainMap?: AgencyChainMap;
   remediationPlan?: RemediationPlanItem[];
+  remediationSummary?: RemediationSummary;
+  evidenceAppendix?: AuditEvidenceRef[];
+  selfAuditDisclosure?: SelfAuditDisclosure;
   appendices?: GovernanceRealityReport["appendices"];
   rawInputs?: unknown;
 }

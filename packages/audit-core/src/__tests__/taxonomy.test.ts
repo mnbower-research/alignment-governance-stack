@@ -14,7 +14,12 @@ describe("theater signal taxonomy", () => {
 
   it("includes audit questions and recommended remediations for every entry", () => {
     expect(THEATER_SIGNAL_TAXONOMY.every((entry) => entry.defaultAuditQuestions.length > 0)).toBe(true);
+    expect(THEATER_SIGNAL_TAXONOMY.every((entry) => entry.defaultRemediation.length > 0)).toBe(true);
     expect(THEATER_SIGNAL_TAXONOMY.every((entry) => entry.recommendedRemediations.length > 0)).toBe(true);
+  });
+
+  it("maps every theater signal to a remediation control surface", () => {
+    expect(THEATER_SIGNAL_TAXONOMY.every((entry) => entry.mapsToControl !== undefined)).toBe(true);
   });
 
   it("does not use prohibited accusatory wording", () => {

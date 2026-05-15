@@ -5,17 +5,12 @@ import type {
   GovernanceRealityReport,
   RemediationPlanItem
 } from "./types.js";
-
-export const DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER =
-  "This report identifies potential governance theater signals and evidence gaps based on available inputs. It is not a legal conclusion, compliance certification, accusation of wrongdoing, or finding of unsafe operation. All findings require human review and verification before external use.";
+import { NON_ACCUSATORY_CLOSING_NOTE } from "./standardLanguage.js";
+import { getTheaterSignalById } from "./taxonomy.js";
 
 export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityReport): string {
   return [
     "# Governance Reality Report",
-    "",
-    "## Professional Disclaimer",
-    "",
-    report.disclaimer,
     "",
     "## Executive Summary",
     "",
@@ -25,7 +20,19 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     renderAuditScope(report),
     "",
-    "## Governance Reality Posture",
+    "## Audit Mode",
+    "",
+    formatToken(report.auditMode),
+    "",
+    "## Methodology",
+    "",
+    renderStringList(report.methodology),
+    "",
+    "## Limitations",
+    "",
+    renderStringList([report.disclaimer, ...report.limitations]),
+    "",
+    "## Overall Assessment",
     "",
     renderPosture(report),
     "",
@@ -33,17 +40,32 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     renderAgencyChainMap(report.agencyChainMap),
     "",
-    "## Key Findings",
+    "## Finding Summary",
+    "",
+    renderFindingSummary(report.findings),
+    "",
+    "## Severity and Confidence Definitions",
+    "",
+    renderSeverityAndConfidenceDefinitions(report),
+    "",
+    "## Findings",
     "",
     renderFindings(report.findings),
     "",
-    "## Remediation Plan",
+    "## Remediation Summary",
     "",
-    renderRemediationPlan(report.remediationPlan),
+    renderRemediationSummary(report),
     "",
     "## Evidence Appendix",
     "",
-    renderEvidenceAppendix(report.appendices?.evidenceRefs ?? collectEvidenceRefs(report.findings)),
+    renderEvidenceAppendix(report.evidenceAppendix),
+    ...(report.selfAuditDisclosure !== undefined
+      ? ["", "## Self-Audit Disclosure", "", renderSelfAuditDisclosure(report)]
+      : []),
+    "",
+    "## Non-Accusatory Closing Note",
+    "",
+    NON_ACCUSATORY_CLOSING_NOTE,
     ""
   ].join("\n");
 }
@@ -104,21 +126,25 @@ function renderAgencyChainMap(agencyChainMap: AgencyChainMap | undefined): strin
 
 function renderFindings(findings: AuditFinding[]): string {
   if (findings.length === 0) {
-    return "No key findings were supplied for this local report.";
+    return "No findings were supplied for this local report.";
   }
 
   return findings.map(renderFinding).join("\n\n");
 }
 
 function renderFinding(finding: AuditFinding): string {
+  const taxonomyEntry = getTheaterSignalById(finding.taxonomyId);
+  const riskSurface = taxonomyEntry?.category ?? "unmapped";
+
   return [
-    `### ${finding.id}: ${finding.title}`,
+    `### ${finding.id} - ${finding.title}`,
     "",
     `- Finding ID: ${finding.id}`,
     `- Taxonomy ID: ${finding.taxonomyId}`,
     `- Severity: ${formatToken(finding.severity)}`,
     `- Confidence: ${formatToken(finding.confidence)}`,
     `- Status: ${formatToken(finding.status)}`,
+    `- Category / risk surface: ${formatToken(riskSurface)}`,
     `- Summary: ${finding.summary}`,
     "",
     "**Observation**",
@@ -129,17 +155,25 @@ function renderFinding(finding: AuditFinding): string {
     "",
     finding.whyItMatters,
     "",
-    "**Audit Questions**",
+    "**Evidence**",
+    "",
+    renderEvidenceReferences(finding.evidenceRefs),
+    "",
+    "**Audit Question**",
     "",
     renderStringList(finding.auditQuestions),
     "",
     "**Recommended Remediation**",
     "",
-    renderStringList(finding.recommendedRemediations),
+    renderStringList(finding.recommendedRemediations)
+  ].join("\n");
+}
+
+function renderRemediationSummary(report: GovernanceRealityReport): string {
+  return [
+    report.remediationSummary.overview,
     "",
-    "**Evidence References**",
-    "",
-    renderEvidenceReferences(finding.evidenceRefs)
+    renderRemediationPlan(report.remediationSummary.items.length > 0 ? report.remediationSummary.items : report.remediationPlan)
   ].join("\n");
 }
 
@@ -174,7 +208,7 @@ function renderEvidenceReferences(evidenceRefs: AuditEvidenceRef[]): string {
       const details = [
         `type: ${evidenceRef.type}`,
         evidenceRef.sourcePath !== undefined ? `source: ${evidenceRef.sourcePath}` : undefined,
-        evidenceRef.excerpt !== undefined ? `excerpt: ${evidenceRef.excerpt}` : undefined
+        evidenceRef.excerpt !== undefined ? `quoted excerpt: ${evidenceRef.excerpt}` : undefined
       ].filter((detail): detail is string => detail !== undefined);
 
       return `- ${evidenceRef.id}: ${evidenceRef.title} (${details.join("; ")})`;
@@ -182,20 +216,64 @@ function renderEvidenceReferences(evidenceRefs: AuditEvidenceRef[]): string {
     .join("\n");
 }
 
-function renderStringList(values: string[]): string {
-  return values.map((value) => `- ${value}`).join("\n");
-}
-
-function collectEvidenceRefs(findings: AuditFinding[]): AuditEvidenceRef[] {
-  const evidenceRefsById = new Map<string, AuditEvidenceRef>();
-
-  for (const finding of findings) {
-    for (const evidenceRef of finding.evidenceRefs) {
-      evidenceRefsById.set(evidenceRef.id, evidenceRef);
-    }
+function renderFindingSummary(findings: AuditFinding[]): string {
+  if (findings.length === 0) {
+    return "No findings were supplied. This should not be read as certification; it only means no finding objects were provided for this report.";
   }
 
-  return [...evidenceRefsById.values()];
+  const counts = new Map<string, number>();
+  for (const finding of findings) {
+    counts.set(finding.severity, (counts.get(finding.severity) ?? 0) + 1);
+  }
+
+  return ["critical", "high", "medium", "low", "info"]
+    .filter((severity) => counts.has(severity))
+    .map((severity) => `- ${formatToken(severity)}: ${counts.get(severity)}`)
+    .join("\n");
+}
+
+function renderSeverityAndConfidenceDefinitions(report: GovernanceRealityReport): string {
+  return [
+    "**Severity**",
+    "",
+    `- Critical: ${report.severityDefinitions.critical}`,
+    `- High: ${report.severityDefinitions.high}`,
+    `- Medium: ${report.severityDefinitions.medium}`,
+    `- Low: ${report.severityDefinitions.low}`,
+    "",
+    "**Confidence**",
+    "",
+    `- High: ${report.confidenceDefinitions.high}`,
+    `- Medium: ${report.confidenceDefinitions.medium}`,
+    `- Low: ${report.confidenceDefinitions.low}`
+  ].join("\n");
+}
+
+function renderSelfAuditDisclosure(report: GovernanceRealityReport): string {
+  const disclosure = report.selfAuditDisclosure;
+  if (disclosure === undefined) {
+    return "";
+  }
+
+  return [
+    disclosure.scopeDisclosure,
+    "",
+    "**Strengths**",
+    "",
+    renderStringList(disclosure.strengths),
+    "",
+    "**Watch Items / Limitations**",
+    "",
+    renderStringList(disclosure.watchItems),
+    "",
+    "**Non-Certification Statement**",
+    "",
+    disclosure.nonCertificationStatement
+  ].join("\n");
+}
+
+function renderStringList(values: string[]): string {
+  return values.map((value) => `- ${value}`).join("\n");
 }
 
 function pushOptional(lines: string[], label: string, value: string | undefined): void {

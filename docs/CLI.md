@@ -42,6 +42,7 @@ node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial
 node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial-governance.json --json
 node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json
 node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
+node packages/cli/dist/cli.js audit-report examples/audit-report/ags-self-audit.json --out .tmp/ags-self-audit.md
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
@@ -185,6 +186,14 @@ Input may be either:
 Readable output is Markdown by default. Use `--json` for the normalized typed report. Use `--out report.md` to write Markdown to a file.
 
 The command does not call networks, execute actions, store data, or use model calls.
+
+Rendered reports include audit mode, methodology, limitations, overall assessment, finding summary, severity and confidence definitions, findings, remediation summary, evidence appendix, optional self-audit disclosure, and a non-accusatory closing note.
+
+Self-audit example:
+
+```bash
+node packages/cli/dist/cli.js audit-report examples/audit-report/ags-self-audit.json --out .tmp/ags-self-audit.md
+```
 
 Exit behavior:
 

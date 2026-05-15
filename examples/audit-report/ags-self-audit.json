@@ -1,0 +1,172 @@
+{
+  "reportId": "grr-ags-self-audit-v1-5-0",
+  "generatedAt": "2026-05-15T12:00:00.000Z",
+  "auditMode": "internal_self_audit",
+  "subject": {
+    "organizationName": "Alignment Governance Stack",
+    "systemName": "Alignment Governance Stack v1.5.0",
+    "workflowName": "Governance Reality Report foundation",
+    "auditScope": "Internal self-audit of AGS v1.5.0 audit/reporting foundation, based on repository evidence and local deterministic examples."
+  },
+  "executiveSummary": "AGS v1.5.0 demonstrates a working governance spine and a first Governance Reality Report foundation. The self-audit identifies meaningful strengths in proposal scrutiny, action authorization, runtime binding, receipts, red-team and dogfood evals, and audit report generation. It also records watch items where evidence, integration depth, external review, and productized audit workflows remain incomplete.",
+  "posture": {
+    "overallStatus": "partially_supported",
+    "governanceRealityScore": 74,
+    "confidence": "medium"
+  },
+  "findings": [
+    {
+      "id": "F-AGS-SELF-001",
+      "taxonomyId": "TG-003",
+      "title": "Audit-core adapter coverage is foundational",
+      "severity": "medium",
+      "confidence": "high",
+      "status": "requires_verification",
+      "summary": "Runtime Binding exists in AGS, but the audit-core adapter layer is not yet deeply integrated with every package output.",
+      "observation": "The repository includes Runtime Binding and a lightweight audit adapter foundation. The self-audit does not demonstrate full conversion coverage for every AGS output shape.",
+      "whyItMatters": "A professional auditor workflow benefits from consistent conversion of runtime, receipt, eval, participation, authority, and gap evidence into report findings.",
+      "auditQuestions": [
+        "Which AGS package outputs are directly convertible into audit findings today?",
+        "Which outputs still require manual report authoring or future adapter work?"
+      ],
+      "recommendedRemediations": [
+        "Expand deterministic adapters package by package, starting with runtime binding, receipts, participation quality, red-team results, and alignment gaps.",
+        "Add fixture-backed tests for each supported adapter path."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-AGS-001",
+          "type": "document",
+          "title": "Audit core package fixture",
+          "sourcePath": "packages/audit-core"
+        }
+      ],
+      "relatedControls": ["Runtime Binding", "Receipts", "Alignment Gap Detector"]
+    },
+    {
+      "id": "F-AGS-SELF-002",
+      "taxonomyId": "TG-005",
+      "title": "Evidence locker is future work",
+      "severity": "medium",
+      "confidence": "medium",
+      "status": "not_demonstrated",
+      "summary": "AGS has receipts and report evidence references, but no dedicated evidence locker is included in v1.5.0.",
+      "observation": "The self-audit relies on local files and fixtures. It does not include a persistent evidence locker, chain of custody workflow, or third-party evidence review.",
+      "whyItMatters": "Professional audit workflows need durable evidence references that can be reviewed independently and tied back to report findings.",
+      "auditQuestions": [
+        "Where will evidence artifacts live when reports are prepared for external review?",
+        "How will evidence integrity and access be preserved without adding unnecessary data handling?"
+      ],
+      "recommendedRemediations": [
+        "Design an evidence locker interface before adding storage behavior.",
+        "Keep evidence handling local and deterministic until a reviewed storage model exists."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-AGS-002",
+          "type": "document",
+          "title": "Governance Reality Report documentation",
+          "sourcePath": "docs/GOVERNANCE_REALITY_REPORT.md"
+        }
+      ],
+      "relatedControls": ["Receipts"]
+    },
+    {
+      "id": "F-AGS-SELF-003",
+      "taxonomyId": "TG-006",
+      "title": "Release and package version alignment should be clarified",
+      "severity": "low",
+      "confidence": "high",
+      "status": "potential_signal",
+      "summary": "Repository release version and individual package versions may not align one-to-one.",
+      "observation": "The release history tracks AGS milestones, while package manifests may retain package-specific versions.",
+      "whyItMatters": "Clear version labeling helps auditors understand which package artifacts correspond to a release milestone.",
+      "auditQuestions": [
+        "Which package versions correspond to AGS v1.5.0 and v1.5.1?",
+        "Should release documentation include a package-version matrix?"
+      ],
+      "recommendedRemediations": [
+        "Add a release-to-package version note in release documentation.",
+        "Avoid implying package version parity unless manifests are intentionally aligned."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-AGS-003",
+          "type": "document",
+          "title": "Release history and package manifests",
+          "sourcePath": "docs/RELEASE_HISTORY.md"
+        }
+      ],
+      "relatedControls": ["Governance Memory"]
+    },
+    {
+      "id": "F-AGS-SELF-004",
+      "taxonomyId": "TG-012",
+      "title": "Public-source review workflow is not yet first-class",
+      "severity": "medium",
+      "confidence": "medium",
+      "status": "not_demonstrated",
+      "summary": "The report model supports public-source review mode, but no first-class public-source review workflow is included in v1.5.0.",
+      "observation": "Examples focus on local fixture inputs. Public-source review workflow mechanics, evidence capture, and agency chain mapping remain future work.",
+      "whyItMatters": "Public-source review needs clear limitations, evidence capture, and non-accusatory posture so outputs remain professional and verifiable.",
+      "auditQuestions": [
+        "What inputs are acceptable for a public-source review?",
+        "How should public claims be separated from verified control evidence?"
+      ],
+      "recommendedRemediations": [
+        "Create a deterministic public-source review input format.",
+        "Add agency chain mapper and evidence reference conventions before external-facing use."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-AGS-004",
+          "type": "document",
+          "title": "Audit report examples",
+          "sourcePath": "examples/audit-report"
+        }
+      ],
+      "relatedControls": ["AAG", "Receipts"]
+    }
+  ],
+  "agencyChainMap": {
+    "intentOwner": "AGS maintainer",
+    "agentRole": "Local deterministic audit/reporting package",
+    "toolAccess": ["local JSON input", "Markdown rendering", "CLI output"],
+    "policyConstraints": [
+      "no hosted API",
+      "no database",
+      "no network calls",
+      "no customer data handling",
+      "no model calls"
+    ],
+    "approvalAuthority": ["human maintainer review"],
+    "runtimePermit": "not applicable to report rendering",
+    "executionBoundary": "local deterministic report generation",
+    "receiptProof": "local examples and test results",
+    "missingLinks": [
+      "third-party external audit",
+      "evidence locker",
+      "first-class public-source review workflow",
+      "agency chain mapper"
+    ]
+  },
+  "selfAuditDisclosure": {
+    "scopeDisclosure": "This is an internal self-audit of AGS v1.5.0 repository evidence. It is prepared by the project itself and should not be treated as independent external assurance.",
+    "strengths": [
+      "PGDL exists for proposal scrutiny.",
+      "AAG exists for action authorization.",
+      "Runtime Binding exists for permit-bound execution.",
+      "Receipts exist for proof and accountability.",
+      "Red-team and dogfood eval suites exist.",
+      "Governance Reality Report foundation exists."
+    ],
+    "watchItems": [
+      "Audit-core adapter layer is foundational and not yet deeply integrated with every package output.",
+      "No third-party external audit yet.",
+      "Package versions may not align with repo release version.",
+      "Public-source review workflow is not yet first-class.",
+      "Evidence locker and agency chain mapper are future work."
+    ],
+    "nonCertificationStatement": "This self-audit does not claim AGS is enterprise certified, legally compliant, regulator-approved, or production-guaranteed."
+  }
+}

@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.5.1 - Agentic Governance Auditor Report Hardening
+
+- Hardens `@alignment-governance-stack/audit-core` reports with audit mode, methodology, limitations, severity and confidence definitions, remediation summary, evidence appendix, and optional self-audit disclosure.
+- Adds standard non-accusatory audit language and deterministic default limitations.
+- Adds default remediation mapping and AGS control mapping for every `TG-001` through `TG-012` taxonomy item.
+- Adds `examples/audit-report/ags-self-audit.json` and fixture summary.
+- Strengthens audit-core and CLI tests for rendering determinism, examples, self-audit output, and JSON normalization.
+- Keeps the release local and deterministic with no runtime spine changes.
+
 ## v1.5.0 - Governance Reality Report Foundation
 
 - Adds `@alignment-governance-stack/audit-core` with a deterministic theater signal taxonomy, typed audit findings, Governance Reality Report model, validation, Markdown rendering, and lightweight adapters.

@@ -11,6 +11,12 @@ import type {
 
 const auditSeverities = ["info", "low", "medium", "high", "critical"];
 const auditConfidences = ["low", "medium", "high"];
+const auditModes = [
+  "public_source_review",
+  "client_provided_evidence_review",
+  "internal_self_audit",
+  "workflow_review"
+];
 const findingStatuses = [
   "potential_signal",
   "requires_verification",
@@ -106,6 +112,7 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
   }
 
   requireString(report, "reportId", "$.reportId", errors);
+  requireEnum(report, "auditMode", "$.auditMode", auditModes, errors);
   const generatedAt = requireString(report, "generatedAt", "$.generatedAt", errors);
   if (generatedAt !== undefined && Number.isNaN(Date.parse(generatedAt))) {
     errors.push({ path: "$.generatedAt", message: "generatedAt must be an ISO-compatible date string." });
@@ -119,6 +126,21 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
 
   requireString(report, "disclaimer", "$.disclaimer", errors);
   requireString(report, "executiveSummary", "$.executiveSummary", errors);
+  requireNonEmptyStringArray(report, "limitations", "$.limitations", errors);
+  requireNonEmptyStringArray(report, "methodology", "$.methodology", errors);
+
+  validateDefinitionMap(
+    report.severityDefinitions,
+    "$.severityDefinitions",
+    ["critical", "high", "medium", "low"],
+    errors
+  );
+  validateDefinitionMap(
+    report.confidenceDefinitions,
+    "$.confidenceDefinitions",
+    ["high", "medium", "low"],
+    errors
+  );
 
   if (!isRecord(report.posture)) {
     errors.push({ path: "$.posture", message: "posture is required." });
@@ -165,6 +187,27 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
     );
   }
 
+  if (!isRecord(report.remediationSummary)) {
+    errors.push({ path: "$.remediationSummary", message: "remediationSummary is required." });
+  } else {
+    requireString(report.remediationSummary, "overview", "$.remediationSummary.overview", errors);
+    if (!Array.isArray(report.remediationSummary.items)) {
+      errors.push({ path: "$.remediationSummary.items", message: "remediationSummary.items array is required." });
+    }
+  }
+
+  if (!Array.isArray(report.evidenceAppendix)) {
+    errors.push({ path: "$.evidenceAppendix", message: "evidenceAppendix array is required." });
+  } else {
+    report.evidenceAppendix.forEach((evidenceRef, index) =>
+      validateEvidenceRef(evidenceRef, `$.evidenceAppendix[${index}]`, errors)
+    );
+  }
+
+  if (report.selfAuditDisclosure !== undefined) {
+    validateSelfAuditDisclosure(report.selfAuditDisclosure, "$.selfAuditDisclosure", errors);
+  }
+
   if (report.appendices !== undefined) {
     if (!isRecord(report.appendices)) {
       errors.push({ path: "$.appendices", message: "appendices must be an object when provided." });
@@ -176,6 +219,34 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
   errors.push(...findProhibitedAccusatoryLanguage(report));
 
   return { valid: errors.length === 0, errors, warnings };
+}
+
+function validateDefinitionMap(
+  value: unknown,
+  path: string,
+  keys: readonly string[],
+  errors: AuditValidationIssue[]
+): void {
+  if (!isRecord(value)) {
+    errors.push({ path, message: "Definition map is required." });
+    return;
+  }
+
+  for (const key of keys) {
+    requireString(value, key, `${path}.${key}`, errors);
+  }
+}
+
+function validateSelfAuditDisclosure(value: unknown, path: string, errors: AuditValidationIssue[]): void {
+  if (!isRecord(value)) {
+    errors.push({ path, message: "selfAuditDisclosure must be an object when provided." });
+    return;
+  }
+
+  requireString(value, "scopeDisclosure", `${path}.scopeDisclosure`, errors);
+  requireNonEmptyStringArray(value, "strengths", `${path}.strengths`, errors);
+  requireNonEmptyStringArray(value, "watchItems", `${path}.watchItems`, errors);
+  requireString(value, "nonCertificationStatement", `${path}.nonCertificationStatement`, errors);
 }
 
 function validateEvidenceRef(value: unknown, path: string, errors: AuditValidationIssue[]): void {

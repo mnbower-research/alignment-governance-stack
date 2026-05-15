@@ -66,7 +66,7 @@ Integration Adapters
 - Developer CLI for local evals, governance checks, and receipt verification
 - Integration Adapters foundation with n8n action mapping and workflow templates
 - Governance Memory receipt-history analysis with human-reviewable recommendations
-- Governance Reality Report foundation for professional audit outputs that identify potential governance theater signals, evidence gaps, and remediation paths without making external accusations
+- Governance Reality Report foundation and report hardening for professional audit outputs that identify potential governance theater signals, evidence gaps, severity/confidence posture, and remediation paths without making external accusations
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
 - Adversarial Red-Team Eval Pack for bypass, authority, runtime, receipt, and memory attacks
@@ -129,13 +129,20 @@ Governance Reality Reports are the first AGS auditor layer. They convert availab
 
 They do not make external accusations, legal conclusions, or compliance certifications.
 
+Reports include audit mode, methodology, limitations, severity and confidence definitions, finding summaries, remediation summaries, evidence appendices, and optional self-audit disclosure.
+
 ```bash
 node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json
 node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json --json
 node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
+node packages/cli/dist/cli.js audit-report examples/audit-report/ags-self-audit.json --out .tmp/ags-self-audit.md
 ```
 
 See `docs/GOVERNANCE_REALITY_REPORT.md` and `examples/audit-report`.
+
+### Self-Auditing AGS
+
+AGS includes an honest self-audit fixture for Alignment Governance Stack v1.5.0. It records strengths in PGDL, AAG, Runtime Binding, Receipts, red-team and dogfood evals, and the Governance Reality Report foundation, while naming watch items such as foundational adapter coverage, no third-party audit yet, package/release version alignment, public-source review workflow, and future evidence locker / agency chain mapper work.
 
 ## Developer CLI
 
@@ -216,7 +223,7 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.5.0
+Current version: v1.5.1
 
 The core AGS spine is working:
 

@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   createGovernanceRealityReport,
+  STANDARD_AUDIT_LIMITATIONS,
+  STANDARD_CONFIDENCE_DEFINITIONS,
+  STANDARD_SEVERITY_DEFINITIONS,
   validateAuditFinding,
   validateGovernanceRealityReport,
   type AuditFinding,
@@ -63,6 +66,36 @@ describe("audit validation", () => {
     expect(result.validation.valid).toBe(true);
     expect(result.report?.reportId).toBe("grr-2026-05-15-agent-workflow-governance-review");
     expect(result.report?.remediationPlan).toHaveLength(1);
+    expect(result.report?.limitations).toContain(STANDARD_AUDIT_LIMITATIONS[0]);
+    expect(result.report?.severityDefinitions).toEqual(STANDARD_SEVERITY_DEFINITIONS);
+    expect(result.report?.confidenceDefinitions).toEqual(STANDARD_CONFIDENCE_DEFINITIONS);
+  });
+
+  it("adds taxonomy remediation when an input finding omits custom remediation", () => {
+    const result = createGovernanceRealityReport(
+      {
+        generatedAt: "2026-05-15T12:00:00.000Z",
+        subject: { auditScope: "Sparse finding review" },
+        findings: [
+          {
+            id: "F-SPARSE-001",
+            taxonomyId: "TG-003",
+            title: "Runtime binding not demonstrated",
+            severity: "high",
+            confidence: "medium",
+            status: "not_demonstrated",
+            summary: "Runtime permit evidence was not supplied.",
+            observation: "The available fixture does not include runtime permit evidence.",
+            whyItMatters: "Runtime binding constrains the action that actually runs.",
+            evidenceRefs: []
+          }
+        ]
+      },
+      { generatedAt: "2026-05-15T12:00:00.000Z" }
+    );
+
+    expect(result.validation.valid).toBe(true);
+    expect(result.report?.findings[0]?.recommendedRemediations[0]).toContain("scoped, expiring execution permits");
   });
 });
 
@@ -87,6 +120,7 @@ function sampleReport(): GovernanceRealityReport {
   return {
     reportId: "grr-test",
     generatedAt: "2026-05-15T12:00:00.000Z",
+    auditMode: "workflow_review",
     subject: {
       organizationName: "Example Corp",
       auditScope: "Agent workflow governance review"
@@ -94,6 +128,10 @@ function sampleReport(): GovernanceRealityReport {
     disclaimer:
       "This report identifies potential governance theater signals and evidence gaps based on available inputs. It is not a legal conclusion, compliance certification, accusation of wrongdoing, or finding of unsafe operation. All findings require human review and verification before external use.",
     executiveSummary: "Available inputs identify one finding requiring verification.",
+    limitations: [...STANDARD_AUDIT_LIMITATIONS],
+    methodology: ["Review available evidence."],
+    severityDefinitions: STANDARD_SEVERITY_DEFINITIONS,
+    confidenceDefinitions: STANDARD_CONFIDENCE_DEFINITIONS,
     posture: {
       overallStatus: "needs_attention",
       confidence: "medium"
@@ -107,6 +145,18 @@ function sampleReport(): GovernanceRealityReport {
         mapsToControl: "Runtime Binding"
       }
     ],
+    remediationSummary: {
+      overview: "One remediation item maps to runtime binding.",
+      items: [
+        {
+          findingId: "F-001",
+          priority: "high",
+          action: "Add runtime binding evidence.",
+          mapsToControl: "Runtime Binding"
+        }
+      ]
+    },
+    evidenceAppendix: [],
     appendices: {
       evidenceRefs: []
     }

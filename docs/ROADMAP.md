@@ -95,6 +95,16 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.5.1
+
+- Agentic Governance Auditor report hardening
+- Professional report sections for methodology, limitations, severity/confidence definitions, remediation summary, evidence appendix, and self-audit disclosure
+- Default remediation mapping for every TG taxonomy item
+- AGS self-audit example under `examples/audit-report`
+- Stronger deterministic rendering and example validation tests
+
+## Recently Completed
+
 ### v1.5.0
 
 - Governance Reality Report foundation
@@ -103,8 +113,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Markdown report renderer
 - Local `ags audit-report <input.json>` command
 - Example audit inputs and fixture summaries
-
-## Recently Completed
 
 ### v1.4.0
 

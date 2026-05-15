@@ -1,6 +1,7 @@
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { evaluateGovernedRuntimeActionWithReceipt } from "@alignment-governance-stack/governance-core";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
@@ -8,6 +9,7 @@ import { runCli } from "../cli.js";
 import { writeJsonFile } from "../io/writeJsonFile.js";
 
 const tempDirs: string[] = [];
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
 afterEach(() => {
   for (const tempDir of tempDirs.splice(0)) {
@@ -292,6 +294,40 @@ describe("ags cli", () => {
     expect(result.stdout).toBe("");
     expect(existsSync(outPath)).toBe(true);
     expect(readFileSync(outPath, "utf8")).toContain("# Governance Reality Report");
+  });
+
+  it("audit-report AGS self-audit example exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "audit-report", "ags-self-audit.json");
+
+    const result = runCli(["audit-report", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("## Self-Audit Disclosure");
+    expect(result.stdout).toContain("Alignment Governance Stack v1.5.0");
+  });
+
+  it("audit-report AGS self-audit --out writes report", () => {
+    const tempDir = mkdtempSync(join(tmpdir(), "ags-cli-"));
+    tempDirs.push(tempDir);
+    const inputPath = join(repoRoot, "examples", "audit-report", "ags-self-audit.json");
+    const outPath = join(tempDir, "ags-self-audit.md");
+
+    const result = runCli(["audit-report", inputPath, "--out", outPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toBe("");
+    expect(readFileSync(outPath, "utf8")).toContain("## Self-Audit Disclosure");
+  });
+
+  it("audit-report AGS self-audit --json includes audit mode and limitations", () => {
+    const inputPath = join(repoRoot, "examples", "audit-report", "ags-self-audit.json");
+
+    const result = runCli(["audit-report", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as { auditMode?: string; limitations?: string[] };
+
+    expect(result.exitCode).toBe(0);
+    expect(parsed.auditMode).toBe("internal_self_audit");
+    expect(parsed.limitations?.length).toBeGreaterThan(0);
   });
 
   it("missing file exits 1", () => {

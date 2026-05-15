@@ -1,4 +1,11 @@
-import { DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER } from "./renderGovernanceRealityReportMarkdown.js";
+import {
+  DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER,
+  STANDARD_AUDIT_LIMITATIONS,
+  STANDARD_AUDIT_METHODOLOGY,
+  STANDARD_CONFIDENCE_DEFINITIONS,
+  STANDARD_SEVERITY_DEFINITIONS
+} from "./standardLanguage.js";
+import { getTheaterSignalById } from "./taxonomy.js";
 import { validateGovernanceRealityReport } from "./validation.js";
 import type {
   AuditFinding,
@@ -44,13 +51,22 @@ function normalizeFullReport(
   input: GovernanceRealityReport,
   options: CreateGovernanceRealityReportOptions
 ): GovernanceRealityReport {
-  const findings = Array.isArray(input.findings) ? input.findings : [];
+  const findings = normalizeFindings(Array.isArray(input.findings) ? input.findings : []);
+  const remediationPlan = input.remediationPlan ?? createRemediationPlan(findings);
 
   return {
     ...input,
     generatedAt: input.generatedAt ?? options.generatedAt ?? new Date().toISOString(),
+    auditMode: input.auditMode ?? inferAuditMode(input),
     disclaimer: input.disclaimer ?? DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER,
-    remediationPlan: input.remediationPlan ?? createRemediationPlan(findings),
+    limitations: mergeStringLists(STANDARD_AUDIT_LIMITATIONS, input.limitations),
+    methodology: mergeStringLists(STANDARD_AUDIT_METHODOLOGY, input.methodology),
+    severityDefinitions: input.severityDefinitions ?? STANDARD_SEVERITY_DEFINITIONS,
+    confidenceDefinitions: input.confidenceDefinitions ?? STANDARD_CONFIDENCE_DEFINITIONS,
+    findings,
+    remediationPlan,
+    remediationSummary: input.remediationSummary ?? createRemediationSummary(remediationPlan),
+    evidenceAppendix: input.evidenceAppendix ?? input.appendices?.evidenceRefs ?? collectEvidenceRefs(findings),
     appendices: input.appendices ?? createAppendices(findings, options.includeRawInputs ? input : undefined)
   };
 }
@@ -60,20 +76,28 @@ function normalizeSimplifiedInput(
   options: CreateGovernanceRealityReportOptions
 ): GovernanceRealityReport {
   const generatedAt = input.generatedAt ?? options.generatedAt ?? new Date().toISOString();
-  const findings = Array.isArray(input.findings) ? input.findings : [];
+  const findings = normalizeFindings(Array.isArray(input.findings) ? input.findings : []);
   const subject = input.subject ?? { auditScope: "Unspecified local audit scope" };
   const remediationPlan = input.remediationPlan ?? createRemediationPlan(findings);
 
   return {
     reportId: input.reportId ?? createReportId(subject.auditScope, generatedAt),
     generatedAt,
+    auditMode: input.auditMode ?? inferAuditMode(input),
     subject,
     disclaimer: DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER,
     executiveSummary: input.executiveSummary ?? createExecutiveSummary(findings),
+    limitations: mergeStringLists(STANDARD_AUDIT_LIMITATIONS, input.limitations),
+    methodology: mergeStringLists(STANDARD_AUDIT_METHODOLOGY, input.methodology),
+    severityDefinitions: input.severityDefinitions ?? STANDARD_SEVERITY_DEFINITIONS,
+    confidenceDefinitions: input.confidenceDefinitions ?? STANDARD_CONFIDENCE_DEFINITIONS,
     posture: createPosture(input.posture, findings),
     findings,
     ...(input.agencyChainMap !== undefined ? { agencyChainMap: input.agencyChainMap } : {}),
     remediationPlan,
+    remediationSummary: input.remediationSummary ?? createRemediationSummary(remediationPlan),
+    evidenceAppendix: input.evidenceAppendix ?? input.appendices?.evidenceRefs ?? collectEvidenceRefs(findings),
+    ...(input.selfAuditDisclosure !== undefined ? { selfAuditDisclosure: input.selfAuditDisclosure } : {}),
     appendices:
       input.appendices ??
       createAppendices(findings, options.includeRawInputs ? input.rawInputs ?? input : undefined)
@@ -105,6 +129,29 @@ function createExecutiveSummary(findings: AuditFinding[]): string {
   }
 
   return `Available inputs identify ${findings.length} audit finding(s). The findings should be reviewed by humans before external use or governance claims.`;
+}
+
+function normalizeFindings(findings: AuditFinding[]): AuditFinding[] {
+  return findings.map((finding) => {
+    const taxonomyEntry = getTheaterSignalById(finding.taxonomyId);
+    const auditQuestions =
+      Array.isArray(finding.auditQuestions) && finding.auditQuestions.length > 0
+        ? finding.auditQuestions
+        : taxonomyEntry?.defaultAuditQuestions ?? [];
+    const recommendedRemediations =
+      Array.isArray(finding.recommendedRemediations) && finding.recommendedRemediations.length > 0
+        ? finding.recommendedRemediations
+        : taxonomyEntry !== undefined
+          ? [taxonomyEntry.defaultRemediation, ...taxonomyEntry.recommendedRemediations]
+          : [];
+
+    return {
+      ...finding,
+      auditQuestions,
+      recommendedRemediations,
+      evidenceRefs: Array.isArray(finding.evidenceRefs) ? finding.evidenceRefs : []
+    };
+  });
 }
 
 function createPosture(
@@ -176,6 +223,16 @@ function createRemediationPlan(findings: AuditFinding[]): RemediationPlanItem[] 
   });
 }
 
+function createRemediationSummary(remediationPlan: RemediationPlanItem[]) {
+  return {
+    overview:
+      remediationPlan.length === 0
+        ? "No remediation items were supplied. This does not certify the reviewed system; it only means no findings required remediation in the provided input."
+        : "Remediation items map findings to AGS control surfaces and should be reviewed by accountable humans before external reliance.",
+    items: remediationPlan
+  };
+}
+
 function mapSeverityToPriority(severity: AuditFinding["severity"]): RemediationPlanItem["priority"] {
   if (severity === "critical") {
     return "urgent";
@@ -193,22 +250,7 @@ function mapSeverityToPriority(severity: AuditFinding["severity"]): RemediationP
 }
 
 function inferControl(taxonomyId: string): RemediationPlanItem["mapsToControl"] | undefined {
-  const controlsByTaxonomyId: Record<string, RemediationPlanItem["mapsToControl"]> = {
-    "TG-001": "Authority Map",
-    "TG-002": "Human Participation",
-    "TG-003": "Runtime Binding",
-    "TG-004": "AAG",
-    "TG-005": "Receipts",
-    "TG-006": "Authority Map",
-    "TG-007": "PGDL",
-    "TG-008": "Runtime Binding",
-    "TG-009": "AAG",
-    "TG-010": "Governance Memory",
-    "TG-011": "Human Participation",
-    "TG-012": "AAG"
-  };
-
-  return controlsByTaxonomyId[taxonomyId];
+  return getTheaterSignalById(taxonomyId)?.mapsToControl;
 }
 
 function collectEvidenceRefs(findings: AuditFinding[]) {
@@ -239,6 +281,28 @@ function createAppendices(
 
 function looksLikeFullReport(input: Record<string, unknown>): boolean {
   return "reportId" in input && "posture" in input && "remediationPlan" in input;
+}
+
+function inferAuditMode(
+  input: Partial<GovernanceRealityReport> | Partial<SimplifiedAuditReportInput>
+): GovernanceRealityReport["auditMode"] {
+  if (input.selfAuditDisclosure !== undefined) {
+    return "internal_self_audit";
+  }
+
+  if (input.agencyChainMap !== undefined) {
+    return "workflow_review";
+  }
+
+  return "client_provided_evidence_review";
+}
+
+function mergeStringLists(defaults: readonly string[], custom: string[] | undefined): string[] {
+  if (custom === undefined || custom.length === 0) {
+    return [...defaults];
+  }
+
+  return [...defaults, ...custom.filter((item) => item.trim().length > 0)];
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

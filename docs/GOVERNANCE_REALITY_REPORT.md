@@ -8,9 +8,11 @@ Governance Reality Reports turn existing AGS outputs into auditor-ready findings
 
 The report is deterministic, local, typed, and file-based. It does not call networks, execute actions, store customer data, run model calls, or host an API.
 
+v1.5.1 hardens the report so it reads like a professional auditor deliverable: it includes audit mode, methodology, limitations, severity and confidence definitions, finding summaries, remediation summaries, evidence appendices, self-audit disclosure when applicable, and a non-accusatory closing note.
+
 ## Professional Posture
 
-The report uses careful audit language:
+The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:
 
 - potential signal
 - not demonstrated
@@ -60,7 +62,22 @@ The v1.5.0 taxonomy includes:
 - `TG-011`: Human-in-the-Loop Theater
 - `TG-012`: Dashboard Without Enforcement
 
-Each entry includes an ID, category, default severity, description, why-it-matters text, default audit questions, and recommended remediations.
+Each entry includes an ID, category, default severity, description, why-it-matters text, default audit questions, a default remediation, recommended remediations, and an AGS control mapping.
+
+## Severity and Confidence
+
+Severity definitions:
+
+- Critical: A likely break in governance that could allow consequential action without meaningful authorization, proof, or runtime constraint.
+- High: A serious governance weakness that could enable bypass, rubber-stamping, runtime drift, hard-boundary erosion, or weak accountability.
+- Medium: A material governance ambiguity or missing proof point that should be verified or remediated.
+- Low: A minor documentation, clarity, or evidence-strength issue.
+
+Confidence definitions:
+
+- High: Supported by direct evidence in the provided/public materials.
+- Medium: Reasonable inference from available evidence, but requires verification.
+- Low: Weak or incomplete evidence; included as an audit question, not a conclusion.
 
 ## CLI Usage
 
@@ -88,6 +105,12 @@ Write Markdown to a file:
 node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
 ```
 
+Self-audit AGS:
+
+```bash
+node packages/cli/dist/cli.js audit-report examples/audit-report/ags-self-audit.json --out .tmp/ags-self-audit.md
+```
+
 Exit codes:
 
 - `0`: report generated with no high or critical findings
@@ -101,6 +124,7 @@ Examples live in `examples/audit-report`:
 - `strongly-supported-governance.json`
 - `potential-theater-signals.json`
 - `agent-workflow-gap-review.json`
+- `ags-self-audit.json`
 
 Fixture summaries live in `evals/fixtures/audit-report`.
 
@@ -108,16 +132,28 @@ Fixture summaries live in `evals/fixtures/audit-report`.
 
 The Markdown renderer includes:
 
-- Professional Disclaimer
 - Executive Summary
 - Audit Scope
-- Governance Reality Posture
+- Audit Mode
+- Methodology
+- Limitations
+- Overall Assessment
 - Agency Chain Map
-- Key Findings
-- Remediation Plan
+- Finding Summary
+- Severity and Confidence Definitions
+- Findings
+- Remediation Summary
 - Evidence Appendix
+- Self-Audit Disclosure, when supplied
+- Non-Accusatory Closing Note
 
 Each finding renders finding ID, taxonomy ID, severity, confidence, status, observation, why it matters, audit questions, recommended remediation, and evidence references.
+
+## Self-Auditing AGS
+
+The AGS self-audit example is intentionally modest. It records strengths such as PGDL, AAG, Runtime Binding, Receipts, red-team and dogfood evals, and the Governance Reality Report foundation. It also records limitations: adapter coverage is foundational, no third-party external audit is included, package versions may not align with repository release version, public-source review is not yet first-class, and evidence locker / agency chain mapper work remains future work.
+
+The self-audit does not claim AGS is enterprise certified, legally compliant, regulator-approved, or production-guaranteed.
 
 ## Gateblade / Agentic Governance Auditor Positioning
 
