@@ -1,0 +1,44 @@
+{
+  "companyAlignmentInput": {
+    "id": "hard-boundary-override-claim",
+    "name": "Hard Boundary Override Claim",
+    "roles": [
+      {
+        "id": "root_admin",
+        "label": "Root Admin",
+        "canApprove": ["override_hard_boundary"]
+      }
+    ],
+    "decisionBoundaries": [
+      {
+        "id": "never-delete-receipts",
+        "label": "Never delete receipt history",
+        "tool": "file.delete",
+        "targetIncludes": "receipts/history",
+        "requiresHumanApproval": true,
+        "neverAutomate": true
+      }
+    ]
+  },
+  "authorityMap": {
+    "id": "hard-boundary-override-claim.authority",
+    "name": "Hard Boundary Override Authority",
+    "version": "authority.map.example",
+    "roles": [
+      {
+        "id": "root_admin",
+        "label": "Root Admin",
+        "scopes": [
+          {
+            "id": "receipt_delete",
+            "tool": "file.delete",
+            "targetIncludes": "receipts/history"
+          }
+        ],
+        "metadata": {
+          "claim": "override_hard_boundary"
+        }
+      }
+    ]
+  }
+}

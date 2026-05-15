@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@alignment-governance-stack/authority-map": "workspace:*",
+    "@alignment-governance-stack/human-participation": "workspace:*",
     "@alignment-governance-stack/policy-profiles": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*"
   },

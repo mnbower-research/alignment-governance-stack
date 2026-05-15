@@ -23,6 +23,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
 corepack pnpm --filter @alignment-governance-stack/cli ags redteam
+corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -35,6 +36,8 @@ node packages/cli/dist/cli.js help
 node packages/cli/dist/cli.js eval
 node packages/cli/dist/cli.js dogfood
 node packages/cli/dist/cli.js redteam
+node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial-governance.json
+node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial-governance.json --json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
@@ -49,6 +52,8 @@ node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/rec
 - `ags eval`
 - `ags dogfood`
 - `ags redteam`
+- `ags gaps <input.json>`
+- `ags gaps <input.json> --json`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags receipt verify <receipt.json>`
@@ -95,6 +100,31 @@ Output includes:
 - passed
 - failed
 - failed red-team case IDs and reasons, when failures exist
+
+### `ags gaps <input.json>`
+
+Runs the Alignment Gap Detector from `@alignment-governance-stack/company-profile-generator`.
+
+Input shape:
+
+```json
+{
+  "companyAlignmentInput": {},
+  "companyAlignmentProfile": {},
+  "policyProfile": {},
+  "authorityMap": {},
+  "participationPolicy": {}
+}
+```
+
+All fields are optional, but at least one governance input is useful. Use `--json` for the full `AlignmentGapReport`.
+
+Output includes:
+
+- gap count
+- highest severity
+- human review note
+- no-mutation note
 
 ### `ags govern <input.json>`
 
@@ -177,11 +207,13 @@ Full-stack demo inputs live under `examples/demo/full-stack`.
 
 Dogfood workbench scenarios live under `examples/dogfood/scenarios` and `examples/dogfood/enterprise-golden-path/scenarios`. Red-team scenarios live under `examples/redteam/scenarios`.
 
+Alignment Gap Detector examples live under `examples/alignment-gaps`.
+
 ## Exit Codes
 
 - `0`: command succeeded, evals passed, receipt is valid, or governance result is `execution_allowed` / `allowed_by_aag`
 - `1`: malformed input, missing file, unknown command, or runtime error
-- `2`: governed denial, block, escalation, approval required, or invalid receipt
+- `2`: governed denial, block, escalation, approval required, invalid receipt, or high/critical alignment gaps
 
 ## Boundaries
 

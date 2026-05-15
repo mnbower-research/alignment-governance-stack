@@ -16,6 +16,7 @@ Memory must not outrun human review.
 ```text
 Integration Adapters
 -> Company Alignment Profile Generator
+-> Alignment Gap Detector / Policy Conflict Analyzer
 -> Policy Profile with Hard Boundaries
 -> Authority Map / Approval Validation
 -> Human Participation Quality
@@ -31,6 +32,7 @@ Integration Adapters
 
 - Integration Adapters translate external workflow and tool payloads into AGS governance inputs.
 - Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles and draft Authority Maps.
+- Alignment Gap Detector checks company governance inputs for contradictions, missing authority, ambiguous boundaries, and fake oversight before they become enforceable agent governance.
 - Policy Profiles define organization-specific governance rules.
 - Hard Boundaries enforce explicit "never automate" rules before actions reach AAG.
 - Authority Map defines who is allowed to approve which actions, scopes, environments, and risk categories.
@@ -58,6 +60,7 @@ Integration Adapters
 - Human Participation Quality rubber-stamp detection
 - Cross-stack deterministic eval suite
 - Company Alignment Profile Generator
+- Alignment Gap Detector / Policy Conflict Analyzer for pre-runtime company governance diagnostics
 - Developer CLI for local evals, governance checks, and receipt verification
 - Integration Adapters foundation with n8n action mapping and workflow templates
 - Governance Memory receipt-history analysis with human-reviewable recommendations
@@ -76,7 +79,7 @@ Integration Adapters
 - `@alignment-governance-stack/authority-map`: role, scope, and approval evidence validation for governed actions.
 - `@alignment-governance-stack/human-participation`: deterministic evaluation of meaningful participation and likely rubber-stamping.
 - `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
-- `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs.
+- `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs, plus Alignment Gap Detector diagnostics.
 - `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
 - `@alignment-governance-stack/integration-adapters`: edge adapters for workflow systems, starting with n8n payload mappers and response helpers.
 - `@alignment-governance-stack/governance-memory`: deterministic receipt-history pattern detection and human-reviewable governance recommendations.
@@ -103,6 +106,18 @@ Adapters do not execute actions, call networks, store data, or host an API. They
 
 See `docs/INTEGRATION_ADAPTERS.md` and `examples/integrations/n8n`.
 
+## Alignment Gap Detector
+
+The Alignment Gap Detector analyzes company governance inputs before they become enforceable policy. It surfaces contradictions such as external sharing conflicts, missing stop authority, approval requirements without approvers, hard-boundary override claims, and ambiguous never-automate boundaries.
+
+It does not mutate Policy Profiles, Authority Maps, or Human Participation policies. It produces human-reviewable reports.
+
+```bash
+node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial-governance.json
+```
+
+See `docs/ALIGNMENT_GAP_DETECTOR.md` and `examples/alignment-gaps`.
+
 ## Developer CLI
 
 The CLI is for local governance, eval, and receipt checks. It does not execute governed actions, make network calls, store data, or run a server.
@@ -113,6 +128,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
 corepack pnpm --filter @alignment-governance-stack/cli ags redteam
+corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
@@ -165,6 +181,7 @@ corepack pnpm -r exec npm pack --dry-run
 - Receipts do not execute or approve actions.
 - Governance Memory does not auto-update governance policy.
 - Integration Adapters do not execute actions or host a service.
+- Alignment Gap Detector does not mutate governance inputs or auto-fix policy.
 - Policy Profiles do not replace PGDL or AAG.
 - Hard Boundaries stop explicit organization-defined "never automate" actions before AAG.
 - Authority Map validates scoped approval evidence; it does not store approvals or replace AAG.
@@ -175,12 +192,12 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.2.0
+Current version: v1.3.0
 
 The core AGS spine is working:
 
 ```text
-Integration Adapters -> Company Alignment Profile Generator -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Governance Memory / Internalization Layer -> Evaluation Suite -> Developer CLI
+Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Governance Memory / Internalization Layer -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

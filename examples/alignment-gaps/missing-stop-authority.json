@@ -1,0 +1,45 @@
+{
+  "companyAlignmentInput": {
+    "id": "missing-stop-authority",
+    "name": "Missing Stop Authority",
+    "roles": [
+      {
+        "id": "business_owner",
+        "label": "Business Owner"
+      }
+    ],
+    "tools": [
+      {
+        "tool": "deploy.release",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacing": true,
+        "maxDataSensitivity": "medium"
+      }
+    ],
+    "environments": [
+      {
+        "id": "production",
+        "label": "Production",
+        "productionLike": true
+      }
+    ]
+  },
+  "authorityMap": {
+    "id": "missing-stop-authority.authority",
+    "name": "Missing Stop Authority Map",
+    "version": "authority.map.example",
+    "roles": [
+      {
+        "id": "business_owner",
+        "label": "Business Owner",
+        "scopes": [
+          {
+            "id": "docs",
+            "tool": "file.edit"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -12,6 +12,7 @@ export function runHelpCommand(): CliResult {
       "  ags eval",
       "  ags dogfood",
       "  ags redteam",
+      "  ags gaps <input.json> [--json]",
       "  ags govern <input.json> [--json]",
       "  ags memory <receipts.json>",
       "  ags receipt verify <receipt.json>",

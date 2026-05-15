@@ -5,6 +5,7 @@ export {
 } from "./cli.js";
 export { runDogfoodCommand } from "./commands/dogfood.js";
 export { runEvalCommand } from "./commands/eval.js";
+export { runGapsCommand } from "./commands/gaps.js";
 export { runGovernCommand } from "./commands/govern.js";
 export { runHelpCommand } from "./commands/help.js";
 export { runMemoryCommand } from "./commands/memory.js";

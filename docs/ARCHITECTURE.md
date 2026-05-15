@@ -6,6 +6,7 @@ Alignment Governance Stack separates proposal maturation from execution approval
 User goal
 -> Integration Adapters
 -> Company Alignment Profile Generator
+-> Alignment Gap Detector / Policy Conflict Analyzer
 -> Draft Policy Profile
 -> Agent proposal
 -> Policy Profile with Hard Boundaries
@@ -40,6 +41,7 @@ The full stack around the runtime spine is:
 ```text
 Integration Adapters
 -> Company Alignment Profile Generator
+-> Alignment Gap Detector / Policy Conflict Analyzer
 -> Policy Profile with Hard Boundaries
 -> Authority Map / Approval Validation
 -> Human Participation Quality
@@ -59,7 +61,9 @@ Integration Adapters
 
 Integration Adapters sit at the edge of the stack. They translate workflow and tool payloads into AGS governance inputs, then map AGS governance results back into workflow-friendly responses. They do not execute external actions, store state, host APIs, or weaken any downstream gate.
 
-Company Alignment Profile Generator sits above Policy Profiles. It translates structured company context into a draft `PolicyProfile` for human review.
+Company Alignment Profile Generator sits above Policy Profiles. It translates structured company context into a draft `PolicyProfile` and draft `AuthorityMap` for human review.
+
+Alignment Gap Detector sits between company profile generation and enforceable policy. It analyzes company governance inputs, generated or supplied Policy Profiles, Authority Maps, and Human Participation policies for contradictions, missing authority, ambiguous boundaries, and fake oversight. It produces a human-reviewable report and does not mutate policy, authority, or participation settings.
 
 Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2, `governance-core` can validate a supplied profile, run PGDL, then resolve policy against the proposal that would be sent to AAG.
 

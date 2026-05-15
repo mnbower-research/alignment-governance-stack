@@ -23,6 +23,7 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("ags eval");
     expect(result.stdout).toContain("ags dogfood");
     expect(result.stdout).toContain("ags redteam");
+    expect(result.stdout).toContain("ags gaps <input.json>");
     expect(result.stdout).toContain("ags govern <input.json>");
     expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
@@ -54,6 +55,69 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("total: 15");
     expect(result.stdout).toContain("passed: 15");
     expect(result.stdout).toContain("failed: 0");
+  });
+
+  it("gaps command exits 0 for coherent input", () => {
+    const inputPath = writeTempJson("coherent-gaps.json", coherentGapInput());
+
+    const result = runCli(["gaps", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("AGS Alignment Gap Report");
+    expect(result.stdout).toContain("gap count:");
+  });
+
+  it("gaps command exits 2 for high or critical gaps", () => {
+    const inputPath = writeTempJson("conflicting-gaps.json", {
+      companyAlignmentInput: {
+        id: "conflicting-finance",
+        name: "Conflicting Finance",
+        tools: [
+          {
+            tool: "email.send",
+            allowed: true,
+            externalFacing: true,
+            maxDataSensitivity: "high"
+          }
+        ],
+        dataClasses: [
+          {
+            id: "financial_report",
+            label: "Financial report",
+            sensitivity: "high",
+            externalSharingAllowed: false
+          }
+        ]
+      }
+    });
+
+    const result = runCli(["gaps", inputPath]);
+
+    expect(result.exitCode).toBe(2);
+    expect(result.stdout).toContain("highest severity:");
+  });
+
+  it("gaps --json returns parseable gap report", () => {
+    const inputPath = writeTempJson("conflicting-gaps-json.json", {
+      companyAlignmentInput: {
+        id: "hard-boundary-override",
+        name: "Hard Boundary Override",
+        roles: [
+          {
+            id: "root_admin",
+            label: "Root Admin",
+            canApprove: ["override_hard_boundary"]
+          }
+        ]
+      }
+    });
+
+    const result = runCli(["gaps", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as { gapCount?: number; gaps?: Array<{ type?: string }> };
+
+    expect(result.exitCode).toBe(2);
+    expect(parsed.gapCount).toBeGreaterThan(0);
+    expect(parsed.gaps?.some((gap) => gap.type === "hard_boundary_override_claim")).toBe(true);
   });
 
   it("govern command with safe input returns receipt hash", () => {
@@ -186,6 +250,58 @@ function safeInternalReport(): AgentActionProposal {
     requiresApproval: false,
     knownApproval: false,
     metadata: {}
+  };
+}
+
+function coherentGapInput(): unknown {
+  return {
+    companyAlignmentInput: {
+      id: "coherent-cli-company",
+      name: "Coherent CLI Company",
+      values: [
+        {
+          id: "proof",
+          label: "Proof before trust",
+          governanceImplication: "Use audit trails for sensitive production actions."
+        }
+      ],
+      tools: [
+        {
+          tool: "file.edit",
+          allowed: true,
+          externalFacing: false,
+          maxDataSensitivity: "low"
+        }
+      ],
+      dataClasses: [
+        {
+          id: "public_docs",
+          label: "Public docs",
+          sensitivity: "low",
+          externalSharingAllowed: true
+        }
+      ],
+      environments: [{ id: "staging", label: "Staging", productionLike: false }]
+    },
+    authorityMap: {
+      id: "coherent-cli-authority",
+      name: "Coherent CLI Authority",
+      version: "authority.map.test",
+      roles: [
+        {
+          id: "release_admin",
+          label: "Release Admin",
+          scopes: [{ id: "production", environment: "production" }]
+        }
+      ]
+    },
+    participationPolicy: {
+      id: "meaningful-review",
+      name: "Meaningful Review",
+      version: "human.participation.test",
+      requireReasonForHighRisk: true,
+      requireContextForHighRisk: true
+    }
   };
 }
 

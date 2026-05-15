@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3.0 - Alignment Gap Detector / Policy Conflict Analyzer
+
+- Adds deterministic alignment gap detection to `@alignment-governance-stack/company-profile-generator`.
+- Exposes `detectAlignmentGaps`, `summarizeAlignmentGapReport`, and Alignment Gap report/types.
+- Adds `ags gaps <input.json> [--json]` CLI command.
+- Adds CLI-ready examples under `examples/alignment-gaps`.
+- Documents the detector as a human-review diagnostic that does not mutate policies, authority maps, or participation policies.
+
 ## v1.2.0 - Adversarial Red-Team Eval Pack
 
 - Adds `builtInRedTeamEvalCases` and `runRedTeamEvalSuite`.

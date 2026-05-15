@@ -1,0 +1,91 @@
+{
+  "companyAlignmentInput": {
+    "id": "coherent-company-profile",
+    "name": "Coherent Company Profile",
+    "values": [
+      {
+        "id": "proof",
+        "label": "Proof before trust",
+        "governanceImplication": "Use audit trails for sensitive production actions."
+      }
+    ],
+    "roles": [
+      {
+        "id": "release_admin",
+        "label": "Release Admin",
+        "canApprove": ["production", "irreversible"]
+      },
+      {
+        "id": "security_admin",
+        "label": "Security Admin",
+        "canApprove": ["high_sensitivity"]
+      }
+    ],
+    "tools": [
+      {
+        "tool": "file.edit",
+        "allowed": true,
+        "requiresApproval": false,
+        "externalFacing": false,
+        "maxDataSensitivity": "low"
+      }
+    ],
+    "dataClasses": [
+      {
+        "id": "public_docs",
+        "label": "Public docs",
+        "sensitivity": "low",
+        "externalSharingAllowed": true
+      }
+    ],
+    "environments": [
+      {
+        "id": "staging",
+        "label": "Staging",
+        "productionLike": false
+      }
+    ],
+    "decisionBoundaries": [],
+    "defaultMode": "balanced"
+  },
+  "authorityMap": {
+    "id": "coherent-company-profile.authority",
+    "name": "Coherent Company Profile Authority",
+    "version": "authority.map.example",
+    "roles": [
+      {
+        "id": "release_admin",
+        "label": "Release Admin",
+        "scopes": [
+          {
+            "id": "production",
+            "environment": "production"
+          },
+          {
+            "id": "irreversible",
+            "reversible": false
+          }
+        ]
+      },
+      {
+        "id": "security_admin",
+        "label": "Security Admin",
+        "scopes": [
+          {
+            "id": "high_sensitivity",
+            "maxDataSensitivity": "high"
+          }
+        ]
+      }
+    ]
+  },
+  "participationPolicy": {
+    "id": "meaningful-review",
+    "name": "Meaningful Review",
+    "version": "human.participation.example",
+    "requireReasonForHighRisk": true,
+    "requireContextForHighRisk": true,
+    "requireAlternativesForHighRisk": true,
+    "requireObjectionsForHighRisk": true
+  }
+}

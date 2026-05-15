@@ -94,13 +94,19 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.3.0
+
+- Alignment Gap Detector / Policy Conflict Analyzer hardening milestone
+- Deterministic company governance diagnostics before enforceable policy
+- Local `ags gaps <input.json>` command
+
+## Recently Completed
+
 ### v1.2.0
 
 - Adversarial Red-Team Eval Pack hardening milestone
 - Deterministic bypass, authority, participation, runtime, receipt, and memory attack cases
 - Local `ags redteam` command
-
-## Recently Completed
 
 ### v1.1.0
 
@@ -112,19 +118,19 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Next
 
-### v1.2.0
+### v1.4.0
 
 - Local Governance API
 
-### v1.3.0
+### v1.5.0
 
 - Dashboard MVP
 
-### v1.4.0
+### v1.6.0
 
 - Persistent Receipt Store
 
-### v1.5.0
+### v1.7.0
 
 - Approval Workflow UI / Human Review Console
 

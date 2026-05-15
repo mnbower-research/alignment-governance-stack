@@ -1,0 +1,50 @@
+{
+  "companyAlignmentInput": {
+    "id": "conflicting-financial-governance",
+    "name": "Conflicting Financial Governance",
+    "values": [
+      {
+        "id": "financial-integrity",
+        "label": "Financial integrity",
+        "governanceImplication": "High sensitivity financial reports require human approval and auditability."
+      }
+    ],
+    "tools": [
+      {
+        "tool": "email.send",
+        "label": "Send email",
+        "allowed": true,
+        "requiresApproval": false,
+        "externalFacing": true,
+        "maxDataSensitivity": "high"
+      }
+    ],
+    "dataClasses": [
+      {
+        "id": "financial_report",
+        "label": "Financial report",
+        "sensitivity": "high",
+        "externalSharingAllowed": false,
+        "requiresApproval": true
+      }
+    ],
+    "decisionBoundaries": [
+      {
+        "id": "never-external-financial-report",
+        "label": "Never externally send financial reports automatically",
+        "tool": "email.send",
+        "externalFacing": true,
+        "dataSensitivity": "high",
+        "requiresHumanApproval": true,
+        "neverAutomate": true
+      }
+    ],
+    "defaultMode": "permissive"
+  },
+  "authorityMap": {
+    "id": "conflicting-financial-governance.authority",
+    "name": "Conflicting Financial Governance Authority",
+    "version": "authority.map.example",
+    "roles": []
+  }
+}

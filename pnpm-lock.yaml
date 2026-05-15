@@ -49,6 +49,9 @@ importers:
 
   packages/cli:
     dependencies:
+      '@alignment-governance-stack/company-profile-generator':
+        specifier: workspace:*
+        version: link:../company-profile-generator
       '@alignment-governance-stack/eval-suite':
         specifier: workspace:*
         version: link:../eval-suite
@@ -80,6 +83,9 @@ importers:
       '@alignment-governance-stack/authority-map':
         specifier: workspace:*
         version: link:../authority-map
+      '@alignment-governance-stack/human-participation':
+        specifier: workspace:*
+        version: link:../human-participation
       '@alignment-governance-stack/policy-profiles':
         specifier: workspace:*
         version: link:../policy-profiles

@@ -1,0 +1,15 @@
+{
+  "companyAlignmentInput": {
+    "id": "ambiguous-never-automate",
+    "name": "Ambiguous Never Automate",
+    "decisionBoundaries": [
+      {
+        "id": "never-risky-actions",
+        "label": "Never automate risky actions",
+        "description": "This is directionally important but lacks deterministic matching fields.",
+        "requiresHumanApproval": true,
+        "neverAutomate": true
+      }
+    ]
+  }
+}

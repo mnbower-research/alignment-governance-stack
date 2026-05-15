@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { runDogfoodCommand } from "./commands/dogfood.js";
 import { runEvalCommand } from "./commands/eval.js";
+import { runGapsCommand } from "./commands/gaps.js";
 import { runGovernCommand } from "./commands/govern.js";
 import { runHelpCommand } from "./commands/help.js";
 import { runMemoryCommand } from "./commands/memory.js";
@@ -40,6 +41,10 @@ export function runCli(args: string[]): CliResult {
 
     if (command === "redteam") {
       return runRedTeamCommand(rest);
+    }
+
+    if (command === "gaps") {
+      return runGapsCommand(rest);
     }
 
     if (command === "govern") {

@@ -8,6 +8,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags help
 corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
 corepack pnpm --filter @alignment-governance-stack/cli ags redteam
+corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
 ```
 
 The CLI does not execute governed actions. It runs deterministic local checks against workspace packages.
@@ -19,12 +20,14 @@ The CLI does not execute governed actions. It runs deterministic local checks ag
 - `ags eval`
 - `ags dogfood`
 - `ags redteam`
+- `ags gaps <input.json>`
+- `ags gaps <input.json> --json`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags memory <receipts.json>`
 - `ags receipt verify <receipt.json>`
 - `ags receipt hash <receipt.json>`
 
-`ags dogfood` reports Internal Dogfood and Enterprise Golden Path counts. `ags redteam` runs adversarial bypass regression cases.
+`ags dogfood` reports Internal Dogfood and Enterprise Golden Path counts. `ags redteam` runs adversarial bypass regression cases. `ags gaps` runs the Alignment Gap Detector and exits `2` when high or critical gaps require human review.
 
 See `docs/CLI.md` for examples and exit codes.
