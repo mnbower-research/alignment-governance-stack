@@ -15,6 +15,7 @@ export function runHelpCommand(): CliResult {
       "  ags gaps <input.json> [--json]",
       "  ags govern <input.json> [--json]",
       "  ags memory <receipts.json>",
+      "  ags audit-report <input.json> [--out report.md] [--json]",
       "  ags receipt verify <receipt.json>",
       "  ags receipt hash <receipt.json>",
       ""

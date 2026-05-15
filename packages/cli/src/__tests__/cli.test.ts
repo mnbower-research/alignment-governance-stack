@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -26,6 +26,7 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("ags gaps <input.json>");
     expect(result.stdout).toContain("ags govern <input.json>");
     expect(result.stdout).toContain("ags memory <receipts.json>");
+    expect(result.stdout).toContain("ags audit-report <input.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
   });
 
@@ -229,6 +230,70 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("human review");
   });
 
+  it("audit-report command exits 0 for report with no high or critical findings", () => {
+    const inputPath = writeTempJson("audit-low.json", lowSeverityAuditInput());
+
+    const result = runCli(["audit-report", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("# Governance Reality Report");
+    expect(result.stdout).toContain("TG-002");
+  });
+
+  it("audit-report command exits 1 when high or critical findings exist", () => {
+    const inputPath = writeTempJson("audit-high.json", highSeverityAuditInput());
+
+    const result = runCli(["audit-report", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("Runtime binding not demonstrated");
+  });
+
+  it("audit-report command exits 2 for invalid input", () => {
+    const inputPath = writeTempJson("audit-invalid.json", {
+      subject: { auditScope: "Invalid report input" },
+      findings: [
+        {
+          id: "F-BAD",
+          taxonomyId: "TG-999",
+          title: "Invalid finding",
+          severity: "high"
+        }
+      ]
+    });
+
+    const result = runCli(["audit-report", inputPath]);
+
+    expect(result.exitCode).toBe(2);
+    expect(result.stderr).toContain("Invalid audit report input");
+    expect(result.stderr).toContain("$.findings[0].taxonomyId");
+  });
+
+  it("audit-report --json returns parseable report JSON", () => {
+    const inputPath = writeTempJson("audit-json.json", highSeverityAuditInput());
+
+    const result = runCli(["audit-report", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as { reportId?: string; findings?: Array<{ taxonomyId?: string }> };
+
+    expect(result.exitCode).toBe(1);
+    expect(parsed.reportId).toBeDefined();
+    expect(parsed.findings?.[0]?.taxonomyId).toBe("TG-003");
+  });
+
+  it("audit-report --out writes Markdown file", () => {
+    const tempDir = mkdtempSync(join(tmpdir(), "ags-cli-"));
+    tempDirs.push(tempDir);
+    const inputPath = writeTempJson("audit-out.json", lowSeverityAuditInput());
+    const outPath = join(tempDir, "governance-reality-report.md");
+
+    const result = runCli(["audit-report", inputPath, "--out", outPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toBe("");
+    expect(existsSync(outPath)).toBe(true);
+    expect(readFileSync(outPath, "utf8")).toContain("# Governance Reality Report");
+  });
+
   it("missing file exits 1", () => {
     const result = runCli(["govern", join(tmpdir(), "ags-missing-input.json")]);
 
@@ -303,6 +368,58 @@ function coherentGapInput(): unknown {
       requireReasonForHighRisk: true,
       requireContextForHighRisk: true
     }
+  };
+}
+
+function lowSeverityAuditInput(): unknown {
+  return {
+    subject: {
+      organizationName: "Example Corp",
+      systemName: "Agent Workflow",
+      auditScope: "Low severity local audit fixture"
+    },
+    findings: [
+      {
+        id: "F-LOW-001",
+        taxonomyId: "TG-002",
+        title: "Approval quality requires verification",
+        severity: "low",
+        confidence: "medium",
+        status: "potential_signal",
+        summary: "Approval evidence is present but review depth should be verified.",
+        observation: "The available approval note does not include detailed reviewer reasoning.",
+        whyItMatters: "Reviewer context and reasoning improve evidence quality for sensitive workflows.",
+        auditQuestions: ["Did the reviewer receive risk context?"],
+        recommendedRemediations: ["Add reviewer context and reason capture."],
+        evidenceRefs: []
+      }
+    ]
+  };
+}
+
+function highSeverityAuditInput(): unknown {
+  return {
+    subject: {
+      organizationName: "Example Corp",
+      systemName: "Agent Workflow",
+      auditScope: "High severity local audit fixture"
+    },
+    findings: [
+      {
+        id: "F-HIGH-001",
+        taxonomyId: "TG-003",
+        title: "Runtime binding not demonstrated",
+        severity: "high",
+        confidence: "medium",
+        status: "not_demonstrated",
+        summary: "Available evidence does not show runtime permit matching.",
+        observation: "The reviewed artifact describes approval but does not include a runtime binding result.",
+        whyItMatters: "Execution can differ from an approved proposal unless the exact action is checked at runtime.",
+        auditQuestions: ["Is the runtime action bound to a permit?"],
+        recommendedRemediations: ["Store runtime binding results with governance receipts."],
+        evidenceRefs: []
+      }
+    ]
   };
 }
 

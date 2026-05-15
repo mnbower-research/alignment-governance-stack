@@ -20,6 +20,7 @@ User goal
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Execution
 ```
@@ -51,6 +52,7 @@ Integration Adapters
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Developer CLI
 ```
@@ -63,7 +65,7 @@ Integration Adapters sit at the edge of the stack. They translate workflow and t
 
 Company Alignment Profile Generator sits above Policy Profiles. It translates structured company context into a draft `PolicyProfile` and draft `AuthorityMap` for human review.
 
-Alignment Gap Detector sits between company profile generation and enforceable policy. It analyzes company governance inputs, generated or supplied Policy Profiles, Authority Maps, and Human Participation policies for contradictions, missing authority, ambiguous boundaries, and fake oversight. It produces a human-reviewable report and does not mutate policy, authority, or participation settings.
+Alignment Gap Detector sits between company profile generation and enforceable policy. It analyzes company governance inputs, generated or supplied Policy Profiles, Authority Maps, and Human Participation policies for contradictions, missing authority, ambiguous boundaries, and performative oversight. It produces a human-reviewable report and does not mutate policy, authority, or participation settings.
 
 Policy Profiles are the configuration layer above the governance spine. They describe organization-specific rules, approvals, tools, environments, risk thresholds, and audit expectations. In v0.2, `governance-core` can validate a supplied profile, run PGDL, then resolve policy against the proposal that would be sent to AAG.
 
@@ -82,6 +84,8 @@ Runtime Binding verifies the exact permitted action. Receipts preserve proof for
 Receipts feed Governance Memory. Governance Memory analyzes receipt history over time and produces human-reviewable recommendations for Policy Profiles, Hard Boundaries, Authority Maps, Human Participation policies, Runtime Binding investigation, and eval expansion. It is a feedback loop, not inline action execution, and it does not silently mutate governance behavior.
 
 The Eval Suite tests the stack. It is a feedback layer around the stack, not an inline execution layer, and it runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, Receipts, and Governance Memory. The suite now includes built-in governance cases, Internal Dogfood, the Enterprise Financial Report Golden Path, the Content Publishing Dogfood Agent, and the Adversarial Red-Team Eval Pack. These tracks cover docs updates, release drafts, package deletion, publishing, pushing to main, external communication, authority-map edits, receipt deletion, sensitive financial report handling, public content claims, borrowed author voice, provenance changes, rubber-stamped approval, runtime substitution, hard-boundary bypass attempts, forged approvals, receipt tampering, and noisy memory histories.
+
+Governance Reality Reports are the first professional audit/reporting layer. They convert AGS evidence and existing outputs into typed findings, a Governance Reality posture, an agency chain map, remediation plan items, and Markdown or JSON report output. They use careful audit language, identify evidence gaps, and do not make external accusations or compliance certifications.
 
 The Developer CLI exposes local developer access to the same deterministic packages. It can run evals, evaluate a supplied governance input, verify or hash receipts, and summarize receipt-history memory. It does not execute actions, host a server, store state, or call providers.
 

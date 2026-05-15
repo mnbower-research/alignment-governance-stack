@@ -17,6 +17,7 @@ Integration Adapters
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Developer CLI
 ```
@@ -25,7 +26,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.4.0 | Content Publishing Dogfood Agent | Public voice, claims, provenance, and publishing eval proof | Current |
+| v1.5.0 | Governance Reality Report Foundation | Professional audit reports, theater signal taxonomy, and local report CLI | Current |
+| v1.4.0 | Content Publishing Dogfood Agent | Public voice, claims, provenance, and publishing eval proof | Complete |
 | v1.3.0 | Alignment Gap Detector / Policy Conflict Analyzer | Pre-runtime company governance diagnostics | Complete |
 | v1.2.0 | Adversarial Red-Team Eval Pack | Deterministic bypass and exploit regression cases | Complete |
 | v1.1.0 | Dogfood Workbench Eval Pack | Internal AGS development evals plus Enterprise Financial Report Golden Path | Complete |

@@ -1,0 +1,101 @@
+{
+  "reportId": "grr-agent-workflow-gap-review",
+  "generatedAt": "2026-05-15T12:00:00.000Z",
+  "subject": {
+    "organizationName": "ExampleCo",
+    "systemName": "Finance Workflow Agent",
+    "workflowName": "Quarterly finance packet preparation",
+    "auditScope": "Workflow-level local review of agent role, tool access, policy constraints, approval authority, runtime permit evidence, and receipt proof."
+  },
+  "executiveSummary": "Available fixture inputs provide a useful agency chain map but leave runtime permit and receipt proof links unresolved. Findings are framed as audit questions and remediation items requiring verification.",
+  "posture": {
+    "overallStatus": "needs_attention",
+    "governanceRealityScore": 55,
+    "confidence": "medium"
+  },
+  "findings": [
+    {
+      "id": "F-WORKFLOW-001",
+      "taxonomyId": "TG-003",
+      "title": "Runtime permit evidence missing",
+      "severity": "high",
+      "confidence": "medium",
+      "status": "not_demonstrated",
+      "summary": "The workflow fixture does not include a runtime permit for the action that would execute.",
+      "observation": "Agent role, tool access, policy constraints, and approval authority are described, but no runtime permit is supplied for the reviewed workflow.",
+      "whyItMatters": "A proposal can be reviewed correctly while execution later changes tool, target, scope, or environment.",
+      "auditQuestions": [
+        "Is there a runtime permit that binds tool, target, action type, and environment?",
+        "What evidence shows the runtime action matched the permit at execution time?"
+      ],
+      "recommendedRemediations": [
+        "Add runtime permits for governed workflow actions.",
+        "Validate the runtime action against the permit before execution."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-WORKFLOW-001",
+          "type": "manual_note",
+          "title": "Workflow agency chain fixture",
+          "sourcePath": "examples/audit-report/agent-workflow-gap-review.json"
+        }
+      ],
+      "relatedControls": ["Runtime Binding"]
+    },
+    {
+      "id": "F-WORKFLOW-002",
+      "taxonomyId": "TG-005",
+      "title": "Receipt proof not demonstrated",
+      "severity": "medium",
+      "confidence": "medium",
+      "status": "requires_verification",
+      "summary": "The workflow fixture does not include receipt proof for the final governance decision.",
+      "observation": "The agency chain map identifies approval authority and policy constraints, but receipt proof is listed as a missing link.",
+      "whyItMatters": "Governance claims are difficult to verify after the fact without complete and tamper-evident decision evidence.",
+      "auditQuestions": [
+        "Which receipt fields prove the proposal, decision, permit, and runtime match?",
+        "Can receipt integrity be independently verified?"
+      ],
+      "recommendedRemediations": [
+        "Create receipts that preserve proposal, review, permit, runtime binding, and final decision evidence.",
+        "Verify receipt integrity during workflow review."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-WORKFLOW-002",
+          "type": "manual_note",
+          "title": "Receipt proof missing-link note",
+          "sourcePath": "examples/audit-report/agent-workflow-gap-review.json"
+        }
+      ],
+      "relatedControls": ["Receipts"]
+    }
+  ],
+  "agencyChainMap": {
+    "intentOwner": "Finance Operations",
+    "agentRole": "Finance packet preparation agent",
+    "toolAccess": ["spreadsheet.read", "report.generate", "email.draft"],
+    "policyConstraints": [
+      "no external send without finance approval",
+      "source financial data must not be modified by the workflow",
+      "high-sensitivity summaries require review"
+    ],
+    "approvalAuthority": ["Finance Director", "Controller"],
+    "executionBoundary": "draft preparation only",
+    "missingLinks": ["runtime permit", "receipt proof"]
+  },
+  "remediationPlan": [
+    {
+      "findingId": "F-WORKFLOW-001",
+      "priority": "high",
+      "action": "Issue and validate runtime permits for governed workflow actions.",
+      "mapsToControl": "Runtime Binding"
+    },
+    {
+      "findingId": "F-WORKFLOW-002",
+      "priority": "medium",
+      "action": "Attach receipt proof to each final governance decision.",
+      "mapsToControl": "Receipts"
+    }
+  ]
+}

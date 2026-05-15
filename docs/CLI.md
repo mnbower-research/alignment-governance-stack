@@ -1,6 +1,6 @@
 # Developer CLI
 
-The AGS CLI provides a dependency-light local entry point for evals, governance checks, and receipt verification.
+The AGS CLI provides a dependency-light local entry point for evals, governance checks, audit reports, and receipt verification.
 
 It answers the v0.8.0 developer question:
 
@@ -24,6 +24,8 @@ corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
 corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
+corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json
+corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -38,6 +40,8 @@ node packages/cli/dist/cli.js dogfood
 node packages/cli/dist/cli.js redteam
 node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial-governance.json
 node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial-governance.json --json
+node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json
+node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
@@ -54,6 +58,9 @@ node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/rec
 - `ags redteam`
 - `ags gaps <input.json>`
 - `ags gaps <input.json> --json`
+- `ags audit-report <input.json>`
+- `ags audit-report <input.json> --json`
+- `ags audit-report <input.json> --out report.md`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags receipt verify <receipt.json>`
@@ -166,6 +173,25 @@ Use `--json` for the full governance and receipt result:
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 ```
 
+### `ags audit-report <input.json>`
+
+Reads a local JSON file and generates a Governance Reality Report.
+
+Input may be either:
+
+- a full `GovernanceRealityReport`
+- a simplified audit input with `subject` and `findings`
+
+Readable output is Markdown by default. Use `--json` for the normalized typed report. Use `--out report.md` to write Markdown to a file.
+
+The command does not call networks, execute actions, store data, or use model calls.
+
+Exit behavior:
+
+- `0`: report generated with no high or critical findings
+- `1`: report generated and high or critical findings are present
+- `2`: invalid input or validation failure
+
 ### `ags receipt verify <receipt.json>`
 
 Reads a governance receipt JSON file and verifies it with `verifyGovernanceReceipt`.
@@ -210,11 +236,15 @@ Dogfood workbench scenarios live under `examples/dogfood/scenarios`, `examples/d
 
 Alignment Gap Detector examples live under `examples/alignment-gaps`.
 
+Governance Reality Report examples live under `examples/audit-report`.
+
 ## Exit Codes
 
 - `0`: command succeeded, evals passed, receipt is valid, or governance result is `execution_allowed` / `allowed_by_aag`
-- `1`: malformed input, missing file, unknown command, or runtime error
+- `1`: malformed input for most commands, missing file, unknown command, runtime error, or generated audit report with high or critical findings
 - `2`: governed denial, block, escalation, approval required, invalid receipt, or high/critical alignment gaps
+
+For `ags audit-report`, invalid input returns `2` so report generation can be used in deterministic audit workflows.
 
 ## Boundaries
 

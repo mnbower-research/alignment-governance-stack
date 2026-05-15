@@ -1,0 +1,104 @@
+{
+  "reportId": "grr-potential-theater-signals",
+  "generatedAt": "2026-05-15T12:00:00.000Z",
+  "subject": {
+    "organizationName": "ExampleCo",
+    "systemName": "Customer Support Agent",
+    "workflowName": "External customer response workflow",
+    "auditScope": "Local fixture review of public oversight claims against available governance evidence."
+  },
+  "executiveSummary": "Available fixture inputs identify potential governance theater signals and evidence gaps. Public-facing statements reference human oversight and audit-ready controls, but the supplied evidence does not demonstrate stop authority, runtime binding, or receipt integrity for the reviewed workflow.",
+  "posture": {
+    "overallStatus": "needs_attention",
+    "governanceRealityScore": 42,
+    "confidence": "medium"
+  },
+  "findings": [
+    {
+      "id": "F-THEATER-001",
+      "taxonomyId": "TG-001",
+      "title": "Stop authority not demonstrated",
+      "severity": "high",
+      "confidence": "medium",
+      "status": "not_demonstrated",
+      "summary": "Available evidence does not identify who can stop the agentic workflow before execution.",
+      "observation": "The public claim references human oversight, but the supplied fixture does not identify a role with explicit stop, pause, reject, or escalation authority.",
+      "whyItMatters": "Agentic governance needs an identified authority able to halt action when risk, scope, or evidence is unclear.",
+      "auditQuestions": [
+        "Who has explicit authority to stop this workflow before execution?",
+        "Is stop authority documented separately from general approval authority?"
+      ],
+      "recommendedRemediations": [
+        "Define stop authority by workflow, risk tier, and environment.",
+        "Record stop decisions in receipts or equivalent audit evidence."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-THEATER-001",
+          "type": "public_claim",
+          "title": "Public oversight statement fixture",
+          "excerpt": "Human oversight is used for important agent actions."
+        }
+      ],
+      "relatedControls": ["Authority Map", "Human Participation"]
+    },
+    {
+      "id": "F-THEATER-002",
+      "taxonomyId": "TG-003",
+      "title": "Runtime binding not demonstrated",
+      "severity": "high",
+      "confidence": "medium",
+      "status": "not_demonstrated",
+      "summary": "Available evidence does not show that runtime execution is bound to the exact permitted action.",
+      "observation": "The supplied fixture includes an audit-ready claim but no runtime permit, permit hash, or runtime binding result.",
+      "whyItMatters": "A proposal can be reviewed correctly while execution later changes tool, target, scope, or environment.",
+      "auditQuestions": [
+        "Is there a runtime permit that binds tool, target, action type, and environment?",
+        "What evidence shows the runtime action matched the permit at execution time?"
+      ],
+      "recommendedRemediations": [
+        "Add deterministic runtime permit validation before execution.",
+        "Store runtime binding results with receipts."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-THEATER-002",
+          "type": "public_claim",
+          "title": "Audit-ready statement fixture",
+          "excerpt": "The system is audit-ready for agent actions."
+        }
+      ],
+      "relatedRuntimeRisks": ["tool substitution", "target substitution", "scope expansion"],
+      "relatedControls": ["Runtime Binding"]
+    },
+    {
+      "id": "F-THEATER-003",
+      "taxonomyId": "TG-005",
+      "title": "Receipt integrity gap",
+      "severity": "medium",
+      "confidence": "medium",
+      "status": "requires_verification",
+      "summary": "Available evidence does not demonstrate durable receipt integrity for the reviewed workflow.",
+      "observation": "The fixture references audit logs but does not provide a complete receipt with proposal, decision, permit, runtime match, and verification result.",
+      "whyItMatters": "Governance claims are difficult to verify after the fact without complete and tamper-evident decision evidence.",
+      "auditQuestions": [
+        "Which receipt fields prove the proposal, decision, permit, and runtime match?",
+        "Can receipt integrity be independently verified?"
+      ],
+      "recommendedRemediations": [
+        "Record complete governance receipts for gated actions.",
+        "Add hash verification or equivalent integrity checks for stored receipts."
+      ],
+      "evidenceRefs": [],
+      "relatedControls": ["Receipts"]
+    }
+  ],
+  "agencyChainMap": {
+    "intentOwner": "Customer Operations",
+    "agentRole": "Customer support response agent",
+    "toolAccess": ["crm.read", "email.draft", "email.send"],
+    "policyConstraints": ["human review for external send", "high-sensitivity data requires approval"],
+    "approvalAuthority": ["Support Manager"],
+    "missingLinks": ["explicit stop authority", "runtime permit", "receipt verification result"]
+  }
+}

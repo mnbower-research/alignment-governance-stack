@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { runAuditReportCommand } from "./commands/auditReport.js";
 import { runDogfoodCommand } from "./commands/dogfood.js";
 import { runEvalCommand } from "./commands/eval.js";
 import { runGapsCommand } from "./commands/gaps.js";
@@ -57,6 +58,10 @@ export function runCli(args: string[]): CliResult {
 
     if (command === "memory") {
       return runMemoryCommand(rest);
+    }
+
+    if (command === "audit-report") {
+      return runAuditReportCommand(rest);
     }
 
     return {

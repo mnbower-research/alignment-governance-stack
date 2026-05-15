@@ -16,6 +16,7 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Human participation package
 - Integration adapters package
 - Governance memory package
+- Audit core package
 - Eval suite package
 - Developer CLI package
 - Examples, docs, and eval fixtures
@@ -94,13 +95,22 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.5.0
+
+- Governance Reality Report foundation
+- Theater signal taxonomy TG-001 through TG-012
+- Audit finding and report schemas
+- Markdown report renderer
+- Local `ags audit-report <input.json>` command
+- Example audit inputs and fixture summaries
+
+## Recently Completed
+
 ### v1.4.0
 
 - Content Publishing Dogfood Agent hardening/demo milestone
 - Public voice, claims, provenance, publishing approval, and runtime substitution evals
 - Content publishing examples and Governance Memory fixture
-
-## Recently Completed
 
 ### v1.3.0
 
@@ -123,10 +133,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Examples and receipt-history fixture for Governance Memory
 
 ## Next
-
-### v1.5.0
-
-- Local Governance API
 
 ### v1.6.0
 

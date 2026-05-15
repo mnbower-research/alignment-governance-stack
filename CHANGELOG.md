@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.5.0 - Governance Reality Report Foundation
+
+- Adds `@alignment-governance-stack/audit-core` with a deterministic theater signal taxonomy, typed audit findings, Governance Reality Report model, validation, Markdown rendering, and lightweight adapters.
+- Adds `ags audit-report <input.json> [--out report.md] [--json]`.
+- Adds local examples under `examples/audit-report`.
+- Adds fixture summaries under `evals/fixtures/audit-report`.
+- Documents professional non-accusatory audit posture and Gateblade / Agentic Governance Auditor positioning.
+- Keeps the release local and deterministic: no dashboards, databases, hosted APIs, network calls, auth, scraping, real execution, customer data handling, or model calls.
+
 ## v1.4.0 - Content Publishing Dogfood Agent
 
 - Adds Content Publishing Dogfood eval cases for public AGS / AlignmentTheory.org materials.

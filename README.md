@@ -26,13 +26,14 @@ Integration Adapters
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Developer CLI
 ```
 
 - Integration Adapters translate external workflow and tool payloads into AGS governance inputs.
 - Company Alignment Profile Generator turns structured company roles, tools, environments, data classes, and decision boundaries into draft Policy Profiles and draft Authority Maps.
-- Alignment Gap Detector checks company governance inputs for contradictions, missing authority, ambiguous boundaries, and fake oversight before they become enforceable agent governance.
+- Alignment Gap Detector checks company governance inputs for contradictions, missing authority, ambiguous boundaries, and performative oversight before they become enforceable agent governance.
 - Policy Profiles define organization-specific governance rules.
 - Hard Boundaries enforce explicit "never automate" rules before actions reach AAG.
 - Authority Map defines who is allowed to approve which actions, scopes, environments, and risk categories.
@@ -44,6 +45,7 @@ Integration Adapters
 - Runtime Binding verifies the exact runtime action matches the permitted action.
 - Receipts preserve tamper-evident proof of the governance path.
 - Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
+- Governance Reality Reports turn AGS outputs into professional audit findings, evidence-gap summaries, and remediation plans.
 - Evaluation Suite runs deterministic cross-stack scenarios.
 - Developer CLI runs local eval, governance, and receipt checks.
 
@@ -64,6 +66,7 @@ Integration Adapters
 - Developer CLI for local evals, governance checks, and receipt verification
 - Integration Adapters foundation with n8n action mapping and workflow templates
 - Governance Memory receipt-history analysis with human-reviewable recommendations
+- Governance Reality Report foundation for professional audit outputs that identify potential governance theater signals, evidence gaps, and remediation paths without making external accusations
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
 - Adversarial Red-Team Eval Pack for bypass, authority, runtime, receipt, and memory attacks
@@ -79,6 +82,7 @@ Integration Adapters
 - `@alignment-governance-stack/policy-profiles`: organization-specific governance rules, hard boundaries, and deterministic policy resolution.
 - `@alignment-governance-stack/authority-map`: role, scope, and approval evidence validation for governed actions.
 - `@alignment-governance-stack/human-participation`: deterministic evaluation of meaningful participation and likely rubber-stamping.
+- `@alignment-governance-stack/audit-core`: deterministic taxonomy, finding schemas, report model, Markdown renderer, validators, and lightweight adapters for Governance Reality Reports.
 - `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
 - `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs, plus Alignment Gap Detector diagnostics.
 - `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
@@ -119,6 +123,20 @@ node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial
 
 See `docs/ALIGNMENT_GAP_DETECTOR.md` and `examples/alignment-gaps`.
 
+## Governance Reality Reports
+
+Governance Reality Reports are the first AGS auditor layer. They convert available AGS evidence into professional report findings using careful language such as potential signal, not demonstrated, requires verification, audit question, and recommended remediation.
+
+They do not make external accusations, legal conclusions, or compliance certifications.
+
+```bash
+node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json
+node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json --json
+node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
+```
+
+See `docs/GOVERNANCE_REALITY_REPORT.md` and `examples/audit-report`.
+
 ## Developer CLI
 
 The CLI is for local governance, eval, and receipt checks. It does not execute governed actions, make network calls, store data, or run a server.
@@ -130,6 +148,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags eval
 corepack pnpm --filter @alignment-governance-stack/cli ags dogfood
 corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
+corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
@@ -184,6 +203,7 @@ corepack pnpm -r exec npm pack --dry-run
 - Runtime Binding does not decide wisdom or policy.
 - Receipts do not execute or approve actions.
 - Governance Memory does not auto-update governance policy.
+- Governance Reality Reports do not make external accusations, certify compliance, execute actions, or collect customer data.
 - Integration Adapters do not execute actions or host a service.
 - Alignment Gap Detector does not mutate governance inputs or auto-fix policy.
 - Policy Profiles do not replace PGDL or AAG.
@@ -196,12 +216,12 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.4.0
+Current version: v1.5.0
 
 The core AGS spine is working:
 
 ```text
-Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Governance Memory / Internalization Layer -> Evaluation Suite -> Developer CLI
+Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Governance Memory / Internalization Layer -> Governance Reality Reports / Audit Core -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

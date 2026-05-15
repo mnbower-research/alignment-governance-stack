@@ -1,0 +1,45 @@
+{
+  "reportId": "grr-strongly-supported-governance",
+  "generatedAt": "2026-05-15T12:00:00.000Z",
+  "subject": {
+    "organizationName": "ExampleCo",
+    "systemName": "Internal Report Assistant",
+    "workflowName": "Internal usage report generation",
+    "auditScope": "Local fixture review of authority mapping, runtime binding, and receipt proof for an internal low-sensitivity reporting workflow."
+  },
+  "executiveSummary": "Available fixture inputs show a defined intent owner, constrained tool access, policy constraints, approval path, runtime permit evidence, and receipt proof. No major findings are supplied in this local example.",
+  "posture": {
+    "overallStatus": "strongly_supported",
+    "governanceRealityScore": 92,
+    "confidence": "high"
+  },
+  "findings": [],
+  "agencyChainMap": {
+    "intentOwner": "Operations Analytics",
+    "agentRole": "Internal reporting assistant",
+    "toolAccess": ["report.generate", "file.write"],
+    "policyConstraints": ["internal-only", "low-sensitivity-data", "no external delivery"],
+    "approvalAuthority": ["Operations Analytics Lead"],
+    "runtimePermit": "permit-internal-report-2026-05-15",
+    "executionBoundary": "staging and internal reporting workspace only",
+    "receiptProof": "receipt-internal-report-2026-05-15",
+    "missingLinks": []
+  },
+  "remediationPlan": [],
+  "appendices": {
+    "evidenceRefs": [
+      {
+        "id": "EV-STRONG-001",
+        "type": "policy",
+        "title": "Internal reporting policy fixture",
+        "sourcePath": "examples/audit-report/strongly-supported-governance.json"
+      },
+      {
+        "id": "EV-STRONG-002",
+        "type": "receipt",
+        "title": "Receipt proof fixture",
+        "sourcePath": "examples/audit-report/strongly-supported-governance.json"
+      }
+    ]
+  }
+}
