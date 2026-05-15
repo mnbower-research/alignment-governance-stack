@@ -25,6 +25,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@alignment-governance-stack/agency-chain": "workspace:*",
     "@alignment-governance-stack/audit-core": "workspace:*",
     "@alignment-governance-stack/company-profile-generator": "workspace:*",
     "@alignment-governance-stack/eval-suite": "workspace:*",

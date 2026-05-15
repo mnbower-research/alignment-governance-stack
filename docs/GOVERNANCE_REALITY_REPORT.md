@@ -10,6 +10,8 @@ The report is deterministic, local, typed, and file-based. It does not call netw
 
 v1.5.1 hardens the report so it reads like a professional auditor deliverable: it includes audit mode, methodology, limitations, severity and confidence definitions, finding summaries, remediation summaries, evidence appendices, self-audit disclosure when applicable, and a non-accusatory closing note.
 
+v1.6.0 adds Agency Chain Map support so reports can show where human authority, policy constraints, delegated agent action, runtime binding, execution boundary, receipts, and governance memory are demonstrated or require verification.
+
 ## Professional Posture
 
 The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:
@@ -145,6 +147,7 @@ The Markdown renderer includes:
 - Remediation Summary
 - Evidence Appendix
 - Self-Audit Disclosure, when supplied
+- Agency Chain Map link table and broken / weak links, when supplied
 - Non-Accusatory Closing Note
 
 Each finding renders finding ID, taxonomy ID, severity, confidence, status, observation, why it matters, audit questions, recommended remediation, and evidence references.

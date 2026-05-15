@@ -1,0 +1,112 @@
+{
+  "chainId": "agency-chain-strong-internal-report",
+  "auditMode": "workflow_review",
+  "subject": {
+    "organizationName": "ExampleCo",
+    "systemName": "Internal Report Agent",
+    "workflowName": "Internal report drafting",
+    "auditScope": "Strong agency chain fixture for an internal report drafting workflow."
+  },
+  "description": "Agent drafts an internal report with scoped tools, human authority, policy constraints, runtime binding, receipts, and governance memory.",
+  "links": [
+    {
+      "id": "human-authority",
+      "type": "human_authority",
+      "label": "Product Owner",
+      "status": "present",
+      "description": "Product Owner owns workflow intent and can stop, refuse, revise, halt, or escalate.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-001", "type": "manual_note", "title": "Product Owner authority note" }]
+    },
+    {
+      "id": "policy",
+      "type": "organizational_policy",
+      "label": "Internal reporting policy",
+      "status": "present",
+      "description": "Policy allows internal draft generation for low-sensitivity data only.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-002", "type": "policy", "title": "Internal reporting policy fixture" }]
+    },
+    {
+      "id": "hard-boundary",
+      "type": "hard_boundary",
+      "label": "External send boundary",
+      "status": "present",
+      "description": "External send requires a separate reviewed workflow.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-003", "type": "policy", "title": "External send boundary fixture" }]
+    },
+    {
+      "id": "agent-role",
+      "type": "agent_role",
+      "label": "Internal report drafting agent",
+      "status": "present",
+      "description": "Agent role is scoped to draft internal reports.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-004", "type": "document", "title": "Agent role fixture" }]
+    },
+    {
+      "id": "tool-access",
+      "type": "tool_access",
+      "label": "Read-only reporting tools",
+      "status": "present",
+      "description": "Tool access is read-only and limited to low-sensitivity report inputs.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-005", "type": "policy", "title": "Tool scope fixture" }]
+    },
+    {
+      "id": "proposed-action",
+      "type": "proposed_action",
+      "label": "Draft internal report",
+      "status": "present",
+      "description": "Proposed action is draft-only and internal.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-006", "type": "manual_note", "title": "Draft action fixture" }]
+    },
+    {
+      "id": "approval-authority",
+      "type": "approval_authority",
+      "label": "Product Owner approval",
+      "status": "present",
+      "description": "Approver can stop, refuse, revise, halt, or escalate before execution.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-007", "type": "manual_note", "title": "Approval authority fixture" }]
+    },
+    {
+      "id": "human-participation",
+      "type": "human_participation",
+      "label": "Meaningful review",
+      "status": "present",
+      "description": "Reviewer receives context and can change the outcome.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-008", "type": "manual_note", "title": "Participation fixture" }]
+    },
+    {
+      "id": "runtime-permit",
+      "type": "runtime_permit",
+      "label": "Scoped runtime permit",
+      "status": "present",
+      "description": "Permit binds action, tool, target, authority, and time window.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-009", "type": "runtime_result", "title": "Runtime permit fixture" }]
+    },
+    {
+      "id": "execution-boundary",
+      "type": "execution_boundary",
+      "label": "Draft execution boundary",
+      "status": "present",
+      "description": "Execution boundary is local draft generation only.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-010", "type": "runtime_result", "title": "Execution boundary fixture" }]
+    },
+    {
+      "id": "receipt",
+      "type": "receipt",
+      "label": "Governance receipt",
+      "status": "present",
+      "description": "Receipt preserves proposal, approval, permit, execution boundary, and outcome.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-011", "type": "receipt", "title": "Receipt fixture" }]
+    },
+    {
+      "id": "governance-memory",
+      "type": "governance_memory",
+      "label": "Governance memory review",
+      "status": "present",
+      "description": "Receipt history is reviewed by humans for future improvements.",
+      "evidenceRefs": [{ "id": "EV-STRONG-AC-012", "type": "document", "title": "Governance memory fixture" }]
+    }
+  ],
+  "metadata": {
+    "recurringWorkflow": false
+  }
+}

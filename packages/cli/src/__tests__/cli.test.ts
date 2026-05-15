@@ -29,6 +29,7 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("ags govern <input.json>");
     expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags audit-report <input.json>");
+    expect(result.stdout).toContain("ags agency-chain <input.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
   });
 
@@ -328,6 +329,49 @@ describe("ags cli", () => {
     expect(result.exitCode).toBe(0);
     expect(parsed.auditMode).toBe("internal_self_audit");
     expect(parsed.limitations?.length).toBeGreaterThan(0);
+  });
+
+  it("agency-chain strong example exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "agency-chain", "strong-agent-workflow-chain.json");
+
+    const result = runCli(["agency-chain", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("AGS Agency Chain Map");
+    expect(result.stdout).toContain("overallStatus: preserved");
+  });
+
+  it("agency-chain weak example exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "agency-chain", "weak-agent-workflow-chain.json");
+
+    const result = runCli(["agency-chain", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("AC-001");
+    expect(result.stdout).toContain("AC-003");
+  });
+
+  it("agency-chain --json emits parseable JSON", () => {
+    const inputPath = join(repoRoot, "examples", "agency-chain", "weak-agent-workflow-chain.json");
+
+    const result = runCli(["agency-chain", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as { overallStatus?: string; issues?: Array<{ id?: string }> };
+
+    expect(result.exitCode).toBe(1);
+    expect(parsed.overallStatus).toBe("broken");
+    expect(parsed.issues?.some((issue) => issue.id === "AC-001")).toBe(true);
+  });
+
+  it("agency-chain invalid input exits 2", () => {
+    const inputPath = writeTempJson("invalid-agency-chain.json", {
+      subject: {},
+      links: [{ id: "bad", type: "unknown", label: "", status: "present" }]
+    });
+
+    const result = runCli(["agency-chain", inputPath]);
+
+    expect(result.exitCode).toBe(2);
+    expect(result.stderr).toContain("Invalid agency chain input");
   });
 
   it("missing file exits 1", () => {

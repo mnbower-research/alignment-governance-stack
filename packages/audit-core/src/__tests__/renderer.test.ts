@@ -83,6 +83,53 @@ describe("Governance Reality Report Markdown renderer", () => {
     expect(markdown).toContain("PGDL exists for proposal scrutiny.");
   });
 
+  it("renders a detailed agency chain map section", () => {
+    const report: GovernanceRealityReport = {
+      ...sampleReport(),
+      agencyChain: {
+        chainId: "chain-render-test",
+        description: "Publishing workflow agency chain.",
+        overallStatus: "partially_preserved",
+        links: [
+          {
+            id: "human",
+            type: "human_authority",
+            label: "Product Owner",
+            status: "present",
+            evidenceRefs: [{ id: "EV-HUMAN", type: "manual_note", title: "Human authority note" }]
+          },
+          {
+            id: "permit",
+            type: "runtime_permit",
+            label: "Runtime Permit",
+            status: "missing"
+          }
+        ],
+        issues: [
+          {
+            id: "AC-006",
+            title: "Approval Without Runtime Binding",
+            severity: "high",
+            confidence: "high",
+            linkType: "runtime_permit",
+            observation: "Runtime permit is not demonstrated.",
+            whyItMatters: "Approval can drift without binding.",
+            auditQuestion: "What runtime permit proves the approved action is the exact action that can execute?",
+            recommendedRemediation: "Add scoped runtime permits.",
+            taxonomyId: "TG-003"
+          }
+        ]
+      }
+    };
+
+    const markdown = renderGovernanceRealityReportMarkdown(report);
+
+    expect(markdown).toContain("Overall Chain Status: Partially Preserved");
+    expect(markdown).toContain("| Product Owner | human authority | present | EV-HUMAN |");
+    expect(markdown).toContain("AC-006: Approval Without Runtime Binding");
+    expect(markdown).toContain("What runtime permit proves");
+  });
+
   it("normalizes sparse findings into a client-ready rendered report", () => {
     const result = createGovernanceRealityReport(
       {

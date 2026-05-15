@@ -26,6 +26,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
 corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json
 corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json --json
+corepack pnpm --filter @alignment-governance-stack/cli ags agency-chain examples/agency-chain/strong-agent-workflow-chain.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -43,6 +44,8 @@ node packages/cli/dist/cli.js gaps examples/alignment-gaps/conflicting-financial
 node packages/cli/dist/cli.js audit-report examples/audit-report/potential-theater-signals.json
 node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
 node packages/cli/dist/cli.js audit-report examples/audit-report/ags-self-audit.json --out .tmp/ags-self-audit.md
+node packages/cli/dist/cli.js agency-chain examples/agency-chain/strong-agent-workflow-chain.json
+node packages/cli/dist/cli.js agency-chain examples/agency-chain/weak-agent-workflow-chain.json --json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
@@ -62,6 +65,8 @@ node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/rec
 - `ags audit-report <input.json>`
 - `ags audit-report <input.json> --json`
 - `ags audit-report <input.json> --out report.md`
+- `ags agency-chain <input.json>`
+- `ags agency-chain <input.json> --json`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags receipt verify <receipt.json>`
@@ -201,6 +206,34 @@ Exit behavior:
 - `1`: report generated and high or critical findings are present
 - `2`: invalid input or validation failure
 
+### `ags agency-chain <input.json>`
+
+Reads a local agency-chain JSON file and evaluates where agency is preserved, weak, broken, or insufficiently evidenced.
+
+Readable output includes:
+
+- chain ID
+- overall status
+- audit mode
+- link count
+- issue count
+- link statuses
+- issue audit questions and remediations
+
+Use `--json` for the full evaluated `AgencyChainMap`.
+
+Exit behavior:
+
+- `0`: preserved or partially preserved with no high/critical issues
+- `1`: weak or broken chain, or high/critical issues
+- `2`: invalid input
+
+Example:
+
+```bash
+node packages/cli/dist/cli.js agency-chain examples/agency-chain/weak-agent-workflow-chain.json --json
+```
+
 ### `ags receipt verify <receipt.json>`
 
 Reads a governance receipt JSON file and verifies it with `verifyGovernanceReceipt`.
@@ -246,6 +279,8 @@ Dogfood workbench scenarios live under `examples/dogfood/scenarios`, `examples/d
 Alignment Gap Detector examples live under `examples/alignment-gaps`.
 
 Governance Reality Report examples live under `examples/audit-report`.
+
+Agency Chain Mapper examples live under `examples/agency-chain`.
 
 ## Exit Codes
 

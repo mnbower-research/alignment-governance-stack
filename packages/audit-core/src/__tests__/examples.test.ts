@@ -15,7 +15,8 @@ describe("audit report examples", () => {
     "strongly-supported-governance.json",
     "potential-theater-signals.json",
     "agent-workflow-gap-review.json",
-    "ags-self-audit.json"
+    "ags-self-audit.json",
+    "ags-self-audit-with-agency-chain.json"
   ];
 
   it.each(exampleFiles)("validates %s", (fileName) => {

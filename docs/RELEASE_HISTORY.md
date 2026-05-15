@@ -17,6 +17,7 @@ Integration Adapters
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Agency Chain Mapper
 -> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Developer CLI
@@ -26,7 +27,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.5.1 | Agentic Governance Auditor Report Hardening | Professional report sections, limitations, definitions, remediation mapping, and AGS self-audit | Current |
+| v1.6.0 | Agency Chain Mapper | Delegated agency chain modeling, broken-link detection, and CLI summaries | Current |
+| v1.5.1 | Agentic Governance Auditor Report Hardening | Professional report sections, limitations, definitions, remediation mapping, and AGS self-audit | Complete |
 | v1.5.0 | Governance Reality Report Foundation | Professional audit reports, theater signal taxonomy, and local report CLI | Complete |
 | v1.4.0 | Content Publishing Dogfood Agent | Public voice, claims, provenance, and publishing eval proof | Complete |
 | v1.3.0 | Alignment Gap Detector / Policy Conflict Analyzer | Pre-runtime company governance diagnostics | Complete |

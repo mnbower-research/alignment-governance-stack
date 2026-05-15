@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.6.0 - Agency Chain Mapper
+
+- Adds `@alignment-governance-stack/agency-chain` with typed agency-chain links, deterministic broken-link detection, status calculation, summaries, and audit finding adaptation.
+- Adds `ags agency-chain <input.json> [--json]`.
+- Adds agency-chain examples for AGS self-audit, strong internal workflow, and weak customer-impacting workflow.
+- Adds Governance Reality Report support for detailed Agency Chain Map sections with link table, broken / weak links, audit questions, and conclusion.
+- Adds `examples/audit-report/ags-self-audit-with-agency-chain.json`.
+- Documents the Agency Chain Mapper as an auditor layer that identifies missing or weak links without determining moral responsibility or legal compliance.
+- Keeps PGDL, AAG, Runtime Binding, receipts, policy profiles, authority map, and governance-core runtime behavior unchanged.
+
 ## v1.5.1 - Agentic Governance Auditor Report Hardening
 
 - Hardens `@alignment-governance-stack/audit-core` reports with audit mode, methodology, limitations, severity and confidence definitions, remediation summary, evidence appendix, and optional self-audit disclosure.

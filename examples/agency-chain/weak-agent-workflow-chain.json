@@ -1,0 +1,54 @@
+{
+  "chainId": "agency-chain-weak-customer-email",
+  "auditMode": "workflow_review",
+  "subject": {
+    "organizationName": "ExampleCo",
+    "systemName": "Customer Email Agent",
+    "workflowName": "Customer-impacting email send",
+    "auditScope": "Weak agency chain fixture for an agent workflow that can generate and send customer-impacting email."
+  },
+  "description": "Agent role, tool access, and proposed action are present, but policy, hard boundary, approval authority, runtime permit, and receipt proof are not demonstrated.",
+  "links": [
+    {
+      "id": "agent-role",
+      "type": "agent_role",
+      "label": "Customer email agent",
+      "status": "present",
+      "description": "Agent role can generate customer-impacting email.",
+      "evidenceRefs": [{ "id": "EV-WEAK-AC-001", "type": "manual_note", "title": "Agent role note" }]
+    },
+    {
+      "id": "tool-access",
+      "type": "tool_access",
+      "label": "Email send tool",
+      "status": "present",
+      "description": "Tool access can send external customer-impacting email.",
+      "evidenceRefs": [{ "id": "EV-WEAK-AC-002", "type": "manual_note", "title": "Tool access note" }]
+    },
+    {
+      "id": "proposed-action",
+      "type": "proposed_action",
+      "label": "Send customer-impacting email",
+      "status": "present",
+      "description": "Proposed action is external and consequential.",
+      "evidenceRefs": [{ "id": "EV-WEAK-AC-003", "type": "manual_note", "title": "Proposed action note" }],
+      "metadata": {
+        "consequential": true
+      }
+    },
+    {
+      "id": "execution-boundary",
+      "type": "execution_boundary",
+      "label": "External email execution",
+      "status": "present",
+      "description": "Execution boundary allows external customer-impacting send.",
+      "evidenceRefs": [{ "id": "EV-WEAK-AC-004", "type": "manual_note", "title": "Execution boundary note" }],
+      "metadata": {
+        "consequential": true
+      }
+    }
+  ],
+  "metadata": {
+    "recurringWorkflow": true
+  }
+}

@@ -3,6 +3,7 @@ import type {
   AuditEvidenceRef,
   AuditFinding,
   GovernanceRealityReport,
+  ReportAgencyChainMap,
   RemediationPlanItem
 } from "./types.js";
 import { NON_ACCUSATORY_CLOSING_NOTE } from "./standardLanguage.js";
@@ -38,7 +39,7 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     "## Agency Chain Map",
     "",
-    renderAgencyChainMap(report.agencyChainMap),
+    renderAgencyChainSection(report),
     "",
     "## Finding Summary",
     "",
@@ -105,7 +106,87 @@ function renderPosture(report: GovernanceRealityReport): string {
   return lines.join("\n");
 }
 
-function renderAgencyChainMap(agencyChainMap: AgencyChainMap | undefined): string {
+function renderAgencyChainSection(report: GovernanceRealityReport): string {
+  if (report.agencyChain !== undefined) {
+    return renderDetailedAgencyChainMap(report.agencyChain);
+  }
+
+  return renderLegacyAgencyChainMap(report.agencyChainMap);
+}
+
+function renderDetailedAgencyChainMap(agencyChain: ReportAgencyChainMap): string {
+  return [
+    `Overall Chain Status: ${formatTitle(formatToken(agencyChain.overallStatus))}`,
+    "",
+    `Chain Summary: ${agencyChain.description}`,
+    "",
+    "**Link Table**",
+    "",
+    "| Link | Type | Status | Evidence |",
+    "| --- | --- | --- | --- |",
+    ...agencyChain.links.map(
+      (link) =>
+        `| ${link.label} | ${formatToken(link.type)} | ${formatToken(link.status)} | ${renderEvidenceCell(link.evidenceRefs ?? [])} |`
+    ),
+    "",
+    "**Broken / Weak Links**",
+    "",
+    renderAgencyChainIssues(agencyChain),
+    "",
+    "**Agency Chain Audit Questions**",
+    "",
+    renderStringList(agencyChain.issues.map((issue) => issue.auditQuestion)),
+    "",
+    `Conclusion: ${createAgencyChainConclusion(agencyChain)}`
+  ].join("\n");
+}
+
+function renderAgencyChainIssues(agencyChain: ReportAgencyChainMap): string {
+  const issues = agencyChain.issues.filter(
+    (issue) => issue.severity === "critical" || issue.severity === "high" || issue.severity === "medium"
+  );
+
+  if (issues.length === 0) {
+    return "No broken or weak agency-chain links were supplied.";
+  }
+
+  return issues
+    .map((issue) => {
+      const linkText = issue.linkId !== undefined ? ` link: ${issue.linkId};` : "";
+      return `- ${issue.id}: ${issue.title} (${formatToken(issue.severity)};${linkText} ${formatToken(issue.linkType)}). ${issue.observation}`;
+    })
+    .join("\n");
+}
+
+function createAgencyChainConclusion(agencyChain: ReportAgencyChainMap): string {
+  if (agencyChain.overallStatus === "preserved") {
+    return "The agency chain is demonstrated across authority, policy, delegation, runtime constraint, and proof for the provided evidence.";
+  }
+
+  if (agencyChain.overallStatus === "partially_preserved") {
+    return "The agency chain is partially preserved, with some links requiring verification or remediation.";
+  }
+
+  if (agencyChain.overallStatus === "weak") {
+    return "The agency chain is present in parts, but weak links require remediation before external reliance.";
+  }
+
+  if (agencyChain.overallStatus === "broken") {
+    return "The agency chain has one or more broken links requiring human review and remediation before reliance.";
+  }
+
+  return "Available evidence is insufficient to determine whether agency is preserved across the workflow.";
+}
+
+function renderEvidenceCell(evidenceRefs: AuditEvidenceRef[]): string {
+  if (evidenceRefs.length === 0) {
+    return "not demonstrated";
+  }
+
+  return evidenceRefs.map((evidenceRef) => evidenceRef.id).join(", ");
+}
+
+function renderLegacyAgencyChainMap(agencyChainMap: AgencyChainMap | undefined): string {
   if (agencyChainMap === undefined) {
     return "No agency chain map was provided. This should be treated as an audit question, not a conclusion.";
   }
@@ -290,4 +371,8 @@ function pushOptionalList(lines: string[], label: string, value: string[] | unde
 
 function formatToken(value: string): string {
   return value.replace(/_/g, " ");
+}
+
+function formatTitle(value: string): string {
+  return value.replace(/\b\w/g, (character) => character.toUpperCase());
 }

@@ -20,6 +20,7 @@ User goal
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Agency Chain Mapper
 -> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Execution
@@ -52,6 +53,7 @@ Integration Adapters
 -> Runtime Binding
 -> Receipt
 -> Governance Memory / Internalization Layer
+-> Agency Chain Mapper
 -> Governance Reality Reports / Audit Core
 -> Evaluation Suite
 -> Developer CLI
@@ -88,6 +90,8 @@ The Eval Suite tests the stack. It is a feedback layer around the stack, not an 
 Governance Reality Reports are the first professional audit/reporting layer. They convert AGS evidence and existing outputs into typed findings, a Governance Reality posture, an agency chain map, remediation plan items, and Markdown or JSON report output. They use careful audit language, identify potential governance theater signals and evidence gaps, and do not make external accusations, determine legal compliance, or certify systems.
 
 The v1.5.1 report hardening adds audit mode, methodology, limitations, severity and confidence definitions, remediation summaries, evidence appendices, and optional self-audit disclosure. This remains a deterministic local reporting layer, not a dashboard, database, hosted API, model caller, or external execution layer.
+
+Agency Chain Mapper is the v1.6.0 auditor layer that maps where human or organizational agency enters the workflow, where it is delegated to agents, where authority is validated, where execution is bound, where consequence occurs, and where proof remains. It detects missing or weak links and can adapt agency-chain issues into Governance Reality Report findings. It does not change PGDL, AAG, Runtime Binding, receipts, policy profiles, authority maps, or governance-core runtime behavior.
 
 The Developer CLI exposes local developer access to the same deterministic packages. It can run evals, evaluate a supplied governance input, verify or hash receipts, and summarize receipt-history memory. It does not execute actions, host a server, store state, or call providers.
 

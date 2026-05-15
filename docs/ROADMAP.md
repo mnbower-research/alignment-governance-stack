@@ -16,6 +16,7 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Human participation package
 - Integration adapters package
 - Governance memory package
+- Agency chain package
 - Audit core package
 - Eval suite package
 - Developer CLI package
@@ -95,6 +96,17 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.6.0
+
+- Agency Chain Mapper
+- Typed agency-chain model and deterministic broken-link detection
+- Local `ags agency-chain <input.json>` command
+- Adapter from agency-chain issues to Governance Reality Report findings
+- Agency-chain rendering inside Governance Reality Reports
+- Strong, weak, and AGS self-audit agency-chain examples
+
+## Recently Completed
+
 ### v1.5.1
 
 - Agentic Governance Auditor report hardening
@@ -102,8 +114,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Default remediation mapping for every TG taxonomy item
 - AGS self-audit example under `examples/audit-report`
 - Stronger deterministic rendering and example validation tests
-
-## Recently Completed
 
 ### v1.5.0
 

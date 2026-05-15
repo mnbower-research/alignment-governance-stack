@@ -1,0 +1,166 @@
+{
+  "reportId": "grr-ags-self-audit-agency-chain-v1-6-0",
+  "generatedAt": "2026-05-15T12:00:00.000Z",
+  "auditMode": "internal_self_audit",
+  "subject": {
+    "organizationName": "Alignment Governance Stack",
+    "systemName": "Alignment Governance Stack v1.5.1",
+    "workflowName": "Agency Chain Mapper foundation",
+    "auditScope": "Internal self-audit with Agency Chain Map section for AGS v1.6.0 development."
+  },
+  "executiveSummary": "The AGS self-audit agency chain demonstrates human project authority, non-accusatory audit policy, local implementation boundaries, Runtime Binding and Receipts package evidence, and Governance Memory package evidence. Watch items remain around public-source review, evidence locker design, external third-party audit, and the new foundational status of the agency-chain mapper.",
+  "posture": {
+    "overallStatus": "partially_supported",
+    "governanceRealityScore": 78,
+    "confidence": "medium"
+  },
+  "findings": [
+    {
+      "id": "F-AGS-CHAIN-001",
+      "taxonomyId": "TG-012",
+      "title": "Agency chain mapper is foundational",
+      "severity": "medium",
+      "confidence": "high",
+      "status": "requires_verification",
+      "summary": "The Agency Chain Mapper is now present, but it is a new local deterministic foundation.",
+      "observation": "The mapper can identify broken or weak links in local fixtures. It has not yet been connected to an evidence locker or third-party audit workflow.",
+      "whyItMatters": "Agency-chain evidence should become durable and independently reviewable before external reliance.",
+      "auditQuestions": [
+        "Which agency-chain links are supported by durable evidence artifacts?",
+        "Which future workflows should connect chain links to an evidence locker?"
+      ],
+      "recommendedRemediations": [
+        "Add evidence locker design before external-facing agency-chain reviews.",
+        "Expand agency-chain examples into fixture-backed review workflows."
+      ],
+      "evidenceRefs": [
+        {
+          "id": "EV-AGS-CHAIN-001",
+          "type": "document",
+          "title": "Agency Chain Mapper package",
+          "sourcePath": "packages/agency-chain"
+        }
+      ],
+      "relatedControls": ["AAG", "Receipts"]
+    }
+  ],
+  "agencyChain": {
+    "chainId": "agency-chain-ags-self-audit-v1-5-1",
+    "description": "Internal self-audit chain showing where AGS preserves human authority, policy constraints, runtime binding package evidence, receipt package evidence, and governance memory package evidence.",
+    "overallStatus": "preserved",
+    "links": [
+      {
+        "id": "human-authority",
+        "type": "human_authority",
+        "label": "Founder/operator project authority",
+        "status": "present",
+        "description": "Founder/operator defines project scope and can stop, refuse, revise, halt, or escalate release work.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-001", "type": "manual_note", "title": "Maintainer authority note" }]
+      },
+      {
+        "id": "organizational-policy",
+        "type": "organizational_policy",
+        "label": "Audit-core limitations and non-accusatory language",
+        "status": "present",
+        "description": "Audit-core includes limitations, methodology, and non-accusatory report language.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-002", "type": "document", "title": "Audit core standard language", "sourcePath": "packages/audit-core/src/standardLanguage.ts" }]
+      },
+      {
+        "id": "hard-boundary",
+        "type": "hard_boundary",
+        "label": "Prohibited language and no runtime-change posture",
+        "status": "present",
+        "description": "Prohibited language checks and release constraints preserve report posture; runtime spine behavior remains unchanged.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-003", "type": "document", "title": "Prohibited language and release docs" }]
+      },
+      {
+        "id": "agent-role",
+        "type": "agent_role",
+        "label": "Codex implementation assistant",
+        "status": "present",
+        "description": "Agents help build but do not own final project authority.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-004", "type": "manual_note", "title": "Agent role note" }]
+      },
+      {
+        "id": "tool-access",
+        "type": "tool_access",
+        "label": "Local repository edit and test tools",
+        "status": "present",
+        "description": "Tool access is local to repository edits and deterministic verification.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-005", "type": "manual_note", "title": "Local tool access note" }]
+      },
+      {
+        "id": "proposed-action",
+        "type": "proposed_action",
+        "label": "Release process reviewed through tests and docs",
+        "status": "present",
+        "description": "Proposed release work is reviewed through tests, examples, documentation, and verification commands.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-006", "type": "document", "title": "Release documentation" }]
+      },
+      {
+        "id": "approval-authority",
+        "type": "approval_authority",
+        "label": "Human commit/release decision",
+        "status": "present",
+        "description": "Human decides whether to commit or release and can stop, refuse, revise, halt, or escalate.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-007", "type": "manual_note", "title": "Human release decision note" }]
+      },
+      {
+        "id": "human-participation",
+        "type": "human_participation",
+        "label": "Human review and verification requests",
+        "status": "present",
+        "description": "Human reviews outputs and asks for verification before release.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-008", "type": "manual_note", "title": "Human review note" }]
+      },
+      {
+        "id": "runtime-permit",
+        "type": "runtime_permit",
+        "label": "Runtime Binding package exists",
+        "status": "present",
+        "description": "Runtime Binding exists as a package for permit-bound execution in governed flows.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-009", "type": "document", "title": "Runtime Binding package", "sourcePath": "packages/runtime-binding" }]
+      },
+      {
+        "id": "execution-boundary",
+        "type": "execution_boundary",
+        "label": "Local deterministic implementation boundary",
+        "status": "present",
+        "description": "This release adds deterministic local packages, examples, docs, and CLI behavior without external execution.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-010", "type": "document", "title": "Release boundaries" }]
+      },
+      {
+        "id": "receipt",
+        "type": "receipt",
+        "label": "Receipts package and signed receipt support",
+        "status": "present",
+        "description": "Receipts exist as a package and signed receipt support exists in AAG action gate modules.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-011", "type": "document", "title": "Receipts package", "sourcePath": "packages/receipts" }]
+      },
+      {
+        "id": "governance-memory",
+        "type": "governance_memory",
+        "label": "Governance Memory package",
+        "status": "present",
+        "description": "Governance Memory exists for human-reviewed receipt-history recommendations.",
+        "evidenceRefs": [{ "id": "EV-AGS-AC-012", "type": "document", "title": "Governance Memory package", "sourcePath": "packages/governance-memory" }]
+      }
+    ],
+    "issues": []
+  },
+  "selfAuditDisclosure": {
+    "scopeDisclosure": "This report is an internal AGS self-audit with an agency-chain map. It should not be treated as independent external assurance.",
+    "strengths": [
+      "Human project authority is represented.",
+      "Non-accusatory audit language is represented.",
+      "Runtime Binding, Receipts, and Governance Memory packages are represented."
+    ],
+    "watchItems": [
+      "Public-source review is not first-class yet.",
+      "Evidence locker is not implemented yet.",
+      "External third-party audit has not been completed.",
+      "Agency Chain Mapper is new and foundational."
+    ],
+    "nonCertificationStatement": "This self-audit does not claim AGS is enterprise certified, legally compliant, regulator-approved, or production-guaranteed."
+  }
+}

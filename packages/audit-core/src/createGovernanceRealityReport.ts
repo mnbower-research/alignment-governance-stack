@@ -66,7 +66,10 @@ function normalizeFullReport(
     findings,
     remediationPlan,
     remediationSummary: input.remediationSummary ?? createRemediationSummary(remediationPlan),
-    evidenceAppendix: input.evidenceAppendix ?? input.appendices?.evidenceRefs ?? collectEvidenceRefs(findings),
+    evidenceAppendix:
+      input.evidenceAppendix ??
+      input.appendices?.evidenceRefs ??
+      collectEvidenceRefs(findings, input.agencyChain),
     appendices: input.appendices ?? createAppendices(findings, options.includeRawInputs ? input : undefined)
   };
 }
@@ -94,9 +97,13 @@ function normalizeSimplifiedInput(
     posture: createPosture(input.posture, findings),
     findings,
     ...(input.agencyChainMap !== undefined ? { agencyChainMap: input.agencyChainMap } : {}),
+    ...(input.agencyChain !== undefined ? { agencyChain: input.agencyChain } : {}),
     remediationPlan,
     remediationSummary: input.remediationSummary ?? createRemediationSummary(remediationPlan),
-    evidenceAppendix: input.evidenceAppendix ?? input.appendices?.evidenceRefs ?? collectEvidenceRefs(findings),
+    evidenceAppendix:
+      input.evidenceAppendix ??
+      input.appendices?.evidenceRefs ??
+      collectEvidenceRefs(findings, input.agencyChain),
     ...(input.selfAuditDisclosure !== undefined ? { selfAuditDisclosure: input.selfAuditDisclosure } : {}),
     appendices:
       input.appendices ??
@@ -253,7 +260,7 @@ function inferControl(taxonomyId: string): RemediationPlanItem["mapsToControl"] 
   return getTheaterSignalById(taxonomyId)?.mapsToControl;
 }
 
-function collectEvidenceRefs(findings: AuditFinding[]) {
+function collectEvidenceRefs(findings: AuditFinding[], agencyChain: GovernanceRealityReport["agencyChain"] | undefined) {
   const evidenceRefsById = new Map<string, AuditFinding["evidenceRefs"][number]>();
 
   for (const finding of findings) {
@@ -266,6 +273,20 @@ function collectEvidenceRefs(findings: AuditFinding[]) {
     }
   }
 
+  if (agencyChain !== undefined) {
+    for (const link of agencyChain.links) {
+      for (const evidenceRef of link.evidenceRefs ?? []) {
+        evidenceRefsById.set(evidenceRef.id, evidenceRef);
+      }
+    }
+
+    for (const issue of agencyChain.issues) {
+      for (const evidenceRef of issue.evidenceRefs ?? []) {
+        evidenceRefsById.set(evidenceRef.id, evidenceRef);
+      }
+    }
+  }
+
   return [...evidenceRefsById.values()];
 }
 
@@ -274,7 +295,7 @@ function createAppendices(
   rawInputs: unknown | undefined
 ): NonNullable<GovernanceRealityReport["appendices"]> {
   return {
-    evidenceRefs: collectEvidenceRefs(findings),
+    evidenceRefs: collectEvidenceRefs(findings, undefined),
     ...(rawInputs !== undefined ? { rawInputs } : {})
   };
 }

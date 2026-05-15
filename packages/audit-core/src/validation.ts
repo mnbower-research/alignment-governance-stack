@@ -179,6 +179,10 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
     }
   }
 
+  if (report.agencyChain !== undefined) {
+    validateReportAgencyChain(report.agencyChain, "$.agencyChain", errors);
+  }
+
   if (!Array.isArray(report.remediationPlan)) {
     errors.push({ path: "$.remediationPlan", message: "remediationPlan array is required." });
   } else {
@@ -219,6 +223,31 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
   errors.push(...findProhibitedAccusatoryLanguage(report));
 
   return { valid: errors.length === 0, errors, warnings };
+}
+
+function validateReportAgencyChain(value: unknown, path: string, errors: AuditValidationIssue[]): void {
+  if (!isRecord(value)) {
+    errors.push({ path, message: "agencyChain must be an object when provided." });
+    return;
+  }
+
+  requireString(value, "chainId", `${path}.chainId`, errors);
+  requireString(value, "description", `${path}.description`, errors);
+  requireEnum(
+    value,
+    "overallStatus",
+    `${path}.overallStatus`,
+    ["preserved", "partially_preserved", "weak", "broken", "insufficient_evidence"],
+    errors
+  );
+
+  if (!Array.isArray(value.links)) {
+    errors.push({ path: `${path}.links`, message: "agencyChain.links array is required." });
+  }
+
+  if (!Array.isArray(value.issues)) {
+    errors.push({ path: `${path}.issues`, message: "agencyChain.issues array is required." });
+  }
 }
 
 function validateDefinitionMap(

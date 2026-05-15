@@ -96,6 +96,68 @@ export interface AgencyChainMap {
   missingLinks: string[];
 }
 
+export type ReportAgencyChainLinkType =
+  | "human_authority"
+  | "organizational_policy"
+  | "hard_boundary"
+  | "agent_role"
+  | "tool_access"
+  | "proposed_action"
+  | "approval_authority"
+  | "human_participation"
+  | "runtime_permit"
+  | "execution_boundary"
+  | "receipt"
+  | "governance_memory";
+
+export type ReportAgencyChainLinkStatus =
+  | "present"
+  | "weak"
+  | "missing"
+  | "not_applicable"
+  | "requires_verification";
+
+export type ReportAgencyChainOverallStatus =
+  | "preserved"
+  | "partially_preserved"
+  | "weak"
+  | "broken"
+  | "insufficient_evidence";
+
+export interface ReportAgencyChainLink {
+  id: string;
+  type: ReportAgencyChainLinkType;
+  label: string;
+  status: ReportAgencyChainLinkStatus;
+  description?: string;
+  evidenceRefs?: AuditEvidenceRef[];
+  dependsOn?: string[];
+  notes?: string[];
+}
+
+export interface ReportAgencyChainIssue {
+  id: string;
+  title: string;
+  severity: AuditSeverity;
+  confidence: AuditConfidence;
+  linkType: ReportAgencyChainLinkType;
+  linkId?: string;
+  observation: string;
+  whyItMatters: string;
+  auditQuestion: string;
+  recommendedRemediation: string;
+  taxonomyId?: string;
+  evidenceRefs?: AuditEvidenceRef[];
+}
+
+export interface ReportAgencyChainMap {
+  chainId: string;
+  description: string;
+  links: ReportAgencyChainLink[];
+  issues: ReportAgencyChainIssue[];
+  overallStatus: ReportAgencyChainOverallStatus;
+}
+
 export interface RemediationPlanItem {
   findingId: string;
   priority: "low" | "medium" | "high" | "urgent";
@@ -164,6 +226,7 @@ export interface GovernanceRealityReport {
   };
   findings: AuditFinding[];
   agencyChainMap?: AgencyChainMap;
+  agencyChain?: ReportAgencyChainMap;
   remediationPlan: RemediationPlanItem[];
   remediationSummary: RemediationSummary;
   evidenceAppendix: AuditEvidenceRef[];
@@ -198,6 +261,7 @@ export interface SimplifiedAuditReportInput {
   posture?: Partial<GovernanceRealityReport["posture"]>;
   findings: AuditFinding[];
   agencyChainMap?: AgencyChainMap;
+  agencyChain?: ReportAgencyChainMap;
   remediationPlan?: RemediationPlanItem[];
   remediationSummary?: RemediationSummary;
   evidenceAppendix?: AuditEvidenceRef[];
