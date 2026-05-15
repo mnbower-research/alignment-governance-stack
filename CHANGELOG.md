@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.4.0 - Content Publishing Dogfood Agent
+
+- Adds Content Publishing Dogfood eval cases for public AGS / AlignmentTheory.org materials.
+- Adds `builtInContentPublishingDogfoodEvalCases` and `runContentPublishingDogfoodEvalSuite`.
+- Updates `ags dogfood` to include Internal Dogfood, Enterprise Golden Path, and Content Publishing Dogfood counts.
+- Adds examples under `examples/dogfood/content-publishing`.
+- Adds docs for governing borrowed public voice, claims, provenance, publishing approval, and runtime publishing substitution.
+- Includes narrow PGDL/AAG hardening so reviewed external releases can proceed after approval, while drafts are not treated as live public posts.
+
 ## v1.3.0 - Alignment Gap Detector / Policy Conflict Analyzer
 
 - Adds deterministic alignment gap detection to `@alignment-governance-stack/company-profile-generator`.

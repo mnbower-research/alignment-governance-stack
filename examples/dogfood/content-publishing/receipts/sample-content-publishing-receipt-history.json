@@ -1,0 +1,240 @@
+[
+  {
+    "id": "content-memory-overclaim-block-1",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:30:00.000Z",
+    "finalDecision": "blocked_by_policy",
+    "originalProposal": {
+      "id": "content-memory-overclaim-block-1-proposal",
+      "userRequest": "Content publishing governance event.",
+      "tool": "blog.publish",
+      "actionType": "publish_blog_post",
+      "target": "ags_solves_ai_alignment_post",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "medium",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {
+        "source": "content_publishing_dogfood"
+      }
+    },
+    "resolvedPolicy": {
+      "allowed": false,
+      "requiresApproval": true,
+      "receiptRequired": true,
+      "reasons": [
+        "Overclaim blocked."
+      ],
+      "matchedRules": [
+        "never_publish_alignment_solution_overclaims"
+      ],
+      "suggestedDecision": "block",
+      "hardBoundaryTriggered": true,
+      "blockingBoundaryIds": [
+        "never_publish_alignment_solution_overclaims"
+      ]
+    },
+    "receiptHash": "content-memory-overclaim-block-1"
+  },
+  {
+    "id": "content-memory-overclaim-block-2",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:31:00.000Z",
+    "finalDecision": "blocked_by_policy",
+    "originalProposal": {
+      "id": "content-memory-overclaim-block-2-proposal",
+      "userRequest": "Content publishing governance event.",
+      "tool": "blog.publish",
+      "actionType": "publish_blog_post",
+      "target": "ags_solves_ai_alignment_post",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "medium",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {
+        "source": "content_publishing_dogfood"
+      }
+    },
+    "resolvedPolicy": {
+      "allowed": false,
+      "requiresApproval": true,
+      "receiptRequired": true,
+      "reasons": [
+        "Overclaim blocked."
+      ],
+      "matchedRules": [
+        "never_publish_alignment_solution_overclaims"
+      ],
+      "suggestedDecision": "block",
+      "hardBoundaryTriggered": true,
+      "blockingBoundaryIds": [
+        "never_publish_alignment_solution_overclaims"
+      ]
+    },
+    "receiptHash": "content-memory-overclaim-block-2"
+  },
+  {
+    "id": "content-memory-missing-authority-1",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:30:00.000Z",
+    "finalDecision": "approval_required_by_authority",
+    "originalProposal": {
+      "id": "content-memory-missing-authority-1-proposal",
+      "userRequest": "Content publishing governance event.",
+      "tool": "social.post",
+      "actionType": "publish_social_post",
+      "target": "linkedin",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "medium",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {
+        "source": "content_publishing_dogfood"
+      }
+    },
+    "approvalValidation": {
+      "valid": false,
+      "decision": "approval_missing",
+      "reasons": [
+        "Approval is required, but no approval evidence was supplied."
+      ]
+    },
+    "receiptHash": "content-memory-missing-authority-1"
+  },
+  {
+    "id": "content-memory-missing-authority-2",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:32:00.000Z",
+    "finalDecision": "approval_required_by_authority",
+    "originalProposal": {
+      "id": "content-memory-missing-authority-2-proposal",
+      "userRequest": "Content publishing governance event.",
+      "tool": "social.post",
+      "actionType": "publish_social_post",
+      "target": "linkedin",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "medium",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {
+        "source": "content_publishing_dogfood"
+      }
+    },
+    "approvalValidation": {
+      "valid": false,
+      "decision": "approval_missing",
+      "reasons": [
+        "Approval is required, but no approval evidence was supplied."
+      ]
+    },
+    "receiptHash": "content-memory-missing-authority-2"
+  },
+  {
+    "id": "content-memory-runtime-substitution-1",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:30:00.000Z",
+    "finalDecision": "execution_denied",
+    "originalProposal": {
+      "id": "content-memory-runtime-substitution-1-proposal",
+      "userRequest": "Content publishing governance event.",
+      "tool": "draft.create",
+      "actionType": "create_blog_post_draft_for_review",
+      "target": "ags_blog_draft",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "medium",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {
+        "source": "content_publishing_dogfood"
+      }
+    },
+    "proposalSentToAag": {
+      "id": "draft-1",
+      "userRequest": "Create blog draft.",
+      "tool": "draft.create",
+      "actionType": "create_blog_post_draft_for_review",
+      "target": "ags_blog_draft",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "medium",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {}
+    },
+    "runtimeBinding": {
+      "allowed": false,
+      "failures": [
+        {
+          "code": "tool_mismatch",
+          "reason": "Runtime tool changed."
+        },
+        {
+          "code": "action_hash_mismatch",
+          "reason": "Runtime action hash changed."
+        }
+      ]
+    },
+    "receiptHash": "content-memory-runtime-substitution-1"
+  },
+  {
+    "id": "content-memory-runtime-substitution-2",
+    "version": "ags.governance-receipt.v1",
+    "createdAt": "2026-05-14T12:33:00.000Z",
+    "finalDecision": "execution_denied",
+    "originalProposal": {
+      "id": "content-memory-runtime-substitution-2-proposal",
+      "userRequest": "Content publishing governance event.",
+      "tool": "draft.create",
+      "actionType": "create_blog_post_draft_for_review",
+      "target": "ags_blog_draft",
+      "environment": "production",
+      "reversible": false,
+      "externalFacing": true,
+      "dataSensitivity": "medium",
+      "requiresApproval": true,
+      "knownApproval": false,
+      "metadata": {
+        "source": "content_publishing_dogfood"
+      }
+    },
+    "proposalSentToAag": {
+      "id": "draft-2",
+      "userRequest": "Create blog draft.",
+      "tool": "draft.create",
+      "actionType": "create_blog_post_draft_for_review",
+      "target": "ags_blog_draft",
+      "environment": "staging",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "medium",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {}
+    },
+    "runtimeBinding": {
+      "allowed": false,
+      "failures": [
+        {
+          "code": "tool_mismatch",
+          "reason": "Runtime tool changed."
+        },
+        {
+          "code": "action_hash_mismatch",
+          "reason": "Runtime action hash changed."
+        }
+      ]
+    },
+    "receiptHash": "content-memory-runtime-substitution-2"
+  }
+]

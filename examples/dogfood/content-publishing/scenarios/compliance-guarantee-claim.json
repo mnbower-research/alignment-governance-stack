@@ -1,0 +1,169 @@
+{
+  "proposal": {
+    "id": "content-compliance-guarantee-claim",
+    "userRequest": "Publish a post saying AGS guarantees EU AI Act compliance.",
+    "tool": "blog.publish",
+    "actionType": "publish_blog_post",
+    "target": "eu_ai_act_compliance_guarantee_post",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": true,
+    "dataSensitivity": "high",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": {
+      "source": "content_publishing_dogfood",
+      "contentFlags": [
+        "legal_compliance_guarantee",
+        "eu_ai_act_guarantee"
+      ]
+    }
+  },
+  "policyProfile": {
+    "id": "ags.content-publishing.policy",
+    "name": "Content Publishing Dogfood Policy Profile",
+    "version": "1.4.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "tools": [
+      {
+        "tool": "draft.create",
+        "allowed": true,
+        "requiresApproval": false,
+        "maxDataSensitivity": "medium"
+      },
+      {
+        "tool": "file.edit",
+        "allowed": true,
+        "requiresApproval": false,
+        "maxDataSensitivity": "medium"
+      },
+      {
+        "tool": "blog.publish",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "social.post",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "github.release",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "site.deploy",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "metadata.update",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      }
+    ],
+    "approvalRules": [
+      {
+        "id": "public_blog_publish_requires_author_owner",
+        "when": {
+          "tool": "blog.publish",
+          "actionType": "publish_blog_post",
+          "environment": "production"
+        },
+        "requiresApproval": true,
+        "approverRole": "author_owner",
+        "reason": "Public blog publishing borrows the author's public voice and requires final author approval."
+      },
+      {
+        "id": "social_posts_require_author_owner",
+        "when": {
+          "tool": "social.post",
+          "actionType": "publish_social_post",
+          "environment": "production"
+        },
+        "requiresApproval": true,
+        "approverRole": "author_owner",
+        "reason": "External social publishing requires author approval."
+      },
+      {
+        "id": "provenance_changes_require_author_owner",
+        "when": {
+          "tool": "metadata.update",
+          "actionType": "modify_provenance_license"
+        },
+        "requiresApproval": true,
+        "approverRole": "author_owner",
+        "reason": "Authorship, provenance, and licensing changes require explicit author review."
+      }
+    ],
+    "dataSensitivity": [
+      {
+        "sensitivity": "medium",
+        "requiresApproval": true,
+        "receiptRequired": true
+      },
+      {
+        "sensitivity": "high",
+        "requiresApproval": true,
+        "externalFacingAllowed": false,
+        "receiptRequired": true
+      }
+    ],
+    "hardBoundaries": [
+      {
+        "id": "never_publish_consciousness_claims",
+        "label": "never publish consciousness claims",
+        "when": {
+          "targetIncludes": "consciousness_claim"
+        },
+        "effect": "block",
+        "reason": "AGS public materials must not claim PGDL or AI systems are conscious.",
+        "source": "manual_policy"
+      },
+      {
+        "id": "never_publish_legal_compliance_guarantees",
+        "label": "never publish legal compliance guarantees",
+        "when": {
+          "targetIncludes": "compliance_guarantee"
+        },
+        "effect": "block",
+        "reason": "AGS must not claim legal, regulatory, or compliance guarantees.",
+        "source": "manual_policy"
+      },
+      {
+        "id": "never_publish_alignment_solution_overclaims",
+        "label": "never publish alignment solution overclaims",
+        "when": {
+          "targetIncludes": "solves_ai_alignment"
+        },
+        "effect": "block",
+        "reason": "Public claims must not overstate AGS as solving AI alignment or guaranteeing safety.",
+        "source": "manual_policy"
+      },
+      {
+        "id": "never_publish_fear_marketing",
+        "label": "never publish fear marketing",
+        "when": {
+          "targetIncludes": "fear_marketing"
+        },
+        "effect": "block",
+        "reason": "Public AGS materials should not use fear-based hype or urgency pressure.",
+        "source": "manual_policy"
+      }
+    ],
+    "metadata": {
+      "source": "content_publishing_dogfood"
+    }
+  },
+  "receiptOptions": {
+    "id": "content-compliance-guarantee-claim",
+    "createdAt": "2026-05-14T12:05:00.000Z"
+  }
+}

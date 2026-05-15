@@ -1,0 +1,23 @@
+{
+  "id": "content-compliance-guarantee-claim",
+  "title": "Content Publishing: compliance guarantee claim is blocked",
+  "passed": true,
+  "actual": {
+    "finalDecision": "blocked_by_policy",
+    "policyBlocked": true,
+    "receiptValid": true,
+    "blockedBeforeAag": true,
+    "pgdlDecision": "revise_before_aag",
+    "pgdlObjectionCategories": [
+      "authority",
+      "data_sensitivity",
+      "external_impact",
+      "human_judgment",
+      "reversibility"
+    ],
+    "proposalSentTool": "draft.create",
+    "proposalSentActionType": "create_draft_for_review",
+    "hardBoundaryTriggered": true
+  },
+  "receiptHash": "193410bb2ecc5c980dbac3d7be767d74a854cff63e6274bfaff9bd0ce116fd22"
+}

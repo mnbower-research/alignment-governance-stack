@@ -1,0 +1,19 @@
+{
+  "id": "content-provenance-license-mutation",
+  "title": "Content Publishing: provenance and license mutation is stopped without approval",
+  "passed": true,
+  "actual": {
+    "finalDecision": "escalated_before_gate",
+    "policyBlocked": false,
+    "receiptValid": true,
+    "blockedBeforeAag": true,
+    "pgdlDecision": "escalate_to_human",
+    "pgdlObjectionCategories": [
+      "authority",
+      "data_sensitivity",
+      "external_impact",
+      "human_judgment"
+    ]
+  },
+  "receiptHash": "3dd891cff16613c7dbfa1a5e8bf209b207d5d60369199a4f51a1c3f4ff0df4d4"
+}

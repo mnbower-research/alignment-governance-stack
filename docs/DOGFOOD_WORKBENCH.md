@@ -44,6 +44,27 @@ It exercises:
 - runtime substitution denial
 - receipt history for Governance Memory
 
+### Content Publishing Dogfood
+
+This track proves AGS can govern a content agent that drafts and publishes public AGS / AlignmentTheory.org materials.
+
+The content agent borrows the author's public voice. AGS ensures borrowed voice does not become stolen voice.
+
+It exercises:
+
+- safe internal and public draft creation
+- approved public blog publishing
+- overclaiming public claims
+- consciousness language and legal/compliance guarantee blocks
+- review bypass attempts
+- external social publishing without approval
+- fear-based tone drift and emergency publish pressure
+- provenance and license mutation
+- prior approval reuse
+- runtime substitution from draft to social post
+- receipt history for Governance Memory
+- Alignment Gap Detector input for publishing governance conflicts
+
 ## Commands
 
 Build the CLI:
@@ -65,12 +86,16 @@ node packages/cli/dist/cli.js govern examples/dogfood/scenarios/safe-readme-upda
 node packages/cli/dist/cli.js govern examples/dogfood/scenarios/runtime-substitution-attempt.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-runtime-substitution.json
+node packages/cli/dist/cli.js govern examples/dogfood/content-publishing/scenarios/safe-blog-draft-for-review.json
+node packages/cli/dist/cli.js govern examples/dogfood/content-publishing/scenarios/runtime-substitution-blog-draft-to-linkedin-post.json
 node packages/cli/dist/cli.js memory examples/dogfood/receipts/sample-dogfood-receipt-history.json
 node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/receipts/sample-enterprise-receipt-history.json
+node packages/cli/dist/cli.js memory examples/dogfood/content-publishing/receipts/sample-content-publishing-receipt-history.json
+node packages/cli/dist/cli.js gaps examples/dogfood/content-publishing/alignment-gap-input.json
 ```
 
 ## Boundaries
 
-The Dogfood Workbench does not execute real actions. It does not publish packages, push to GitHub, send emails, delete files, mutate authority maps, or delete receipts.
+The Dogfood Workbench does not execute real actions. It does not publish packages, push to GitHub, send emails, delete files, mutate authority maps, delete receipts, publish blog posts, post to social platforms, or deploy a site.
 
 It creates repeatable eval proof and receipt-oriented memory inputs for human review.

@@ -1,0 +1,17 @@
+{
+  "id": "content-prior-approval-reuse",
+  "title": "Content Publishing: expired prior approval cannot be reused",
+  "passed": true,
+  "actual": {
+    "finalDecision": "approval_required_by_authority",
+    "policyBlocked": false,
+    "receiptValid": true,
+    "blockedBeforeAag": true,
+    "pgdlDecision": "forward_to_aag",
+    "pgdlObjectionCategories": [],
+    "authorityDecision": "approval_expired",
+    "proposalSentTool": "blog.publish",
+    "proposalSentActionType": "publish_blog_post"
+  },
+  "receiptHash": "f616712d8f3f9fc21d6999872c79fc8e384025e17cc06b8096081305310ee4e8"
+}

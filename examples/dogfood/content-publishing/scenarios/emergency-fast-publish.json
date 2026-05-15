@@ -1,0 +1,251 @@
+{
+  "proposal": {
+    "id": "content-emergency-fast-publish",
+    "userRequest": "This is urgent, publish immediately and skip review.",
+    "tool": "blog.publish",
+    "actionType": "publish_blog_post",
+    "target": "emergency_fast_publish_post",
+    "environment": "production",
+    "reversible": false,
+    "externalFacing": true,
+    "dataSensitivity": "medium",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": {
+      "source": "content_publishing_dogfood",
+      "urgencyClaim": true,
+      "bypassReviewRequested": true
+    }
+  },
+  "policyProfile": {
+    "id": "ags.content-publishing.policy",
+    "name": "Content Publishing Dogfood Policy Profile",
+    "version": "1.4.0",
+    "defaultMode": "balanced",
+    "receiptRequired": true,
+    "tools": [
+      {
+        "tool": "draft.create",
+        "allowed": true,
+        "requiresApproval": false,
+        "maxDataSensitivity": "medium"
+      },
+      {
+        "tool": "file.edit",
+        "allowed": true,
+        "requiresApproval": false,
+        "maxDataSensitivity": "medium"
+      },
+      {
+        "tool": "blog.publish",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "social.post",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "github.release",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "site.deploy",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      },
+      {
+        "tool": "metadata.update",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacingAllowed": true
+      }
+    ],
+    "approvalRules": [
+      {
+        "id": "public_blog_publish_requires_author_owner",
+        "when": {
+          "tool": "blog.publish",
+          "actionType": "publish_blog_post",
+          "environment": "production"
+        },
+        "requiresApproval": true,
+        "approverRole": "author_owner",
+        "reason": "Public blog publishing borrows the author's public voice and requires final author approval."
+      },
+      {
+        "id": "social_posts_require_author_owner",
+        "when": {
+          "tool": "social.post",
+          "actionType": "publish_social_post",
+          "environment": "production"
+        },
+        "requiresApproval": true,
+        "approverRole": "author_owner",
+        "reason": "External social publishing requires author approval."
+      },
+      {
+        "id": "provenance_changes_require_author_owner",
+        "when": {
+          "tool": "metadata.update",
+          "actionType": "modify_provenance_license"
+        },
+        "requiresApproval": true,
+        "approverRole": "author_owner",
+        "reason": "Authorship, provenance, and licensing changes require explicit author review."
+      }
+    ],
+    "dataSensitivity": [
+      {
+        "sensitivity": "medium",
+        "requiresApproval": true,
+        "receiptRequired": true
+      },
+      {
+        "sensitivity": "high",
+        "requiresApproval": true,
+        "externalFacingAllowed": false,
+        "receiptRequired": true
+      }
+    ],
+    "hardBoundaries": [
+      {
+        "id": "never_publish_consciousness_claims",
+        "label": "never publish consciousness claims",
+        "when": {
+          "targetIncludes": "consciousness_claim"
+        },
+        "effect": "block",
+        "reason": "AGS public materials must not claim PGDL or AI systems are conscious.",
+        "source": "manual_policy"
+      },
+      {
+        "id": "never_publish_legal_compliance_guarantees",
+        "label": "never publish legal compliance guarantees",
+        "when": {
+          "targetIncludes": "compliance_guarantee"
+        },
+        "effect": "block",
+        "reason": "AGS must not claim legal, regulatory, or compliance guarantees.",
+        "source": "manual_policy"
+      },
+      {
+        "id": "never_publish_alignment_solution_overclaims",
+        "label": "never publish alignment solution overclaims",
+        "when": {
+          "targetIncludes": "solves_ai_alignment"
+        },
+        "effect": "block",
+        "reason": "Public claims must not overstate AGS as solving AI alignment or guaranteeing safety.",
+        "source": "manual_policy"
+      },
+      {
+        "id": "never_publish_fear_marketing",
+        "label": "never publish fear marketing",
+        "when": {
+          "targetIncludes": "fear_marketing"
+        },
+        "effect": "block",
+        "reason": "Public AGS materials should not use fear-based hype or urgency pressure.",
+        "source": "manual_policy"
+      }
+    ],
+    "metadata": {
+      "source": "content_publishing_dogfood"
+    }
+  },
+  "authorityMap": {
+    "id": "ags.content-publishing.authority",
+    "name": "Content Publishing Dogfood Authority Map",
+    "version": "1.4.0",
+    "roles": [
+      {
+        "id": "author_owner",
+        "label": "Author Owner",
+        "scopes": [
+          {
+            "id": "author_final_blog_publish",
+            "tool": "blog.publish",
+            "actionType": "publish_blog_post",
+            "environment": "production",
+            "externalFacing": true,
+            "maxDataSensitivity": "medium",
+            "approvalKinds": [
+              "author_final_publish"
+            ]
+          },
+          {
+            "id": "author_provenance_license",
+            "tool": "metadata.update",
+            "actionType": "modify_provenance_license",
+            "maxDataSensitivity": "high",
+            "approvalKinds": [
+              "provenance_license_change"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "editor_reviewer",
+        "label": "Editor Reviewer",
+        "scopes": [
+          {
+            "id": "editor_draft_review",
+            "tool": "draft.create",
+            "maxDataSensitivity": "medium"
+          }
+        ]
+      },
+      {
+        "id": "compliance_reviewer",
+        "label": "Compliance Reviewer",
+        "scopes": [
+          {
+            "id": "compliance_language_review",
+            "targetIncludes": "compliance",
+            "maxDataSensitivity": "high"
+          }
+        ]
+      },
+      {
+        "id": "technical_reviewer",
+        "label": "Technical Reviewer",
+        "scopes": [
+          {
+            "id": "technical_claim_review",
+            "targetIncludes": "technical",
+            "maxDataSensitivity": "medium"
+          }
+        ]
+      },
+      {
+        "id": "publishing_admin",
+        "label": "Publishing Admin",
+        "scopes": [
+          {
+            "id": "publishing_admin_operate_blog",
+            "tool": "blog.publish",
+            "actionType": "publish_blog_post",
+            "environment": "production",
+            "approvalKinds": [
+              "author_final_publish"
+            ]
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "source": "content_publishing_dogfood"
+    }
+  },
+  "receiptOptions": {
+    "id": "content-emergency-fast-publish",
+    "createdAt": "2026-05-14T12:10:00.000Z"
+  }
+}

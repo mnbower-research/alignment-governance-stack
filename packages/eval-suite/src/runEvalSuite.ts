@@ -1,4 +1,5 @@
 import { builtInEvalCases } from "./evalCases.js";
+import { builtInContentPublishingDogfoodEvalCases } from "./contentPublishingDogfoodEvalCases.js";
 import { builtInDogfoodEvalCases } from "./dogfoodEvalCases.js";
 import { builtInEnterpriseDogfoodEvalCases } from "./enterpriseDogfoodEvalCases.js";
 import { builtInRedTeamEvalCases } from "./redTeamEvalCases.js";
@@ -20,7 +21,17 @@ export function runEvalSuite(cases: AgsEvalCase[] = builtInEvalCases): AgsEvalSu
 }
 
 export function runDogfoodEvalSuite(
-  cases: AgsEvalCase[] = [...builtInDogfoodEvalCases, ...builtInEnterpriseDogfoodEvalCases]
+  cases: AgsEvalCase[] = [
+    ...builtInDogfoodEvalCases,
+    ...builtInEnterpriseDogfoodEvalCases,
+    ...builtInContentPublishingDogfoodEvalCases
+  ]
+): AgsEvalSuiteResult {
+  return runEvalSuite(cases);
+}
+
+export function runContentPublishingDogfoodEvalSuite(
+  cases: AgsEvalCase[] = builtInContentPublishingDogfoodEvalCases
 ): AgsEvalSuiteResult {
   return runEvalSuite(cases);
 }

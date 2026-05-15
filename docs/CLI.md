@@ -87,6 +87,7 @@ Output includes:
 
 - Internal Dogfood passed/total
 - Enterprise Golden Path passed/total
+- Content Publishing Dogfood passed/total
 - combined passed/total
 - failed dogfood case IDs and reasons, when failures exist
 
@@ -205,7 +206,7 @@ Integration examples that can also be checked with `ags govern` live under `exam
 
 Full-stack demo inputs live under `examples/demo/full-stack`.
 
-Dogfood workbench scenarios live under `examples/dogfood/scenarios` and `examples/dogfood/enterprise-golden-path/scenarios`. Red-team scenarios live under `examples/redteam/scenarios`.
+Dogfood workbench scenarios live under `examples/dogfood/scenarios`, `examples/dogfood/enterprise-golden-path/scenarios`, and `examples/dogfood/content-publishing/scenarios`. Red-team scenarios live under `examples/redteam/scenarios`.
 
 Alignment Gap Detector examples live under `examples/alignment-gaps`.
 

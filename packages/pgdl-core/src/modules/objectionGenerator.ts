@@ -7,7 +7,7 @@ export function generateObjections(
 ): PgdlObjection[] {
   const objections: PgdlObjection[] = [];
 
-  if (!proposal.reversible) {
+  if (!proposal.reversible && !isApprovedReviewedExternalRelease(proposal)) {
     objections.push({
       category: "reversibility",
       severity: "high",
@@ -40,7 +40,7 @@ export function generateObjections(
     });
   }
 
-  if (proposal.externalFacing) {
+  if (proposal.externalFacing && !isApprovedReviewedExternalRelease(proposal)) {
     objections.push({
       category: "external_impact",
       severity: "medium",
@@ -78,6 +78,15 @@ export function generateObjections(
   }
 
   return objections;
+}
+
+function isApprovedReviewedExternalRelease(proposal: AgentActionProposal): boolean {
+  return (
+    proposal.externalFacing === true &&
+    proposal.requiresApproval === true &&
+    proposal.knownApproval === true &&
+    proposal.metadata.reviewedForExternalRelease === true
+  );
 }
 
 function isApprovedInternalReversibleAction(

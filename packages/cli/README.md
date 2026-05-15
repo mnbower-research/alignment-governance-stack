@@ -28,6 +28,6 @@ The CLI does not execute governed actions. It runs deterministic local checks ag
 - `ags receipt verify <receipt.json>`
 - `ags receipt hash <receipt.json>`
 
-`ags dogfood` reports Internal Dogfood and Enterprise Golden Path counts. `ags redteam` runs adversarial bypass regression cases. `ags gaps` runs the Alignment Gap Detector and exits `2` when high or critical gaps require human review.
+`ags dogfood` reports Internal Dogfood, Enterprise Golden Path, and Content Publishing Dogfood counts. `ags redteam` runs adversarial bypass regression cases. `ags gaps` runs the Alignment Gap Detector and exits `2` when high or critical gaps require human review.
 
 See `docs/CLI.md` for examples and exit codes.

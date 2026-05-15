@@ -1,0 +1,94 @@
+{
+  "companyAlignmentInput": {
+    "id": "content-publishing-gap-demo",
+    "name": "Content Publishing Gap Demo",
+    "values": [
+      {
+        "id": "preserve-author-voice",
+        "label": "Preserve author voice",
+        "governanceImplication": "Public publishing requires human approval and proof before public claims."
+      },
+      {
+        "id": "no-compliance-overclaims",
+        "label": "No legal/compliance guarantees",
+        "governanceImplication": "Never automate legal compliance claims."
+      }
+    ],
+    "roles": [
+      {
+        "id": "publishing_admin",
+        "label": "Publishing Admin",
+        "canApprove": ["production"]
+      }
+    ],
+    "tools": [
+      {
+        "tool": "blog.publish",
+        "allowed": true,
+        "requiresApproval": true,
+        "externalFacing": true,
+        "maxDataSensitivity": "high"
+      }
+    ],
+    "dataClasses": [
+      {
+        "id": "legal_compliance_claim",
+        "label": "Legal/compliance claim",
+        "sensitivity": "high",
+        "externalSharingAllowed": false,
+        "requiresApproval": true
+      },
+      {
+        "id": "public_author_voice",
+        "label": "Public author voice",
+        "sensitivity": "high",
+        "externalSharingAllowed": true,
+        "requiresApproval": true
+      }
+    ],
+    "environments": [
+      {
+        "id": "production",
+        "label": "Production",
+        "productionLike": true,
+        "requiresApprovalForExternalFacing": false
+      }
+    ],
+    "decisionBoundaries": [
+      {
+        "id": "never-publish-without-author-owner",
+        "label": "Never publish without author owner approval",
+        "tool": "blog.publish",
+        "environment": "production",
+        "requiresHumanApproval": true,
+        "approverRole": "author_owner",
+        "neverAutomate": true
+      },
+      {
+        "id": "never-legal-guarantee",
+        "label": "Never publish legal compliance guarantees",
+        "targetIncludes": "compliance_guarantee",
+        "requiresHumanApproval": true,
+        "neverAutomate": true
+      }
+    ],
+    "defaultMode": "permissive"
+  },
+  "authorityMap": {
+    "id": "content-publishing-gap-demo.authority",
+    "name": "Content Publishing Gap Demo Authority",
+    "version": "authority.map.example",
+    "roles": [
+      {
+        "id": "publishing_admin",
+        "label": "Publishing Admin",
+        "scopes": [
+          {
+            "id": "production",
+            "environment": "production"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "id": "ags-content-publishing",
+  "name": "AGS / AlignmentTheory Public Publishing Governance",
+  "organization": "AlignmentTheory.org",
+  "description": "Governance input for content agents that draft or publish public AGS materials.",
+  "values": [
+    {
+      "id": "preserve-human-agency",
+      "label": "Preserve human agency",
+      "governanceImplication": "Public publishing requires meaningful human authority and review."
+    },
+    {
+      "id": "preserve-author-voice",
+      "label": "Preserve author voice",
+      "governanceImplication": "A content agent borrows public voice and must not publish without author approval."
+    },
+    {
+      "id": "proof-before-public-claims",
+      "label": "Proof before public claims",
+      "governanceImplication": "Public claims need receipt-backed review."
+    },
+    {
+      "id": "no-consciousness-overclaims",
+      "label": "No consciousness overclaims",
+      "governanceImplication": "Never describe PGDL or AI systems as conscious."
+    },
+    {
+      "id": "no-legal-compliance-guarantees",
+      "label": "No legal/compliance guarantees",
+      "governanceImplication": "Do not claim legal, regulatory, or compliance guarantees."
+    },
+    {
+      "id": "no-fear-based-hype",
+      "label": "No fear-based hype",
+      "governanceImplication": "Public materials should avoid urgency pressure and fear-based marketing."
+    },
+    {
+      "id": "no-silent-provenance-mutation",
+      "label": "No silent provenance or licensing mutation",
+      "governanceImplication": "Authorship, provenance, and license metadata changes require explicit review."
+    }
+  ],
+  "roles": [
+    {
+      "id": "author_owner",
+      "label": "Author Owner",
+      "canApprove": ["external_facing", "production"]
+    },
+    {
+      "id": "editor_reviewer",
+      "label": "Editor Reviewer",
+      "canApprove": ["editor_review"]
+    },
+    {
+      "id": "compliance_reviewer",
+      "label": "Compliance Reviewer",
+      "canApprove": ["high_sensitivity"]
+    },
+    {
+      "id": "technical_reviewer",
+      "label": "Technical Reviewer",
+      "canApprove": ["technical_review"]
+    },
+    {
+      "id": "publishing_admin",
+      "label": "Publishing Admin",
+      "canApprove": ["production"]
+    }
+  ],
+  "tools": [
+    {
+      "tool": "draft.create",
+      "allowed": true,
+      "requiresApproval": false,
+      "externalFacing": false,
+      "maxDataSensitivity": "medium"
+    },
+    {
+      "tool": "file.edit",
+      "allowed": true,
+      "requiresApproval": false,
+      "externalFacing": false,
+      "maxDataSensitivity": "medium"
+    },
+    {
+      "tool": "blog.publish",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "maxDataSensitivity": "medium"
+    },
+    {
+      "tool": "social.post",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "maxDataSensitivity": "medium"
+    },
+    {
+      "tool": "github.release",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "maxDataSensitivity": "medium"
+    },
+    {
+      "tool": "site.deploy",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "maxDataSensitivity": "medium"
+    },
+    {
+      "tool": "metadata.update",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "maxDataSensitivity": "high"
+    }
+  ],
+  "dataClasses": [
+    {
+      "id": "public_article",
+      "label": "Public article",
+      "sensitivity": "medium",
+      "externalSharingAllowed": true,
+      "requiresApproval": true
+    },
+    {
+      "id": "unreleased_research",
+      "label": "Unreleased research",
+      "sensitivity": "medium",
+      "externalSharingAllowed": false,
+      "requiresApproval": true
+    },
+    {
+      "id": "legal_compliance_claim",
+      "label": "Legal/compliance claim",
+      "sensitivity": "high",
+      "externalSharingAllowed": false,
+      "requiresApproval": true
+    },
+    {
+      "id": "licensing_provenance",
+      "label": "Licensing and provenance",
+      "sensitivity": "high",
+      "externalSharingAllowed": false,
+      "requiresApproval": true
+    },
+    {
+      "id": "public_author_voice",
+      "label": "Public author voice",
+      "sensitivity": "high",
+      "externalSharingAllowed": true,
+      "requiresApproval": true
+    }
+  ],
+  "environments": [
+    {
+      "id": "drafting",
+      "label": "Drafting"
+    },
+    {
+      "id": "staging",
+      "label": "Staging"
+    },
+    {
+      "id": "production",
+      "label": "Production",
+      "productionLike": true,
+      "requiresApprovalForIrreversible": true,
+      "requiresApprovalForExternalFacing": true,
+      "requiresApprovalForHighSensitivity": true
+    }
+  ],
+  "decisionBoundaries": [
+    {
+      "id": "never-publish-without-author-approval",
+      "label": "Never publish without author approval",
+      "tool": "blog.publish",
+      "environment": "production",
+      "requiresHumanApproval": true,
+      "approverRole": "author_owner"
+    },
+    {
+      "id": "never-consciousness-language",
+      "label": "Never claim AI or PGDL is conscious",
+      "targetIncludes": "consciousness_claim",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never-compliance-guarantee",
+      "label": "Never claim AGS guarantees legal compliance",
+      "targetIncludes": "compliance_guarantee",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never-provenance-license-mutation-without-review",
+      "label": "Never mutate authorship, provenance, or licensing without explicit review",
+      "tool": "metadata.update",
+      "actionType": "modify_provenance_license",
+      "requiresHumanApproval": true,
+      "approverRole": "author_owner"
+    },
+    {
+      "id": "emergency-does-not-bypass-review",
+      "label": "Emergency does not bypass publishing review",
+      "tool": "blog.publish",
+      "environment": "production",
+      "requiresHumanApproval": true,
+      "approverRole": "author_owner"
+    }
+  ],
+  "defaultMode": "balanced"
+}

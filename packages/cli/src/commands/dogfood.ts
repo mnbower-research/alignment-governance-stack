@@ -1,6 +1,8 @@
 import {
+  builtInContentPublishingDogfoodEvalCases,
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
+  runContentPublishingDogfoodEvalSuite,
   runDogfoodEvalSuite,
   runEnterpriseDogfoodEvalSuite,
   runEvalSuite
@@ -10,11 +12,13 @@ import type { CliResult } from "../cli.js";
 export function runDogfoodCommand(_args: string[] = []): CliResult {
   const internal = runEvalSuite(builtInDogfoodEvalCases);
   const enterprise = runEnterpriseDogfoodEvalSuite(builtInEnterpriseDogfoodEvalCases);
+  const contentPublishing = runContentPublishingDogfoodEvalSuite(builtInContentPublishingDogfoodEvalCases);
   const total = runDogfoodEvalSuite();
   const lines = [
     "AGS Dogfood Workbench",
     `Internal Dogfood: ${internal.passedCount}/${internal.total} passed`,
     `Enterprise Golden Path: ${enterprise.passedCount}/${enterprise.total} passed`,
+    `Content Publishing Dogfood: ${contentPublishing.passedCount}/${contentPublishing.total} passed`,
     `Total: ${total.passedCount}/${total.total} passed`
   ];
 

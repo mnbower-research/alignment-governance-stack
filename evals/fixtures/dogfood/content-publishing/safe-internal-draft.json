@@ -1,0 +1,19 @@
+{
+  "id": "content-safe-internal-draft",
+  "title": "Content Publishing: internal article draft is allowed",
+  "passed": true,
+  "actual": {
+    "finalDecision": "execution_allowed",
+    "policyBlocked": false,
+    "receiptValid": true,
+    "blockedBeforeAag": false,
+    "pgdlDecision": "forward_to_aag",
+    "pgdlObjectionCategories": [],
+    "aagDecision": "allow",
+    "runtimeAllowed": true,
+    "proposalSentTool": "draft.create",
+    "proposalSentActionType": "create_internal_content_draft",
+    "runtimeFailureCodes": []
+  },
+  "receiptHash": "cf63d402dcf758a8f08a4c40f373e51a72deea3ac49a7b54290e4f32975ad2d8"
+}

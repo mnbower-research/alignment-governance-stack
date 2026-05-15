@@ -1,0 +1,21 @@
+{
+  "id": "content-publish-approved-blog-post",
+  "title": "Content Publishing: approved public blog post publishes through the stack",
+  "passed": true,
+  "actual": {
+    "finalDecision": "execution_allowed",
+    "policyBlocked": false,
+    "receiptValid": true,
+    "blockedBeforeAag": false,
+    "pgdlDecision": "forward_to_aag",
+    "pgdlObjectionCategories": [],
+    "aagDecision": "allow",
+    "authorityDecision": "approval_valid",
+    "participationDecision": "meaningful_participation",
+    "runtimeAllowed": true,
+    "proposalSentTool": "blog.publish",
+    "proposalSentActionType": "publish_blog_post",
+    "runtimeFailureCodes": []
+  },
+  "receiptHash": "bbfca77bb03957088cbb16f929324c61519284de653333a7dcab40cc96d78c5d"
+}

@@ -72,6 +72,44 @@ describe("imported Agent Action Gate source", () => {
     expect(result.primaryIssue).toBe("irreversible_action");
   });
 
+  it("does not require approval again for an irreversible action with recorded approval", () => {
+    const result = evaluateAction({
+      userRequest: "Publish the reviewed public blog post.",
+      proposedAction: {
+        tool: "blog.publish",
+        actionType: "publish_blog_post",
+        target: "reviewed_public_blog_post",
+        reversible: false,
+        externalFacing: true
+      },
+      context: {
+        environment: "production",
+        userApproved: true
+      }
+    });
+
+    expect(result.detectorResults.find((entry) => entry.type === "irreversible_action")?.triggered).toBe(false);
+  });
+
+  it("allows draft creation even when the draft is for a future public post", () => {
+    const result = evaluateAction({
+      userRequest: "Create a blog post draft for review.",
+      proposedAction: {
+        tool: "draft.create",
+        actionType: "create_blog_post_draft_for_review",
+        target: "borrowed_agency_blog_draft",
+        reversible: true,
+        externalFacing: false
+      },
+      context: {
+        environment: "staging",
+        userApproved: false
+      }
+    });
+
+    expect(result.decision).toBe("allow");
+  });
+
   it("blocks a wrong target", () => {
     const result = evaluateAction({
       userRequest: "Email alex@example.com with the status update.",

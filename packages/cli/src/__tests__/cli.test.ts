@@ -44,7 +44,8 @@ describe("ags cli", () => {
     expect(result.exitCode).toBe(0);
     expect(result.stdout).toContain("Internal Dogfood: 10/10 passed");
     expect(result.stdout).toContain("Enterprise Golden Path: 6/6 passed");
-    expect(result.stdout).toContain("Total: 16/16 passed");
+    expect(result.stdout).toContain("Content Publishing Dogfood: 13/13 passed");
+    expect(result.stdout).toContain("Total: 29/29 passed");
   });
 
   it("redteam command runs built-in red-team evals", () => {

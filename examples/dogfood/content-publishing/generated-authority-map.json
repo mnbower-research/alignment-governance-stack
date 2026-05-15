@@ -1,0 +1,84 @@
+{
+  "id": "ags.content-publishing.authority",
+  "name": "Content Publishing Dogfood Authority Map",
+  "version": "1.4.0",
+  "roles": [
+    {
+      "id": "author_owner",
+      "label": "Author Owner",
+      "scopes": [
+        {
+          "id": "author_final_blog_publish",
+          "tool": "blog.publish",
+          "actionType": "publish_blog_post",
+          "environment": "production",
+          "externalFacing": true,
+          "maxDataSensitivity": "medium",
+          "approvalKinds": [
+            "author_final_publish"
+          ]
+        },
+        {
+          "id": "author_provenance_license",
+          "tool": "metadata.update",
+          "actionType": "modify_provenance_license",
+          "maxDataSensitivity": "high",
+          "approvalKinds": [
+            "provenance_license_change"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editor_reviewer",
+      "label": "Editor Reviewer",
+      "scopes": [
+        {
+          "id": "editor_draft_review",
+          "tool": "draft.create",
+          "maxDataSensitivity": "medium"
+        }
+      ]
+    },
+    {
+      "id": "compliance_reviewer",
+      "label": "Compliance Reviewer",
+      "scopes": [
+        {
+          "id": "compliance_language_review",
+          "targetIncludes": "compliance",
+          "maxDataSensitivity": "high"
+        }
+      ]
+    },
+    {
+      "id": "technical_reviewer",
+      "label": "Technical Reviewer",
+      "scopes": [
+        {
+          "id": "technical_claim_review",
+          "targetIncludes": "technical",
+          "maxDataSensitivity": "medium"
+        }
+      ]
+    },
+    {
+      "id": "publishing_admin",
+      "label": "Publishing Admin",
+      "scopes": [
+        {
+          "id": "publishing_admin_operate_blog",
+          "tool": "blog.publish",
+          "actionType": "publish_blog_post",
+          "environment": "production",
+          "approvalKinds": [
+            "author_final_publish"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "source": "content_publishing_dogfood"
+  }
+}

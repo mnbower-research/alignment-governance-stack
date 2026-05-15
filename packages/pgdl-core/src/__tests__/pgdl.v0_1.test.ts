@@ -135,6 +135,31 @@ describe("PGDL v0.1 deterministic packet generation", () => {
     expect(packet.objections).toHaveLength(0);
   });
 
+  it("forwards an externally reviewed publishing action when approval is already known", () => {
+    const proposal: AgentActionProposal = {
+      id: "approved-public-blog-publish",
+      userRequest: "Publish the reviewed public blog post.",
+      tool: "blog.publish",
+      actionType: "publish_blog_post",
+      target: "reviewed_public_blog_post",
+      environment: "production",
+      reversible: false,
+      externalFacing: true,
+      dataSensitivity: "medium",
+      requiresApproval: true,
+      knownApproval: true,
+      metadata: {
+        reviewedForExternalRelease: true
+      }
+    };
+
+    const packet = evaluatePgdl(proposal);
+
+    expect(packet.decision).toBe("forward_to_aag");
+    expect(packet.objections).toHaveLength(0);
+    expect(packet.resolvedProposal).toBeUndefined();
+  });
+
   it("detects compliance theater when wording changes without risk reduction", () => {
     const proposal: AgentActionProposal = {
       id: "compliance-theater-delete",

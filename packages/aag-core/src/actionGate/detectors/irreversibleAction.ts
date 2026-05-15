@@ -12,6 +12,17 @@ const criticalIrreversiblePattern =
 export const detectIrreversibleAction: GateDetector = (
   input: ActionGateInput,
 ): GateDetectorResult => {
+  if (input.context?.userApproved === true) {
+    return {
+      type: "irreversible_action",
+      triggered: false,
+      confidence: 0,
+      severity: "low",
+      evidence: [],
+      recommendedDecision: "allow",
+    };
+  }
+
   const actionText = getActionText(input);
   const evidence: string[] = [];
 

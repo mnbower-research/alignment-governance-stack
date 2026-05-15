@@ -25,7 +25,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.3.0 | Alignment Gap Detector / Policy Conflict Analyzer | Pre-runtime company governance diagnostics | Current |
+| v1.4.0 | Content Publishing Dogfood Agent | Public voice, claims, provenance, and publishing eval proof | Current |
+| v1.3.0 | Alignment Gap Detector / Policy Conflict Analyzer | Pre-runtime company governance diagnostics | Complete |
 | v1.2.0 | Adversarial Red-Team Eval Pack | Deterministic bypass and exploit regression cases | Complete |
 | v1.1.0 | Dogfood Workbench Eval Pack | Internal AGS development evals plus Enterprise Financial Report Golden Path | Complete |
 | v1.0.1 | Stabilization and Release Cleanup | Release history, docs, demo cleanup | Complete |

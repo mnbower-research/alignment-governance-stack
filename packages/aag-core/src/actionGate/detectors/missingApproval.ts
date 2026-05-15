@@ -51,7 +51,7 @@ function getApprovalReasons(input: ActionGateInput): string[] {
   }
 
   const keywordMatch = actionText.match(approvalKeywordPattern)?.[0];
-  if (keywordMatch) {
+  if (keywordMatch && !isDraftCreation(input)) {
     reasons.push(
       `The action contains approval-sensitive operation \`${keywordMatch.toLowerCase()}\`.`,
     );
@@ -70,6 +70,13 @@ function getApprovalReasons(input: ActionGateInput): string[] {
   }
 
   return [...new Set(reasons)];
+}
+
+function isDraftCreation(input: ActionGateInput): boolean {
+  return (
+    input.proposedAction.tool === "draft.create" ||
+    input.proposedAction.actionType.toLowerCase().includes("draft")
+  );
 }
 
 function getSeverity(reasons: string[]): GateDetectorResult["severity"] {

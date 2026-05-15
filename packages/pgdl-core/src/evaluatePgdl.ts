@@ -69,7 +69,11 @@ function createResolvedProposal(proposal: AgentActionProposal): AgentActionPropo
     };
   }
 
-  if (proposal.externalFacing && (actionType.includes("send") || actionType.includes("publish"))) {
+  if (
+    proposal.externalFacing &&
+    (actionType.includes("send") || actionType.includes("publish")) &&
+    !isApprovedReviewedExternalRelease(proposal)
+  ) {
     return {
       ...proposal,
       tool: "draft.create",
@@ -89,6 +93,15 @@ function createResolvedProposal(proposal: AgentActionProposal): AgentActionPropo
   }
 
   return undefined;
+}
+
+function isApprovedReviewedExternalRelease(proposal: AgentActionProposal): boolean {
+  return (
+    proposal.externalFacing === true &&
+    proposal.requiresApproval === true &&
+    proposal.knownApproval === true &&
+    proposal.metadata.reviewedForExternalRelease === true
+  );
 }
 
 function isFinancialSourceDataMutation(proposal: AgentActionProposal): boolean {

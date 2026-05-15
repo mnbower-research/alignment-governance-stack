@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
+  builtInContentPublishingDogfoodEvalCases,
   runDogfoodEvalSuite,
   runEnterpriseDogfoodEvalSuite,
   runEvalCase
@@ -69,10 +70,14 @@ describe("enterprise dogfood eval suite", () => {
     }
   });
 
-  it("combined dogfood suite includes internal and enterprise cases", () => {
+  it("combined dogfood suite includes internal, enterprise, and content publishing cases", () => {
     const result = runDogfoodEvalSuite();
 
-    expect(result.total).toBe(builtInDogfoodEvalCases.length + builtInEnterpriseDogfoodEvalCases.length);
+    expect(result.total).toBe(
+      builtInDogfoodEvalCases.length +
+      builtInEnterpriseDogfoodEvalCases.length +
+      builtInContentPublishingDogfoodEvalCases.length
+    );
     expect(result.passed).toBe(true);
   });
 });

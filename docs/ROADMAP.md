@@ -94,13 +94,19 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.4.0
+
+- Content Publishing Dogfood Agent hardening/demo milestone
+- Public voice, claims, provenance, publishing approval, and runtime substitution evals
+- Content publishing examples and Governance Memory fixture
+
+## Recently Completed
+
 ### v1.3.0
 
 - Alignment Gap Detector / Policy Conflict Analyzer hardening milestone
 - Deterministic company governance diagnostics before enforceable policy
 - Local `ags gaps <input.json>` command
-
-## Recently Completed
 
 ### v1.2.0
 
@@ -118,19 +124,19 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Next
 
-### v1.4.0
+### v1.5.0
 
 - Local Governance API
 
-### v1.5.0
+### v1.6.0
 
 - Dashboard MVP
 
-### v1.6.0
+### v1.7.0
 
 - Persistent Receipt Store
 
-### v1.7.0
+### v1.8.0
 
 - Approval Workflow UI / Human Review Console
 
