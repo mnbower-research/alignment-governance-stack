@@ -1,10 +1,12 @@
 import {
   builtInContentPublishingDogfoodEvalCases,
+  builtInContentPublishingDepthHardeningEvalCases,
   builtInContentPublishingHardeningEvalCases,
   builtInDecisionClosureHardeningEvalCases,
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
   runContentPublishingDogfoodEvalSuite,
+  runContentPublishingDepthHardeningEvalSuite,
   runContentPublishingHardeningEvalSuite,
   runDecisionClosureHardeningEvalSuite,
   runDogfoodEvalSuite,
@@ -20,6 +22,9 @@ export function runDogfoodCommand(_args: string[] = []): CliResult {
   const contentPublishingHardening = runContentPublishingHardeningEvalSuite(
     builtInContentPublishingHardeningEvalCases
   );
+  const contentPublishingDepthHardening = runContentPublishingDepthHardeningEvalSuite(
+    builtInContentPublishingDepthHardeningEvalCases
+  );
   const decisionClosureHardening = runDecisionClosureHardeningEvalSuite(
     builtInDecisionClosureHardeningEvalCases
   );
@@ -28,6 +33,7 @@ export function runDogfoodCommand(_args: string[] = []): CliResult {
     enterprise,
     contentPublishing,
     contentPublishingHardening,
+    contentPublishingDepthHardening,
     decisionClosureHardening
   ]);
   const lines = [
@@ -36,6 +42,7 @@ export function runDogfoodCommand(_args: string[] = []): CliResult {
     `Enterprise Golden Path: ${enterprise.passedCount}/${enterprise.total} passed`,
     `Content Publishing Dogfood: ${contentPublishing.passedCount}/${contentPublishing.total} passed`,
     `Content Publishing Hardening: ${contentPublishingHardening.passedCount}/${contentPublishingHardening.total} passed`,
+    `Content Publishing Depth Hardening: ${contentPublishingDepthHardening.passedCount}/${contentPublishingDepthHardening.total} passed`,
     `Decision Closure Hardening: ${decisionClosureHardening.passedCount}/${decisionClosureHardening.total} passed`,
     `Total: ${total.passedCount}/${total.total} passed`
   ];

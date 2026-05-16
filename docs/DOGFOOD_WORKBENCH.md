@@ -71,6 +71,12 @@ v1.6.1 adds a focused hardening suite for agents that write public claims about 
 
 The suite is reported separately in `ags dogfood` as `Content Publishing Hardening`.
 
+### Content Publishing Depth Hardening
+
+v1.7.2 adds 30 deterministic content-publishing variants. The suite focuses on severity calibration, false-positive and false-negative handling, report readability, remediation wording, and Decision Closure completeness. It covers safe internal drafts, scoped public release notes, public overclaim variants, boundary laundering, weak review, target-bound approval mismatch, runtime substitution, proof gaps, and drift.
+
+The suite is reported separately in `ags dogfood` as `Content Publishing Depth Hardening`.
+
 ### Decision Closure Hardening
 
 v1.7.1 adds a focused Decision Closure hardening suite for an AGS v1.7.0 public announcement. The case combines public overclaim laundering, internal-draft framing that does not match external execution, weak human participation, approval reuse across targets, runtime substitution, incomplete receipt proof, and an allow decision with hard boundaries present.

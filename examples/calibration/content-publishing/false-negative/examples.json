@@ -1,0 +1,41 @@
+{
+  "calibrationSet": "content-publishing-false-negative",
+  "purpose": "Examples that should be surfaced before external execution or reliance.",
+  "examples": [
+    {
+      "id": "fn-external-publish-hidden-as-internal-draft",
+      "description": "Declared internal draft has public website target and external audience.",
+      "expectedCalibration": "high_or_critical"
+    },
+    {
+      "id": "fn-approval-reused-across-target",
+      "description": "Approval for local notes is reused for public social publishing.",
+      "expectedCalibration": "high_or_critical"
+    },
+    {
+      "id": "fn-runtime-tool-mismatch",
+      "description": "Approved local writer action is attempted with public publishing tool.",
+      "expectedCalibration": "critical_when_allowed"
+    },
+    {
+      "id": "fn-hard-boundary-allowed",
+      "description": "Allow decision records an active hard boundary.",
+      "expectedCalibration": "critical"
+    },
+    {
+      "id": "fn-weak-review-consequential-action",
+      "description": "External publish has weak human participation quality.",
+      "expectedCalibration": "high"
+    },
+    {
+      "id": "fn-public-overclaim-external-publish",
+      "description": "Unsupported public claim is paired with external publication.",
+      "expectedCalibration": "high_or_critical"
+    },
+    {
+      "id": "fn-missing-runtime-permit-at-boundary",
+      "description": "External publish reaches execution boundary without runtime permit.",
+      "expectedCalibration": "high"
+    }
+  ]
+}

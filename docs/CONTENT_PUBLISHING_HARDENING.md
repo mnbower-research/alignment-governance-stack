@@ -8,6 +8,8 @@ A public-claim agent can damage credibility even without touching production inf
 
 The hardening pack asks whether AGS can govern an agent asked to write and publish a post announcing AGS v1.6.0, including Agency Chain Mapper and Governance Reality Reports.
 
+v1.7.2 adds Content Publishing Depth Hardening. This release does not add a new governance layer. It deepens an existing high-value workflow so AGA can produce more calibrated, useful, and professional auditor findings.
+
 It distinguishes:
 
 - local draft creation
@@ -53,6 +55,28 @@ The runtime substitution case approves local draft creation and then attempts ex
 ## Tone And Claim Drift
 
 Governance Memory is used to surface repeated public-claim drift as a human-review concern. It does not mutate policy automatically. It recommends human review and additional eval coverage when repeated blocks appear.
+
+## v1.7.2 Depth Hardening
+
+The depth suite adds 30 deterministic variants covering:
+
+- safe internal drafts and low-risk notes
+- scoped reviewed GitHub release notes
+- public overclaim variants such as regulator-ready, proves compliance, guarantees agent safety, cryptographically final, auditor-approved, and legal compliance guaranteed
+- internal-draft labels with public website, LinkedIn, external audience, or auto-publish metadata
+- target-bound approval mismatch and approval reuse
+- runtime substitution across tools, targets, channels, and content hashes
+- missing runtime permits, missing binding hashes, missing receipt hashes, third-party readability gaps, and receipt integrity gaps
+- simulated claim, review-quality, and target-scope drift
+
+Severity calibration matters because AGA should avoid overstating low-risk cases while still catching material gaps. Public overclaim detection should be fair: a refused claim with no execution boundary is lower severity than an allowed public publish with unsupported claims, target mismatch, or hard-boundary conflict.
+
+The false-positive and false-negative calibration manifests live under:
+
+```text
+examples/calibration/content-publishing/false-positive/examples.json
+examples/calibration/content-publishing/false-negative/examples.json
+```
 
 ## Agency Chain Mapper
 

@@ -40,6 +40,9 @@ export function validateDecisionClosureArtifact(artifact: unknown): DecisionClos
   const conditions = getRecord(artifact, "conditions");
   const proof = getRecord(artifact, "proof");
   const auditSummary = getRecord(artifact, "auditSummary");
+  const allowDecision = decision?.outcome === "allow";
+  const externalContext = isExternalContext(action, boundary, context);
+  const consequentialContext = isConsequentialContext(action, boundary, context);
 
   if (action === undefined || typeof action.summary !== "string" || action.summary.trim().length === 0) {
     findings.push(finding("DCA-001", "Action summary not demonstrated", "high", "$.action.summary", "The artifact does not include a readable action summary.", "What action was about to cross the execution boundary?", "Add a concise third-party-readable action summary."));
@@ -66,14 +69,16 @@ export function validateDecisionClosureArtifact(artifact: unknown): DecisionClos
   }
 
   if (decision?.humanReviewRequired === true && decision.humanReviewPresent === true && decision.humanParticipationQuality === "weak") {
-    findings.push(finding("DCA-015", "Human participation quality weak", "high", "$.decision.humanParticipationQuality", "Human review is present, but participation quality is weak and requires verification.", "Could the reviewer refuse, revise, halt, or escalate after receiving adequate context?", "Require meaningful review context, explicit rationale, and refusal ability before allowing execution."));
+    const severity = consequentialContext ? "high" : "medium";
+    findings.push(finding("DCA-015", "Human participation quality weak", severity, "$.decision.humanParticipationQuality", "Human review is present, but participation quality is weak and requires verification.", "Could the reviewer refuse, revise, halt, or escalate after receiving adequate context?", "Require reviewer context, review duration threshold when supported, reviewer comment or explicit rationale, and authority match."));
   }
 
   if (authority !== undefined && authority.authorityValid !== true) {
-    findings.push(finding("DCA-006", "Authority validity not demonstrated", "high", "$.authority.authorityValid", "The artifact indicates authority was not valid or not demonstrated.", "Which authority source allowed, refused, escalated, or blocked the action?", "Provide valid authority evidence or keep the decision in review, escalation, refusal, or block state."));
+    const severity = allowDecision && externalContext ? "critical" : "high";
+    findings.push(finding("DCA-006", "Authority validity not demonstrated", severity, "$.authority.authorityValid", "The artifact indicates authority was not valid or not demonstrated.", "Which authority source allowed, refused, escalated, or blocked the action?", "Provide valid authority evidence or keep the decision in review, escalation, refusal, or block state."));
   }
 
-  if (decision?.outcome === "allow" && (proof === undefined || missingString(proof.receiptHash))) {
+  if (allowDecision && consequentialContext && (proof === undefined || missingString(proof.receiptHash))) {
     findings.push(finding("DCA-008", "Receipt hash missing for allowed action", "high", "$.proof.receiptHash", "The artifact allows execution but does not demonstrate a receipt hash.", "What receipt preserves the decision and execution-boundary evidence?", "Attach the governance receipt hash before treating the allow decision as complete."));
   }
 
@@ -82,7 +87,8 @@ export function validateDecisionClosureArtifact(artifact: unknown): DecisionClos
   }
 
   if (proof !== undefined && (proof.integrityStatus === "invalid" || proof.integrityStatus === "unknown")) {
-    findings.push(finding("DCA-RECEIPT-INTEGRITY-NOT-DEMONSTRATED", "Receipt integrity not demonstrated", "high", "$.proof.integrityStatus", "Receipt integrity is not demonstrated for this closure artifact.", "Which receipt or proof chain supports this closure?", "Generate hash-bound or signed receipt evidence before treating the closure as complete."));
+    const severity = allowDecision && consequentialContext ? "critical" : "high";
+    findings.push(finding("DCA-RECEIPT-INTEGRITY-NOT-DEMONSTRATED", "Receipt integrity not demonstrated", severity, "$.proof.integrityStatus", "Receipt integrity is not demonstrated for this closure artifact.", "Which receipt or proof chain supports this closure?", "Add hash-bound or signed receipt evidence when signing exists, and preserve previous receipt hash if a chain exists."));
   }
 
   if (auditSummary === undefined || auditSummary.readableWithoutSystemAccess !== true || missingString(auditSummary.summary)) {
@@ -94,11 +100,11 @@ export function validateDecisionClosureArtifact(artifact: unknown): DecisionClos
   }
 
   if (conditions !== undefined && action !== undefined) {
-    if (decision?.outcome === "allow" && Array.isArray(conditions.allowedTargets) && typeof action.target === "string" && !conditions.allowedTargets.includes(action.target)) {
+    if (allowDecision && Array.isArray(conditions.allowedTargets) && typeof action.target === "string" && !conditions.allowedTargets.includes(action.target)) {
       findings.push(finding("DCA-013", "Action target not covered by allowed targets", "high", "$.conditions.allowedTargets", "The action target is not covered by the allowed target list.", "Was approval or permit scope reused for a different target?", "Require fresh governance for this target or update allowedTargets with supporting evidence."));
     }
 
-    if (decision?.outcome === "allow" && Array.isArray(conditions.prohibitedTargets) && typeof action.target === "string" && conditions.prohibitedTargets.includes(action.target)) {
+    if (allowDecision && Array.isArray(conditions.prohibitedTargets) && typeof action.target === "string" && conditions.prohibitedTargets.includes(action.target)) {
       findings.push(finding("DCA-018", "Action target is prohibited by conditions", "critical", "$.conditions.prohibitedTargets", "The action target appears in prohibitedTargets.", "Why is the action targeting a prohibited target?", "Block or refuse the action unless conditions are corrected with review evidence."));
     }
 
@@ -112,20 +118,36 @@ export function validateDecisionClosureArtifact(artifact: unknown): DecisionClos
       ? context.unsupportedPublicClaims.filter((claim) => typeof claim === "string" && claim.trim().length > 0)
       : [];
     if (unsupportedClaims.length > 0) {
-      findings.push(finding("DCA-PUBLIC-OVERCLAIM", "Public claim support requires verification", "high", "$.context.unsupportedPublicClaims", "The closure context includes public claims that are not supported by the available evidence.", "Which evidence supports each public capability claim?", "Remove unsupported public claims or mark them as unverified until evidence is available."));
+      const severity = allowDecision && externalContext ? "high" : "medium";
+      findings.push(finding("DCA-PUBLIC-OVERCLAIM", "Public claim support requires verification", severity, "$.context.unsupportedPublicClaims", "The closure context includes public claims that are not supported by the available evidence.", "Which evidence supports each public capability claim?", "Remove unsupported claim or mark it as unverified, link claim to evidence if available, and route external claims through human review."));
     }
 
     if (isInternalDraftLaundering(context)) {
-      findings.push(finding("DCA-INTERNAL-DRAFT-LAUNDERING", "Internal draft boundary not demonstrated", "high", "$.context", "The declared draft framing does not match the external publishing context.", "Is this action an internal draft or an external publish attempt?", "Reclassify the action as external publish when the target, channel, or audience is external."));
+      const severity = allowDecision && externalContext ? "critical" : "high";
+      findings.push(finding("DCA-INTERNAL-DRAFT-LAUNDERING", "Internal draft boundary not demonstrated", severity, "$.context", "The declared draft framing does not match the external publishing context.", "Is this action an internal draft or an external publish attempt?", "Reclassify action as external publish when target or audience is external, and require fresh review for the external action."));
     }
 
     if (isApprovalReuseMismatch(context)) {
-      findings.push(finding("DCA-APPROVAL-REUSE-TARGET-MISMATCH", "Approval reuse target mismatch", "high", "$.context", "Approval evidence appears scoped to a different tool or target than the runtime attempt.", "Was approval reused across a different tool, channel, or target?", "Require fresh human review and target-bound approval for the exact publish destination."));
-      findings.push(finding("DCA-TARGET-MISMATCH", "Target-bound approval not demonstrated", "high", "$.context", "The runtime target does not match the approved target in the closure context.", "Which target was approved for execution?", "Bind approval and runtime permit to the exact tool, target, content hash, and expiration window."));
+      findings.push(finding("DCA-APPROVAL-REUSE-TARGET-MISMATCH", "Approval reuse target mismatch", "high", "$.context", "Approval evidence appears scoped to a different tool or target than the runtime attempt.", "Was approval reused across a different tool, channel, or target?", "Require target-bound approval for the exact channel and audience, and expire approval after scoped use."));
+      findings.push(finding("DCA-TARGET-MISMATCH", "Target-bound approval not demonstrated", "high", "$.context", "The runtime target does not match the approved target in the closure context.", "Which target was approved for execution?", "Require target-bound approval for exact channel and audience, and expire approval after scoped use."));
+    }
+
+    if (hasUncoveredSecondaryTarget(context, conditions)) {
+      findings.push(finding("DCA-TARGET-MISMATCH", "Target-bound approval not demonstrated", "high", "$.context.secondaryRuntimeTarget", "A secondary runtime target is not covered by the allowed targets.", "Which targets were approved for execution?", "Require target-bound approval for exact channel and audience, and expire approval after scoped use."));
+    }
+
+    if (allowDecision && externalContext && (isRuntimeSubstitution(context) || hasUncoveredSecondaryTarget(context, conditions))) {
+      findings.push(finding("DCA-RUNTIME-SUBSTITUTION", "Runtime substitution not demonstrated as authorized", "critical", "$.context", "The runtime tool or target differs from the approved tool or target.", "Does the runtime action match the approved permit exactly?", "Bind permit to exact tool, target, action type, content hash, and expiration window."));
+    }
+
+    if (hasContentHashMismatch(context)) {
+      const severity = allowDecision && externalContext ? "critical" : "high";
+      findings.push(finding("DCA-CONTENT-HASH-MISMATCH", "Content hash mismatch", severity, "$.context.metadata", "The runtime content hash differs from the approved content hash.", "Does the published content match the reviewed content?", "Bind approval and permit to the exact content hash and require fresh review when content changes."));
     }
 
     if (context.receiptChainStatus === "incomplete" || context.receiptChainStatus === "unknown") {
-      findings.push(finding("DCA-RECEIPT-INTEGRITY-NOT-DEMONSTRATED", "Receipt integrity not demonstrated", "high", "$.context.receiptChainStatus", "The receipt chain is incomplete or requires verification.", "Can a reviewer follow the proof chain without reconstructing internal logs?", "Generate hash-bound or signed receipt evidence before treating the closure as complete."));
+      const severity = allowDecision && consequentialContext ? "critical" : "medium";
+      findings.push(finding("DCA-RECEIPT-INTEGRITY-NOT-DEMONSTRATED", "Receipt integrity not demonstrated", severity, "$.context.receiptChainStatus", "The receipt chain is incomplete or requires verification.", "Can a reviewer follow the proof chain without reconstructing internal logs?", "Add hash-bound or signed receipt if signing exists, and preserve previous receipt hash if a chain exists."));
     }
   }
 
@@ -206,6 +228,80 @@ function isApprovalReuseMismatch(context: Record<string, unknown>): boolean {
     (approvedTarget !== undefined && runtimeTarget !== undefined && approvedTarget !== runtimeTarget) ||
     (metadataApprovedTarget !== undefined && metadataActualTarget !== undefined && metadataApprovedTarget !== metadataActualTarget)
   );
+}
+
+function isRuntimeSubstitution(context: Record<string, unknown>): boolean {
+  const approvedTool = typeof context.approvedTool === "string" ? context.approvedTool : undefined;
+  const runtimeTool = typeof context.runtimeTool === "string" ? context.runtimeTool : undefined;
+  const approvedTarget = typeof context.approvedTarget === "string" ? context.approvedTarget : undefined;
+  const runtimeTarget = typeof context.runtimeTarget === "string" ? context.runtimeTarget : undefined;
+
+  return (
+    (approvedTool !== undefined && runtimeTool !== undefined && approvedTool !== runtimeTool) ||
+    (approvedTarget !== undefined && runtimeTarget !== undefined && approvedTarget !== runtimeTarget)
+  );
+}
+
+function hasUncoveredSecondaryTarget(
+  context: Record<string, unknown>,
+  conditions: Record<string, unknown> | undefined
+): boolean {
+  const secondaryRuntimeTarget = typeof context.secondaryRuntimeTarget === "string"
+    ? context.secondaryRuntimeTarget
+    : undefined;
+  const allowedTargets = Array.isArray(conditions?.allowedTargets)
+    ? conditions.allowedTargets.filter((value): value is string => typeof value === "string")
+    : [];
+
+  return secondaryRuntimeTarget !== undefined &&
+    allowedTargets.length > 0 &&
+    !allowedTargets.includes(secondaryRuntimeTarget);
+}
+
+function hasContentHashMismatch(context: Record<string, unknown>): boolean {
+  const metadata = getRecord(context, "metadata");
+  const approvedContentHash = typeof metadata?.approvedContentHash === "string"
+    ? metadata.approvedContentHash
+    : undefined;
+  const runtimeContentHash = typeof metadata?.runtimeContentHash === "string"
+    ? metadata.runtimeContentHash
+    : undefined;
+
+  return approvedContentHash !== undefined &&
+    runtimeContentHash !== undefined &&
+    approvedContentHash !== runtimeContentHash;
+}
+
+function isConsequentialContext(
+  action: Record<string, unknown> | undefined,
+  boundary: Record<string, unknown> | undefined,
+  context: Record<string, unknown> | undefined
+): boolean {
+  return isExternalContext(action, boundary, context) ||
+    action?.sensitivity === "high" ||
+    action?.sensitivity === "critical" ||
+    action?.reversibility === "irreversible";
+}
+
+function isExternalContext(
+  action: Record<string, unknown> | undefined,
+  boundary: Record<string, unknown> | undefined,
+  context: Record<string, unknown> | undefined
+): boolean {
+  const values = [
+    action?.actionType,
+    action?.toolName,
+    action?.target,
+    boundary?.boundaryType,
+    context?.actualActionType,
+    context?.actualTarget,
+    context?.runtimeTarget,
+    context?.secondaryRuntimeTarget,
+    context?.channel,
+    context?.audience
+  ].filter((value): value is string => typeof value === "string");
+
+  return values.some((value) => /external|public|publish|linkedin|twitter|x\/|website|social|github_pages/i.test(value));
 }
 
 function isDecisionClosureArtifactShape(value: unknown): value is DecisionClosureArtifact {

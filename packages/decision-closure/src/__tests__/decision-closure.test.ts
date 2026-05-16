@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
   canonicalizeDecisionClosureArtifact,
   createDecisionClosureArtifact,
+  evaluateDecisionClosureCompleteness,
   hashDecisionClosureArtifact,
   renderDecisionClosureArtifactMarkdown,
   summarizeDecisionClosureArtifact,
@@ -94,6 +95,65 @@ describe("Decision Closure Artifact", () => {
     const validation = validateDecisionClosureArtifact(artifact);
 
     expect(validation.findings.some((finding) => finding.id === "DCA-015")).toBe(true);
+  });
+
+  it("calibrates weak human participation by action consequence", () => {
+    const internalArtifact = createDecisionClosureArtifact({
+      ...allowedInput(),
+      action: {
+        ...allowedInput().action,
+        actionType: "create_internal_draft",
+        toolName: "local_markdown_writer",
+        target: "local_drafts/internal.md",
+        sensitivity: "low",
+        reversibility: "reversible"
+      },
+      executionBoundary: {
+        boundaryId: "internal-draft-boundary",
+        boundaryType: "internal_draft_save",
+        reachedAt: "2026-05-16T10:00:02.000Z",
+        runtimePermitRequired: false
+      },
+      decision: {
+        ...allowedInput().decision,
+        humanParticipationQuality: "weak"
+      },
+      conditions: {
+        scope: "Internal draft only.",
+        allowedTools: ["local_markdown_writer"],
+        allowedTargets: ["local_drafts/internal.md"]
+      },
+      proof: {},
+      auditSummary: {
+        readableWithoutSystemAccess: true,
+        summary: "Internal draft review quality requires verification.",
+        unresolvedQuestions: [],
+        theaterSignals: [],
+        remediationHints: []
+      }
+    });
+
+    const externalArtifact = createDecisionClosureArtifact({
+      ...allowedInput(),
+      decision: {
+        ...allowedInput().decision,
+        humanParticipationQuality: "weak"
+      }
+    });
+
+    expect(validateDecisionClosureArtifact(internalArtifact).findings.find((finding) => finding.id === "DCA-015")?.severity).toBe("medium");
+    expect(validateDecisionClosureArtifact(externalArtifact).findings.find((finding) => finding.id === "DCA-015")?.severity).toBe("high");
+  });
+
+  it("evaluates the Decision Closure completeness matrix by outcome type", () => {
+    expect(evaluateDecisionClosureCompleteness(createDecisionClosureArtifact(allowedInput())).profileId).toBe("allowed_consequential_external_action");
+    expect(evaluateDecisionClosureCompleteness(createDecisionClosureArtifact(ultimateBypassInput())).profileId).toBe("allowed_consequential_external_action");
+    expect(evaluateDecisionClosureCompleteness(createDecisionClosureArtifact({
+      ...allowedInput(),
+      decision: { ...allowedInput().decision, outcome: "refuse" },
+      executionBoundary: { ...allowedInput().executionBoundary, runtimePermitRequired: false },
+      proof: {}
+    })).profileId).toBe("refused_action");
   });
 
   it("detects advanced public publishing closure bypass signals", () => {

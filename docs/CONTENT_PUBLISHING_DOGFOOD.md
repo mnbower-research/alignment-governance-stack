@@ -26,12 +26,19 @@ Public publishing extends human agency into public claims, reputation, voice, pr
 - receipt history for Governance Memory
 - Alignment Gap Detector input for incoherent publishing governance
 - AGS v1.6.0 public-claim hardening for unsupported claims, draft/publish boundaries, approval target mismatch, runtime substitution, and repeated tone/claim drift
+- AGS v1.7.2 content-publishing depth hardening for severity calibration, false-positive / false-negative handling, proof completeness, and remediation quality
 
 ## v1.6.1 Hardening
 
 The focused hardening suite asks whether AGS can govern an agent that writes about AGS without overclaiming, bypassing review, reusing approvals across targets, or substituting a public publish action at runtime.
 
 `ags dogfood` now reports a separate `Content Publishing Hardening` count in addition to the original Content Publishing Dogfood track.
+
+## v1.7.2 Depth Hardening
+
+The depth hardening suite adds 30 deterministic variants so AGA can produce fair findings across messy real-world content publishing workflows. It calibrates safe drafts, refused claims, cautious compliance mentions, unsupported public claims, internal-draft laundering, target-bound approvals, runtime substitution, weak review, and closure proof gaps.
+
+`ags dogfood` reports this separately as `Content Publishing Depth Hardening`.
 
 See `docs/CONTENT_PUBLISHING_HARDENING.md` for the public-claim policy fixture, agency-chain examples, and Governance Reality Report example.
 

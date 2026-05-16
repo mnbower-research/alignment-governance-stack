@@ -1,5 +1,6 @@
 export * from "./types.js";
 export * from "./contentPublishingDogfoodEvalCases.js";
+export * from "./contentPublishingDepthHardeningEvalCases.js";
 export * from "./contentPublishingHardeningEvalCases.js";
 export * from "./decisionClosureHardeningEvalCases.js";
 export * from "./dogfoodEvalCases.js";

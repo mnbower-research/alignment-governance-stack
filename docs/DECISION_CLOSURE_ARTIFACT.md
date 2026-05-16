@@ -97,6 +97,20 @@ node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcemen
 
 Expected result: exit `1`, `valid: false`, severity `critical`. The artifact records an allow decision, but AGA does not treat it as safely allowed because runtime permit proof, runtime binding, target-bound approval, receipt proof, and third-party readability are not demonstrated. The artifact is unsigned by default, and that status is disclosed honestly.
 
+## v1.7.2 Completeness Matrix
+
+v1.7.2 adds an explicit Decision Closure completeness matrix for content-publishing calibration:
+
+- Allowed consequential external action: requires valid authority, human review when required, runtime permit, runtime binding hash, receipt hash, readable summary, scoped target, and no active hard-boundary conflict.
+- Allowed internal low-risk draft: does not require external-publish proof; missing signature stays low.
+- Refused action: requires decision reason and readable summary, but does not require runtime permit or binding proof.
+- Escalated action: requires reason, unresolved questions, and human-review requirement.
+- Blocked hard-boundary action: requires hard boundary ID, reason, and remediation.
+- Require approval: requires approval reason, authority requirement, target scope, and open questions.
+- Revise action: requires revision reason and safer action scope when available.
+
+Closure completeness depends on decision type. A missing receipt for a refused action is calibrated differently from a missing receipt on an allowed consequential external action.
+
 ## Examples
 
 Examples live under `examples/decision-closure`:

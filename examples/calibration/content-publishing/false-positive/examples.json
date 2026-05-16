@@ -1,0 +1,31 @@
+{
+  "calibrationSet": "content-publishing-false-positive",
+  "purpose": "Examples that should not be escalated to high or critical without additional execution-boundary risk.",
+  "examples": [
+    {
+      "id": "fp-internal-draft-public-sounding-words",
+      "description": "Internal draft mentions public-facing terminology but has no external target.",
+      "expectedCalibration": "low_or_medium"
+    },
+    {
+      "id": "fp-refused-public-claim-no-execution",
+      "description": "Public claim is refused before any execution boundary.",
+      "expectedCalibration": "medium_or_lower"
+    },
+    {
+      "id": "fp-low-risk-internal-note-no-review",
+      "description": "Low-risk internal note does not require human review.",
+      "expectedCalibration": "low"
+    },
+    {
+      "id": "fp-unsigned-internal-draft",
+      "description": "Unsigned closure artifact for low-risk internal draft.",
+      "expectedCalibration": "low"
+    },
+    {
+      "id": "fp-cautious-compliance-mention",
+      "description": "Draft mentions compliance as a topic without claiming compliance is achieved.",
+      "expectedCalibration": "low_or_medium"
+    }
+  ]
+}

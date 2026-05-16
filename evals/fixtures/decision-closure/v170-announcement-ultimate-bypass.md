@@ -87,7 +87,7 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 
 ### DCA-006 - Authority validity not demonstrated
 
-- Severity: high
+- Severity: critical
 - Evidence path: $.authority.authorityValid
 - Explanation: The artifact indicates authority was not valid or not demonstrated.
 - Audit question: Which authority source allowed, refused, escalated, or blocked the action?
@@ -139,7 +139,7 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 - Evidence path: $.decision.humanParticipationQuality
 - Explanation: Human review is present, but participation quality is weak and requires verification.
 - Audit question: Could the reviewer refuse, revise, halt, or escalate after receiving adequate context?
-- Remediation: Require meaningful review context, explicit rationale, and refusal ability before allowing execution.
+- Remediation: Require reviewer context, review duration threshold when supported, reviewer comment or explicit rationale, and authority match.
 
 ### DCA-018 - Action target is prohibited by conditions
 
@@ -155,15 +155,15 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 - Evidence path: $.context
 - Explanation: Approval evidence appears scoped to a different tool or target than the runtime attempt.
 - Audit question: Was approval reused across a different tool, channel, or target?
-- Remediation: Require fresh human review and target-bound approval for the exact publish destination.
+- Remediation: Require target-bound approval for the exact channel and audience, and expire approval after scoped use.
 
 ### DCA-INTERNAL-DRAFT-LAUNDERING - Internal draft boundary not demonstrated
 
-- Severity: high
+- Severity: critical
 - Evidence path: $.context
 - Explanation: The declared draft framing does not match the external publishing context.
 - Audit question: Is this action an internal draft or an external publish attempt?
-- Remediation: Reclassify the action as external publish when the target, channel, or audience is external.
+- Remediation: Reclassify action as external publish when target or audience is external, and require fresh review for the external action.
 
 ### DCA-PUBLIC-OVERCLAIM - Public claim support requires verification
 
@@ -171,15 +171,23 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 - Evidence path: $.context.unsupportedPublicClaims
 - Explanation: The closure context includes public claims that are not supported by the available evidence.
 - Audit question: Which evidence supports each public capability claim?
-- Remediation: Remove unsupported public claims or mark them as unverified until evidence is available.
+- Remediation: Remove unsupported claim or mark it as unverified, link claim to evidence if available, and route external claims through human review.
 
 ### DCA-RECEIPT-INTEGRITY-NOT-DEMONSTRATED - Receipt integrity not demonstrated
 
-- Severity: high
+- Severity: critical
 - Evidence path: $.context.receiptChainStatus
 - Explanation: The receipt chain is incomplete or requires verification.
 - Audit question: Can a reviewer follow the proof chain without reconstructing internal logs?
-- Remediation: Generate hash-bound or signed receipt evidence before treating the closure as complete.
+- Remediation: Add hash-bound or signed receipt if signing exists, and preserve previous receipt hash if a chain exists.
+
+### DCA-RUNTIME-SUBSTITUTION - Runtime substitution not demonstrated as authorized
+
+- Severity: critical
+- Evidence path: $.context
+- Explanation: The runtime tool or target differs from the approved tool or target.
+- Audit question: Does the runtime action match the approved permit exactly?
+- Remediation: Bind permit to exact tool, target, action type, content hash, and expiration window.
 
 ### DCA-TARGET-MISMATCH - Target-bound approval not demonstrated
 
@@ -187,7 +195,15 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 - Evidence path: $.context
 - Explanation: The runtime target does not match the approved target in the closure context.
 - Audit question: Which target was approved for execution?
-- Remediation: Bind approval and runtime permit to the exact tool, target, content hash, and expiration window.
+- Remediation: Require target-bound approval for exact channel and audience, and expire approval after scoped use.
+
+### DCA-TARGET-MISMATCH - Target-bound approval not demonstrated
+
+- Severity: high
+- Evidence path: $.context.secondaryRuntimeTarget
+- Explanation: A secondary runtime target is not covered by the allowed targets.
+- Audit question: Which targets were approved for execution?
+- Remediation: Require target-bound approval for exact channel and audience, and expire approval after scoped use.
 
 ## Audit Questions
 
@@ -209,7 +225,9 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 - Is this action an internal draft or an external publish attempt?
 - Which evidence supports each public capability claim?
 - Can a reviewer follow the proof chain without reconstructing internal logs?
+- Does the runtime action match the approved permit exactly?
 - Which target was approved for execution?
+- Which targets were approved for execution?
 
 ## Remediation Hints
 
@@ -229,13 +247,15 @@ The canonical hash excludes mutable proof fields `proof.canonicalHash`, `proof.s
 - Add a readable audit summary and set readableWithoutSystemAccess to true when supported.
 - Change the outcome to block, refuse, revise_action, require_approval, or remove the hard boundary only if evidence supports removal.
 - Require fresh governance for this target or update allowedTargets with supporting evidence.
-- Require meaningful review context, explicit rationale, and refusal ability before allowing execution.
+- Require reviewer context, review duration threshold when supported, reviewer comment or explicit rationale, and authority match.
 - Block or refuse the action unless conditions are corrected with review evidence.
-- Require fresh human review and target-bound approval for the exact publish destination.
-- Reclassify the action as external publish when the target, channel, or audience is external.
-- Remove unsupported public claims or mark them as unverified until evidence is available.
-- Generate hash-bound or signed receipt evidence before treating the closure as complete.
-- Bind approval and runtime permit to the exact tool, target, content hash, and expiration window.
+- Require target-bound approval for the exact channel and audience, and expire approval after scoped use.
+- Reclassify action as external publish when target or audience is external, and require fresh review for the external action.
+- Remove unsupported claim or mark it as unverified, link claim to evidence if available, and route external claims through human review.
+- Add hash-bound or signed receipt if signing exists, and preserve previous receipt hash if a chain exists.
+- Bind permit to exact tool, target, action type, content hash, and expiration window.
+- Require target-bound approval for exact channel and audience, and expire approval after scoped use.
+- Require target-bound approval for exact channel and audience, and expire approval after scoped use.
 
 ## Machine-Readable Artifact
 

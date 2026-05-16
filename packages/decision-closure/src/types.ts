@@ -141,3 +141,27 @@ export interface DecisionClosureValidationResult {
   severity: DecisionClosureFindingSeverity;
   findings: DecisionClosureValidationFinding[];
 }
+
+export interface DecisionClosureCompletenessRequirement {
+  id: string;
+  label: string;
+  required: boolean;
+  satisfied: boolean;
+  evidencePath: string;
+  severityIfMissing: DecisionClosureFindingSeverity;
+  remediation: string;
+}
+
+export interface DecisionClosureCompletenessProfile {
+  profileId:
+    | "allowed_consequential_external_action"
+    | "allowed_internal_low_risk_draft"
+    | "refused_action"
+    | "escalated_action"
+    | "blocked_hard_boundary_action"
+    | "require_approval_action"
+    | "revise_action"
+    | "general_closure";
+  description: string;
+  requirements: DecisionClosureCompletenessRequirement[];
+}

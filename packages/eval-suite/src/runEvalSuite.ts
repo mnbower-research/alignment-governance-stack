@@ -1,5 +1,9 @@
 import { builtInEvalCases } from "./evalCases.js";
 import { builtInContentPublishingDogfoodEvalCases } from "./contentPublishingDogfoodEvalCases.js";
+import {
+  builtInContentPublishingDepthHardeningEvalCases,
+  runContentPublishingDepthHardeningEvalSuite
+} from "./contentPublishingDepthHardeningEvalCases.js";
 import { builtInContentPublishingHardeningEvalCases } from "./contentPublishingHardeningEvalCases.js";
 import {
   builtInDecisionClosureHardeningEvalCases,
@@ -48,6 +52,7 @@ export function runContentPublishingHardeningEvalSuite(
   return runEvalSuite(cases);
 }
 
+export { runContentPublishingDepthHardeningEvalSuite, builtInContentPublishingDepthHardeningEvalCases };
 export { runDecisionClosureHardeningEvalSuite, builtInDecisionClosureHardeningEvalCases };
 
 export function runEnterpriseDogfoodEvalSuite(

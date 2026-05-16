@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.7.2 - Content Publishing Depth Hardening
+
+- Adds `contentPublishingDepthHardeningEvalCases` with 30 deterministic content-publishing variants.
+- Adds severity calibration across safe drafts, public overclaims, boundary laundering, authority/review quality, runtime substitution, proof gaps, and tone/target drift.
+- Adds Decision Closure completeness matrix support for outcome-specific proof requirements.
+- Updates `ags dogfood` to include `Content Publishing Depth Hardening: 30/30 passed`.
+- Adds false-positive and false-negative calibration manifests under `examples/calibration/content-publishing`.
+- Improves Governance Reality Report readability with what-was-tested, demonstrated/not-demonstrated, highest-risk finding, evidence summary, finding table, remediation priority, known limitations, and machine-readable summary sections.
+- Keeps the release deterministic and additive with no dashboard, hosted API, database, or runtime spine redesign.
+
 ## v1.7.1 - Decision Closure Red-Team Hardening
 
 - Adds `examples/decision-closure/v170-announcement-ultimate-bypass.json`, an advanced deterministic public-announcement closure scenario.

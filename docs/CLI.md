@@ -107,11 +107,14 @@ Output includes:
 - Enterprise Golden Path passed/total
 - Content Publishing Dogfood passed/total
 - Content Publishing Hardening passed/total
+- Content Publishing Depth Hardening passed/total
 - Decision Closure Hardening passed/total
 - combined passed/total
 - failed dogfood case IDs and reasons, when failures exist
 
 The hardening line covers AGS public-claim cases for unsupported claims, direct external publish without review, internal-draft laundering, runtime substitution, approval reuse across targets, and tone/claim drift.
+
+The depth hardening line covers 30 v1.7.2 calibration cases for safe drafts, public overclaims, boundary laundering, authority/review quality, runtime substitution, proof gaps, false-positive handling, and false-negative handling.
 
 The Decision Closure Hardening line covers the v1.7.1 AGS v1.7.0 announcement scenario where an allow decision is not accepted as safe because execution-boundary proof is incomplete, runtime binding is not demonstrated, approval scope does not match the runtime target, human participation quality is weak, and third-party readability is not demonstrated.
 

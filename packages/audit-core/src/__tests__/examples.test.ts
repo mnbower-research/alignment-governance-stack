@@ -49,9 +49,16 @@ describe("audit report examples", () => {
     expect(markdown).toContain("AGS Content Publishing Agent Public-Claim Hardening Review");
     expect(markdown).toContain("## Limitations");
     expect(markdown).toContain("## Methodology");
+    expect(markdown).toContain("## What Was Tested");
+    expect(markdown).toContain("## What Was Demonstrated");
+    expect(markdown).toContain("## Highest-Risk Finding");
+    expect(markdown).toContain("## Finding Table");
     expect(markdown).toContain("## Severity and Confidence Definitions");
     expect(markdown).toContain("## Remediation Summary");
+    expect(markdown).toContain("## Remediation Priority");
     expect(markdown).toContain("## Evidence Appendix");
+    expect(markdown).toContain("## Known Limitations");
+    expect(markdown).toContain("## Machine-Readable Summary");
     expect(markdown).toContain("## Agency Chain Map");
     expect(markdown).toContain("Unsupported public claim risk");
     expect(findProhibitedAccusatoryLanguage(markdown)).toEqual([]);

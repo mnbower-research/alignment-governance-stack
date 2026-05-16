@@ -51,8 +51,9 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("Enterprise Golden Path: 6/6 passed");
     expect(result.stdout).toContain("Content Publishing Dogfood: 13/13 passed");
     expect(result.stdout).toContain("Content Publishing Hardening: 8/8 passed");
+    expect(result.stdout).toContain("Content Publishing Depth Hardening: 30/30 passed");
     expect(result.stdout).toContain("Decision Closure Hardening: 1/1 passed");
-    expect(result.stdout).toContain("Total: 38/38 passed");
+    expect(result.stdout).toContain("Total: 68/68 passed");
   });
 
   it("redteam command runs built-in red-team evals", () => {

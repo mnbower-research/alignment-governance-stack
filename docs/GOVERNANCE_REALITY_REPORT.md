@@ -18,6 +18,8 @@ v1.7.0 adds Decision Closure Artifacts as execution-boundary proof objects. Gove
 
 v1.7.1 adds a Decision Closure hardening scenario for public-announcement workflows. Governance Reality Reports can treat incomplete closure proof, unsupported public claims, target-bound approval mismatch, weak human participation, and missing third-party readability as evidence gaps requiring verification rather than as accusations.
 
+v1.7.2 improves report readability for content-publishing reviews. Reports now include what was tested, what was demonstrated, what was not demonstrated, highest-risk finding, evidence summary, finding table, severity explanation, remediation priority, known limitations, and a compact machine-readable summary. These sections help technical and non-technical reviewers separate evidence from inference.
+
 ## Professional Posture
 
 The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:

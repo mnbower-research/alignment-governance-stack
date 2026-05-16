@@ -15,6 +15,9 @@ describe("Governance Reality Report Markdown renderer", () => {
 
     expect(markdown).toContain("# Governance Reality Report");
     expect(markdown).toContain("## Executive Summary");
+    expect(markdown).toContain("## What Was Tested");
+    expect(markdown).toContain("## What Was Demonstrated");
+    expect(markdown).toContain("## What Was Not Demonstrated");
     expect(markdown).toContain("## Audit Scope");
     expect(markdown).toContain("## Audit Mode");
     expect(markdown).toContain("## Methodology");
@@ -22,10 +25,17 @@ describe("Governance Reality Report Markdown renderer", () => {
     expect(markdown).toContain("## Overall Assessment");
     expect(markdown).toContain("## Agency Chain Map");
     expect(markdown).toContain("## Finding Summary");
+    expect(markdown).toContain("## Highest-Risk Finding");
+    expect(markdown).toContain("## Evidence Summary");
+    expect(markdown).toContain("## Finding Table");
     expect(markdown).toContain("## Severity and Confidence Definitions");
+    expect(markdown).toContain("## Severity Explanation");
     expect(markdown).toContain("## Findings");
     expect(markdown).toContain("## Remediation Summary");
+    expect(markdown).toContain("## Remediation Priority");
     expect(markdown).toContain("## Evidence Appendix");
+    expect(markdown).toContain("## Known Limitations");
+    expect(markdown).toContain("## Machine-Readable Summary");
     expect(markdown).toContain("- Finding ID: F-001");
     expect(markdown).toContain("- Taxonomy ID: TG-003");
     expect(markdown).toContain("- Category / risk surface: runtime binding");

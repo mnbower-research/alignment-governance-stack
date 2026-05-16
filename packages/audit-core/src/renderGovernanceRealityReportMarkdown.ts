@@ -17,6 +17,18 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     report.executiveSummary,
     "",
+    "## What Was Tested",
+    "",
+    renderWhatWasTested(report),
+    "",
+    "## What Was Demonstrated",
+    "",
+    renderWhatWasDemonstrated(report),
+    "",
+    "## What Was Not Demonstrated",
+    "",
+    renderWhatWasNotDemonstrated(report),
+    "",
     "## Audit Scope",
     "",
     renderAuditScope(report),
@@ -45,9 +57,25 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     renderFindingSummary(report.findings),
     "",
+    "## Highest-Risk Finding",
+    "",
+    renderHighestRiskFinding(report.findings),
+    "",
+    "## Evidence Summary",
+    "",
+    renderEvidenceSummary(report),
+    "",
+    "## Finding Table",
+    "",
+    renderFindingTable(report.findings),
+    "",
     "## Severity and Confidence Definitions",
     "",
     renderSeverityAndConfidenceDefinitions(report),
+    "",
+    "## Severity Explanation",
+    "",
+    renderSeverityExplanation(report.findings),
     "",
     "## Findings",
     "",
@@ -57,6 +85,10 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     renderRemediationSummary(report),
     "",
+    "## Remediation Priority",
+    "",
+    renderRemediationPriority(report),
+    "",
     "## Evidence Appendix",
     "",
     renderEvidenceAppendix(report.evidenceAppendix),
@@ -64,11 +96,121 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
       ? ["", "## Self-Audit Disclosure", "", renderSelfAuditDisclosure(report)]
       : []),
     "",
+    "## Known Limitations",
+    "",
+    renderStringList(report.limitations),
+    "",
+    "## Machine-Readable Summary",
+    "",
+    renderMachineReadableSummary(report),
+    "",
     "## Non-Accusatory Closing Note",
     "",
     NON_ACCUSATORY_CLOSING_NOTE,
     ""
   ].join("\n");
+}
+
+function renderWhatWasTested(report: GovernanceRealityReport): string {
+  return [
+    `- Scope: ${report.subject.auditScope}`,
+    `- Mode: ${formatToken(report.auditMode)}`,
+    `- Method count: ${report.methodology.length}`,
+    `- Finding count: ${report.findings.length}`
+  ].join("\n");
+}
+
+function renderWhatWasDemonstrated(report: GovernanceRealityReport): string {
+  const demonstrated = report.findings.filter(
+    (finding) => finding.status === "confirmed_by_fixture" || finding.status === "resolved"
+  );
+
+  if (demonstrated.length === 0) {
+    return "No supplied finding is marked as confirmed by fixture or resolved. This is an evidence statement, not a certification.";
+  }
+
+  return demonstrated.map((finding) => `- ${finding.id}: ${finding.summary}`).join("\n");
+}
+
+function renderWhatWasNotDemonstrated(report: GovernanceRealityReport): string {
+  const notDemonstrated = report.findings.filter(
+    (finding) => finding.status === "not_demonstrated" || finding.status === "requires_verification" || finding.status === "potential_signal"
+  );
+
+  if (notDemonstrated.length === 0) {
+    return "No supplied finding is marked as not demonstrated, requiring verification, or potential signal.";
+  }
+
+  return notDemonstrated.map((finding) => `- ${finding.id}: ${finding.observation}`).join("\n");
+}
+
+function renderHighestRiskFinding(findings: AuditFinding[]): string {
+  if (findings.length === 0) {
+    return "No findings were supplied.";
+  }
+
+  const highest = [...findings].sort((left, right) => severityRank(right.severity) - severityRank(left.severity))[0];
+  if (highest === undefined) {
+    return "No findings were supplied.";
+  }
+
+  return `- ${highest.id}: ${highest.title} (${formatToken(highest.severity)}). ${highest.summary}`;
+}
+
+function renderEvidenceSummary(report: GovernanceRealityReport): string {
+  const findingEvidenceCount = report.findings.reduce((sum, finding) => sum + finding.evidenceRefs.length, 0);
+  const appendixCount = report.evidenceAppendix.length;
+
+  return [
+    `- Finding evidence references: ${findingEvidenceCount}`,
+    `- Appendix evidence references: ${appendixCount}`,
+    "- Evidence and inference should remain separate during human review."
+  ].join("\n");
+}
+
+function renderFindingTable(findings: AuditFinding[]): string {
+  if (findings.length === 0) {
+    return "No finding table is available because no findings were supplied.";
+  }
+
+  return [
+    "| Finding | Severity | Confidence | Status | Taxonomy |",
+    "| --- | --- | --- | --- | --- |",
+    ...findings.map(
+      (finding) =>
+        `| ${finding.id} | ${formatToken(finding.severity)} | ${formatToken(finding.confidence)} | ${formatToken(finding.status)} | ${finding.taxonomyId} |`
+    )
+  ].join("\n");
+}
+
+function renderSeverityExplanation(findings: AuditFinding[]): string {
+  if (findings.length === 0) {
+    return "No severity explanation is available because no findings were supplied.";
+  }
+
+  return "Severity reflects the supplied finding severity and should be interpreted with confidence, evidence quality, execution boundary, and remediation priority.";
+}
+
+function renderRemediationPriority(report: GovernanceRealityReport): string {
+  const items = report.remediationSummary.items.length > 0 ? report.remediationSummary.items : report.remediationPlan;
+  if (items.length === 0) {
+    return "No remediation priorities were supplied.";
+  }
+
+  return items.map((item) => `- ${formatToken(item.priority)}: ${item.findingId} - ${item.action}`).join("\n");
+}
+
+function renderMachineReadableSummary(report: GovernanceRealityReport): string {
+  const summary = {
+    reportId: report.reportId,
+    auditMode: report.auditMode,
+    overallStatus: report.posture.overallStatus,
+    confidence: report.posture.confidence,
+    findingCount: report.findings.length,
+    highestSeverity: highestSeverity(report.findings)
+  };
+
+  return ["```json", JSON.stringify(summary, null, 2), "```"].join("\n");
 }
 
 function renderAuditScope(report: GovernanceRealityReport): string {
@@ -375,4 +517,23 @@ function formatToken(value: string): string {
 
 function formatTitle(value: string): string {
   return value.replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function severityRank(severity: string): number {
+  const ranks: Record<string, number> = {
+    info: 0,
+    low: 1,
+    medium: 2,
+    high: 3,
+    critical: 4
+  };
+
+  return ranks[severity] ?? 0;
+}
+
+function highestSeverity(findings: AuditFinding[]): string {
+  return findings.reduce<string>(
+    (highest, finding) => severityRank(finding.severity) > severityRank(highest) ? finding.severity : highest,
+    "info"
+  );
 }

@@ -96,14 +96,24 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.7.2
+
+- Content Publishing Depth Hardening
+- 30 deterministic content-publishing calibration variants
+- Severity calibration for safe drafts, public overclaims, boundary laundering, authority/review quality, runtime substitution, proof gaps, and drift
+- False-positive and false-negative calibration examples
+- Decision Closure completeness matrix
+- Governance Reality Report readability pass
+- Dogfood summary includes Content Publishing Depth Hardening
+
+## Recently Completed
+
 ### v1.7.1
 
 - Decision Closure Red-Team Hardening
 - Advanced AGS v1.7.0 public-announcement closure scenario
 - Detection for public overclaim laundering, internal-draft boundary mismatch, weak participation, target-bound approval mismatch, runtime substitution, incomplete receipt proof, and missing third-party readability
 - Dogfood summary includes Decision Closure Hardening
-
-## Recently Completed
 
 ### v1.7.0
 
