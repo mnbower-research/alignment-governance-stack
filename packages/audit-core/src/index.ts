@@ -1,4 +1,5 @@
 export * from "./adapters.js";
+export * from "./continuityFindings.js";
 export * from "./createGovernanceRealityReport.js";
 export * from "./prohibitedLanguage.js";
 export * from "./renderGovernanceRealityReportMarkdown.js";

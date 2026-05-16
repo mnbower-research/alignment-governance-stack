@@ -105,6 +105,8 @@ v1.7.1 adds Decision Closure Red-Team Hardening for adversarial execution-bounda
 
 v1.7.2 adds Content Publishing Depth Hardening. This release does not add a new governance layer. It deepens an existing high-value workflow so AGA can produce more calibrated, useful, and professional auditor findings across messy content publishing variants.
 
+v1.8.0 adds Governance Continuity Findings to the Governance Reality Report. Continuity findings are not a new layer; they are an optional extension of the existing report flow that turns stale authority, receipt continuity, human review continuity, scope drift, policy reality mismatch, and governance maturity signals into ordinary audit findings.
+
 The Developer CLI exposes local developer access to the same deterministic packages. It can run evals, evaluate a supplied governance input, verify or hash receipts, and summarize receipt-history memory. It does not execute actions, host a server, store state, or call providers.
 
 ## Runtime-Bound Governance Flow

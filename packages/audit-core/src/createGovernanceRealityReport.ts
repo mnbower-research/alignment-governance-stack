@@ -5,11 +5,13 @@ import {
   STANDARD_CONFIDENCE_DEFINITIONS,
   STANDARD_SEVERITY_DEFINITIONS
 } from "./standardLanguage.js";
+import { createGovernanceContinuityFindings } from "./continuityFindings.js";
 import { getTheaterSignalById } from "./taxonomy.js";
 import { validateGovernanceRealityReport } from "./validation.js";
 import type {
   AuditFinding,
   AuditValidationResult,
+  GovernanceContinuityInput,
   GovernanceRealityReport,
   RemediationPlanItem,
   SimplifiedAuditReportInput
@@ -24,6 +26,9 @@ export interface CreateGovernanceRealityReportResult {
   report?: GovernanceRealityReport;
   validation: AuditValidationResult;
 }
+
+const CONTINUITY_METHOD_NOTE =
+  "Continuity checks extend governance auditing by asking whether governance remained coherent over time across receipts, approvals, authority, policy, and scope evidence.";
 
 export function createGovernanceRealityReport(
   input: GovernanceRealityReport | SimplifiedAuditReportInput | unknown,
@@ -51,8 +56,10 @@ function normalizeFullReport(
   input: GovernanceRealityReport,
   options: CreateGovernanceRealityReportOptions
 ): GovernanceRealityReport {
-  const findings = normalizeFindings(Array.isArray(input.findings) ? input.findings : []);
+  const continuity = createContinuityReview(input, options);
+  const findings = normalizeFindings([...(Array.isArray(input.findings) ? input.findings : []), ...continuity.findings]);
   const remediationPlan = input.remediationPlan ?? createRemediationPlan(findings);
+  const continuityReview = input.continuityReview ?? continuity.summary;
 
   return {
     ...input,
@@ -60,10 +67,13 @@ function normalizeFullReport(
     auditMode: input.auditMode ?? inferAuditMode(input),
     disclaimer: input.disclaimer ?? DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER,
     limitations: mergeStringLists(STANDARD_AUDIT_LIMITATIONS, input.limitations),
-    methodology: mergeStringLists(STANDARD_AUDIT_METHODOLOGY, input.methodology),
+    methodology: continuity.methodologyAdded
+      ? mergeStringLists([...STANDARD_AUDIT_METHODOLOGY, CONTINUITY_METHOD_NOTE], input.methodology)
+      : mergeStringLists(STANDARD_AUDIT_METHODOLOGY, input.methodology),
     severityDefinitions: input.severityDefinitions ?? STANDARD_SEVERITY_DEFINITIONS,
     confidenceDefinitions: input.confidenceDefinitions ?? STANDARD_CONFIDENCE_DEFINITIONS,
     findings,
+    ...(continuityReview !== undefined ? { continuityReview } : {}),
     remediationPlan,
     remediationSummary: input.remediationSummary ?? createRemediationSummary(remediationPlan),
     evidenceAppendix:
@@ -79,7 +89,8 @@ function normalizeSimplifiedInput(
   options: CreateGovernanceRealityReportOptions
 ): GovernanceRealityReport {
   const generatedAt = input.generatedAt ?? options.generatedAt ?? new Date().toISOString();
-  const findings = normalizeFindings(Array.isArray(input.findings) ? input.findings : []);
+  const continuity = createContinuityReview(input, { ...options, generatedAt });
+  const findings = normalizeFindings([...(Array.isArray(input.findings) ? input.findings : []), ...continuity.findings]);
   const subject = input.subject ?? { auditScope: "Unspecified local audit scope" };
   const remediationPlan = input.remediationPlan ?? createRemediationPlan(findings);
 
@@ -91,11 +102,15 @@ function normalizeSimplifiedInput(
     disclaimer: DEFAULT_GOVERNANCE_REALITY_REPORT_DISCLAIMER,
     executiveSummary: input.executiveSummary ?? createExecutiveSummary(findings),
     limitations: mergeStringLists(STANDARD_AUDIT_LIMITATIONS, input.limitations),
-    methodology: mergeStringLists(STANDARD_AUDIT_METHODOLOGY, input.methodology),
+    methodology: mergeStringLists(
+      continuity.methodologyAdded ? [...STANDARD_AUDIT_METHODOLOGY, CONTINUITY_METHOD_NOTE] : STANDARD_AUDIT_METHODOLOGY,
+      input.methodology
+    ),
     severityDefinitions: input.severityDefinitions ?? STANDARD_SEVERITY_DEFINITIONS,
     confidenceDefinitions: input.confidenceDefinitions ?? STANDARD_CONFIDENCE_DEFINITIONS,
     posture: createPosture(input.posture, findings),
     findings,
+    ...(continuity.summary !== undefined ? { continuityReview: continuity.summary } : {}),
     ...(input.agencyChainMap !== undefined ? { agencyChainMap: input.agencyChainMap } : {}),
     ...(input.agencyChain !== undefined ? { agencyChain: input.agencyChain } : {}),
     remediationPlan,
@@ -159,6 +174,32 @@ function normalizeFindings(findings: AuditFinding[]): AuditFinding[] {
       evidenceRefs: Array.isArray(finding.evidenceRefs) ? finding.evidenceRefs : []
     };
   });
+}
+
+function createContinuityReview(
+  input: unknown,
+  options: CreateGovernanceRealityReportOptions
+): {
+  findings: AuditFinding[];
+  summary?: GovernanceRealityReport["continuityReview"];
+  methodologyAdded: boolean;
+} {
+  const record = isRecord(input) ? input : {};
+  if (!isRecord(record.continuity)) {
+    return { findings: [], methodologyAdded: false };
+  }
+
+  const generatedAt =
+    options.generatedAt ??
+    (typeof record.generatedAt === "string" ? record.generatedAt : undefined) ??
+    new Date().toISOString();
+  const result = createGovernanceContinuityFindings(record.continuity as GovernanceContinuityInput, generatedAt);
+
+  return {
+    findings: result.findings,
+    summary: result.summary,
+    methodologyAdded: true
+  };
 }
 
 function createPosture(

@@ -225,6 +225,7 @@ export interface GovernanceRealityReport {
     confidence: AuditConfidence;
   };
   findings: AuditFinding[];
+  continuityReview?: GovernanceContinuitySummary;
   agencyChainMap?: AgencyChainMap;
   agencyChain?: ReportAgencyChainMap;
   remediationPlan: RemediationPlanItem[];
@@ -260,6 +261,7 @@ export interface SimplifiedAuditReportInput {
   confidenceDefinitions?: ConfidenceDefinitions;
   posture?: Partial<GovernanceRealityReport["posture"]>;
   findings: AuditFinding[];
+  continuity?: GovernanceContinuityInput;
   agencyChainMap?: AgencyChainMap;
   agencyChain?: ReportAgencyChainMap;
   remediationPlan?: RemediationPlanItem[];
@@ -268,4 +270,33 @@ export interface SimplifiedAuditReportInput {
   selfAuditDisclosure?: SelfAuditDisclosure;
   appendices?: GovernanceRealityReport["appendices"];
   rawInputs?: unknown;
+}
+
+export interface GovernanceContinuityInput {
+  receipts?: unknown[];
+  decisions?: unknown[];
+  pgdlReviews?: unknown[];
+  permits?: unknown[];
+  authorityMap?: unknown;
+  policies?: unknown[];
+  workflows?: unknown[];
+  options?: Record<string, unknown>;
+}
+
+export interface GovernanceContinuitySummary {
+  generatedAt: string;
+  summary: string;
+  dimensionsChecked: string[];
+  findingsAdded: number;
+  evidence: {
+    receiptsAnalyzed: number;
+    decisionsAnalyzed: number;
+    pgdlReviewsAnalyzed: number;
+    permitsAnalyzed: number;
+    workflowsAnalyzed: number;
+    timeWindow?: {
+      start?: string;
+      end?: string;
+    };
+  };
 }

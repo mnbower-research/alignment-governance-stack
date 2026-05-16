@@ -1,6 +1,6 @@
 # Roadmap
 
-Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. The roadmap below separates completed milestones, the current hardening pass, and likely future work without adding those future systems before they are requested.
+Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. The roadmap below separates completed milestones, the current release, and likely future work without adding those future systems before they are requested.
 
 ## Scaffold
 
@@ -96,6 +96,16 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.8.0
+
+- Governance Continuity Findings
+- Optional continuity input for Governance Reality Reports
+- Temporal findings for stale authority, receipt continuity, human review continuity, scope drift, policy reality mismatch, and governance maturity
+- Standalone audit-maintenance command and Alignment Maintenance Audit surface removed
+- Useful continuity checks preserved as ordinary `AuditFinding`s inside the existing audit flow
+
+## Recently Completed
+
 ### v1.7.2
 
 - Content Publishing Depth Hardening
@@ -105,8 +115,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Decision Closure completeness matrix
 - Governance Reality Report readability pass
 - Dogfood summary includes Content Publishing Depth Hardening
-
-## Recently Completed
 
 ### v1.7.1
 
@@ -187,15 +195,15 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Next
 
-### v1.8.0
+### v1.9.0
 
 - Dashboard MVP
 
-### v1.9.0
+### v1.10.0
 
 - Persistent Receipt Store
 
-### v1.10.0
+### v1.11.0
 
 - Approval Workflow UI / Human Review Console
 

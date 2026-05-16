@@ -19,6 +19,13 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@alignment-governance-stack/authority-map": "workspace:*",
+    "@alignment-governance-stack/policy-profiles": "workspace:*",
+    "@alignment-governance-stack/receipts": "workspace:*",
+    "@alignment-governance-stack/runtime-binding": "workspace:*",
+    "@alignment-governance-stack/shared-types": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "^25.6.0",
     "vite": "^8.0.12",

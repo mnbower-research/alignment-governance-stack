@@ -52,6 +52,9 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "## Agency Chain Map",
     "",
     renderAgencyChainSection(report),
+    ...(report.continuityReview !== undefined
+      ? ["", "## Continuity Checks", "", renderContinuityReview(report)]
+      : []),
     "",
     "## Finding Summary",
     "",
@@ -108,6 +111,33 @@ export function renderGovernanceRealityReportMarkdown(report: GovernanceRealityR
     "",
     NON_ACCUSATORY_CLOSING_NOTE,
     ""
+  ].join("\n");
+}
+
+function renderContinuityReview(report: GovernanceRealityReport): string {
+  const review = report.continuityReview;
+  if (review === undefined) {
+    return "";
+  }
+
+  const evidence = review.evidence;
+  const timeWindow =
+    evidence.timeWindow === undefined
+      ? "not provided"
+      : `${evidence.timeWindow.start ?? "unknown"} to ${evidence.timeWindow.end ?? "unknown"}`;
+
+  return [
+    review.summary,
+    "",
+    "- Continuity checks ask whether governance remained coherent over time; they extend the Governance Reality Report and do not create a separate governance layer.",
+    `- Findings added: ${review.findingsAdded}`,
+    `- Dimensions checked: ${review.dimensionsChecked.map(formatToken).join(", ")}`,
+    `- Receipts analyzed: ${evidence.receiptsAnalyzed}`,
+    `- Decisions analyzed: ${evidence.decisionsAnalyzed}`,
+    `- PGDL reviews analyzed: ${evidence.pgdlReviewsAnalyzed}`,
+    `- Runtime permits analyzed: ${evidence.permitsAnalyzed}`,
+    `- Workflow records analyzed: ${evidence.workflowsAnalyzed}`,
+    `- Time window: ${timeWindow}`
   ].join("\n");
 }
 

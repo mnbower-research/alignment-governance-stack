@@ -201,12 +201,15 @@ Input may be either:
 
 - a full `GovernanceRealityReport`
 - a simplified audit input with `subject` and `findings`
+- a simplified audit input with optional `continuity` evidence, which is converted into normal Governance Reality Report findings
 
 Readable output is Markdown by default. Use `--json` for the normalized typed report. Use `--out report.md` to write Markdown to a file.
 
 The command does not call networks, execute actions, store data, or use model calls.
 
 Rendered reports include audit mode, methodology, limitations, overall assessment, finding summary, severity and confidence definitions, findings, remediation summary, evidence appendix, optional self-audit disclosure, and a non-accusatory closing note.
+
+Continuity checks extend governance auditing by asking whether governance remained coherent over time across receipts, approvals, authority, policy, and scope evidence. They are not a separate CLI command or governance layer.
 
 Self-audit example:
 

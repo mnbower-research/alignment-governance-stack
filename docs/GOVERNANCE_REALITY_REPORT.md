@@ -20,6 +20,10 @@ v1.7.1 adds a Decision Closure hardening scenario for public-announcement workfl
 
 v1.7.2 improves report readability for content-publishing reviews. Reports now include what was tested, what was demonstrated, what was not demonstrated, highest-risk finding, evidence summary, finding table, severity explanation, remediation priority, known limitations, and a compact machine-readable summary. These sections help technical and non-technical reviewers separate evidence from inference.
 
+v1.8.0 adds optional continuity input and continuity findings to the Governance Reality Report. The release preserves useful temporal checks for stale authority, receipt continuity, human review continuity, scope drift, policy reality mismatch, and governance maturity, but reports them as ordinary `AuditFinding`s in the existing audit flow.
+
+Continuity checks extend Governance Reality Reports by asking whether governance remained coherent over time. They convert receipt history, AAG decisions, PGDL reviews, runtime permits, authority maps, policies, and workflow records into ordinary audit findings. They do not create a separate governance layer, second gap detector, second report model, or second receipt system.
+
 ## Professional Posture
 
 The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:
@@ -44,6 +48,7 @@ This report identifies potential governance theater signals and evidence gaps ba
 - A typed finding model connected to the AGS governance spine.
 - A taxonomy of governance theater signals.
 - A remediation map back to PGDL, AAG, Runtime Binding, Receipts, Authority Map, Human Participation, Governance Memory, and Alignment Gap Detector controls.
+- An optional home for continuity findings that ask whether authority, receipts, human review, scope, policy, and governance memory stayed coherent over time.
 
 ## What It Is Not
 
@@ -54,6 +59,7 @@ This report identifies potential governance theater signals and evidence gaps ba
 - A database-backed audit store.
 - A customer data handling system.
 - A model-based judgment system.
+- A standalone continuity product or replacement for receipts, the Alignment Gap Detector, Decision Closure Artifacts, PGDL, AAG, or Runtime Binding.
 
 ## Taxonomy
 
@@ -115,6 +121,24 @@ Write Markdown to a file:
 node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-gap-review.json --out .tmp/governance-reality-report.md
 ```
 
+Continuity findings use the same command by adding a `continuity` object to the report input:
+
+```json
+{
+  "subject": {
+    "auditScope": "Workflow governance continuity review"
+  },
+  "findings": [],
+  "continuity": {
+    "receipts": [],
+    "decisions": [],
+    "pgdlReviews": [],
+    "permits": [],
+    "workflows": []
+  }
+}
+```
+
 Self-audit AGS:
 
 ```bash
@@ -151,6 +175,7 @@ The Markdown renderer includes:
 - Limitations
 - Overall Assessment
 - Agency Chain Map
+- Continuity Checks, when supplied
 - Finding Summary
 - Severity and Confidence Definitions
 - Findings

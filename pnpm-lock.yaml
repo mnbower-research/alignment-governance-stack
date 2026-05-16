@@ -48,6 +48,22 @@ importers:
         version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
 
   packages/audit-core:
+    dependencies:
+      '@alignment-governance-stack/authority-map':
+        specifier: workspace:*
+        version: link:../authority-map
+      '@alignment-governance-stack/policy-profiles':
+        specifier: workspace:*
+        version: link:../policy-profiles
+      '@alignment-governance-stack/receipts':
+        specifier: workspace:*
+        version: link:../receipts
+      '@alignment-governance-stack/runtime-binding':
+        specifier: workspace:*
+        version: link:../runtime-binding
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
     devDependencies:
       '@types/node':
         specifier: ^25.6.0

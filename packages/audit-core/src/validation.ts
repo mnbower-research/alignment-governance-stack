@@ -179,6 +179,10 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
     }
   }
 
+  if (report.continuityReview !== undefined) {
+    validateContinuityReview(report.continuityReview, "$.continuityReview", errors);
+  }
+
   if (report.agencyChain !== undefined) {
     validateReportAgencyChain(report.agencyChain, "$.agencyChain", errors);
   }
@@ -223,6 +227,32 @@ export function validateGovernanceRealityReport(report: unknown): AuditValidatio
   errors.push(...findProhibitedAccusatoryLanguage(report));
 
   return { valid: errors.length === 0, errors, warnings };
+}
+
+function validateContinuityReview(value: unknown, path: string, errors: AuditValidationIssue[]): void {
+  if (!isRecord(value)) {
+    errors.push({ path, message: "continuityReview must be an object when provided." });
+    return;
+  }
+
+  requireString(value, "generatedAt", `${path}.generatedAt`, errors);
+  requireString(value, "summary", `${path}.summary`, errors);
+  if (!Array.isArray(value.dimensionsChecked)) {
+    errors.push({ path: `${path}.dimensionsChecked`, message: "dimensionsChecked array is required." });
+  }
+  if (typeof value.findingsAdded !== "number" || value.findingsAdded < 0) {
+    errors.push({ path: `${path}.findingsAdded`, message: "findingsAdded must be a non-negative number." });
+  }
+  if (!isRecord(value.evidence)) {
+    errors.push({ path: `${path}.evidence`, message: "continuity evidence summary is required." });
+    return;
+  }
+
+  for (const key of ["receiptsAnalyzed", "decisionsAnalyzed", "pgdlReviewsAnalyzed", "permitsAnalyzed", "workflowsAnalyzed"]) {
+    if (typeof value.evidence[key] !== "number" || value.evidence[key] < 0) {
+      errors.push({ path: `${path}.evidence.${key}`, message: `${key} must be a non-negative number.` });
+    }
+  }
 }
 
 function validateReportAgencyChain(value: unknown, path: string, errors: AuditValidationIssue[]): void {
