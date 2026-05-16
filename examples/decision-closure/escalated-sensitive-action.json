@@ -1,0 +1,51 @@
+{
+  "artifactId": "dca-escalated-sensitive-action-v1",
+  "createdAt": "2026-05-16T10:25:00.000Z",
+  "action": {
+    "actionId": "send-sensitive-external-summary",
+    "actionType": "send_external_summary",
+    "summary": "Escalate a high-sensitivity external summary before any execution is allowed.",
+    "toolName": "email.send",
+    "target": "external_partner/sensitive_summary",
+    "proposedByAgentId": "enterprise-report-agent",
+    "sensitivity": "high",
+    "reversibility": "irreversible"
+  },
+  "executionBoundary": {
+    "boundaryId": "boundary-sensitive-external-send",
+    "boundaryType": "external_sensitive_send",
+    "reachedAt": "2026-05-16T10:25:02.000Z",
+    "runtimePermitRequired": true
+  },
+  "authority": {
+    "authoritySource": "authority_map",
+    "authorityName": "Sensitive External Action Authority",
+    "reviewerRole": "security_reviewer",
+    "authorityValid": false,
+    "authorityReason": "Required sensitive external action authority is not demonstrated in the supplied evidence."
+  },
+  "decision": {
+    "outcome": "escalate",
+    "reason": "High-sensitivity external action requires human authority verification before any runtime permit can be issued.",
+    "ruleIds": ["high_sensitivity_external_escalation", "runtime_permit_required"],
+    "policyProfileId": "enterprise.sensitive.external.policy",
+    "humanReviewRequired": true,
+    "humanReviewPresent": false,
+    "humanParticipationQuality": "unknown"
+  },
+  "conditions": {
+    "scope": "Escalation only; no external send is authorized.",
+    "allowedTools": [],
+    "allowedTargets": [],
+    "prohibitedTargets": ["external_partner/sensitive_summary"],
+    "notes": ["Sensitive external action requires verified human authority and revised conditions."]
+  },
+  "proof": {},
+  "auditSummary": {
+    "readableWithoutSystemAccess": true,
+    "summary": "The artifact records escalation of a high-sensitivity external action because authority and runtime permit proof are not demonstrated.",
+    "unresolvedQuestions": ["Who has authority for this sensitive external action?", "What permit and receipt evidence would be required before execution?"],
+    "theaterSignals": ["authority unclear", "runtime binding not demonstrated"],
+    "remediationHints": ["Verify authority, define scope, and issue a runtime permit only after human review."]
+  }
+}

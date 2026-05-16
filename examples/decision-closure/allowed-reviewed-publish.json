@@ -1,0 +1,60 @@
+{
+  "artifactId": "dca-allowed-reviewed-publish-v1",
+  "createdAt": "2026-05-16T10:00:00.000Z",
+  "action": {
+    "actionId": "publish-ags-v1-6-0-release-note",
+    "actionType": "publish_blog_post",
+    "summary": "Publish the reviewed AGS v1.6.0 release note to the approved public blog target.",
+    "toolName": "blog.publish",
+    "target": "public_blog/ags_v1_6_0_release_note",
+    "proposedByAgentId": "content-publishing-agent",
+    "sensitivity": "medium",
+    "reversibility": "partially_reversible"
+  },
+  "executionBoundary": {
+    "boundaryId": "boundary-public-blog-publish",
+    "boundaryType": "external_public_publish",
+    "reachedAt": "2026-05-16T10:00:02.000Z",
+    "runtimePermitRequired": true,
+    "runtimePermitId": "permit-public-blog-ags-v1-6-0",
+    "runtimeBindingHash": "b7f1e3db0f1fb9da712e8cf7a22695c9f0d34fc4f4f58f97c44af629d9872e10"
+  },
+  "authority": {
+    "authoritySource": "authority_map",
+    "authorityId": "ags.public_claim_reviewer",
+    "authorityName": "Public Claim Reviewer",
+    "reviewerId": "reviewer-founder-operator",
+    "reviewerRole": "public_claim_reviewer",
+    "authorityValid": true,
+    "authorityReason": "Reviewer approved this exact public blog target and release-note scope."
+  },
+  "decision": {
+    "outcome": "allow",
+    "reason": "The public release note was reviewed, target-bound, permit-bound, and supported by receipt evidence.",
+    "ruleIds": ["public_claim_review_required", "target_bound_publish_permit"],
+    "policyProfileId": "ags.content-publishing-hardening.policy",
+    "hardBoundaryIds": [],
+    "humanReviewRequired": true,
+    "humanReviewPresent": true,
+    "humanParticipationQuality": "strong"
+  },
+  "conditions": {
+    "scope": "Allow only the reviewed AGS v1.6.0 release note for the named public blog target.",
+    "expiresAt": "2026-05-17T10:00:00.000Z",
+    "allowedTools": ["blog.publish"],
+    "allowedTargets": ["public_blog/ags_v1_6_0_release_note"],
+    "prohibitedTargets": ["linkedin/ags_v1_6_0_promotional_thread", "x/ags_v1_6_0_thread"],
+    "notes": ["Approval is channel-specific and target-specific."]
+  },
+  "proof": {
+    "receiptHash": "6b4c6e4f91c7af8f0c4821c0ed8b6f7fd2c0e3ef2f3d7ce0f1324b28e7c84721",
+    "previousReceiptHash": "187bb6d44a4f9817b4581b609e13d9a88a0a451daa6d7bd31f9dd99f9d60c2ad"
+  },
+  "auditSummary": {
+    "readableWithoutSystemAccess": true,
+    "summary": "The reviewed public publish action is allowed for one target with valid authority, runtime permit evidence, runtime binding evidence, and receipt hash proof.",
+    "unresolvedQuestions": [],
+    "theaterSignals": [],
+    "remediationHints": []
+  }
+}

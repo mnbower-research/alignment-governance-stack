@@ -24,6 +24,7 @@ Integration Adapters
 -> Policy Resolution
 -> AAG
 -> Runtime Binding
+-> Decision Closure Artifact
 -> Receipt
 -> Governance Memory / Internalization Layer
 -> Agency Chain Mapper
@@ -44,6 +45,7 @@ Integration Adapters
 - Policy Resolution applies organization-specific rules to the proposal that PGDL intends to send to AAG.
 - AAG evaluates whether a proposed action should be allowed before execution.
 - Runtime Binding verifies the exact runtime action matches the permitted action.
+- Decision Closure Artifact binds the action, authority, decision, conditions, and proof at the execution boundary.
 - Receipts preserve tamper-evident proof of the governance path.
 - Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
 - Agency Chain Mapper identifies where human or organizational agency is preserved, weakened, bypassed, or not demonstrated across delegated workflows.
@@ -57,6 +59,7 @@ Integration Adapters
 - Canonical Agent Action Gate integration
 - Governance Core orchestration
 - Runtime Binding exact-action permit validation
+- Decision Closure Artifact execution-boundary proof objects
 - Tamper-evident governance receipts
 - Policy Profiles with deterministic policy resolution
 - Hard Boundary Policy Compiler for explicit `neverAutomate` rules
@@ -81,6 +84,7 @@ Integration Adapters
 - `@alignment-governance-stack/pgdl-core`: deterministic Pre-Gate Deliberation Layer proposal maturation.
 - `@alignment-governance-stack/aag-core`: canonical Agent Action Gate integration.
 - `@alignment-governance-stack/runtime-binding`: exact-action permit creation and runtime validation.
+- `@alignment-governance-stack/decision-closure`: deterministic Decision Closure Artifact generation, validation, hashing, summaries, and Markdown rendering.
 - `@alignment-governance-stack/governance-core`: orchestration for PGDL, optional policy resolution, optional authority validation, optional participation quality, AAG, Runtime Binding, and receipts.
 - `@alignment-governance-stack/receipts`: tamper-evident governance receipts and stable receipt hashing.
 - `@alignment-governance-stack/policy-profiles`: organization-specific governance rules, hard boundaries, and deterministic policy resolution.
@@ -159,6 +163,20 @@ node packages/cli/dist/cli.js agency-chain examples/agency-chain/weak-agent-work
 
 See `docs/AGENCY_CHAIN_MAPPER.md` and `examples/agency-chain`.
 
+## Decision Closure Artifact
+
+Decision Closure Artifact is the execution-boundary proof object. It does not replace logs, receipts, runtime binding, or audit reports. It binds their most important facts into one third-party-readable artifact.
+
+Authority before execution. Evidence after execution.
+
+```bash
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json
+node packages/cli/dist/cli.js closure examples/decision-closure/missing-runtime-permit.json --json
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json --out .tmp/allowed-reviewed-publish-closure.md
+```
+
+See `docs/DECISION_CLOSURE_ARTIFACT.md` and `examples/decision-closure`.
+
 ### Self-Auditing AGS
 
 AGS includes an honest self-audit fixture for Alignment Governance Stack v1.5.0. It records strengths in PGDL, AAG, Runtime Binding, Receipts, red-team and dogfood evals, and the Governance Reality Report foundation, while naming watch items such as foundational adapter coverage, no third-party audit yet, package/release version alignment, public-source review workflow, and future evidence locker / agency chain mapper work.
@@ -176,6 +194,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
 corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json
 corepack pnpm --filter @alignment-governance-stack/cli ags agency-chain examples/agency-chain/strong-agent-workflow-chain.json
+corepack pnpm --filter @alignment-governance-stack/cli ags closure examples/decision-closure/allowed-reviewed-publish.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
 ```
@@ -233,6 +252,7 @@ corepack pnpm -r exec npm pack --dry-run
 - Governance Memory does not auto-update governance policy.
 - Governance Reality Reports do not make external accusations, certify compliance, execute actions, or collect customer data.
 - Agency Chain Mapper does not determine moral responsibility, legal compliance, or blame.
+- Decision Closure Artifact does not replace receipts, verify signatures by default, or claim legal compliance.
 - Integration Adapters do not execute actions or host a service.
 - Alignment Gap Detector does not mutate governance inputs or auto-fix policy.
 - Policy Profiles do not replace PGDL or AAG.
@@ -245,12 +265,12 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.6.1
+Current version: v1.7.0
 
 The core AGS spine is working:
 
 ```text
-Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Receipt -> Governance Memory / Internalization Layer -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Evaluation Suite -> Developer CLI
+Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Governance Memory / Internalization Layer -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

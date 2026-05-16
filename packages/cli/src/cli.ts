@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { runAgencyChainCommand } from "./commands/agencyChain.js";
 import { runAuditReportCommand } from "./commands/auditReport.js";
+import { runClosureCommand } from "./commands/closure.js";
 import { runDogfoodCommand } from "./commands/dogfood.js";
 import { runEvalCommand } from "./commands/eval.js";
 import { runGapsCommand } from "./commands/gaps.js";
@@ -67,6 +68,10 @@ export function runCli(args: string[]): CliResult {
 
     if (command === "agency-chain") {
       return runAgencyChainCommand(rest);
+    }
+
+    if (command === "closure") {
+      return runClosureCommand(rest);
     }
 
     return {

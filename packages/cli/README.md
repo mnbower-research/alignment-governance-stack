@@ -25,6 +25,9 @@ The CLI does not execute governed actions. It runs deterministic local checks ag
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags memory <receipts.json>`
+- `ags audit-report <input.json> [--out report.md] [--json]`
+- `ags agency-chain <input.json> [--json]`
+- `ags closure <input.json> [--out closure.md] [--json]`
 - `ags receipt verify <receipt.json>`
 - `ags receipt hash <receipt.json>`
 

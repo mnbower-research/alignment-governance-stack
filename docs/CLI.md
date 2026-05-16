@@ -67,6 +67,9 @@ node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/rec
 - `ags audit-report <input.json> --out report.md`
 - `ags agency-chain <input.json>`
 - `ags agency-chain <input.json> --json`
+- `ags closure <input.json>`
+- `ags closure <input.json> --json`
+- `ags closure <input.json> --out closure.md`
 - `ags govern <input.json>`
 - `ags govern <input.json> --json`
 - `ags receipt verify <receipt.json>`
@@ -237,6 +240,30 @@ Example:
 node packages/cli/dist/cli.js agency-chain examples/agency-chain/weak-agent-workflow-chain.json --json
 ```
 
+### `ags closure <input.json>`
+
+Reads a local Decision Closure Artifact input, generates a canonical closure artifact, validates it, and prints a third-party-readable summary by default.
+
+Output modes:
+
+- Markdown report with `--out`
+- JSON artifact plus validation with `--json`
+- text summary by default
+
+Exit codes:
+
+- `0`: no high or critical closure findings
+- `1`: high or critical closure findings exist
+- `2`: invalid closure input
+
+Examples:
+
+```bash
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json
+node packages/cli/dist/cli.js closure examples/decision-closure/missing-runtime-permit.json --json
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json --out .tmp/allowed-reviewed-publish-closure.md
+```
+
 ### `ags receipt verify <receipt.json>`
 
 Reads a governance receipt JSON file and verifies it with `verifyGovernanceReceipt`.
@@ -284,6 +311,8 @@ Alignment Gap Detector examples live under `examples/alignment-gaps`.
 Governance Reality Report examples live under `examples/audit-report`.
 
 Agency Chain Mapper examples live under `examples/agency-chain`.
+
+Decision Closure Artifact examples live under `examples/decision-closure`.
 
 ## Exit Codes
 

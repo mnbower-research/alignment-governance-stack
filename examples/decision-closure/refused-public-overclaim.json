@@ -1,0 +1,55 @@
+{
+  "artifactId": "dca-refused-public-overclaim-v1",
+  "createdAt": "2026-05-16T10:20:00.000Z",
+  "action": {
+    "actionId": "publish-refused-unsupported-claim",
+    "actionType": "publish_social_post",
+    "summary": "Refuse a public AGS announcement because the proposed capability claims are unsupported by supplied evidence.",
+    "toolName": "social.post",
+    "target": "linkedin/unsupported_ags_claim_refused",
+    "proposedByAgentId": "content-publishing-agent",
+    "sensitivity": "medium",
+    "reversibility": "partially_reversible"
+  },
+  "executionBoundary": {
+    "boundaryId": "boundary-refused-public-claim",
+    "boundaryType": "external_public_publish",
+    "reachedAt": "2026-05-16T10:20:02.000Z",
+    "runtimePermitRequired": false
+  },
+  "authority": {
+    "authoritySource": "policy_profile",
+    "authorityId": "ags.content-publishing-hardening.policy",
+    "authorityName": "AGS Public Claim Policy",
+    "reviewerRole": "public_claim_reviewer",
+    "authorityValid": true,
+    "authorityReason": "Policy requires evidence-backed public claims and review before external publication."
+  },
+  "decision": {
+    "outcome": "refuse",
+    "reason": "The proposed public claim is unsupported by available evidence and should be revised before any external release.",
+    "ruleIds": ["never_claim_governance_guarantee", "public_claim_review_required"],
+    "policyProfileId": "ags.content-publishing-hardening.policy",
+    "hardBoundaryIds": ["never_claim_governance_guarantee"],
+    "humanReviewRequired": true,
+    "humanReviewPresent": true,
+    "humanParticipationQuality": "strong"
+  },
+  "conditions": {
+    "scope": "No external publish is allowed for unsupported claims; revised evidence-based copy may be reviewed separately.",
+    "allowedTools": [],
+    "allowedTargets": [],
+    "prohibitedTargets": ["linkedin/unsupported_ags_claim_refused"],
+    "notes": ["Refusal closure proves the public-action boundary did not proceed."]
+  },
+  "proof": {
+    "receiptHash": "22cd87ff6ca11fe03764f6d8ab44180df9b1a8d22585e48a6195c42a01d61f73"
+  },
+  "auditSummary": {
+    "readableWithoutSystemAccess": true,
+    "summary": "The artifact proves refusal of an unsupported public claim before external publication.",
+    "unresolvedQuestions": ["What revised evidence-backed language should be reviewed?"],
+    "theaterSignals": ["unsupported public claim requires verification"],
+    "remediationHints": ["Revise the public copy to evidence-backed claims and resubmit for public-claim review."]
+  }
+}

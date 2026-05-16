@@ -83,6 +83,9 @@ importers:
       '@alignment-governance-stack/company-profile-generator':
         specifier: workspace:*
         version: link:../company-profile-generator
+      '@alignment-governance-stack/decision-closure':
+        specifier: workspace:*
+        version: link:../decision-closure
       '@alignment-governance-stack/eval-suite':
         specifier: workspace:*
         version: link:../eval-suite
@@ -123,6 +126,19 @@ importers:
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
+    devDependencies:
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.12(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.6(@types/node@25.7.0)(vite@8.0.12(@types/node@25.7.0))
+
+  packages/decision-closure:
+    dependencies:
+      '@alignment-governance-stack/receipts':
+        specifier: workspace:*
+        version: link:../receipts
     devDependencies:
       vite:
         specifier: ^8.0.12

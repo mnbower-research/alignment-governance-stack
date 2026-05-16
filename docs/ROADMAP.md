@@ -96,6 +96,16 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.7.0
+
+- Decision Closure Artifact
+- Execution-boundary proof object with deterministic canonical hash
+- Local `ags closure <input.json>` command
+- Closure validation findings for runtime permit, authority, receipt, hard boundary, target scope, and human review evidence
+- Decision closure examples and fixture summaries
+
+## Recently Completed
+
 ### v1.6.1
 
 - Content Publishing Governance Hardening
@@ -104,8 +114,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Strong and weak agency-chain examples for content publishing
 - Governance Reality Report example for public-claim hardening
 - Dogfood summary includes Content Publishing Hardening
-
-## Recently Completed
 
 ### v1.6.0
 
@@ -162,15 +170,15 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Next
 
-### v1.7.0
+### v1.8.0
 
 - Dashboard MVP
 
-### v1.8.0
+### v1.9.0
 
 - Persistent Receipt Store
 
-### v1.9.0
+### v1.10.0
 
 - Approval Workflow UI / Human Review Console
 

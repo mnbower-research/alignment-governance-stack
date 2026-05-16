@@ -1,0 +1,90 @@
+# Decision Closure Artifact
+
+Decision Closure Artifact is the execution-boundary proof object. It does not replace logs, receipts, runtime binding, or audit reports. It binds their most important facts into one third-party-readable artifact.
+
+Authority before execution. Evidence after execution.
+
+A true gate does not merely log what happened. It proves what was allowed, refused, or escalated at the moment of consequence.
+
+## What It Is
+
+A Decision Closure Artifact records what action was about to happen, which execution boundary it reached, what authority allowed, refused, escalated, revised, or blocked it, what conditions applied, and what proof binds the decision.
+
+It is deterministic, JSON-serializable, and local. It is designed to be readable by a third party without reconstructing internal logs.
+
+## Why Logs Are Not Enough
+
+Logs can show what happened after the fact. They often require internal system context to interpret. A closure artifact captures the execution-boundary decision in one object so a reviewer can inspect the action, authority, conditions, and proof together.
+
+## Why Policy Is Not Proof
+
+Policy states what should happen. A Decision Closure Artifact records what decision was made for a specific action at a specific boundary. It can show whether runtime permit evidence, receipt evidence, authority evidence, and human review were demonstrated.
+
+## Execution-Boundary Proof
+
+The artifact includes:
+
+- action summary, tool, target, sensitivity, and reversibility
+- execution boundary ID, type, time, permit requirement, permit ID, and runtime binding hash
+- authority source and reviewer context
+- decision outcome and rule IDs
+- conditions such as allowed tools, allowed targets, expiration, and notes
+- receipt hash, previous receipt hash, optional signature fields, canonical hash, and integrity status
+- audit summary, unresolved questions, theater signals, and remediation hints
+
+## Integrity Hash
+
+The canonical hash uses stable key ordering. It excludes mutable proof fields `proof.canonicalHash`, `proof.signature`, and `proof.integrityStatus`; it includes the remaining artifact contents. Signatures are optional and are not treated as verified unless verification is actually supplied.
+
+This release does not claim cryptographic finality beyond the deterministic canonical hash and any explicitly supplied signature metadata.
+
+## Relationship To AGS
+
+PGDL matures the proposal before gate evaluation.
+
+AAG decides whether the proposed action should proceed.
+
+Runtime Binding checks whether the exact runtime action matches the permit.
+
+Receipts preserve the governance path after the decision.
+
+Agency Chain Mapper shows where agency was preserved, weakened, or not demonstrated.
+
+Governance Reality Reports turn closure and other AGS outputs into auditor-ready findings and remediation paths.
+
+Decision Closure Artifact binds the most important execution-boundary facts into one proof object.
+
+## CLI Usage
+
+```bash
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json --json
+node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json --out .tmp/allowed-reviewed-publish-closure.md
+```
+
+High or critical validation findings exit `1`. Bad input exits `2`.
+
+## Example Finding Language
+
+- runtime permit required but not demonstrated
+- execution-boundary proof incomplete
+- authority validity not demonstrated
+- human review required but not demonstrated
+- hard boundary present with allow decision
+
+## Examples
+
+Examples live under `examples/decision-closure`:
+
+- `allowed-reviewed-publish.json`
+- `missing-runtime-permit.json`
+- `hard-boundary-allowed.json`
+- `rubber-stamp-review.json`
+- `refused-public-overclaim.json`
+- `escalated-sensitive-action.json`
+
+Fixture summaries live under `evals/fixtures/decision-closure`.
+
+## Limitations
+
+Decision Closure Artifact does not execute actions, store approvals, verify human identity, provide legal compliance, claim regulator approval, or replace a receipt store. Optional signatures are metadata unless signing and verification are actually implemented around the artifact.

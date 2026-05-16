@@ -14,6 +14,8 @@ v1.6.0 adds Agency Chain Map support so reports can show where human authority, 
 
 v1.6.1 adds a content publishing hardening report fixture for AGS public-claim workflows. It summarizes unsupported public claim risk, external review requirements, target/channel approval mismatch, draft versus publish boundaries, runtime substitution, and tone/claim drift using the same non-accusatory report posture.
 
+v1.7.0 adds Decision Closure Artifacts as execution-boundary proof objects. Governance Reality Reports can use closure artifacts as evidence that a specific action was allowed, refused, escalated, revised, approval-gated, or blocked at the moment of consequence.
+
 ## Professional Posture
 
 The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:

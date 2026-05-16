@@ -1,0 +1,55 @@
+{
+  "artifactId": "dca-rubber-stamp-review-v1",
+  "createdAt": "2026-05-16T10:15:00.000Z",
+  "action": {
+    "actionId": "publish-fast-review-ags-post",
+    "actionType": "publish_social_post",
+    "summary": "Publish a public AGS announcement after a very limited review signal.",
+    "toolName": "social.post",
+    "target": "linkedin/ags_fast_review_post",
+    "proposedByAgentId": "content-publishing-agent",
+    "sensitivity": "medium",
+    "reversibility": "partially_reversible"
+  },
+  "executionBoundary": {
+    "boundaryId": "boundary-fast-review-social-post",
+    "boundaryType": "external_public_publish",
+    "reachedAt": "2026-05-16T10:15:02.000Z",
+    "runtimePermitRequired": true,
+    "runtimePermitId": "permit-fast-review-social-post",
+    "runtimeBindingHash": "3e7a70cbf0793829db9d0bb43f314c4d78252b2d805fd4b6783d36900f8c6dc3"
+  },
+  "authority": {
+    "authoritySource": "authority_map",
+    "authorityId": "ags.public_claim_reviewer",
+    "authorityName": "Public Claim Reviewer",
+    "reviewerRole": "public_claim_reviewer",
+    "authorityValid": true,
+    "authorityReason": "Reviewer role exists, but participation quality is weak."
+  },
+  "decision": {
+    "outcome": "allow",
+    "reason": "Fixture intentionally records weak review for validation.",
+    "ruleIds": ["public_claim_review_required"],
+    "policyProfileId": "ags.content-publishing-hardening.policy",
+    "humanReviewRequired": true,
+    "humanReviewPresent": true,
+    "humanParticipationQuality": "weak"
+  },
+  "conditions": {
+    "scope": "Public publishing requires meaningful review before execution.",
+    "allowedTools": ["social.post"],
+    "allowedTargets": ["linkedin/ags_fast_review_post"],
+    "notes": ["Review was present but meaningful participation requires verification."]
+  },
+  "proof": {
+    "receiptHash": "092b8618c4242f17610b23ee5910a4f9e276efdf46eeb27ba70c4d08ab979e87"
+  },
+  "auditSummary": {
+    "readableWithoutSystemAccess": true,
+    "summary": "The artifact records public publication with weak human participation quality, requiring verification before relying on the allow outcome.",
+    "unresolvedQuestions": ["Did the reviewer receive enough context and have refusal ability?"],
+    "theaterSignals": ["human participation quality weak"],
+    "remediationHints": ["Require reviewer context, rationale, and refusal ability before public publication."]
+  }
+}

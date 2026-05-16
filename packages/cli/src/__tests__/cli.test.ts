@@ -30,6 +30,7 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags audit-report <input.json>");
     expect(result.stdout).toContain("ags agency-chain <input.json>");
+    expect(result.stdout).toContain("ags closure <input.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
   });
 
@@ -407,6 +408,98 @@ describe("ags cli", () => {
     expect(jsonResult.exitCode).toBe(1);
     expect(parsed.auditMode).toBe("workflow_review");
     expect(parsed.findings?.length).toBe(6);
+  });
+
+  it("closure allowed reviewed publish exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "allowed-reviewed-publish.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("AGS Decision Closure Artifact");
+    expect(result.stdout).toContain("outcome: allow");
+  });
+
+  it("closure missing runtime permit exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "missing-runtime-permit.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("DCA-003");
+  });
+
+  it("closure hard boundary allowed exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "hard-boundary-allowed.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("DCA-011");
+  });
+
+  it("closure rubber-stamp review exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "rubber-stamp-review.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("DCA-015");
+  });
+
+  it("closure refused public overclaim exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "refused-public-overclaim.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("outcome: refuse");
+  });
+
+  it("closure escalated sensitive action exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "escalated-sensitive-action.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("DCA-006");
+  });
+
+  it("closure --json emits parseable artifact and validation", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "allowed-reviewed-publish.json");
+
+    const result = runCli(["closure", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as {
+      artifact?: { artifactType?: string; proof?: { canonicalHash?: string } };
+      validation?: { severity?: string };
+    };
+
+    expect(result.exitCode).toBe(0);
+    expect(parsed.artifact?.artifactType).toBe("decision_closure");
+    expect(parsed.artifact?.proof?.canonicalHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(parsed.validation?.severity).toBe("low");
+  });
+
+  it("closure --out writes Markdown file", () => {
+    const tempDir = mkdtempSync(join(tmpdir(), "ags-cli-"));
+    tempDirs.push(tempDir);
+    const inputPath = join(repoRoot, "examples", "decision-closure", "allowed-reviewed-publish.json");
+    const outPath = join(tempDir, "decision-closure.md");
+
+    const result = runCli(["closure", inputPath, "--out", outPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toBe("");
+    expect(readFileSync(outPath, "utf8")).toContain("# Decision Closure Artifact");
+  });
+
+  it("closure invalid input exits 2", () => {
+    const inputPath = writeTempJson("invalid-closure.json", { artifactId: "missing-sections" });
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(2);
+    expect(result.stderr).toContain("Invalid decision closure input");
   });
 
   it("missing file exits 1", () => {

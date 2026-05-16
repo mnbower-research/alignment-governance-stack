@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.7.0 - Decision Closure Artifact
+
+- Adds `@alignment-governance-stack/decision-closure` with typed Decision Closure Artifact models, deterministic generation, validation, canonicalization, hashing, summaries, and Markdown rendering.
+- Adds `ags closure <input.json> [--out closure.md] [--json]`.
+- Adds closure examples for allowed reviewed publish, missing runtime permit, hard-boundary inconsistency, weak review, refused public overclaim, and escalated sensitive action.
+- Adds deterministic fixture summaries under `evals/fixtures/decision-closure`.
+- Adds validation findings for missing runtime permits, missing runtime binding hashes, weak or missing human review, invalid authority, missing receipt hashes for allowed actions, hard-boundary inconsistency, target scope mismatch, expiration, third-party readability, and unsigned artifacts.
+- Documents Decision Closure Artifact as the execution-boundary proof object: Authority before execution. Evidence after execution.
+- Keeps PGDL, AAG, Runtime Binding, receipts, policy profiles, authority map, audit-core, and governance-core runtime behavior unchanged.
+
 ## v1.6.1 - Content Publishing Governance Hardening
 
 - Adds `contentPublishingHardeningEvalCases` and `runContentPublishingHardeningEvalSuite` for AGS v1.6.0 public-claim workflows.

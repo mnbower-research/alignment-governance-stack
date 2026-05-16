@@ -29,6 +29,8 @@ Human authority
 
 Agentic systems delegate operational agency. A governance audit needs to show where that delegated agency remains constrained by human authority, scoped policy, runtime authorization, and durable evidence.
 
+Decision Closure Artifacts complement the Agency Chain Mapper by binding execution-boundary facts into a single proof object. The mapper asks where agency is preserved or weakened; the closure artifact records what decision was made when an action reached the boundary.
+
 ## Link Types
 
 - `human_authority`

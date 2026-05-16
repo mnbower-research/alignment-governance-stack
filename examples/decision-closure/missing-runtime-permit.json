@@ -1,0 +1,51 @@
+{
+  "artifactId": "dca-missing-runtime-permit-v1",
+  "createdAt": "2026-05-16T10:05:00.000Z",
+  "action": {
+    "actionId": "publish-ags-v1-6-0-social-post",
+    "actionType": "publish_social_post",
+    "summary": "Publish an AGS v1.6.0 announcement to a public social channel.",
+    "toolName": "social.post",
+    "target": "linkedin/ags_v1_6_0_announcement",
+    "proposedByAgentId": "content-publishing-agent",
+    "sensitivity": "medium",
+    "reversibility": "partially_reversible"
+  },
+  "executionBoundary": {
+    "boundaryId": "boundary-linkedin-post",
+    "boundaryType": "external_public_publish",
+    "reachedAt": "2026-05-16T10:05:02.000Z",
+    "runtimePermitRequired": true
+  },
+  "authority": {
+    "authoritySource": "authority_map",
+    "authorityId": "ags.public_claim_reviewer",
+    "authorityName": "Public Claim Reviewer",
+    "reviewerRole": "public_claim_reviewer",
+    "authorityValid": true,
+    "authorityReason": "Public claim reviewer is the relevant authority, but runtime permit proof is not demonstrated."
+  },
+  "decision": {
+    "outcome": "require_approval",
+    "reason": "The action reached an external publishing boundary without runtime permit proof.",
+    "ruleIds": ["runtime_permit_required_for_external_publish"],
+    "policyProfileId": "ags.content-publishing-hardening.policy",
+    "humanReviewRequired": true,
+    "humanReviewPresent": false,
+    "humanParticipationQuality": "unknown"
+  },
+  "conditions": {
+    "scope": "No external publish should proceed until a target-bound runtime permit is issued.",
+    "allowedTools": ["social.post"],
+    "allowedTargets": ["linkedin/ags_v1_6_0_announcement"],
+    "notes": ["Runtime permit is required for public publishing."]
+  },
+  "proof": {},
+  "auditSummary": {
+    "readableWithoutSystemAccess": true,
+    "summary": "The action reached a public publishing boundary, but runtime permit proof is not demonstrated.",
+    "unresolvedQuestions": ["Which runtime permit authorizes this exact public publishing target?"],
+    "theaterSignals": ["runtime binding not demonstrated"],
+    "remediationHints": ["Issue a scoped runtime permit before external publication."]
+  }
+}

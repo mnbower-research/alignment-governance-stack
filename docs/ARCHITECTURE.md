@@ -18,6 +18,7 @@ User goal
 -> AAG
 -> Permit decision
 -> Runtime Binding
+-> Decision Closure Artifact
 -> Receipt
 -> Governance Memory / Internalization Layer
 -> Agency Chain Mapper
@@ -34,7 +35,7 @@ The core runtime spine remains:
 PGDL -> AAG -> Runtime Binding -> Receipt
 ```
 
-PGDL matures the proposal before execution gating. AAG decides whether the proposed action should be allowed before execution. Runtime Binding verifies that the exact runtime action matches the issued permit. Receipts preserve proof of the governance path.
+PGDL matures the proposal before execution gating. AAG decides whether the proposed action should be allowed before execution. Runtime Binding verifies that the exact runtime action matches the issued permit. Receipts preserve proof of the governance path. Decision Closure Artifact is an additive audit artifact at the execution boundary; it does not redesign the runtime spine.
 
 ## Full AGS Stack
 
@@ -51,6 +52,7 @@ Integration Adapters
 -> Policy Resolution
 -> AAG
 -> Runtime Binding
+-> Decision Closure Artifact
 -> Receipt
 -> Governance Memory / Internalization Layer
 -> Agency Chain Mapper
@@ -83,6 +85,8 @@ AAG evaluates execution permission for the proposal it receives. It does not mat
 
 Runtime Binding verifies the exact permitted action. Receipts preserve proof for the full governance path after the governance decision has been reached.
 
+Decision Closure Artifact is the execution-boundary proof object. It does not replace logs, receipts, runtime binding, or audit reports. It binds their most important facts into one third-party-readable artifact. Authority before execution. Evidence after execution.
+
 Receipts feed Governance Memory. Governance Memory analyzes receipt history over time and produces human-reviewable recommendations for Policy Profiles, Hard Boundaries, Authority Maps, Human Participation policies, Runtime Binding investigation, and eval expansion. It is a feedback loop, not inline action execution, and it does not silently mutate governance behavior.
 
 The Eval Suite tests the stack. It is a feedback layer around the stack, not an inline execution layer, and it runs deterministic cross-stack scenarios that exercise PGDL, Policy Profiles, Hard Boundaries, Authority Map, Human Participation Quality, AAG, Runtime Binding, Receipts, and Governance Memory. The suite now includes built-in governance cases, Internal Dogfood, the Enterprise Financial Report Golden Path, the Content Publishing Dogfood Agent, Content Publishing Governance Hardening, and the Adversarial Red-Team Eval Pack. These tracks cover docs updates, release drafts, package deletion, publishing, pushing to main, external communication, authority-map edits, receipt deletion, sensitive financial report handling, public content claims, borrowed author voice, provenance changes, rubber-stamped approval, runtime substitution, approval target mismatch, draft/publish boundary checks, hard-boundary bypass attempts, forged approvals, receipt tampering, and noisy memory histories.
@@ -94,6 +98,8 @@ The v1.5.1 report hardening adds audit mode, methodology, limitations, severity 
 Agency Chain Mapper is the v1.6.0 auditor layer that maps where human or organizational agency enters the workflow, where it is delegated to agents, where authority is validated, where execution is bound, where consequence occurs, and where proof remains. It detects missing or weak links and can adapt agency-chain issues into Governance Reality Report findings. It does not change PGDL, AAG, Runtime Binding, receipts, policy profiles, authority maps, or governance-core runtime behavior.
 
 v1.6.1 adds focused content-publishing hardening for public claims about AGS itself. It verifies that local drafts, reviewed public releases, unsupported public claims, direct external publication, approval reuse, runtime substitution, and tone/claim drift remain distinguishable across dogfood, Runtime Binding, Governance Memory, Agency Chain Mapper, and Governance Reality Reports.
+
+v1.7.0 adds Decision Closure Artifacts for proving what was allowed, refused, escalated, revised, approval-gated, or blocked at the moment of consequence. A true gate does not merely log what happened. It proves what was allowed, refused, or escalated at the moment of consequence.
 
 The Developer CLI exposes local developer access to the same deterministic packages. It can run evals, evaluate a supplied governance input, verify or hash receipts, and summarize receipt-history memory. It does not execute actions, host a server, store state, or call providers.
 
