@@ -3,6 +3,7 @@ import {
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
   builtInContentPublishingDogfoodEvalCases,
+  builtInContentPublishingHardeningEvalCases,
   runDogfoodEvalSuite,
   runEnterpriseDogfoodEvalSuite,
   runEvalCase
@@ -76,7 +77,8 @@ describe("enterprise dogfood eval suite", () => {
     expect(result.total).toBe(
       builtInDogfoodEvalCases.length +
       builtInEnterpriseDogfoodEvalCases.length +
-      builtInContentPublishingDogfoodEvalCases.length
+      builtInContentPublishingDogfoodEvalCases.length +
+      builtInContentPublishingHardeningEvalCases.length
     );
     expect(result.passed).toBe(true);
   });

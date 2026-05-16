@@ -72,6 +72,7 @@ Integration Adapters
 - Governance Reality Report foundation and report hardening for professional audit outputs that identify potential governance theater signals, evidence gaps, severity/confidence posture, and remediation paths without making external accusations
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
+- Content Publishing Governance Hardening for AGS public-claim agents, draft/publish boundaries, target-specific approvals, runtime substitution, and tone drift
 - Adversarial Red-Team Eval Pack for bypass, authority, runtime, receipt, and memory attacks
 
 ## Package Map
@@ -188,6 +189,7 @@ The Dogfood Workbench turns realistic workflows into repeatable eval cases. It h
 - Internal AGS Development Dogfood: safe documentation changes, release-note drafts, package deletion, npm publishing, pushing to main, external email draft-first behavior, authority-map edits, receipt deletion, rubber-stamped release approval, and runtime substitution.
 - Enterprise Financial Report Golden Path: high-sensitivity Q2 financial report draft generation, direct-send prevention, external-domain hard boundaries, financial source data mutation blocks, finance authority, meaningful participation, runtime substitution denial, receipts, and memory.
 - Content Publishing Dogfood Agent: safe drafts, approved blog publishing, overclaim prevention, consciousness/compliance language blocks, review bypass, external social publishing, tone drift, provenance mutation, stale approval reuse, runtime substitution, receipts, and memory.
+- Content Publishing Governance Hardening: AGS v1.6.0 public-claim cases for safe draft creation, unsupported public claims, external publish review, draft/publish boundary checks, runtime substitution, approval target mismatch, and tone/claim drift.
 
 The content agent borrows the author's public voice. AGS ensures borrowed voice does not become stolen voice.
 
@@ -197,7 +199,7 @@ Run it locally after build:
 node packages/cli/dist/cli.js dogfood
 ```
 
-See `docs/DOGFOOD_WORKBENCH.md`, `docs/CONTENT_PUBLISHING_DOGFOOD.md`, and `examples/dogfood`.
+See `docs/DOGFOOD_WORKBENCH.md`, `docs/CONTENT_PUBLISHING_DOGFOOD.md`, `docs/CONTENT_PUBLISHING_HARDENING.md`, and `examples/dogfood`.
 
 ## Red-Team Eval Pack
 
@@ -243,7 +245,7 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.6.0
+Current version: v1.6.1
 
 The core AGS spine is working:
 

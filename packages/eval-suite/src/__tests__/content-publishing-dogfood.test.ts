@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   builtInContentPublishingDogfoodEvalCases,
+  builtInContentPublishingHardeningEvalCases,
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
   runContentPublishingDogfoodEvalSuite,
@@ -81,7 +82,8 @@ describe("content publishing dogfood eval suite", () => {
     expect(result.total).toBe(
       builtInDogfoodEvalCases.length +
       builtInEnterpriseDogfoodEvalCases.length +
-      builtInContentPublishingDogfoodEvalCases.length
+      builtInContentPublishingDogfoodEvalCases.length +
+      builtInContentPublishingHardeningEvalCases.length
     );
   });
 });

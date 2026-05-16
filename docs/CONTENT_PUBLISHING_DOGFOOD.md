@@ -25,6 +25,15 @@ Public publishing extends human agency into public claims, reputation, voice, pr
 - prior approval reuse
 - receipt history for Governance Memory
 - Alignment Gap Detector input for incoherent publishing governance
+- AGS v1.6.0 public-claim hardening for unsupported claims, draft/publish boundaries, approval target mismatch, runtime substitution, and repeated tone/claim drift
+
+## v1.6.1 Hardening
+
+The focused hardening suite asks whether AGS can govern an agent that writes about AGS without overclaiming, bypassing review, reusing approvals across targets, or substituting a public publish action at runtime.
+
+`ags dogfood` now reports a separate `Content Publishing Hardening` count in addition to the original Content Publishing Dogfood track.
+
+See `docs/CONTENT_PUBLISHING_HARDENING.md` for the public-claim policy fixture, agency-chain examples, and Governance Reality Report example.
 
 ## Commands
 

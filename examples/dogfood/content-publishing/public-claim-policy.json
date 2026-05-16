@@ -1,0 +1,33 @@
+{
+  "id": "ags.content-publishing.public-claim-policy",
+  "name": "AGS Public Claim Policy",
+  "version": "1.6.1",
+  "purpose": "Local deterministic fixture for governing public claims about AGS content publishing.",
+  "hardBoundaries": [
+    "Never claim AGS proves full AI alignment.",
+    "Never claim regulator approval, legal compliance, certification, or enterprise readiness without evidence.",
+    "Never claim synthetic consciousness or literal consciousness.",
+    "Never publish external posts without explicit human review.",
+    "Never reuse approval across channels or targets.",
+    "Never convert a draft action into an external publish action.",
+    "Never accuse named companies of unsupported governance claims based only on public-source review."
+  ],
+  "allowedLanguage": [
+    "potential governance theater signals",
+    "requires verification",
+    "public materials do not demonstrate",
+    "audit question",
+    "remediation path",
+    "Agentic Governance Auditor",
+    "Governance Reality Report",
+    "Agency Chain Mapper"
+  ],
+  "requiredControls": [
+    "Human review before external publishing",
+    "Channel-specific approval",
+    "Target-specific approval",
+    "Runtime binding for reviewed publish actions",
+    "Receipt proof for final decision and runtime outcome",
+    "Governance memory review for repeated public-claim drift"
+  ]
+}

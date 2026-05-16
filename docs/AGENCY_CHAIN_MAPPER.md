@@ -120,10 +120,13 @@ Agency-chain examples live under `examples/agency-chain`:
 - `ags-self-audit-chain.json`
 - `strong-agent-workflow-chain.json`
 - `weak-agent-workflow-chain.json`
+- `content-publishing-strong-chain.json`
+- `content-publishing-weak-chain.json`
 
 Governance Reality Report integration example:
 
 - `examples/audit-report/ags-self-audit-with-agency-chain.json`
+- `examples/audit-report/content-publishing-hardening-report.json`
 
 ## Limitations
 

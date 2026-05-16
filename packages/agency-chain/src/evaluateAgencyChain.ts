@@ -208,6 +208,22 @@ function evaluateAgencyChainIssues(input: AgencyChainInput): AgencyChainIssue[] 
     });
   }
 
+  if (!hasLink(links, "approval_authority") && hasExecutionBoundary && !hasLink(links, "runtime_permit")) {
+    issues.push({
+      id: "AC-006",
+      title: "Execution Boundary Without Runtime Binding",
+      severity: "high",
+      confidence: "high",
+      linkType: "runtime_permit",
+      observation:
+        "The agency chain includes an execution boundary, but does not demonstrate a runtime permit binding the action to action, tool, target, authority, and time window.",
+      whyItMatters: "External or consequential execution can drift if the exact runtime action is not bound before execution.",
+      auditQuestion: "What runtime permit proves the action is authorized for this exact execution boundary?",
+      recommendedRemediation: "Add scoped, expiring runtime permits bound to action, tool, target, authority, and time window.",
+      taxonomyId: "TG-003"
+    });
+  }
+
   if (hasExecutionBoundary && !hasLink(links, "receipt")) {
     issues.push({
       id: "AC-007",

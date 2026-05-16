@@ -96,6 +96,17 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.6.1
+
+- Content Publishing Governance Hardening
+- Focused AGS v1.6.0 public-claim dogfood cases
+- Public claim policy fixture
+- Strong and weak agency-chain examples for content publishing
+- Governance Reality Report example for public-claim hardening
+- Dogfood summary includes Content Publishing Hardening
+
+## Recently Completed
+
 ### v1.6.0
 
 - Agency Chain Mapper
@@ -105,7 +116,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Agency-chain rendering inside Governance Reality Reports
 - Strong, weak, and AGS self-audit agency-chain examples
 
-## Recently Completed
 
 ### v1.5.1
 
@@ -152,15 +162,15 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Next
 
-### v1.6.0
+### v1.7.0
 
 - Dashboard MVP
 
-### v1.7.0
+### v1.8.0
 
 - Persistent Receipt Store
 
-### v1.8.0
+### v1.9.0
 
 - Approval Workflow UI / Human Review Console
 

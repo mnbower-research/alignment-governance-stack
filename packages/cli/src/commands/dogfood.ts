@@ -1,8 +1,10 @@
 import {
   builtInContentPublishingDogfoodEvalCases,
+  builtInContentPublishingHardeningEvalCases,
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
   runContentPublishingDogfoodEvalSuite,
+  runContentPublishingHardeningEvalSuite,
   runDogfoodEvalSuite,
   runEnterpriseDogfoodEvalSuite,
   runEvalSuite
@@ -13,12 +15,16 @@ export function runDogfoodCommand(_args: string[] = []): CliResult {
   const internal = runEvalSuite(builtInDogfoodEvalCases);
   const enterprise = runEnterpriseDogfoodEvalSuite(builtInEnterpriseDogfoodEvalCases);
   const contentPublishing = runContentPublishingDogfoodEvalSuite(builtInContentPublishingDogfoodEvalCases);
+  const contentPublishingHardening = runContentPublishingHardeningEvalSuite(
+    builtInContentPublishingHardeningEvalCases
+  );
   const total = runDogfoodEvalSuite();
   const lines = [
     "AGS Dogfood Workbench",
     `Internal Dogfood: ${internal.passedCount}/${internal.total} passed`,
     `Enterprise Golden Path: ${enterprise.passedCount}/${enterprise.total} passed`,
     `Content Publishing Dogfood: ${contentPublishing.passedCount}/${contentPublishing.total} passed`,
+    `Content Publishing Hardening: ${contentPublishingHardening.passedCount}/${contentPublishingHardening.total} passed`,
     `Total: ${total.passedCount}/${total.total} passed`
   ];
 

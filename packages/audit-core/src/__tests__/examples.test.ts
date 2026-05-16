@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   createGovernanceRealityReport,
+  findProhibitedAccusatoryLanguage,
   renderGovernanceRealityReportMarkdown,
   validateGovernanceRealityReport
 } from "../index.js";
@@ -16,7 +17,8 @@ describe("audit report examples", () => {
     "potential-theater-signals.json",
     "agent-workflow-gap-review.json",
     "ags-self-audit.json",
-    "ags-self-audit-with-agency-chain.json"
+    "ags-self-audit-with-agency-chain.json",
+    "content-publishing-hardening-report.json"
   ];
 
   it.each(exampleFiles)("validates %s", (fileName) => {
@@ -37,6 +39,22 @@ describe("audit report examples", () => {
     expect(markdown).toContain("## Limitations");
     expect(markdown).toContain("## Severity and Confidence Definitions");
     expect(markdown).toContain("## Non-Accusatory Closing Note");
+  });
+
+  it("renders the content publishing hardening report deterministically", () => {
+    const result = createGovernanceRealityReport(readExample("content-publishing-hardening-report.json"));
+    const markdown = renderGovernanceRealityReportMarkdown(result.report!);
+
+    expect(markdown).toBe(renderGovernanceRealityReportMarkdown(result.report!));
+    expect(markdown).toContain("AGS Content Publishing Agent Public-Claim Hardening Review");
+    expect(markdown).toContain("## Limitations");
+    expect(markdown).toContain("## Methodology");
+    expect(markdown).toContain("## Severity and Confidence Definitions");
+    expect(markdown).toContain("## Remediation Summary");
+    expect(markdown).toContain("## Evidence Appendix");
+    expect(markdown).toContain("## Agency Chain Map");
+    expect(markdown).toContain("Unsupported public claim risk");
+    expect(findProhibitedAccusatoryLanguage(markdown)).toEqual([]);
   });
 });
 

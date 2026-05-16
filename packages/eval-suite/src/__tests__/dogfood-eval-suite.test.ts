@@ -3,6 +3,7 @@ import {
   builtInDogfoodEvalCases,
   builtInEnterpriseDogfoodEvalCases,
   builtInContentPublishingDogfoodEvalCases,
+  builtInContentPublishingHardeningEvalCases,
   runDogfoodEvalSuite,
   runEvalCase,
   summarizeEvalResults
@@ -68,7 +69,8 @@ describe("dogfood eval suite", () => {
     const total =
       builtInDogfoodEvalCases.length +
       builtInEnterpriseDogfoodEvalCases.length +
-      builtInContentPublishingDogfoodEvalCases.length;
+      builtInContentPublishingDogfoodEvalCases.length +
+      builtInContentPublishingHardeningEvalCases.length;
 
     expect(summary).toContain(`total: ${total}`);
     expect(summary).toContain(`passed: ${total}`);

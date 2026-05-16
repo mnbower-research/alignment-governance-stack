@@ -27,7 +27,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.6.0 | Agency Chain Mapper | Delegated agency chain modeling, broken-link detection, and CLI summaries | Current |
+| v1.6.1 | Content Publishing Governance Hardening | Public-claim dogfood hardening, agency-chain examples, and audit report fixture | Current |
+| v1.6.0 | Agency Chain Mapper | Delegated agency chain modeling, broken-link detection, and CLI summaries | Complete |
 | v1.5.1 | Agentic Governance Auditor Report Hardening | Professional report sections, limitations, definitions, remediation mapping, and AGS self-audit | Complete |
 | v1.5.0 | Governance Reality Report Foundation | Professional audit reports, theater signal taxonomy, and local report CLI | Complete |
 | v1.4.0 | Content Publishing Dogfood Agent | Public voice, claims, provenance, and publishing eval proof | Complete |

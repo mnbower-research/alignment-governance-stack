@@ -12,6 +12,8 @@ v1.5.1 hardens the report so it reads like a professional auditor deliverable: i
 
 v1.6.0 adds Agency Chain Map support so reports can show where human authority, policy constraints, delegated agent action, runtime binding, execution boundary, receipts, and governance memory are demonstrated or require verification.
 
+v1.6.1 adds a content publishing hardening report fixture for AGS public-claim workflows. It summarizes unsupported public claim risk, external review requirements, target/channel approval mismatch, draft versus publish boundaries, runtime substitution, and tone/claim drift using the same non-accusatory report posture.
+
 ## Professional Posture
 
 The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:
@@ -127,6 +129,8 @@ Examples live in `examples/audit-report`:
 - `potential-theater-signals.json`
 - `agent-workflow-gap-review.json`
 - `ags-self-audit.json`
+- `ags-self-audit-with-agency-chain.json`
+- `content-publishing-hardening-report.json`
 
 Fixture summaries live in `evals/fixtures/audit-report`.
 

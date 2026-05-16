@@ -1,0 +1,112 @@
+{
+  "chainId": "agency-chain-content-publishing-strong",
+  "auditMode": "workflow_review",
+  "subject": {
+    "organizationName": "Alignment Governance Stack",
+    "systemName": "Content Publishing Agent",
+    "workflowName": "Reviewed AGS v1.6.0 public release note",
+    "auditScope": "Strong agency chain fixture for public content publishing about AGS v1.6.0."
+  },
+  "description": "Public publishing chain with human authority, policy boundaries, scoped tools, target-specific approval, runtime binding, receipts, and governance memory.",
+  "links": [
+    {
+      "id": "human-authority",
+      "type": "human_authority",
+      "label": "Founder/operator public-claim authority",
+      "status": "present",
+      "description": "Founder/operator owns public claims and can stop, refuse, revise, halt, or escalate publication.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-001", "type": "manual_note", "title": "Public claim authority note" }]
+    },
+    {
+      "id": "organizational-policy",
+      "type": "organizational_policy",
+      "label": "AGS public claim policy",
+      "status": "present",
+      "description": "Public claim policy constrains unsupported claims, external publishing, target reuse, and draft-to-publish conversion.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-002", "type": "policy", "title": "Public claim policy", "sourcePath": "examples/dogfood/content-publishing/public-claim-policy.json" }]
+    },
+    {
+      "id": "hard-boundary",
+      "type": "hard_boundary",
+      "label": "Public overclaim and external publish boundary",
+      "status": "present",
+      "description": "Hard boundaries prevent unsupported public claims and require review before external publish.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-003", "type": "policy", "title": "Public claim hard boundaries" }]
+    },
+    {
+      "id": "agent-role",
+      "type": "agent_role",
+      "label": "Content Publishing Agent",
+      "status": "present",
+      "description": "Agent role is scoped to draft release copy and prepare reviewed public release notes.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-004", "type": "manual_note", "title": "Agent role note" }]
+    },
+    {
+      "id": "tool-access",
+      "type": "tool_access",
+      "label": "Draft and reviewed release tools",
+      "status": "present",
+      "description": "Tool access is scoped to local draft creation and approved GitHub release publication.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-005", "type": "manual_note", "title": "Scoped tool access note" }]
+    },
+    {
+      "id": "proposed-action",
+      "type": "proposed_action",
+      "label": "Reviewed AGS v1.6.0 release note",
+      "status": "present",
+      "description": "Proposed action is a reviewed public release note for the exact GitHub release target.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-006", "type": "manual_note", "title": "Proposed action note" }],
+      "metadata": { "consequential": true }
+    },
+    {
+      "id": "approval-authority",
+      "type": "approval_authority",
+      "label": "Public claim reviewer",
+      "status": "present",
+      "description": "Reviewer can stop, refuse, revise, halt, or escalate public publication for the target channel.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-007", "type": "manual_note", "title": "Approval authority note" }]
+    },
+    {
+      "id": "human-participation",
+      "type": "human_participation",
+      "label": "Meaningful public-claim review",
+      "status": "present",
+      "description": "Reviewer receives claim context, channel scope, target scope, and alternatives before approval.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-008", "type": "manual_note", "title": "Human participation note" }]
+    },
+    {
+      "id": "runtime-permit",
+      "type": "runtime_permit",
+      "label": "Target-bound publish permit",
+      "status": "present",
+      "description": "Runtime permit binds action, tool, target, authority, and time window for the reviewed GitHub release note.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-009", "type": "runtime_result", "title": "Runtime permit note" }]
+    },
+    {
+      "id": "execution-boundary",
+      "type": "execution_boundary",
+      "label": "GitHub release publication boundary",
+      "status": "present",
+      "description": "Execution boundary is the approved GitHub release target only.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-010", "type": "runtime_result", "title": "Execution boundary note" }],
+      "metadata": { "consequential": true }
+    },
+    {
+      "id": "receipt",
+      "type": "receipt",
+      "label": "Publishing governance receipt",
+      "status": "present",
+      "description": "Receipt preserves proposal, review, permit, runtime result, and outcome.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-011", "type": "receipt", "title": "Publishing receipt note" }]
+    },
+    {
+      "id": "governance-memory",
+      "type": "governance_memory",
+      "label": "Public claim memory review",
+      "status": "present",
+      "description": "Governance memory reviews repeated tone, claim, and target drift with human approval before policy changes.",
+      "evidenceRefs": [{ "id": "EV-CP-AC-012", "type": "manual_note", "title": "Governance memory note" }]
+    }
+  ],
+  "metadata": { "recurringWorkflow": true }
+}

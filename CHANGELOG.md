@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.6.1 - Content Publishing Governance Hardening
+
+- Adds `contentPublishingHardeningEvalCases` and `runContentPublishingHardeningEvalSuite` for AGS v1.6.0 public-claim workflows.
+- Updates `ags dogfood` to include `Content Publishing Hardening: 8/8 passed`.
+- Adds a public-claim policy fixture for unsupported claims, review requirements, target/channel approval scope, draft/publish boundaries, and non-accusatory language.
+- Adds strong and weak content-publishing agency-chain examples.
+- Adds a Governance Reality Report example and fixture for content publishing hardening findings.
+- Tests runtime substitution, unsupported public claims, direct external publish without review, internal-draft laundering, approval reuse across targets, and tone/claim drift.
+- Keeps PGDL, AAG, Runtime Binding, receipts, policy profiles, authority map, agency-chain, audit-core, and governance-core runtime behavior unchanged except focused agency-chain detection coverage for execution boundaries without runtime permits.
+
 ## v1.6.0 - Agency Chain Mapper
 
 - Adds `@alignment-governance-stack/agency-chain` with typed agency-chain links, deterministic broken-link detection, status calculation, summaries, and audit finding adaptation.

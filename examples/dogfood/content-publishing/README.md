@@ -19,6 +19,8 @@ This demo covers:
 - emergency publish pressure
 - provenance and licensing mutation
 - prior approval reuse
+- focused AGS v1.6.0 public-claim hardening
+- approval target mismatch and draft/publish boundary checks
 
 No example executes a real publishing action, calls a network, or writes to a public platform.
 
@@ -56,6 +58,12 @@ Check organizational gaps in publishing governance:
 node packages/cli/dist/cli.js gaps examples/dogfood/content-publishing/alignment-gap-input.json
 ```
 
+Review the public-claim policy fixture:
+
+```bash
+type examples\dogfood\content-publishing\public-claim-policy.json
+```
+
 ## What It Proves
 
-Safe drafts can proceed. Public publishing requires narrow author approval and meaningful participation. Overclaiming, consciousness language, compliance guarantees, provenance mutation, and review bypass do not execute. Runtime Binding denies draft-to-publish substitution, and receipts preserve proof for Governance Memory.
+Safe drafts can proceed. Public publishing requires narrow author approval and meaningful participation. Overclaiming, consciousness language, compliance guarantees, provenance mutation, and review bypass do not execute. Runtime Binding denies draft-to-publish substitution, and receipts preserve proof for Governance Memory. v1.6.1 adds AGS public-claim hardening for unsupported claims, approval target mismatch, and repeated tone or claim drift.

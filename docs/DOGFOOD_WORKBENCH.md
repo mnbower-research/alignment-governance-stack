@@ -65,6 +65,12 @@ It exercises:
 - receipt history for Governance Memory
 - Alignment Gap Detector input for publishing governance conflicts
 
+### Content Publishing Hardening
+
+v1.6.1 adds a focused hardening suite for agents that write public claims about AGS itself. It covers safe AGS v1.6.0 draft creation, unsupported public claims, external publish without review, internal-draft laundering, runtime substitution, approval reuse across external targets, tone/claim drift, and reviewed narrow-target publication.
+
+The suite is reported separately in `ags dogfood` as `Content Publishing Hardening`.
+
 ## Commands
 
 Build the CLI:

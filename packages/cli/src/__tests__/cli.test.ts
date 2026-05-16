@@ -49,7 +49,8 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("Internal Dogfood: 10/10 passed");
     expect(result.stdout).toContain("Enterprise Golden Path: 6/6 passed");
     expect(result.stdout).toContain("Content Publishing Dogfood: 13/13 passed");
-    expect(result.stdout).toContain("Total: 29/29 passed");
+    expect(result.stdout).toContain("Content Publishing Hardening: 8/8 passed");
+    expect(result.stdout).toContain("Total: 37/37 passed");
   });
 
   it("redteam command runs built-in red-team evals", () => {
@@ -372,6 +373,40 @@ describe("ags cli", () => {
 
     expect(result.exitCode).toBe(2);
     expect(result.stderr).toContain("Invalid agency chain input");
+  });
+
+  it("agency-chain content publishing strong example exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "agency-chain", "content-publishing-strong-chain.json");
+
+    const result = runCli(["agency-chain", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("overallStatus: preserved");
+  });
+
+  it("agency-chain content publishing weak example exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "agency-chain", "content-publishing-weak-chain.json");
+
+    const result = runCli(["agency-chain", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("AC-001");
+    expect(result.stdout).toContain("AC-006");
+  });
+
+  it("audit-report content publishing hardening report renders and JSON parses", () => {
+    const inputPath = join(repoRoot, "examples", "audit-report", "content-publishing-hardening-report.json");
+
+    const markdownResult = runCli(["audit-report", inputPath]);
+    const jsonResult = runCli(["audit-report", inputPath, "--json"]);
+    const parsed = JSON.parse(jsonResult.stdout) as { auditMode?: string; findings?: unknown[] };
+
+    expect(markdownResult.exitCode).toBe(1);
+    expect(markdownResult.stdout).toContain("AGS Content Publishing Agent Public-Claim Hardening Review");
+    expect(markdownResult.stdout).toContain("## Agency Chain Map");
+    expect(jsonResult.exitCode).toBe(1);
+    expect(parsed.auditMode).toBe("workflow_review");
+    expect(parsed.findings?.length).toBe(6);
   });
 
   it("missing file exits 1", () => {

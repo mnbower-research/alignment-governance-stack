@@ -101,8 +101,11 @@ Output includes:
 - Internal Dogfood passed/total
 - Enterprise Golden Path passed/total
 - Content Publishing Dogfood passed/total
+- Content Publishing Hardening passed/total
 - combined passed/total
 - failed dogfood case IDs and reasons, when failures exist
+
+The hardening line covers AGS public-claim cases for unsupported claims, direct external publish without review, internal-draft laundering, runtime substitution, approval reuse across targets, and tone/claim drift.
 
 ### `ags redteam`
 
@@ -274,7 +277,7 @@ Integration examples that can also be checked with `ags govern` live under `exam
 
 Full-stack demo inputs live under `examples/demo/full-stack`.
 
-Dogfood workbench scenarios live under `examples/dogfood/scenarios`, `examples/dogfood/enterprise-golden-path/scenarios`, and `examples/dogfood/content-publishing/scenarios`. Red-team scenarios live under `examples/redteam/scenarios`.
+Dogfood workbench scenarios live under `examples/dogfood/scenarios`, `examples/dogfood/enterprise-golden-path/scenarios`, and `examples/dogfood/content-publishing/scenarios`. The public-claim policy fixture lives at `examples/dogfood/content-publishing/public-claim-policy.json`. Red-team scenarios live under `examples/redteam/scenarios`.
 
 Alignment Gap Detector examples live under `examples/alignment-gaps`.
 

@@ -1,0 +1,48 @@
+{
+  "chainId": "agency-chain-content-publishing-weak",
+  "auditMode": "workflow_review",
+  "subject": {
+    "organizationName": "Alignment Governance Stack",
+    "systemName": "Content Publishing Agent",
+    "workflowName": "Unreviewed AGS v1.6.0 public post",
+    "auditScope": "Weak agency chain fixture for public content publishing about AGS v1.6.0."
+  },
+  "description": "Weak public publishing chain where agent role, tool access, and external proposed action are present, but policy, approval, participation, runtime permit, and receipt proof are not demonstrated.",
+  "links": [
+    {
+      "id": "agent-role",
+      "type": "agent_role",
+      "label": "Content Publishing Agent",
+      "status": "present",
+      "description": "Agent role can draft and attempt public release text.",
+      "evidenceRefs": [{ "id": "EV-CP-WEAK-001", "type": "manual_note", "title": "Agent role note" }]
+    },
+    {
+      "id": "tool-access",
+      "type": "tool_access",
+      "label": "External publishing tools",
+      "status": "present",
+      "description": "Tool access includes public social or site publishing targets.",
+      "evidenceRefs": [{ "id": "EV-CP-WEAK-002", "type": "manual_note", "title": "Tool access note" }]
+    },
+    {
+      "id": "proposed-action",
+      "type": "proposed_action",
+      "label": "External AGS v1.6.0 announcement",
+      "status": "present",
+      "description": "Proposed action is an external public post about AGS v1.6.0.",
+      "evidenceRefs": [{ "id": "EV-CP-WEAK-003", "type": "manual_note", "title": "Proposed action note" }],
+      "metadata": { "consequential": true }
+    },
+    {
+      "id": "execution-boundary",
+      "type": "execution_boundary",
+      "label": "Public post execution",
+      "status": "present",
+      "description": "Execution boundary includes external public publishing.",
+      "evidenceRefs": [{ "id": "EV-CP-WEAK-004", "type": "manual_note", "title": "Execution boundary note" }],
+      "metadata": { "consequential": true }
+    }
+  ],
+  "metadata": { "recurringWorkflow": true }
+}
