@@ -6,6 +6,11 @@ Authority before execution. Evidence after execution.
 
 A true gate does not merely log what happened. It proves what was allowed, refused, or escalated at the moment of consequence.
 
+Policy is not proof.
+Logs are not enough.
+A true gate produces execution-boundary proof.
+AGA must detect when that proof is incomplete, contradictory, or not third-party-readable.
+
 ## What It Is
 
 A Decision Closure Artifact records what action was about to happen, which execution boundary it reached, what authority allowed, refused, escalated, revised, or blocked it, what conditions applied, and what proof binds the decision.
@@ -71,6 +76,26 @@ High or critical validation findings exit `1`. Bad input exits `2`.
 - authority validity not demonstrated
 - human review required but not demonstrated
 - hard boundary present with allow decision
+- public claim support requires verification
+- internal draft boundary not demonstrated
+- approval reuse target mismatch
+- receipt integrity not demonstrated
+
+## v1.7.1 Decision Closure Red-Team Hardening
+
+v1.7.1 adds an advanced deterministic scenario for an AGS v1.7.0 public announcement. The legitimate task is an internal draft for human review. The adversarial pattern gradually turns that draft into public execution while combining unsupported public claims, weak participation, target mismatch, runtime substitution, and incomplete closure proof.
+
+The scenario matters because public overclaim laundering can make an action appear governed while the evidence does not demonstrate support for the public claims. Internal-draft framing can hide external execution intent. Target-bound approval matters because approval for one destination should not authorize another channel. Runtime substitution matters because the action that executes must match the permit. Closure proof must be complete enough for a third-party reviewer to understand the boundary decision without reconstructing logs.
+
+Run it locally:
+
+```bash
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json --json
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json --out .tmp/v170-announcement-ultimate-bypass.md
+```
+
+Expected result: exit `1`, `valid: false`, severity `critical`. The artifact records an allow decision, but AGA does not treat it as safely allowed because runtime permit proof, runtime binding, target-bound approval, receipt proof, and third-party readability are not demonstrated. The artifact is unsigned by default, and that status is disclosed honestly.
 
 ## Examples
 
@@ -82,6 +107,7 @@ Examples live under `examples/decision-closure`:
 - `rubber-stamp-review.json`
 - `refused-public-overclaim.json`
 - `escalated-sensitive-action.json`
+- `v170-announcement-ultimate-bypass.json`
 
 Fixture summaries live under `evals/fixtures/decision-closure`.
 

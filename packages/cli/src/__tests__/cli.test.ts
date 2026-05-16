@@ -51,7 +51,8 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("Enterprise Golden Path: 6/6 passed");
     expect(result.stdout).toContain("Content Publishing Dogfood: 13/13 passed");
     expect(result.stdout).toContain("Content Publishing Hardening: 8/8 passed");
-    expect(result.stdout).toContain("Total: 37/37 passed");
+    expect(result.stdout).toContain("Decision Closure Hardening: 1/1 passed");
+    expect(result.stdout).toContain("Total: 38/38 passed");
   });
 
   it("redteam command runs built-in red-team evals", () => {
@@ -463,6 +464,34 @@ describe("ags cli", () => {
 
     expect(result.exitCode).toBe(1);
     expect(result.stdout).toContain("DCA-006");
+  });
+
+  it("closure ultimate bypass example exits 1 with critical findings", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "v170-announcement-ultimate-bypass.json");
+
+    const result = runCli(["closure", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("DCA-011");
+    expect(result.stdout).toContain("DCA-PUBLIC-OVERCLAIM");
+    expect(result.stdout).toContain("DCA-INTERNAL-DRAFT-LAUNDERING");
+  });
+
+  it("closure ultimate bypass --json is parseable and critical", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "v170-announcement-ultimate-bypass.json");
+
+    const result = runCli(["closure", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as {
+      artifact?: { decision?: { outcome?: string }; proof?: { canonicalHash?: string } };
+      validation?: { severity?: string; valid?: boolean; findings?: Array<{ id?: string }> };
+    };
+
+    expect(result.exitCode).toBe(1);
+    expect(parsed.artifact?.decision?.outcome).toBe("allow");
+    expect(parsed.artifact?.proof?.canonicalHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(parsed.validation?.valid).toBe(false);
+    expect(parsed.validation?.severity).toBe("critical");
+    expect(parsed.validation?.findings?.some((finding) => finding.id === "DCA-011")).toBe(true);
   });
 
   it("closure --json emits parseable artifact and validation", () => {

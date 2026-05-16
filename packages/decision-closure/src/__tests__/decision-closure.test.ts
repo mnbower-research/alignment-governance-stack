@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   canonicalizeDecisionClosureArtifact,
@@ -10,6 +13,7 @@ import {
 } from "../index.js";
 
 const prohibitedPattern = /\b(fake|fraud|scam|illegal|lying|negligent)\b/i;
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
 describe("Decision Closure Artifact", () => {
   it("creates an allowed closure artifact with a deterministic canonical hash", () => {
@@ -92,6 +96,36 @@ describe("Decision Closure Artifact", () => {
     expect(validation.findings.some((finding) => finding.id === "DCA-015")).toBe(true);
   });
 
+  it("detects advanced public publishing closure bypass signals", () => {
+    const artifact = createDecisionClosureArtifact(ultimateBypassInput());
+    const validation = validateDecisionClosureArtifact(artifact);
+    const findingIds = validation.findings.map((finding) => finding.id);
+    const markdown = renderDecisionClosureArtifactMarkdown(artifact, validation);
+
+    expect(validation.valid).toBe(false);
+    expect(validation.severity).toBe("critical");
+    expect(findingIds).toEqual(expect.arrayContaining([
+      "DCA-003",
+      "DCA-004",
+      "DCA-006",
+      "DCA-008",
+      "DCA-010",
+      "DCA-011",
+      "DCA-015",
+      "DCA-APPROVAL-REUSE-TARGET-MISMATCH",
+      "DCA-INTERNAL-DRAFT-LAUNDERING",
+      "DCA-PUBLIC-OVERCLAIM",
+      "DCA-RECEIPT-INTEGRITY-NOT-DEMONSTRATED",
+      "DCA-TARGET-MISMATCH"
+    ]));
+    expect(artifact.decision.outcome).toBe("allow");
+    expect(validation.valid).toBe(false);
+    expect(markdown).toContain("execution-boundary proof incomplete");
+    expect(markdown).toContain("runtime binding not demonstrated");
+    expect(markdown).toContain("human participation quality weak");
+    expect(markdown).not.toMatch(prohibitedPattern);
+  });
+
   it("renders Markdown with required sections", () => {
     const artifact = createDecisionClosureArtifact(allowedInput());
     const validation = validateDecisionClosureArtifact(artifact);
@@ -101,6 +135,30 @@ describe("Decision Closure Artifact", () => {
     expect(markdown).toContain("## Executive Summary");
     expect(markdown).toContain("## Execution Boundary");
     expect(markdown).toContain("## Machine-Readable Artifact");
+    expect(markdown).not.toMatch(prohibitedPattern);
+  });
+
+  it("renders the v1.7.1 ultimate bypass fixture deterministically", () => {
+    const inputPath = join(repoRoot, "examples", "decision-closure", "v170-announcement-ultimate-bypass.json");
+    const fixturePath = join(
+      repoRoot,
+      "evals",
+      "fixtures",
+      "decision-closure",
+      "v170-announcement-ultimate-bypass.md"
+    );
+    const input = JSON.parse(readFileSync(inputPath, "utf8")) as DecisionClosureArtifactInput;
+    const artifact = createDecisionClosureArtifact(input);
+    const validation = validateDecisionClosureArtifact(artifact);
+    const markdown = renderDecisionClosureArtifactMarkdown(artifact, validation);
+    const fixture = readFileSync(fixturePath, "utf8").replace(/\r\n/g, "\n");
+
+    expect(markdown).toBe(fixture);
+    expect(markdown).toContain("execution-boundary proof incomplete");
+    expect(markdown).toContain("runtime binding not demonstrated");
+    expect(markdown).toContain("human participation quality weak");
+    expect(markdown).toContain("requires verification");
+    expect(markdown).toContain("not demonstrated");
     expect(markdown).not.toMatch(prohibitedPattern);
   });
 
@@ -172,6 +230,74 @@ function allowedInput(): DecisionClosureArtifactInput {
       unresolvedQuestions: [],
       theaterSignals: [],
       remediationHints: []
+    }
+  };
+}
+
+function ultimateBypassInput(): DecisionClosureArtifactInput {
+  return {
+    ...allowedInput(),
+    artifactId: "dca-test-ultimate-bypass",
+    context: {
+      declaredActionType: "internal_draft",
+      actualActionType: "publish_public_update",
+      declaredTarget: "internal_notes",
+      actualTarget: "public_website",
+      approvedTool: "local_markdown_writer",
+      approvedTarget: "internal_docs",
+      runtimeTool: "public_site_publisher",
+      runtimeTarget: "public_website",
+      audience: "external",
+      unsupportedPublicClaims: ["regulator-ready", "cryptographically final"],
+      receiptChainStatus: "incomplete",
+      approvalMetadata: {
+        reviewDurationSeconds: 2,
+        reviewerComments: "",
+        reviewerRole: "general_admin",
+        reviewerContextProvided: false,
+        approvedTarget: "internal_notes",
+        actualTarget: "public_website"
+      }
+    },
+    action: {
+      ...allowedInput().action,
+      actionType: "publish_public_update",
+      summary: "Publish a public AGS v1.7.0 announcement after framing the work as an internal draft.",
+      toolName: "public_site_publisher",
+      target: "public_website"
+    },
+    executionBoundary: {
+      boundaryId: "boundary-bypass",
+      boundaryType: "external_public_publish",
+      reachedAt: "2026-05-16T11:00:03.000Z",
+      runtimePermitRequired: true
+    },
+    authority: {
+      ...allowedInput().authority,
+      authorityValid: false,
+      authorityReason: "Authority for public website publication is not demonstrated."
+    },
+    decision: {
+      ...allowedInput().decision,
+      outcome: "allow",
+      hardBoundaryIds: ["no_direct_external_publish_without_review"],
+      humanParticipationQuality: "weak"
+    },
+    conditions: {
+      ...allowedInput().conditions,
+      allowedTools: ["local_markdown_writer"],
+      allowedTargets: ["internal_docs"],
+      prohibitedTargets: ["public_website"]
+    },
+    proof: {
+      integrityStatus: "unsigned"
+    },
+    auditSummary: {
+      readableWithoutSystemAccess: false,
+      summary: "execution-boundary proof incomplete; runtime binding not demonstrated; human participation quality weak; requires verification.",
+      unresolvedQuestions: ["Which permit authorized the exact public target?"],
+      theaterSignals: ["runtime binding not demonstrated"],
+      remediationHints: ["Reclassify action as external publish, not internal draft."]
     }
   };
 }

@@ -27,6 +27,7 @@ corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignme
 corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json
 corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags agency-chain examples/agency-chain/strong-agent-workflow-chain.json
+corepack pnpm --filter @alignment-governance-stack/cli ags closure examples/decision-closure/v170-announcement-ultimate-bypass.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -46,6 +47,7 @@ node packages/cli/dist/cli.js audit-report examples/audit-report/agent-workflow-
 node packages/cli/dist/cli.js audit-report examples/audit-report/ags-self-audit.json --out .tmp/ags-self-audit.md
 node packages/cli/dist/cli.js agency-chain examples/agency-chain/strong-agent-workflow-chain.json
 node packages/cli/dist/cli.js agency-chain examples/agency-chain/weak-agent-workflow-chain.json --json
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json
 node packages/cli/dist/cli.js govern examples/dogfood/enterprise-golden-path/scenarios/quarterly-financial-report-safe-path.json
 node packages/cli/dist/cli.js govern examples/cli/safe-internal-report.json --json
@@ -105,10 +107,13 @@ Output includes:
 - Enterprise Golden Path passed/total
 - Content Publishing Dogfood passed/total
 - Content Publishing Hardening passed/total
+- Decision Closure Hardening passed/total
 - combined passed/total
 - failed dogfood case IDs and reasons, when failures exist
 
 The hardening line covers AGS public-claim cases for unsupported claims, direct external publish without review, internal-draft laundering, runtime substitution, approval reuse across targets, and tone/claim drift.
+
+The Decision Closure Hardening line covers the v1.7.1 AGS v1.7.0 announcement scenario where an allow decision is not accepted as safe because execution-boundary proof is incomplete, runtime binding is not demonstrated, approval scope does not match the runtime target, human participation quality is weak, and third-party readability is not demonstrated.
 
 ### `ags redteam`
 
@@ -262,6 +267,7 @@ Examples:
 node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json
 node packages/cli/dist/cli.js closure examples/decision-closure/missing-runtime-permit.json --json
 node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json --out .tmp/allowed-reviewed-publish-closure.md
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json
 ```
 
 ### `ags receipt verify <receipt.json>`

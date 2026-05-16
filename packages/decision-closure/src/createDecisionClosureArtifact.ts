@@ -21,6 +21,7 @@ export function createDecisionClosureArtifact(input: DecisionClosureArtifactInpu
     artifactVersion: "1.0",
     artifactId: input.artifactId,
     createdAt: input.createdAt,
+    ...(input.context !== undefined ? { context: input.context } : {}),
     action: input.action,
     executionBoundary: input.executionBoundary,
     authority: input.authority,
@@ -41,4 +42,3 @@ function inferIntegrityStatus(proof: Partial<DecisionClosureProof>): DecisionClo
 
   return "unsigned";
 }
-

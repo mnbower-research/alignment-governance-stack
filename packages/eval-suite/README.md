@@ -10,13 +10,15 @@ It also exposes the v1.1.0 Dogfood Workbench eval pack:
 - `builtInEnterpriseDogfoodEvalCases`
 - `builtInContentPublishingDogfoodEvalCases`
 - `builtInContentPublishingHardeningEvalCases`
+- `builtInDecisionClosureHardeningEvalCases`
 - `runDogfoodEvalSuite`
 - `runEnterpriseDogfoodEvalSuite`
 - `runContentPublishingDogfoodEvalSuite`
 - `runContentPublishingHardeningEvalSuite`
+- `runDecisionClosureHardeningEvalSuite`
 - `builtInRedTeamEvalCases`
 - `runRedTeamEvalSuite`
 
-Dogfood cases model realistic AGS development workflows, an Enterprise Financial Report Golden Path, a Content Publishing Dogfood Agent, and a focused Content Publishing Governance Hardening pack for AGS public-claim agents. Red-team cases model adversarial bypass attempts. None of these evals execute real actions.
+Dogfood cases model realistic AGS development workflows, an Enterprise Financial Report Golden Path, a Content Publishing Dogfood Agent, a focused Content Publishing Governance Hardening pack for AGS public-claim agents, and a Decision Closure Hardening case for incomplete execution-boundary proof. Red-team cases model adversarial bypass attempts. None of these evals execute real actions.
 
 This package does not add a dashboard, persistent history, database, provider integration, or network calls.

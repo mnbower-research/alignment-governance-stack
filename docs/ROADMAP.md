@@ -96,6 +96,15 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 
 ## Current
 
+### v1.7.1
+
+- Decision Closure Red-Team Hardening
+- Advanced AGS v1.7.0 public-announcement closure scenario
+- Detection for public overclaim laundering, internal-draft boundary mismatch, weak participation, target-bound approval mismatch, runtime substitution, incomplete receipt proof, and missing third-party readability
+- Dogfood summary includes Decision Closure Hardening
+
+## Recently Completed
+
 ### v1.7.0
 
 - Decision Closure Artifact
@@ -103,8 +112,6 @@ Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. 
 - Local `ags closure <input.json>` command
 - Closure validation findings for runtime permit, authority, receipt, hard boundary, target scope, and human review evidence
 - Decision closure examples and fixture summaries
-
-## Recently Completed
 
 ### v1.6.1
 

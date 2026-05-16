@@ -16,6 +16,8 @@ v1.6.1 adds a content publishing hardening report fixture for AGS public-claim w
 
 v1.7.0 adds Decision Closure Artifacts as execution-boundary proof objects. Governance Reality Reports can use closure artifacts as evidence that a specific action was allowed, refused, escalated, revised, approval-gated, or blocked at the moment of consequence.
 
+v1.7.1 adds a Decision Closure hardening scenario for public-announcement workflows. Governance Reality Reports can treat incomplete closure proof, unsupported public claims, target-bound approval mismatch, weak human participation, and missing third-party readability as evidence gaps requiring verification rather than as accusations.
+
 ## Professional Posture
 
 The Agentic Governance Auditor posture is to identify potential governance theater signals, evidence gaps, unsupported claims, and remediation paths. It does not accuse an organization, determine legal compliance, or certify a system. The report uses careful audit language:

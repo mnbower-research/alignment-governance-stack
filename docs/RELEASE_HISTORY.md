@@ -28,7 +28,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.7.0 | Decision Closure Artifact | Execution-boundary proof object, validation findings, canonical hash, and CLI rendering | Current |
+| v1.7.1 | Decision Closure Red-Team Hardening | Advanced closure proof failure scenario, required critical findings, and dogfood integration | Current |
+| v1.7.0 | Decision Closure Artifact | Execution-boundary proof object, validation findings, canonical hash, and CLI rendering | Complete |
 | v1.6.1 | Content Publishing Governance Hardening | Public-claim dogfood hardening, agency-chain examples, and audit report fixture | Complete |
 | v1.6.0 | Agency Chain Mapper | Delegated agency chain modeling, broken-link detection, and CLI summaries | Complete |
 | v1.5.1 | Agentic Governance Auditor Report Hardening | Professional report sections, limitations, definitions, remediation mapping, and AGS self-audit | Complete |

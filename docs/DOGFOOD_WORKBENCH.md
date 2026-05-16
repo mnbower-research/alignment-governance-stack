@@ -71,6 +71,12 @@ v1.6.1 adds a focused hardening suite for agents that write public claims about 
 
 The suite is reported separately in `ags dogfood` as `Content Publishing Hardening`.
 
+### Decision Closure Hardening
+
+v1.7.1 adds a focused Decision Closure hardening suite for an AGS v1.7.0 public announcement. The case combines public overclaim laundering, internal-draft framing that does not match external execution, weak human participation, approval reuse across targets, runtime substitution, incomplete receipt proof, and an allow decision with hard boundaries present.
+
+The suite is reported separately in `ags dogfood` as `Decision Closure Hardening`.
+
 ## Commands
 
 Build the CLI:
@@ -98,6 +104,7 @@ node packages/cli/dist/cli.js memory examples/dogfood/receipts/sample-dogfood-re
 node packages/cli/dist/cli.js memory examples/dogfood/enterprise-golden-path/receipts/sample-enterprise-receipt-history.json
 node packages/cli/dist/cli.js memory examples/dogfood/content-publishing/receipts/sample-content-publishing-receipt-history.json
 node packages/cli/dist/cli.js gaps examples/dogfood/content-publishing/alignment-gap-input.json
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json
 ```
 
 ## Boundaries

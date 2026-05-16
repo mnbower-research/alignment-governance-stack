@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.7.1 - Decision Closure Red-Team Hardening
+
+- Adds `examples/decision-closure/v170-announcement-ultimate-bypass.json`, an advanced deterministic public-announcement closure scenario.
+- Adds validation findings for public claim support requiring verification, internal-draft boundary mismatch, approval reuse target mismatch, target-bound approval gaps, and receipt integrity not demonstrated.
+- Adds `decisionClosureHardeningEvalCases` and `runDecisionClosureHardeningEvalSuite`.
+- Updates `ags dogfood` to include `Decision Closure Hardening: 1/1 passed`.
+- Adds deterministic fixture summary under `evals/fixtures/decision-closure/v170-announcement-ultimate-bypass.md`.
+- Documents the v1.7.1 framing: Policy is not proof. Logs are not enough. A true gate produces execution-boundary proof.
+- Keeps PGDL, AAG, Runtime Binding, receipts, policy profiles, authority map, audit-core, governance-core, and decision-closure runtime behavior additive and deterministic.
+
 ## v1.7.0 - Decision Closure Artifact
 
 - Adds `@alignment-governance-stack/decision-closure` with typed Decision Closure Artifact models, deterministic generation, validation, canonicalization, hashing, summaries, and Markdown rendering.

@@ -140,6 +140,9 @@ importers:
         specifier: workspace:*
         version: link:../receipts
     devDependencies:
+      '@types/node':
+        specifier: ^25.7.0
+        version: 25.7.0
       vite:
         specifier: ^8.0.12
         version: 8.0.12(@types/node@25.7.0)
@@ -152,6 +155,9 @@ importers:
       '@alignment-governance-stack/authority-map':
         specifier: workspace:*
         version: link:../authority-map
+      '@alignment-governance-stack/decision-closure':
+        specifier: workspace:*
+        version: link:../decision-closure
       '@alignment-governance-stack/governance-core':
         specifier: workspace:*
         version: link:../governance-core

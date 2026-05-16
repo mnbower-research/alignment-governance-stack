@@ -23,6 +23,7 @@
     "@alignment-governance-stack/receipts": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^25.7.0",
     "vite": "^8.0.12",
     "vitest": "^4.1.6"
   }

@@ -17,6 +17,7 @@ export interface DecisionClosureArtifact {
   artifactVersion: "1.0";
   artifactId: string;
   createdAt: string;
+  context?: DecisionClosureContext;
   action: DecisionClosureAction;
   executionBoundary: DecisionClosureExecutionBoundary;
   authority: DecisionClosureAuthority;
@@ -35,6 +36,32 @@ export interface DecisionClosureAction {
   proposedByAgentId?: string;
   sensitivity: DecisionClosureSensitivity;
   reversibility: DecisionClosureReversibility;
+}
+
+export interface DecisionClosureContext {
+  declaredActionType?: string;
+  actualActionType?: string;
+  declaredTarget?: string;
+  actualTarget?: string;
+  approvedTool?: string;
+  approvedTarget?: string;
+  runtimeTool?: string;
+  runtimeTarget?: string;
+  secondaryRuntimeTarget?: string;
+  channel?: string;
+  audience?: "internal" | "external" | "mixed" | "unknown";
+  unsupportedPublicClaims?: string[];
+  receiptChainStatus?: "complete" | "incomplete" | "unknown";
+  receiptReference?: string;
+  approvalMetadata?: {
+    reviewDurationSeconds?: number;
+    reviewerComments?: string;
+    reviewerRole?: string;
+    reviewerContextProvided?: boolean;
+    approvedTarget?: string;
+    actualTarget?: string;
+  };
+  metadata?: Record<string, unknown>;
 }
 
 export interface DecisionClosureExecutionBoundary {
@@ -114,4 +141,3 @@ export interface DecisionClosureValidationResult {
   severity: DecisionClosureFindingSeverity;
   findings: DecisionClosureValidationFinding[];
 }
-

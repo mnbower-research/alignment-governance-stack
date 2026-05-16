@@ -76,6 +76,7 @@ Integration Adapters
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
 - Content Publishing Governance Hardening for AGS public-claim agents, draft/publish boundaries, target-specific approvals, runtime substitution, and tone drift
+- Decision Closure Red-Team Hardening for adversarial public-announcement closure proof failures, including overclaim laundering, weak review, target mismatch, runtime substitution, and incomplete third-party-readable proof
 - Adversarial Red-Team Eval Pack for bypass, authority, runtime, receipt, and memory attacks
 
 ## Package Map
@@ -173,7 +174,10 @@ Authority before execution. Evidence after execution.
 node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json
 node packages/cli/dist/cli.js closure examples/decision-closure/missing-runtime-permit.json --json
 node packages/cli/dist/cli.js closure examples/decision-closure/allowed-reviewed-publish.json --out .tmp/allowed-reviewed-publish-closure.md
+node packages/cli/dist/cli.js closure examples/decision-closure/v170-announcement-ultimate-bypass.json
 ```
+
+v1.7.1 adds a deterministic Decision Closure hardening scenario for an AGS v1.7.0 announcement. It verifies that an apparent allow decision is not accepted as safe when public claims require verification, internal-draft framing does not match external execution, approval is reused across targets, runtime binding is not demonstrated, receipt proof is incomplete, and the artifact is not third-party-readable.
 
 See `docs/DECISION_CLOSURE_ARTIFACT.md` and `examples/decision-closure`.
 
@@ -203,12 +207,13 @@ See `docs/CLI.md` for command details and exit codes.
 
 ## Dogfood Workbench
 
-The Dogfood Workbench turns realistic workflows into repeatable eval cases. It has three tracks:
+The Dogfood Workbench turns realistic workflows into repeatable eval cases. It has five tracks:
 
 - Internal AGS Development Dogfood: safe documentation changes, release-note drafts, package deletion, npm publishing, pushing to main, external email draft-first behavior, authority-map edits, receipt deletion, rubber-stamped release approval, and runtime substitution.
 - Enterprise Financial Report Golden Path: high-sensitivity Q2 financial report draft generation, direct-send prevention, external-domain hard boundaries, financial source data mutation blocks, finance authority, meaningful participation, runtime substitution denial, receipts, and memory.
 - Content Publishing Dogfood Agent: safe drafts, approved blog publishing, overclaim prevention, consciousness/compliance language blocks, review bypass, external social publishing, tone drift, provenance mutation, stale approval reuse, runtime substitution, receipts, and memory.
 - Content Publishing Governance Hardening: AGS v1.6.0 public-claim cases for safe draft creation, unsupported public claims, external publish review, draft/publish boundary checks, runtime substitution, approval target mismatch, and tone/claim drift.
+- Decision Closure Hardening: AGS v1.7.0 public-announcement closure case for public overclaim laundering, weak participation, target-bound approval mismatch, runtime substitution, and incomplete proof.
 
 The content agent borrows the author's public voice. AGS ensures borrowed voice does not become stolen voice.
 
@@ -265,7 +270,7 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.7.0
+Current version: v1.7.1
 
 The core AGS spine is working:
 
