@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
 import { verifyGovernanceReceipt } from "@alignment-governance-stack/receipts";
+import { verifyAgencyFingerprint } from "@alignment-governance-stack/agency-fingerprint";
 import { evaluateGovernedRuntimeActionWithReceipt } from "../evaluateGovernedRuntimeActionWithReceipt.js";
 
 describe("runtime-bound governed flow with receipts", () => {
@@ -44,6 +45,48 @@ describe("runtime-bound governed flow with receipts", () => {
     expect(result.governance.finalDecision).toBe("execution_denied");
     expect(result.governance.runtimeBinding?.failures.length).toBeGreaterThan(0);
     expect(result.receipt.finalDecision).toBe("execution_denied");
+    expect(verifyGovernanceReceipt(result.receipt).valid).toBe(true);
+  });
+
+  it("can attach an agency fingerprint to receipt metadata", () => {
+    const proposal = createSafeReportProposal();
+
+    const result = evaluateGovernedRuntimeActionWithReceipt({
+      proposal,
+      runtimeAction: proposal,
+      permitOptions: {
+        issuedAt: "2026-05-12T10:00:00.000Z"
+      },
+      receiptOptions: {
+        createdAt: "2026-05-12T10:00:01.000Z",
+        metadata: {
+          source: "unit-test"
+        }
+      },
+      agencyFingerprintOptions: {
+        input: {
+          subjectHumanId: "human-founder-001",
+          subjectOrganizationId: "org-ags-labs",
+          delegatedBy: "human-founder-001",
+          agentId: "research-agent-1",
+          agentRole: "research",
+          workflowId: "workflow-weekly-report",
+          workflowScopeHash: "hash:workflow-weekly-report",
+          authorityMapHash: "hash:authority-map",
+          policyProfileHash: "hash:policy-profile",
+          timestamp: "2026-05-12T10:00:02.000Z"
+        }
+      }
+    });
+
+    expect(result.agencyFingerprint).toBeDefined();
+    expect(verifyAgencyFingerprint(result.agencyFingerprint!).valid).toBe(true);
+    expect(result.receipt.metadata).toMatchObject({
+      source: "unit-test",
+      agencyFingerprintId: result.agencyFingerprint?.fingerprintId,
+      agencyFingerprintHash: result.agencyFingerprint?.fingerprintHash
+    });
+    expect(result.agencyFingerprint?.runtimePermitHash).toBeDefined();
     expect(verifyGovernanceReceipt(result.receipt).valid).toBe(true);
   });
 

@@ -25,6 +25,10 @@ import type {
   HumanParticipationPolicy,
   HumanParticipationResult
 } from "@alignment-governance-stack/human-participation";
+import type {
+  AgencyFingerprint,
+  AgencyFingerprintInput
+} from "@alignment-governance-stack/agency-fingerprint";
 
 export type GovernanceFinalDecision =
   | "policy_invalid"
@@ -85,6 +89,9 @@ export interface EvaluateGovernedRuntimeActionWithReceiptInput extends EvaluateG
     previousReceiptHash?: string;
     metadata?: Record<string, unknown>;
   };
+  agencyFingerprintOptions?: {
+    input: GovernedRuntimeAgencyFingerprintInput;
+  };
 }
 
 export interface GovernanceRuntimePacket {
@@ -106,4 +113,31 @@ export interface GovernanceRuntimePacket {
 export interface GovernanceRuntimePacketWithReceipt {
   governance: GovernanceRuntimePacket;
   receipt: GovernanceReceipt;
+  agencyFingerprint?: AgencyFingerprint;
+}
+
+export type GovernedRuntimeAgencyFingerprintInput = Omit<
+  AgencyFingerprintInput,
+  | "actionHash"
+  | "timestamp"
+  | "environment"
+  | "pgdlPacketHash"
+  | "aagDecisionHash"
+  | "runtimePermitHash"
+> &
+  Partial<
+    Pick<
+      AgencyFingerprintInput,
+      | "actionHash"
+      | "timestamp"
+      | "environment"
+      | "pgdlPacketHash"
+      | "aagDecisionHash"
+      | "runtimePermitHash"
+    >
+  >;
+
+export interface CreateGovernanceAgencyFingerprintInput {
+  governance: GovernanceRuntimePacket;
+  fingerprintInput: GovernedRuntimeAgencyFingerprintInput;
 }

@@ -25,6 +25,7 @@ Integration Adapters
 -> AAG
 -> Runtime Binding
 -> Decision Closure Artifact
+-> Agency Fingerprint
 -> Receipt
 -> Governance Memory
 -> Agency Chain Mapper
@@ -46,6 +47,7 @@ Integration Adapters
 - AAG evaluates whether a proposed action should be allowed before execution.
 - Runtime Binding verifies the exact runtime action matches the permitted action.
 - Decision Closure Artifact binds the action, authority, decision, conditions, and proof at the execution boundary.
+- Agency Fingerprints bind delegated agent actions to the human or organizational authority chain under which they acted.
 - Receipts preserve tamper-evident proof of the governance path.
 - Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
 - Agency Chain Mapper identifies where human or organizational agency is preserved, weakened, bypassed, or not demonstrated across delegated workflows.
@@ -60,6 +62,7 @@ Integration Adapters
 - Governance Core orchestration
 - Runtime Binding exact-action permit validation
 - Decision Closure Artifact execution-boundary proof objects
+- Agency Fingerprints for deterministic accountability continuity across delegated AI actions
 - Tamper-evident governance receipts
 - Policy Profiles with deterministic policy resolution
 - Hard Boundary Policy Compiler for explicit `neverAutomate` rules
@@ -88,6 +91,7 @@ Integration Adapters
 - `@alignment-governance-stack/aag-core`: canonical Agent Action Gate integration.
 - `@alignment-governance-stack/runtime-binding`: exact-action permit creation and runtime validation.
 - `@alignment-governance-stack/decision-closure`: deterministic Decision Closure Artifact generation, validation, hashing, summaries, and Markdown rendering.
+- `@alignment-governance-stack/agency-fingerprint`: deterministic accountability fingerprints that bind delegated actions to authority chains, workflow scope, runtime permits, and receipt metadata.
 - `@alignment-governance-stack/governance-core`: orchestration for PGDL, optional policy resolution, optional authority validation, optional participation quality, AAG, Runtime Binding, and receipts.
 - `@alignment-governance-stack/receipts`: tamper-evident governance receipts and stable receipt hashing.
 - `@alignment-governance-stack/policy-profiles`: organization-specific governance rules, hard boundaries, and deterministic policy resolution.
@@ -260,6 +264,7 @@ corepack pnpm -r exec npm pack --dry-run
 - PGDL does not execute actions.
 - AAG does not mature proposals.
 - Runtime Binding does not decide wisdom or policy.
+- Agency Fingerprints do not perform biometric identity, surveillance, persistence, or moral-person attribution to agents.
 - Receipts do not execute or approve actions.
 - Governance Memory does not auto-update governance policy.
 - Governance Reality Reports do not make external accusations, certify compliance, execute actions, or collect customer data.
@@ -277,14 +282,14 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.8.0
+Current version: v1.9.0
 
-v1.8.0 adds governance continuity findings to the Governance Reality Report. It removes the standalone Alignment Maintenance Audit surface and preserves useful temporal checks as ordinary `AuditFinding`s inside the existing report flow.
+v1.9.0 adds Agency Fingerprints v0.1, a deterministic accountability-continuity primitive that binds delegated AI actions to human or organizational authority, workflow scope, runtime permits, and receipt metadata.
 
 The core AGS spine is working:
 
 ```text
-Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Evaluation Suite -> Developer CLI
+Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Agency Fingerprint -> Receipt -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

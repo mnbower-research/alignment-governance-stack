@@ -1,4 +1,5 @@
 import { createGovernanceReceipt } from "@alignment-governance-stack/receipts";
+import { createAgencyFingerprintForGovernedRuntimeAction } from "./createAgencyFingerprintForGovernedRuntimeAction.js";
 import { evaluateGovernedRuntimeAction } from "./evaluateGovernedRuntimeAction.js";
 import type {
   EvaluateGovernedRuntimeActionWithReceiptInput,
@@ -9,6 +10,21 @@ export function evaluateGovernedRuntimeActionWithReceipt(
   input: EvaluateGovernedRuntimeActionWithReceiptInput
 ): GovernanceRuntimePacketWithReceipt {
   const governance = evaluateGovernedRuntimeAction(input);
+  const agencyFingerprint =
+    input.agencyFingerprintOptions !== undefined
+      ? createAgencyFingerprintForGovernedRuntimeAction({
+          governance,
+          fingerprintInput: input.agencyFingerprintOptions.input
+        })
+      : undefined;
+  const receiptMetadata =
+    agencyFingerprint !== undefined
+      ? {
+          ...input.receiptOptions?.metadata,
+          agencyFingerprintId: agencyFingerprint.fingerprintId,
+          agencyFingerprintHash: agencyFingerprint.fingerprintHash
+        }
+      : input.receiptOptions?.metadata;
   const receipt = createGovernanceReceipt({
     governancePacket: governance,
     ...(input.receiptOptions?.id !== undefined ? { id: input.receiptOptions.id } : {}),
@@ -16,11 +32,12 @@ export function evaluateGovernedRuntimeActionWithReceipt(
     ...(input.receiptOptions?.previousReceiptHash !== undefined
       ? { previousReceiptHash: input.receiptOptions.previousReceiptHash }
       : {}),
-    ...(input.receiptOptions?.metadata !== undefined ? { metadata: input.receiptOptions.metadata } : {})
+    ...(receiptMetadata !== undefined ? { metadata: receiptMetadata } : {})
   });
 
   return {
     governance,
-    receipt
+    receipt,
+    ...(agencyFingerprint !== undefined ? { agencyFingerprint } : {})
   };
 }

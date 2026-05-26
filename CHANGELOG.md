@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.9.0 - Agency Fingerprints
+
+Release date: 2026-05-26
+
+Adds Agency Fingerprints v0.1, a deterministic accountability-continuity primitive for delegated AI actions.
+
+Highlights:
+- New `@alignment-governance-stack/agency-fingerprint` package.
+- Deterministic fingerprint creation, verification, linking, and chain validation.
+- Fingerprints bind delegated action to human or organizational authority, agent identity, workflow scope, policy profile, authority map, PGDL/AAG artifacts, runtime permits, and receipts.
+- Governance-core can optionally create fingerprints during governed runtime evaluation and write `agencyFingerprintId` / `agencyFingerprintHash` into receipt metadata.
+- Added advisory validation for incomplete authority chains, including permit-without-AAG, approval-without-authority-map, and workflow-without-scope.
+- Added documentation and example usage.
+
+Principle:
+Agents borrow authority. Fingerprints preserve the chain.
+
+Boundary:
+Agency Fingerprints are not biometric identity, surveillance, legal certification, or proof that an action was good. They preserve the delegated authority chain and action identity for review.
+
 ## v1.7.2 - Content Publishing Depth Hardening
 
 - Adds `contentPublishingDepthHardeningEvalCases` with 30 deterministic content-publishing variants.
