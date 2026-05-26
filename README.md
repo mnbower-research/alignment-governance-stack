@@ -25,11 +25,12 @@ Integration Adapters
 -> AAG
 -> Runtime Binding
 -> Decision Closure Artifact
--> Agency Fingerprint
 -> Receipt
+-> Agency Fingerprint
 -> Governance Memory
 -> Agency Chain Mapper
 -> Governance Reality Reports / Audit Core
+-> Structural Babel Detection
 -> Evaluation Suite
 -> Developer CLI
 ```
@@ -52,6 +53,7 @@ Integration Adapters
 - Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
 - Agency Chain Mapper identifies where human or organizational agency is preserved, weakened, bypassed, or not demonstrated across delegated workflows.
 - Governance Reality Reports turn AGS outputs into professional audit findings, evidence-gap summaries, and remediation plans.
+- Structural Babel Detection audits whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
 - Evaluation Suite runs deterministic cross-stack scenarios.
 - Developer CLI runs local eval, governance, and receipt checks.
 
@@ -76,6 +78,7 @@ Integration Adapters
 - Governance Memory receipt-history analysis with human-reviewable recommendations
 - Agency Chain Mapper for human authority, delegation, runtime binding, execution boundary, receipt, and memory chain review
 - Governance Reality Report foundation and report hardening for professional audit outputs that identify potential governance theater signals, evidence gaps, severity/confidence posture, and remediation paths without making external accusations
+- Structural Babel Detection for auditing whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof
 - Optional continuity checks inside Governance Reality Reports for asking whether governance remained coherent over time across receipts, decisions, approvals, authority, policy, and scope evidence
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
@@ -99,6 +102,7 @@ Integration Adapters
 - `@alignment-governance-stack/human-participation`: deterministic evaluation of meaningful participation and likely rubber-stamping.
 - `@alignment-governance-stack/agency-chain`: deterministic agency-chain mapping, broken-link detection, summaries, and audit finding adaptation.
 - `@alignment-governance-stack/audit-core`: deterministic taxonomy, finding schemas, report model, Markdown renderer, validators, lightweight adapters for Governance Reality Reports, and optional continuity findings.
+- `@alignment-governance-stack/babel-risk`: deterministic Structural Babel Detection, Babel Risk Reports, scoring, Markdown rendering, and signal-based structural ascent findings.
 - `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
 - `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs, plus Alignment Gap Detector diagnostics.
 - `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
@@ -172,6 +176,18 @@ node packages/cli/dist/cli.js agency-chain examples/agency-chain/weak-agent-work
 
 See `docs/AGENCY_CHAIN_MAPPER.md` and `examples/agency-chain`.
 
+## Structural Babel Detection
+
+Structural Babel Detection asks whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof. It does not block actions; it produces human-reviewable Babel Risk Reports.
+
+```bash
+node packages/cli/dist/cli.js babel-risk examples/babel-risk/high-babel-risk.json
+node packages/cli/dist/cli.js babel-risk examples/babel-risk/high-babel-risk.json --json
+node packages/cli/dist/cli.js babel-risk examples/babel-risk/high-babel-risk.json --out .tmp/babel-risk-report.md
+```
+
+See `docs/STRUCTURAL_BABEL_DETECTION.md` and `examples/babel-risk`.
+
 ## Decision Closure Artifact
 
 Decision Closure Artifact is the execution-boundary proof object. It does not replace logs, receipts, runtime binding, or audit reports. It binds their most important facts into one third-party-readable artifact.
@@ -208,6 +224,9 @@ corepack pnpm --filter @alignment-governance-stack/cli ags redteam
 corepack pnpm --filter @alignment-governance-stack/cli ags gaps examples/alignment-gaps/conflicting-financial-governance.json
 corepack pnpm --filter @alignment-governance-stack/cli ags audit-report examples/audit-report/potential-theater-signals.json
 corepack pnpm --filter @alignment-governance-stack/cli ags agency-chain examples/agency-chain/strong-agent-workflow-chain.json
+corepack pnpm --filter @alignment-governance-stack/cli ags babel-risk examples/babel-risk/high-babel-risk.json
+corepack pnpm --filter @alignment-governance-stack/cli ags babel-risk examples/babel-risk/high-babel-risk.json --json
+corepack pnpm --filter @alignment-governance-stack/cli ags babel-risk examples/babel-risk/high-babel-risk.json --out .tmp/babel-risk-report.md
 corepack pnpm --filter @alignment-governance-stack/cli ags closure examples/decision-closure/allowed-reviewed-publish.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -268,6 +287,7 @@ corepack pnpm -r exec npm pack --dry-run
 - Receipts do not execute or approve actions.
 - Governance Memory does not auto-update governance policy.
 - Governance Reality Reports do not make external accusations, certify compliance, execute actions, or collect customer data.
+- Structural Babel Detection does not approve, block, execute actions, make religious claims as software output, certify compliance, assign moral blame, or mutate governance inputs.
 - Agency Chain Mapper does not determine moral responsibility, legal compliance, or blame.
 - Decision Closure Artifact does not replace receipts, verify signatures by default, or claim legal compliance.
 - Integration Adapters do not execute actions or host a service.
@@ -282,14 +302,14 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.9.0
+Current version: v1.10.0
 
-v1.9.0 adds Agency Fingerprints v0.1, a deterministic accountability-continuity primitive that binds delegated AI actions to human or organizational authority, workflow scope, runtime permits, and receipt metadata.
+v1.10.0 adds Structural Babel Detection v0.1, a deterministic audit layer for identifying whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
 
 The core AGS spine is working:
 
 ```text
-Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Agency Fingerprint -> Receipt -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Evaluation Suite -> Developer CLI
+Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Agency Fingerprint -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Structural Babel Detection -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

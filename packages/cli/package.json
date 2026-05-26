@@ -27,6 +27,7 @@
   "dependencies": {
     "@alignment-governance-stack/agency-chain": "workspace:*",
     "@alignment-governance-stack/audit-core": "workspace:*",
+    "@alignment-governance-stack/babel-risk": "workspace:*",
     "@alignment-governance-stack/company-profile-generator": "workspace:*",
     "@alignment-governance-stack/decision-closure": "workspace:*",
     "@alignment-governance-stack/eval-suite": "workspace:*",

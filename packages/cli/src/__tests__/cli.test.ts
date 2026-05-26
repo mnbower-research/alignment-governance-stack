@@ -30,6 +30,7 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("ags memory <receipts.json>");
     expect(result.stdout).toContain("ags audit-report <input.json>");
     expect(result.stdout).toContain("ags agency-chain <input.json>");
+    expect(result.stdout).toContain("ags babel-risk <input.json>");
     expect(result.stdout).toContain("ags closure <input.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
   });
@@ -395,6 +396,55 @@ describe("ags cli", () => {
     expect(result.exitCode).toBe(1);
     expect(result.stdout).toContain("AC-001");
     expect(result.stdout).toContain("AC-006");
+  });
+
+  it("babel-risk healthy example exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "babel-risk", "healthy-anti-babel-structure.json");
+
+    const result = runCli(["babel-risk", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("# Structural Babel Risk Report");
+    expect(result.stdout).toContain("Overall risk: low");
+  });
+
+  it("babel-risk high example exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "babel-risk", "high-babel-risk.json");
+
+    const result = runCli(["babel-risk", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("Capability may be outrunning discernment");
+    expect(result.stdout).toContain("Centralized control");
+  });
+
+  it("babel-risk --json emits parseable report", () => {
+    const inputPath = join(repoRoot, "examples", "babel-risk", "high-babel-risk.json");
+
+    const result = runCli(["babel-risk", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as {
+      version?: string;
+      overallRisk?: string;
+      findings?: Array<{ category?: string }>;
+    };
+
+    expect(result.exitCode).toBe(1);
+    expect(parsed.version).toBe("babel-risk/v0.1");
+    expect(parsed.overallRisk).toBe("critical");
+    expect(parsed.findings?.some((finding) => finding.category === "governance_theater")).toBe(true);
+  });
+
+  it("babel-risk --out writes Markdown file", () => {
+    const tempDir = mkdtempSync(join(tmpdir(), "ags-cli-"));
+    tempDirs.push(tempDir);
+    const inputPath = join(repoRoot, "examples", "babel-risk", "basic-babel-risk.json");
+    const outPath = join(tempDir, "babel-risk-report.md");
+
+    const result = runCli(["babel-risk", inputPath, "--out", outPath]);
+
+    expect(result.stdout).toBe("");
+    expect(existsSync(outPath)).toBe(true);
+    expect(readFileSync(outPath, "utf8")).toContain("# Structural Babel Risk Report");
   });
 
   it("audit-report content publishing hardening report renders and JSON parses", () => {

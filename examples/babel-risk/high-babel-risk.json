@@ -1,0 +1,185 @@
+{
+  "systemId": "rapid-agent-ops-platform",
+  "organizationId": "org-example",
+  "workflowId": "cross-department-automation",
+  "assessmentWindow": {
+    "from": "2026-04-01T00:00:00.000Z",
+    "to": "2026-05-26T23:59:59.000Z"
+  },
+  "capabilitySignals": [
+    {
+      "id": "cap-001",
+      "kind": "agent_count",
+      "severity": "high",
+      "description": "Agent count expanded rapidly across operational workflows.",
+      "value": 24,
+      "evidenceRefs": ["agent-inventory-may"]
+    },
+    {
+      "id": "cap-002",
+      "kind": "tool_access",
+      "severity": "critical",
+      "description": "Agents have access to production-impacting tools across departments.",
+      "evidenceRefs": ["tool-access-review"]
+    },
+    {
+      "id": "cap-003",
+      "kind": "execution_speed",
+      "severity": "high",
+      "description": "Automated execution speed increased before review capacity was expanded.",
+      "evidenceRefs": ["ops-throughput-chart"]
+    }
+  ],
+  "coordinationSignals": [
+    {
+      "id": "coord-001",
+      "kind": "multi_agent_coordination",
+      "severity": "high",
+      "description": "Multiple agents coordinate handoffs across finance, support, and publishing.",
+      "evidenceRefs": ["multi-agent-map"]
+    },
+    {
+      "id": "coord-002",
+      "kind": "centralized_control_plane",
+      "severity": "critical",
+      "description": "A central orchestration layer controls execution across workflows.",
+      "evidenceRefs": ["control-plane-diagram"]
+    },
+    {
+      "id": "coord-003",
+      "kind": "shared_language_without_shared_meaning",
+      "severity": "high",
+      "description": "Teams use shared safety terms without shared operational definitions.",
+      "evidenceRefs": ["policy-language-review"]
+    },
+    {
+      "id": "coord-004",
+      "kind": "dependency_on_single_platform",
+      "severity": "high",
+      "description": "Reviewers rely on one platform summary and rarely inspect source artifacts.",
+      "evidenceRefs": ["review-workflow-study"]
+    }
+  ],
+  "authoritySignals": [
+    {
+      "id": "auth-001",
+      "kind": "unclear_owner",
+      "severity": "high",
+      "description": "No single owner is accountable for cross-workflow outcomes.",
+      "evidenceRefs": ["ownership-gap-review"]
+    },
+    {
+      "id": "auth-002",
+      "kind": "missing_stop_authority",
+      "severity": "critical",
+      "description": "Stop authority is not defined for the central control plane.",
+      "evidenceRefs": ["approval-policy-review"]
+    },
+    {
+      "id": "auth-003",
+      "kind": "delegation_without_map",
+      "severity": "high",
+      "description": "Delegation occurs before authority maps are updated.",
+      "evidenceRefs": ["delegation-record-sample"]
+    }
+  ],
+  "participationSignals": [
+    {
+      "id": "part-001",
+      "kind": "rubber_stamp_pattern",
+      "severity": "high",
+      "description": "Approvals frequently repeat the same short phrase.",
+      "evidenceRefs": ["approval-sample"]
+    },
+    {
+      "id": "part-002",
+      "kind": "human_near_loop",
+      "severity": "critical",
+      "description": "Humans are notified near execution but do not pause or refuse actions.",
+      "evidenceRefs": ["notification-log-sample"]
+    },
+    {
+      "id": "part-003",
+      "kind": "overload_pressure",
+      "severity": "high",
+      "description": "Review volume exceeds reviewer capacity.",
+      "evidenceRefs": ["reviewer-load-report"]
+    }
+  ],
+  "proofSignals": [
+    {
+      "id": "proof-001",
+      "kind": "missing_receipt",
+      "severity": "high",
+      "description": "Some production-impacting actions do not have receipts.",
+      "evidenceRefs": ["receipt-gap-sample"]
+    },
+    {
+      "id": "proof-002",
+      "kind": "unverified_runtime_binding",
+      "severity": "critical",
+      "description": "Receipts exist for some actions but runtime binding is not demonstrated.",
+      "evidenceRefs": ["runtime-proof-gap"]
+    }
+  ],
+  "memorySignals": [
+    {
+      "id": "memory-001",
+      "kind": "recommendation_without_human_approval",
+      "severity": "high",
+      "description": "Governance memory recommendations are promoted before human approval.",
+      "evidenceRefs": ["memory-recommendation-log"]
+    }
+  ],
+  "agencyChainSignals": [
+    {
+      "id": "chain-001",
+      "kind": "broken_authority_chain",
+      "severity": "critical",
+      "description": "Agency Chain Mapper shows broken authority links.",
+      "evidenceRefs": ["agency-chain-review"]
+    }
+  ],
+  "fingerprintSignals": [
+    {
+      "id": "fingerprint-001",
+      "kind": "missing_fingerprint",
+      "severity": "high",
+      "description": "Several governed actions do not have Agency Fingerprints.",
+      "evidenceRefs": ["fingerprint-gap-review"]
+    },
+    {
+      "id": "fingerprint-002",
+      "kind": "permit_unlinked",
+      "severity": "high",
+      "description": "Some runtime permits are not linked to agencyFingerprintHash metadata.",
+      "evidenceRefs": ["permit-link-review"]
+    }
+  ],
+  "governanceReportSignals": [
+    {
+      "id": "report-001",
+      "kind": "repeated_governance_theater_finding",
+      "severity": "high",
+      "description": "Governance Reality Reports repeatedly identify artifact-without-boundary-proof patterns.",
+      "evidenceRefs": ["governance-report-history"]
+    },
+    {
+      "id": "report-002",
+      "kind": "self_audit_circularity",
+      "severity": "high",
+      "description": "The only validation evidence is an internal self-audit.",
+      "evidenceRefs": ["self-audit-disclosure"]
+    },
+    {
+      "id": "report-003",
+      "kind": "third_party_review_missing",
+      "severity": "medium",
+      "description": "No external review is demonstrated for high-impact contexts.",
+      "evidenceRefs": ["review-plan-gap"]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z"
+  }
+}

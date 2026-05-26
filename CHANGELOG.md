@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.10.0 - Structural Babel Detection
+
+Adds Structural Babel Detection v0.1, a deterministic audit layer for identifying whether a delegated AI system is becoming Babel-shaped even when individual actions appear governed.
+
+Highlights:
+- New `@alignment-governance-stack/babel-risk` package.
+- Deterministic Babel Risk Reports with transparent scoring, findings, summaries, remediation, and Markdown rendering.
+- New signal model for capability, coordination, authority, participation, proof, memory, agency-chain, fingerprint, and governance-report evidence.
+- Detects structural risk patterns where capability and coordination scale faster than agency, discernment, authority clarity, accountability, and proof.
+- Covers capability outrunning discernment, coordination outrunning authority, language outrunning meaning, automation outrunning participation, memory outrunning review, proof outrunning reality, governance theater, dependency capture, self-audit circularity, and centralized control without accountability.
+- Added CLI command: `ags babel-risk <input.json> [--out report.md] [--json]`.
+- Added example inputs for healthy, mixed, and high-risk structures.
+- Added documentation for Structural Babel Detection and its relationship to AGS anti-Babel infrastructure.
+
+Principle:
+Babel risk is structural, not merely behavioral.
+
+Boundary:
+Structural Babel Detection does not approve, block, or execute actions. It does not make religious claims as software output, legal conclusions, moral accusations, compliance certifications, or production-readiness guarantees. It produces human-reviewable audit findings.
+
 ## v1.9.0 - Agency Fingerprints
 
 Release date: 2026-05-26

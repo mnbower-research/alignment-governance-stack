@@ -1,0 +1,57 @@
+{
+  "systemId": "ags-mixed-content-workflow",
+  "organizationId": "org-example",
+  "workflowId": "content-draft-and-review",
+  "assessmentWindow": {
+    "from": "2026-05-15T00:00:00.000Z",
+    "to": "2026-05-26T23:59:59.000Z"
+  },
+  "capabilitySignals": [
+    {
+      "id": "cap-001",
+      "kind": "scope_expansion",
+      "severity": "medium",
+      "description": "The agent now drafts for two external channels instead of one.",
+      "evidenceRefs": ["workflow-change-2026-05-20"]
+    }
+  ],
+  "coordinationSignals": [
+    {
+      "id": "coord-001",
+      "kind": "handoff_complexity",
+      "severity": "medium",
+      "description": "Draft, review, approval, and publishing handoffs cross three teams.",
+      "evidenceRefs": ["handoff-map-v2"]
+    }
+  ],
+  "authoritySignals": [
+    {
+      "id": "auth-001",
+      "kind": "approval_scope_ambiguous",
+      "severity": "medium",
+      "description": "Approval is clear for blog drafts but ambiguous for social reposts.",
+      "evidenceRefs": ["authority-map-gap-001"]
+    }
+  ],
+  "proofSignals": [
+    {
+      "id": "proof-001",
+      "kind": "weak_decision_closure",
+      "severity": "low",
+      "description": "Decision Closure exists but does not cite every source artifact.",
+      "evidenceRefs": ["closure-review-001"]
+    }
+  ],
+  "fingerprintSignals": [
+    {
+      "id": "fingerprint-001",
+      "kind": "receipt_unlinked",
+      "severity": "medium",
+      "description": "Some older receipts do not include agencyFingerprintId metadata.",
+      "evidenceRefs": ["receipt-sample-legacy"]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z"
+  }
+}

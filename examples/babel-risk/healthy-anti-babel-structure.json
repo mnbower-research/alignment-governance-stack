@@ -1,0 +1,21 @@
+{
+  "systemId": "ags-reviewed-release-system",
+  "organizationId": "org-human-agency-labs",
+  "workflowId": "reviewed-release-workflow",
+  "assessmentWindow": {
+    "from": "2026-05-01T00:00:00.000Z",
+    "to": "2026-05-26T23:59:59.000Z"
+  },
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z",
+    "positiveEvidence": [
+      "Authority map identifies release owner and stop authority.",
+      "Human participation records include context, rationale, and refusal power.",
+      "PGDL and AAG packets are preserved for governed proposals.",
+      "Runtime Binding validates exact permitted execution.",
+      "Decision Closure and receipts preserve proof at the consequence boundary.",
+      "Agency Fingerprints link delegated action to the authority chain.",
+      "Governance Memory recommendations are reviewed by humans before policy changes."
+    ]
+  }
+}
