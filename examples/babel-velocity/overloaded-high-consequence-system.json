@@ -1,0 +1,34 @@
+{
+  "systemId": "high-consequence-agent-ops",
+  "organizationId": "org-example",
+  "workflowId": "sensitive-ops",
+  "windows": [
+    {
+      "id": "current",
+      "from": "2026-05-01T00:00:00.000Z",
+      "to": "2026-05-02T00:00:00.000Z",
+      "decisionEvents": [
+        { "id": "d-001", "timestamp": "2026-05-01T09:00:00.000Z", "kind": "financial", "consequenceLevel": "critical", "evidenceRefs": ["finance-action"] },
+        { "id": "d-002", "timestamp": "2026-05-01T10:00:00.000Z", "kind": "permission_change", "consequenceLevel": "high", "evidenceRefs": ["permission-action"] }
+      ],
+      "closureEvents": [
+        { "id": "c-001", "timestamp": "2026-05-01T20:00:00.000Z", "kind": "approval", "participationQuality": "weak", "closureStatus": "partially_closed", "relatedDecisionIds": ["d-001"], "authorityValid": false, "beforeCommitment": false, "refusalPowerDemonstrated": false, "contextSufficient": false, "scopeMatched": false, "evidenceRefs": ["late-approval"] }
+      ],
+      "capacitySignals": [
+        { "id": "cap-001", "kind": "reviewer_bandwidth", "capacityLevel": "weak", "evidenceRefs": ["capacity-gap"] }
+      ],
+      "remediationEvents": [
+        { "id": "rem-001", "openedAt": "2026-05-01T12:00:00.000Z", "severity": "critical", "status": "open", "evidenceRefs": ["open-remediation"] }
+      ],
+      "proofEvents": [
+        { "id": "proof-001", "timestamp": "2026-05-01T21:00:00.000Z", "hasReceipt": true, "hasRuntimeBinding": false, "hasDecisionClosure": false, "hasAgencyFingerprint": false, "hasAuthorityEvidence": false, "completeness": "weak", "evidenceRefs": ["weak-proof"] }
+      ],
+      "authorityCoverageEvents": [
+        { "id": "authority-001", "timestamp": "2026-05-01T21:00:00.000Z", "coverage": "weak", "missingAuthority": true, "ambiguousAuthority": true, "evidenceRefs": ["authority-gap"] }
+      ]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z"
+  }
+}

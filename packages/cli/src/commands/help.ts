@@ -18,6 +18,7 @@ export function runHelpCommand(): CliResult {
       "  ags audit-report <input.json> [--out report.md] [--json]",
       "  ags agency-chain <input.json> [--json]",
       "  ags babel-risk <input.json> [--out report.md] [--json]",
+      "  ags babel-velocity <input.json> [--out report.md] [--json]",
       "  ags closure <input.json> [--out closure.md] [--json]",
       "  ags receipt verify <receipt.json>",
       "  ags receipt hash <receipt.json>",

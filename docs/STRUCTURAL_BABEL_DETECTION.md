@@ -25,6 +25,8 @@ human participation, source alignment, refusal capacity, accountability, and pro
 
 Anti-Babel infrastructure does not mean anti-technology. It means power under discernment, agency under authority, delegation under accountability, and execution under proof.
 
+Governance Absorption Capacity / Babel Velocity extends this snapshot view with temporal analysis. It asks whether meaningful governance closure can keep pace with risk-weighted agent decision throughput over time.
+
 ## Relationship To Anti-Babel Infrastructure
 
 Anti-Babel infrastructure preserves human agency as systems scale. Structural Babel Detection contributes the structural audit view: it looks above individual gates and asks whether the whole operating model is preserving authority, participation, refusal capacity, accountability, and proof as coordination power increases.

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { runAgencyChainCommand } from "./commands/agencyChain.js";
 import { runAuditReportCommand } from "./commands/auditReport.js";
 import { runBabelRiskCommand } from "./commands/babelRisk.js";
+import { runBabelVelocityCommand } from "./commands/babelVelocity.js";
 import { runClosureCommand } from "./commands/closure.js";
 import { runDogfoodCommand } from "./commands/dogfood.js";
 import { runEvalCommand } from "./commands/eval.js";
@@ -73,6 +74,10 @@ export function runCli(args: string[]): CliResult {
 
     if (command === "babel-risk") {
       return runBabelRiskCommand(rest);
+    }
+
+    if (command === "babel-velocity") {
+      return runBabelVelocityCommand(rest);
     }
 
     if (command === "closure") {

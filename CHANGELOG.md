@@ -1,5 +1,28 @@
 # Changelog
 
+## v1.11.0 - Governance Absorption Capacity
+
+Adds Governance Absorption Capacity / Babel Velocity v0.1 as a temporal hardening layer inside Structural Babel Detection.
+
+This release detects whether meaningful human governance closure is keeping pace with risk-weighted agent decision throughput across time windows.
+
+Highlights:
+- Extends `@alignment-governance-stack/babel-risk` with temporal Babel Velocity analysis.
+- Adds quality-weighted governance closure scoring so rubber-stamp approvals do not count as full closures.
+- Adds consequence-weighted decision load so low-risk internal actions and high-consequence external actions do not carry the same denominator weight.
+- Adds Governance Closure Ratio, Governance Absorption Capacity, capacity utilization, review lag, remediation load, proof completeness scoring, authority coverage scoring, and participation quality scoring.
+- Adds cross-window trend analysis for closure ratio decline, decision load acceleration, closure rate change, and capacity change.
+- Detects locally valid but globally drowning governance patterns where individual approvals may appear formally closed while the overall governance loop falls behind.
+- Adds CLI command: `ags babel-velocity <input.json> [--out report.md] [--json]`.
+- Adds example inputs for healthy, declining, overloaded, and locally-valid-globally-drowning governance systems.
+- Adds documentation for Governance Absorption Capacity and its relationship to Structural Babel Detection.
+
+Principle:
+A system becomes Babel-shaped when its decision tempo exceeds its governance absorption capacity.
+
+Boundary:
+Governance Absorption Capacity does not approve, block, or execute actions. It does not make religious claims as software output, legal conclusions, moral accusations, compliance certifications, or production-readiness guarantees. It produces human-reviewable temporal risk findings.
+
 ## v1.10.0 - Structural Babel Detection
 
 Adds Structural Babel Detection v0.1, a deterministic audit layer for identifying whether a delegated AI system is becoming Babel-shaped even when individual actions appear governed.

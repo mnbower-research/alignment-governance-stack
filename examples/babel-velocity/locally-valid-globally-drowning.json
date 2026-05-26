@@ -1,0 +1,43 @@
+{
+  "systemId": "approval-heavy-agent-platform",
+  "organizationId": "org-example",
+  "workflowId": "cross-team-approval-flow",
+  "windows": [
+    {
+      "id": "baseline",
+      "from": "2026-05-01T00:00:00.000Z",
+      "to": "2026-05-02T00:00:00.000Z",
+      "decisionEvents": [
+        { "id": "d-001", "timestamp": "2026-05-01T09:00:00.000Z", "kind": "external_message", "consequenceLevel": "medium" },
+        { "id": "d-002", "timestamp": "2026-05-01T10:00:00.000Z", "kind": "runtime_execution", "consequenceLevel": "medium" }
+      ],
+      "closureEvents": [
+        { "id": "c-001", "timestamp": "2026-05-01T11:00:00.000Z", "kind": "approval", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-001"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["approval-c-001"] },
+        { "id": "c-002", "timestamp": "2026-05-01T11:15:00.000Z", "kind": "receipt_verified", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-002"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["receipt-c-002"] },
+        { "id": "c-003", "timestamp": "2026-05-01T11:30:00.000Z", "kind": "fingerprint_verified", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-002"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["fingerprint-c-003"] }
+      ]
+    },
+    {
+      "id": "approval-surge",
+      "from": "2026-05-02T00:00:00.000Z",
+      "to": "2026-05-03T00:00:00.000Z",
+      "decisionEvents": [
+        { "id": "d-003", "timestamp": "2026-05-02T09:00:00.000Z", "kind": "external_publish", "consequenceLevel": "high" },
+        { "id": "d-004", "timestamp": "2026-05-02T10:00:00.000Z", "kind": "customer_impacting", "consequenceLevel": "high" },
+        { "id": "d-005", "timestamp": "2026-05-02T11:00:00.000Z", "kind": "data_export", "consequenceLevel": "critical" }
+      ],
+      "closureEvents": [
+        { "id": "c-004", "timestamp": "2026-05-02T12:00:00.000Z", "kind": "approval", "participationQuality": "rubber_stamp", "closureStatus": "closed", "relatedDecisionIds": ["d-003"], "authorityValid": true, "beforeCommitment": false, "refusalPowerDemonstrated": false, "contextSufficient": false, "scopeMatched": true, "evidenceRefs": ["approval-c-004"] },
+        { "id": "c-005", "timestamp": "2026-05-02T12:05:00.000Z", "kind": "approval", "participationQuality": "rubber_stamp", "closureStatus": "closed", "relatedDecisionIds": ["d-004"], "authorityValid": true, "beforeCommitment": false, "refusalPowerDemonstrated": false, "contextSufficient": false, "scopeMatched": true, "evidenceRefs": ["approval-c-005"] },
+        { "id": "c-006", "timestamp": "2026-05-02T12:10:00.000Z", "kind": "approval", "participationQuality": "weak", "closureStatus": "closed", "relatedDecisionIds": ["d-005"], "authorityValid": true, "beforeCommitment": false, "refusalPowerDemonstrated": false, "contextSufficient": false, "scopeMatched": true, "evidenceRefs": ["approval-c-006"] },
+        { "id": "c-007", "timestamp": "2026-05-02T12:15:00.000Z", "kind": "approval", "participationQuality": "rubber_stamp", "closureStatus": "closed", "relatedDecisionIds": ["d-005"], "authorityValid": true, "beforeCommitment": false, "refusalPowerDemonstrated": false, "contextSufficient": false, "scopeMatched": true, "evidenceRefs": ["approval-c-007"] }
+      ],
+      "proofEvents": [
+        { "id": "proof-001", "timestamp": "2026-05-02T13:00:00.000Z", "completeness": "weak", "evidenceRefs": ["proof-sample"] }
+      ]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z"
+  }
+}

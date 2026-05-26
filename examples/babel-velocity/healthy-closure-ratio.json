@@ -1,0 +1,202 @@
+{
+  "systemId": "reviewed-release-system",
+  "organizationId": "org-human-agency-labs",
+  "workflowId": "reviewed-release-workflow",
+  "windows": [
+    {
+      "id": "week-1",
+      "label": "Week 1",
+      "from": "2026-05-01T00:00:00.000Z",
+      "to": "2026-05-02T00:00:00.000Z",
+      "decisionEvents": [
+        {
+          "id": "d-001",
+          "timestamp": "2026-05-01T09:00:00.000Z",
+          "kind": "internal_update",
+          "consequenceLevel": "low",
+          "evidenceRefs": ["receipt-d-001"]
+        },
+        {
+          "id": "d-002",
+          "timestamp": "2026-05-01T10:00:00.000Z",
+          "kind": "external_publish",
+          "consequenceLevel": "medium",
+          "evidenceRefs": ["receipt-d-002"]
+        }
+      ],
+      "closureEvents": [
+        {
+          "id": "c-001",
+          "timestamp": "2026-05-01T09:30:00.000Z",
+          "kind": "human_review",
+          "participationQuality": "meaningful",
+          "closureStatus": "closed",
+          "relatedDecisionIds": ["d-001"],
+          "authorityValid": true,
+          "beforeCommitment": true,
+          "refusalPowerDemonstrated": true,
+          "contextSufficient": true,
+          "scopeMatched": true,
+          "evidenceRefs": ["review-c-001"]
+        },
+        {
+          "id": "c-002",
+          "timestamp": "2026-05-01T11:00:00.000Z",
+          "kind": "decision_closure_verified",
+          "participationQuality": "meaningful",
+          "closureStatus": "closed",
+          "relatedDecisionIds": ["d-002"],
+          "authorityValid": true,
+          "beforeCommitment": true,
+          "refusalPowerDemonstrated": true,
+          "contextSufficient": true,
+          "scopeMatched": true,
+          "evidenceRefs": ["closure-c-002"]
+        },
+        {
+          "id": "c-003",
+          "timestamp": "2026-05-01T11:15:00.000Z",
+          "kind": "fingerprint_verified",
+          "participationQuality": "meaningful",
+          "closureStatus": "closed",
+          "relatedDecisionIds": ["d-002"],
+          "authorityValid": true,
+          "beforeCommitment": true,
+          "refusalPowerDemonstrated": true,
+          "contextSufficient": true,
+          "scopeMatched": true,
+          "evidenceRefs": ["fingerprint-c-003"]
+        }
+      ],
+      "capacitySignals": [
+        {
+          "id": "cap-001",
+          "kind": "reviewer_bandwidth",
+          "capacityLevel": "strong",
+          "value": 0.2,
+          "evidenceRefs": ["review-rota-week-1"]
+        }
+      ],
+      "proofEvents": [
+        {
+          "id": "proof-001",
+          "timestamp": "2026-05-01T12:00:00.000Z",
+          "hasReceipt": true,
+          "hasRuntimeBinding": true,
+          "hasDecisionClosure": true,
+          "hasAgencyFingerprint": true,
+          "hasAuthorityEvidence": true,
+          "completeness": "complete",
+          "evidenceRefs": ["proof-sample-week-1"]
+        }
+      ],
+      "authorityCoverageEvents": [
+        {
+          "id": "authority-001",
+          "timestamp": "2026-05-01T12:00:00.000Z",
+          "coverage": "covered",
+          "evidenceRefs": ["authority-map-week-1"]
+        }
+      ]
+    },
+    {
+      "id": "week-2",
+      "label": "Week 2",
+      "from": "2026-05-02T00:00:00.000Z",
+      "to": "2026-05-03T00:00:00.000Z",
+      "decisionEvents": [
+        {
+          "id": "d-003",
+          "timestamp": "2026-05-02T09:00:00.000Z",
+          "kind": "internal_update",
+          "consequenceLevel": "low",
+          "evidenceRefs": ["receipt-d-003"]
+        },
+        {
+          "id": "d-004",
+          "timestamp": "2026-05-02T10:00:00.000Z",
+          "kind": "external_publish",
+          "consequenceLevel": "medium",
+          "evidenceRefs": ["receipt-d-004"]
+        }
+      ],
+      "closureEvents": [
+        {
+          "id": "c-004",
+          "timestamp": "2026-05-02T09:30:00.000Z",
+          "kind": "human_review",
+          "participationQuality": "meaningful",
+          "closureStatus": "closed",
+          "relatedDecisionIds": ["d-003"],
+          "authorityValid": true,
+          "beforeCommitment": true,
+          "refusalPowerDemonstrated": true,
+          "contextSufficient": true,
+          "scopeMatched": true,
+          "evidenceRefs": ["review-c-004"]
+        },
+        {
+          "id": "c-005",
+          "timestamp": "2026-05-02T11:00:00.000Z",
+          "kind": "decision_closure_verified",
+          "participationQuality": "meaningful",
+          "closureStatus": "closed",
+          "relatedDecisionIds": ["d-004"],
+          "authorityValid": true,
+          "beforeCommitment": true,
+          "refusalPowerDemonstrated": true,
+          "contextSufficient": true,
+          "scopeMatched": true,
+          "evidenceRefs": ["closure-c-005"]
+        },
+        {
+          "id": "c-006",
+          "timestamp": "2026-05-02T11:15:00.000Z",
+          "kind": "receipt_verified",
+          "participationQuality": "meaningful",
+          "closureStatus": "closed",
+          "relatedDecisionIds": ["d-004"],
+          "authorityValid": true,
+          "beforeCommitment": true,
+          "refusalPowerDemonstrated": true,
+          "contextSufficient": true,
+          "scopeMatched": true,
+          "evidenceRefs": ["receipt-c-006"]
+        }
+      ],
+      "capacitySignals": [
+        {
+          "id": "cap-002",
+          "kind": "reviewer_bandwidth",
+          "capacityLevel": "strong",
+          "value": 0.2,
+          "evidenceRefs": ["review-rota-week-2"]
+        }
+      ],
+      "proofEvents": [
+        {
+          "id": "proof-002",
+          "timestamp": "2026-05-02T12:00:00.000Z",
+          "hasReceipt": true,
+          "hasRuntimeBinding": true,
+          "hasDecisionClosure": true,
+          "hasAgencyFingerprint": true,
+          "hasAuthorityEvidence": true,
+          "completeness": "complete",
+          "evidenceRefs": ["proof-sample-week-2"]
+        }
+      ],
+      "authorityCoverageEvents": [
+        {
+          "id": "authority-002",
+          "timestamp": "2026-05-02T12:00:00.000Z",
+          "coverage": "covered",
+          "evidenceRefs": ["authority-map-week-2"]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z"
+  }
+}

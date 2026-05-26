@@ -1,0 +1,55 @@
+{
+  "systemId": "expanding-agent-workflow",
+  "organizationId": "org-example",
+  "workflowId": "external-content-ops",
+  "windows": [
+    {
+      "id": "baseline",
+      "from": "2026-05-01T00:00:00.000Z",
+      "to": "2026-05-02T00:00:00.000Z",
+      "decisionEvents": [
+        { "id": "d-001", "timestamp": "2026-05-01T09:00:00.000Z", "kind": "external_publish", "consequenceLevel": "medium", "evidenceRefs": ["receipt-d-001"] },
+        { "id": "d-002", "timestamp": "2026-05-01T10:00:00.000Z", "kind": "internal_update", "consequenceLevel": "low", "evidenceRefs": ["receipt-d-002"] }
+      ],
+      "closureEvents": [
+        { "id": "c-001", "timestamp": "2026-05-01T11:00:00.000Z", "kind": "human_review", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-001"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["review-c-001"] },
+        { "id": "c-002", "timestamp": "2026-05-01T11:30:00.000Z", "kind": "receipt_verified", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-002"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["receipt-c-002"] },
+        { "id": "c-003", "timestamp": "2026-05-01T12:00:00.000Z", "kind": "fingerprint_verified", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-001"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["fingerprint-c-003"] }
+      ],
+      "capacitySignals": [
+        { "id": "cap-001", "kind": "reviewer_bandwidth", "capacityLevel": "partial", "value": 0.2, "evidenceRefs": ["capacity-week-1"] }
+      ],
+      "proofEvents": [
+        { "id": "proof-001", "timestamp": "2026-05-01T12:00:00.000Z", "completeness": "complete", "evidenceRefs": ["proof-week-1"] }
+      ],
+      "authorityCoverageEvents": [
+        { "id": "authority-001", "timestamp": "2026-05-01T12:00:00.000Z", "coverage": "covered", "evidenceRefs": ["authority-week-1"] }
+      ]
+    },
+    {
+      "id": "expansion",
+      "from": "2026-05-02T00:00:00.000Z",
+      "to": "2026-05-03T00:00:00.000Z",
+      "decisionEvents": [
+        { "id": "d-003", "timestamp": "2026-05-02T09:00:00.000Z", "kind": "external_publish", "consequenceLevel": "high", "evidenceRefs": ["receipt-d-003"] },
+        { "id": "d-004", "timestamp": "2026-05-02T10:00:00.000Z", "kind": "customer_impacting", "consequenceLevel": "high", "evidenceRefs": ["receipt-d-004"] },
+        { "id": "d-005", "timestamp": "2026-05-02T11:00:00.000Z", "kind": "runtime_execution", "consequenceLevel": "critical", "evidenceRefs": ["receipt-d-005"] }
+      ],
+      "closureEvents": [
+        { "id": "c-004", "timestamp": "2026-05-02T18:00:00.000Z", "kind": "human_review", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-003"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["review-c-004"] }
+      ],
+      "capacitySignals": [
+        { "id": "cap-002", "kind": "reviewer_bandwidth", "capacityLevel": "partial", "value": 0.2, "evidenceRefs": ["capacity-week-2"] }
+      ],
+      "proofEvents": [
+        { "id": "proof-002", "timestamp": "2026-05-02T18:00:00.000Z", "completeness": "partial", "evidenceRefs": ["proof-week-2"] }
+      ],
+      "authorityCoverageEvents": [
+        { "id": "authority-002", "timestamp": "2026-05-02T18:00:00.000Z", "coverage": "partial", "evidenceRefs": ["authority-week-2"] }
+      ]
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2026-05-26T12:00:00.000Z"
+  }
+}

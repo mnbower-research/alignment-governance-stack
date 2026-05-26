@@ -31,6 +31,7 @@ describe("ags cli", () => {
     expect(result.stdout).toContain("ags audit-report <input.json>");
     expect(result.stdout).toContain("ags agency-chain <input.json>");
     expect(result.stdout).toContain("ags babel-risk <input.json>");
+    expect(result.stdout).toContain("ags babel-velocity <input.json>");
     expect(result.stdout).toContain("ags closure <input.json>");
     expect(result.stdout).toContain("ags receipt verify <receipt.json>");
   });
@@ -445,6 +446,52 @@ describe("ags cli", () => {
     expect(result.stdout).toBe("");
     expect(existsSync(outPath)).toBe(true);
     expect(readFileSync(outPath, "utf8")).toContain("# Structural Babel Risk Report");
+  });
+
+  it("babel-velocity healthy example exits 0", () => {
+    const inputPath = join(repoRoot, "examples", "babel-velocity", "healthy-closure-ratio.json");
+
+    const result = runCli(["babel-velocity", inputPath]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("# Governance Absorption Capacity / Babel Velocity Report");
+    expect(result.stdout).toContain("Absorption status: keeping pace");
+  });
+
+  it("babel-velocity declining example exits 1", () => {
+    const inputPath = join(repoRoot, "examples", "babel-velocity", "declining-closure-ratio.json");
+
+    const result = runCli(["babel-velocity", inputPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toContain("Governance closure ratio is declining");
+  });
+
+  it("babel-velocity --json emits parseable report", () => {
+    const inputPath = join(repoRoot, "examples", "babel-velocity", "locally-valid-globally-drowning.json");
+
+    const result = runCli(["babel-velocity", inputPath, "--json"]);
+    const parsed = JSON.parse(result.stdout) as {
+      version?: string;
+      findings?: Array<{ category?: string }>;
+    };
+
+    expect(result.exitCode).toBe(1);
+    expect(parsed.version).toBe("babel-velocity/v0.1");
+    expect(parsed.findings?.some((finding) => finding.category === "locally_valid_globally_drowning")).toBe(true);
+  });
+
+  it("babel-velocity --out writes Markdown file", () => {
+    const tempDir = mkdtempSync(join(tmpdir(), "ags-cli-"));
+    tempDirs.push(tempDir);
+    const inputPath = join(repoRoot, "examples", "babel-velocity", "overloaded-high-consequence-system.json");
+    const outPath = join(tempDir, "babel-velocity-report.md");
+
+    const result = runCli(["babel-velocity", inputPath, "--out", outPath]);
+
+    expect(result.stdout).toBe("");
+    expect(existsSync(outPath)).toBe(true);
+    expect(readFileSync(outPath, "utf8")).toContain("# Governance Absorption Capacity / Babel Velocity Report");
   });
 
   it("audit-report content publishing hardening report renders and JSON parses", () => {

@@ -54,6 +54,7 @@ Integration Adapters
 - Agency Chain Mapper identifies where human or organizational agency is preserved, weakened, bypassed, or not demonstrated across delegated workflows.
 - Governance Reality Reports turn AGS outputs into professional audit findings, evidence-gap summaries, and remediation plans.
 - Structural Babel Detection audits whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
+- Governance Absorption Capacity / Babel Velocity analyzes whether meaningful governance closure is keeping pace with risk-weighted agent decision throughput over time.
 - Evaluation Suite runs deterministic cross-stack scenarios.
 - Developer CLI runs local eval, governance, and receipt checks.
 
@@ -79,6 +80,7 @@ Integration Adapters
 - Agency Chain Mapper for human authority, delegation, runtime binding, execution boundary, receipt, and memory chain review
 - Governance Reality Report foundation and report hardening for professional audit outputs that identify potential governance theater signals, evidence gaps, severity/confidence posture, and remediation paths without making external accusations
 - Structural Babel Detection for auditing whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof
+- Governance Absorption Capacity / Babel Velocity analysis for detecting whether meaningful human governance closure is keeping pace with risk-weighted agent decision throughput across time windows
 - Optional continuity checks inside Governance Reality Reports for asking whether governance remained coherent over time across receipts, decisions, approvals, authority, policy, and scope evidence
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
@@ -102,7 +104,7 @@ Integration Adapters
 - `@alignment-governance-stack/human-participation`: deterministic evaluation of meaningful participation and likely rubber-stamping.
 - `@alignment-governance-stack/agency-chain`: deterministic agency-chain mapping, broken-link detection, summaries, and audit finding adaptation.
 - `@alignment-governance-stack/audit-core`: deterministic taxonomy, finding schemas, report model, Markdown renderer, validators, lightweight adapters for Governance Reality Reports, and optional continuity findings.
-- `@alignment-governance-stack/babel-risk`: deterministic Structural Babel Detection, Babel Risk Reports, scoring, Markdown rendering, and signal-based structural ascent findings.
+- `@alignment-governance-stack/babel-risk`: deterministic Structural Babel Detection, Babel Risk Reports, Governance Absorption Capacity, Babel Velocity reports, quality-weighted governance closure ratios, risk-weighted decision throughput, Markdown rendering, and signal-based structural ascent findings.
 - `@alignment-governance-stack/eval-suite`: deterministic cross-stack eval cases, runners, and result summaries.
 - `@alignment-governance-stack/company-profile-generator`: deterministic draft PolicyProfile and AuthorityMap generation from structured company governance inputs, plus Alignment Gap Detector diagnostics.
 - `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
@@ -188,6 +190,18 @@ node packages/cli/dist/cli.js babel-risk examples/babel-risk/high-babel-risk.jso
 
 See `docs/STRUCTURAL_BABEL_DETECTION.md` and `examples/babel-risk`.
 
+## Governance Absorption Capacity
+
+Governance Absorption Capacity / Babel Velocity is a temporal hardening layer for Structural Babel Detection. It asks whether meaningful human governance closure can keep pace with consequence-weighted agent decision throughput.
+
+```bash
+node packages/cli/dist/cli.js babel-velocity examples/babel-velocity/declining-closure-ratio.json
+node packages/cli/dist/cli.js babel-velocity examples/babel-velocity/declining-closure-ratio.json --json
+node packages/cli/dist/cli.js babel-velocity examples/babel-velocity/declining-closure-ratio.json --out .tmp/babel-velocity-report.md
+```
+
+See `docs/GOVERNANCE_ABSORPTION_CAPACITY.md` and `examples/babel-velocity`.
+
 ## Decision Closure Artifact
 
 Decision Closure Artifact is the execution-boundary proof object. It does not replace logs, receipts, runtime binding, or audit reports. It binds their most important facts into one third-party-readable artifact.
@@ -227,6 +241,9 @@ corepack pnpm --filter @alignment-governance-stack/cli ags agency-chain examples
 corepack pnpm --filter @alignment-governance-stack/cli ags babel-risk examples/babel-risk/high-babel-risk.json
 corepack pnpm --filter @alignment-governance-stack/cli ags babel-risk examples/babel-risk/high-babel-risk.json --json
 corepack pnpm --filter @alignment-governance-stack/cli ags babel-risk examples/babel-risk/high-babel-risk.json --out .tmp/babel-risk-report.md
+corepack pnpm --filter @alignment-governance-stack/cli ags babel-velocity examples/babel-velocity/declining-closure-ratio.json
+corepack pnpm --filter @alignment-governance-stack/cli ags babel-velocity examples/babel-velocity/declining-closure-ratio.json --json
+corepack pnpm --filter @alignment-governance-stack/cli ags babel-velocity examples/babel-velocity/declining-closure-ratio.json --out .tmp/babel-velocity-report.md
 corepack pnpm --filter @alignment-governance-stack/cli ags closure examples/decision-closure/allowed-reviewed-publish.json
 corepack pnpm --filter @alignment-governance-stack/cli ags govern examples/cli/safe-internal-report.json
 corepack pnpm --filter @alignment-governance-stack/cli ags memory examples/demo/full-stack/receipt-history.json
@@ -288,6 +305,7 @@ corepack pnpm -r exec npm pack --dry-run
 - Governance Memory does not auto-update governance policy.
 - Governance Reality Reports do not make external accusations, certify compliance, execute actions, or collect customer data.
 - Structural Babel Detection does not approve, block, execute actions, make religious claims as software output, certify compliance, assign moral blame, or mutate governance inputs.
+- Governance Absorption Capacity does not approve, block, execute actions, make religious claims as software output, certify compliance, assign moral blame, mutate governance inputs, or replace human review.
 - Agency Chain Mapper does not determine moral responsibility, legal compliance, or blame.
 - Decision Closure Artifact does not replace receipts, verify signatures by default, or claim legal compliance.
 - Integration Adapters do not execute actions or host a service.
@@ -302,9 +320,9 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.10.0
+Current version: v1.11.0
 
-v1.10.0 adds Structural Babel Detection v0.1, a deterministic audit layer for identifying whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
+v1.11.0 adds Governance Absorption Capacity / Babel Velocity v0.1, a temporal hardening layer that detects whether meaningful human governance closure is keeping pace with risk-weighted agent decision throughput across time windows.
 
 The core AGS spine is working:
 
