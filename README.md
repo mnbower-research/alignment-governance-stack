@@ -31,6 +31,7 @@ Integration Adapters
 -> Agency Chain Mapper
 -> Governance Reality Reports / Audit Core
 -> Structural Babel Detection
+-> Governance Absorption Capacity / Babel Velocity
 -> Evaluation Suite
 -> Developer CLI
 ```
@@ -53,8 +54,8 @@ Integration Adapters
 - Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
 - Agency Chain Mapper identifies where human or organizational agency is preserved, weakened, bypassed, or not demonstrated across delegated workflows.
 - Governance Reality Reports turn AGS outputs into professional audit findings, evidence-gap summaries, and remediation plans.
-- Structural Babel Detection audits whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
-- Governance Absorption Capacity / Babel Velocity analyzes whether meaningful governance closure is keeping pace with risk-weighted agent decision throughput over time.
+- Structural Babel Detection is the snapshot structural-risk layer for auditing whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
+- Governance Absorption Capacity / Babel Velocity is the temporal structural-risk layer for analyzing whether meaningful governance closure is keeping pace with risk-weighted agent decision throughput across time windows.
 - Evaluation Suite runs deterministic cross-stack scenarios.
 - Developer CLI runs local eval, governance, and receipt checks.
 
@@ -180,7 +181,7 @@ See `docs/AGENCY_CHAIN_MAPPER.md` and `examples/agency-chain`.
 
 ## Structural Babel Detection
 
-Structural Babel Detection asks whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof. It does not block actions; it produces human-reviewable Babel Risk Reports.
+Structural Babel Detection is the snapshot structural-risk layer. It asks whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof at the assessed point in time. It does not block actions; it produces human-reviewable Babel Risk Reports.
 
 ```bash
 node packages/cli/dist/cli.js babel-risk examples/babel-risk/high-babel-risk.json
@@ -192,7 +193,7 @@ See `docs/STRUCTURAL_BABEL_DETECTION.md` and `examples/babel-risk`.
 
 ## Governance Absorption Capacity
 
-Governance Absorption Capacity / Babel Velocity is a temporal hardening layer for Structural Babel Detection. It asks whether meaningful human governance closure can keep pace with consequence-weighted agent decision throughput.
+Governance Absorption Capacity / Babel Velocity is the temporal structural-risk layer over Structural Babel Detection. It asks whether meaningful human governance closure can keep pace with risk-weighted agent decision throughput across time windows.
 
 ```bash
 node packages/cli/dist/cli.js babel-velocity examples/babel-velocity/declining-closure-ratio.json
@@ -320,14 +321,14 @@ corepack pnpm -r exec npm pack --dry-run
 
 ## Current Status
 
-Current version: v1.11.0
+Current version: v1.11.1
 
-v1.11.0 adds Governance Absorption Capacity / Babel Velocity v0.1, a temporal hardening layer that detects whether meaningful human governance closure is keeping pace with risk-weighted agent decision throughput across time windows.
+v1.11.1 hardens the canonical declining closure ratio fixture and clarifies the snapshot-vs-temporal architecture language for Structural Babel Detection and Governance Absorption Capacity / Babel Velocity.
 
 The core AGS spine is working:
 
 ```text
-Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Agency Fingerprint -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Structural Babel Detection -> Evaluation Suite -> Developer CLI
+Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Agency Fingerprint -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Structural Babel Detection -> Governance Absorption Capacity / Babel Velocity -> Evaluation Suite -> Developer CLI
 ```
 
 No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.

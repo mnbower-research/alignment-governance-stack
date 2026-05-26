@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.11.1 - Babel Velocity Fixture Hardening
+
+Hardens the canonical declining closure ratio example and clarifies the README architecture language for Structural Babel Detection and Governance Absorption Capacity.
+
+Highlights:
+- Tightened the declining closure ratio fixture so the failure mode comes from risk-weighted decision throughput outrunning meaningful governance closure capacity, not from simply removing governance.
+- Keeps governance activity present in the second window, including closure events, proof evidence, and authority coverage.
+- Confirms the fixture triggers `decision_rate_exceeds_closure_rate`, `closure_ratio_declining`, `risk_weighted_load_accelerating`, and `capacity_ceiling_not_expanding`.
+- Clarifies README architecture language:
+  - Structural Babel Detection is the snapshot structural-risk layer.
+  - Governance Absorption Capacity / Babel Velocity is the temporal structural-risk layer over Structural Babel Detection.
+
+Boundary:
+This patch does not add a new governance layer or change the core scoring model. It improves example fidelity and architecture clarity.
+
 ## v1.11.0 - Governance Absorption Capacity
 
 Adds Governance Absorption Capacity / Babel Velocity v0.1 as a temporal hardening layer inside Structural Babel Detection.

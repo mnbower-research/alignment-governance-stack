@@ -36,16 +36,17 @@
         { "id": "d-005", "timestamp": "2026-05-02T11:00:00.000Z", "kind": "runtime_execution", "consequenceLevel": "critical", "evidenceRefs": ["receipt-d-005"] }
       ],
       "closureEvents": [
-        { "id": "c-004", "timestamp": "2026-05-02T18:00:00.000Z", "kind": "human_review", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-003"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["review-c-004"] }
+        { "id": "c-004", "timestamp": "2026-05-02T11:00:00.000Z", "kind": "human_review", "participationQuality": "meaningful", "closureStatus": "closed", "relatedDecisionIds": ["d-003"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": true, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["review-c-004"] },
+        { "id": "c-005", "timestamp": "2026-05-02T12:00:00.000Z", "kind": "receipt_verified", "participationQuality": "partial", "closureStatus": "partially_closed", "relatedDecisionIds": ["d-004"], "authorityValid": true, "beforeCommitment": true, "refusalPowerDemonstrated": false, "contextSufficient": true, "scopeMatched": true, "evidenceRefs": ["receipt-c-005"] }
       ],
       "capacitySignals": [
         { "id": "cap-002", "kind": "reviewer_bandwidth", "capacityLevel": "partial", "value": 0.2, "evidenceRefs": ["capacity-week-2"] }
       ],
       "proofEvents": [
-        { "id": "proof-002", "timestamp": "2026-05-02T18:00:00.000Z", "completeness": "partial", "evidenceRefs": ["proof-week-2"] }
+        { "id": "proof-002", "timestamp": "2026-05-02T12:00:00.000Z", "completeness": "complete", "evidenceRefs": ["proof-week-2"] }
       ],
       "authorityCoverageEvents": [
-        { "id": "authority-002", "timestamp": "2026-05-02T18:00:00.000Z", "coverage": "partial", "evidenceRefs": ["authority-week-2"] }
+        { "id": "authority-002", "timestamp": "2026-05-02T12:00:00.000Z", "coverage": "covered", "evidenceRefs": ["authority-week-2"] }
       ]
     }
   ],
