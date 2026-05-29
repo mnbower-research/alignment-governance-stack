@@ -1,6 +1,8 @@
 # Alignment Governance Stack
 
-Alignment Governance Stack is a full-stack governance architecture for agentic AI systems. It preserves human agency across the action lifecycle by separating company policy, authority validation, human participation quality, proposal maturation, execution gating, runtime authorization, and proof.
+The Alignment Governance Stack is open-source public-interest infrastructure for agentic AI. It is runtime governance infrastructure and human agency infrastructure: anti-Babel architecture for agentic AI systems that separates company policy, authority validation, human participation quality, proposal maturation, execution gating, runtime authorization, and proof.
+
+In practical governance terms, anti-Babel architecture means delegated power remains under discernment, authority, constraint, and evidence instead of scaling beyond meaningful human agency.
 
 Core thesis:
 
@@ -10,6 +12,67 @@ Action must not outrun discernment.
 Execution must not outrun authorization.
 Memory must not outrun human review.
 ```
+
+## Quick Mental Model
+
+AGS is a pre-execution and post-execution governance stack for agentic AI. It helps teams ask:
+
+- Is the proposal mature enough to become an action candidate?
+- Is the action authorized, scoped, reversible, and within policy?
+- Does a valid human or organizational authority chain exist?
+- Does the runtime action match what was approved?
+- What proof remains after the decision and execution?
+- Does receipt history show governance improving or degrading over time?
+
+## Who This Is For
+
+AGS is intended for:
+
+- developers building tool-using or workflow-executing AI agents
+- organizations experimenting with delegated AI workflows
+- auditors and governance teams evaluating agentic AI controls
+- researchers studying human oversight, agency preservation, and runtime governance
+- public-interest builders who want inspectable governance primitives instead of black-box control layers
+
+## What This Is Not
+
+AGS is not an AI model, chatbot, hosted service, legal compliance certification, identity provider, or replacement for human judgment.
+
+It is a local runtime governance stack for evaluating, constraining, documenting, and auditing delegated AI actions.
+
+## Why This Project Is Open Source
+
+The Alignment Governance Stack is released as open public-interest infrastructure.
+
+Agentic AI changes the governance problem. These systems do not only produce outputs. They can call tools, execute workflows, update records, shape decisions, and act through delegated authority.
+
+That makes the central question:
+
+**Why was this system allowed to do what it just did?**
+
+This project exists to help answer that question before and after execution.
+
+The stack is intentionally open so researchers, developers, organizations, auditors, educators, public-interest groups, and independent builders can inspect it, test it, challenge it, improve it, fork it, adapt it, and deploy it.
+
+In the language of this project, this is anti-Babel architecture:
+
+- power under discernment
+- delegation under authority
+- execution under constraint
+- automation under human agency
+- action under proof
+
+The purpose is not to create another captured gatekeeper.
+
+The purpose is to make agency-preserving governance available as a shared primitive for agentic AI systems.
+
+The principle is simple:
+
+**Human agency infrastructure should not become another form of agency capture.**
+
+## Public-Interest Commitment
+
+This project is not being developed as a proprietary product or closed commercial gate. The goal is to keep the core architecture, documentation, examples, templates, and governance primitives open so others can study, reuse, adapt, criticize, and improve them.
 
 ## Current Stack
 
@@ -51,10 +114,12 @@ Integration Adapters
 - Decision Closure Artifact binds the action, authority, decision, conditions, and proof at the execution boundary.
 - Agency Fingerprints bind delegated agent actions to the human or organizational authority chain under which they acted.
 - Receipts preserve tamper-evident proof of the governance path.
-- Governance Memory analyzes receipt history and produces human-reviewable improvement recommendations.
+- Governance Memory analyzes receipt history for governance patterns.
+- Governance Memory recommends improvements for human review. It does not silently mutate policy, authority, or governance configuration.
 - Agency Chain Mapper identifies where human or organizational agency is preserved, weakened, bypassed, or not demonstrated across delegated workflows.
 - Governance Reality Reports turn AGS outputs into professional audit findings, evidence-gap summaries, and remediation plans.
-- Structural Babel Detection is the snapshot structural-risk layer for auditing whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
+- Structural Babel Detection is the snapshot structural-risk layer.
+- Structural Babel Detection asks whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof.
 - Governance Absorption Capacity / Babel Velocity is the temporal structural-risk layer for analyzing whether meaningful governance closure is keeping pace with risk-weighted agent decision throughput across time windows.
 - Evaluation Suite runs deterministic cross-stack scenarios.
 - Developer CLI runs local eval, governance, and receipt checks.
@@ -317,7 +382,11 @@ corepack pnpm -r exec npm pack --dry-run
 - Human Participation Quality evaluates participation evidence; it does not identify people, store approvals, or replace Authority Map.
 - Approval and participation cannot override hard boundaries in v0.6.
 - The Company Alignment Profile Generator creates draft Policy Profiles and draft Authority Maps, not legal or compliance guarantees.
-- AGS is governance infrastructure, not a guarantee of safety, correctness, legality, compliance, or successful deployment.
+- AGS is runtime governance infrastructure and human agency infrastructure, not a guarantee of safety, correctness, legality, compliance, or successful deployment.
+
+## License
+
+Licensed under the Apache License 2.0.
 
 ## Current Status
 
