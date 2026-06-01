@@ -105,6 +105,11 @@ Not every deployment needs the same implementation complexity. A low-risk local 
 - [Adapter Model](docs/ADAPTER_MODEL.md)
 - [Ecosystem Map](docs/ECOSYSTEM_MAP.md)
 - [Human Agency Audit](docs/HUMAN_AGENCY_AUDIT.md)
+- [AGS Continuity Console](docs/CONTINUITY_CONSOLE.md)
+
+## AGS Continuity Console
+
+Phase 1 of the AGS Continuity Console is a local-first visual operator shell for inspecting the governed path from authority to consequence using typed sample data. It does not include live agent integrations, a backend, authentication, billing, or production deployment infrastructure. See [AGS Continuity Console](docs/CONTINUITY_CONSOLE.md).
 
 ## Public-Interest Commitment
 

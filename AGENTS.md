@@ -299,3 +299,14 @@ For feature tasks:
 This is enterprise-friendly infrastructure with a deeper human alignment spine.
 
 Keep public language technical, grounded, and non-mystical. The biblical and human arc is an architectural metaphor and conceptual source, not a claim that AI is conscious.
+
+## Continuity Console
+
+- Preserve the modular reference architecture and the 12 governance-layer vocabulary.
+- Inspect the repository before adding packages or apps.
+- Avoid duplicate implementations; keep core governance logic separate from UI.
+- Use evidence-based status language and do not claim integrations that have not been demonstrated.
+- Do not treat mapped plugins as enforced plugins or registered plugins as safe.
+- Keep Human Agency Audit as the public-facing term.
+- Governance Memory recommendations must not silently mutate policy.
+- Validate links, tests, type checks, builds, and available lint before summarizing changes.
