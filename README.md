@@ -38,7 +38,7 @@ AGS is intended for:
 
 AGS is not an AI model, chatbot, hosted service, legal compliance certification, identity provider, or replacement for human judgment.
 
-It is a local runtime governance stack for evaluating, constraining, documenting, and auditing delegated AI actions.
+The current repository provides a local-first implementation of the Alignment Governance Stack for evaluating, constraining, documenting, and auditing delegated AI actions.
 
 ## Why This Project Is Open Source
 
@@ -70,11 +70,49 @@ The principle is simple:
 
 **Human agency infrastructure should not become another form of agency capture.**
 
+## A Modular Governance Stack
+
+The Alignment Governance Stack is a modular reference architecture for governed delegation. It is substrate-agnostic and vendor-neutral: the stack defines required governance functions rather than requiring one proprietary implementation for every layer.
+
+Organizations can select different adapters and compatible implementations based on their workflows, risk level, industry, and existing systems. An identity provider, policy engine, workflow orchestrator, semantic substrate, runtime-control system, observability tool, or audit store can provide an implementation slot without becoming the whole stack.
+
+External products should not automatically be described as integrated. Use precise status labels such as conceptual fit, mapped, candidate adapter, prototype, integrated, tested, red-teamed, or production-validated. Architectural compatibility is not the same as implementation.
+
+> The Alignment Governance Stack does not need to own every component. Its role is to define the governed path, clarify where systems belong, and preserve human agency across delegation.
+
+The governed path is:
+
+```text
+Human and Organizational Authority
+-> Governance Substrate
+-> Semantic Context and Admissibility
+-> Agent Reasoning and Proposal Formation
+-> PGDL: Pre-Gate Deliberation Layer
+-> AAG: Agent Action Gate
+-> Business-Level Runtime Admissibility
+-> Machine-Level Execution Binding
+-> Execution Environments and Consequence
+-> Receipts and Evidence
+-> Governance Memory and Internalization
+-> Human Agency Audit
+```
+
+Not every deployment needs the same implementation complexity. A low-risk local workflow may use lightweight adapters and local receipts, while a high-risk enterprise deployment may require stronger identity, policy, runtime-control, evidence, and audit systems. What should remain intact is the relevant governance function for the risk profile: the path from authority to consequence must remain governed.
+
+## Documentation
+
+- [Modular Architecture](docs/MODULAR_ARCHITECTURE.md)
+- [Adapter Model](docs/ADAPTER_MODEL.md)
+- [Ecosystem Map](docs/ECOSYSTEM_MAP.md)
+- [Human Agency Audit](docs/HUMAN_AGENCY_AUDIT.md)
+
 ## Public-Interest Commitment
 
 This project is not being developed as a proprietary product or closed commercial gate. The goal is to keep the core architecture, documentation, examples, templates, and governance primitives open so others can study, reuse, adapt, criticize, and improve them.
 
-## Current Stack
+## Current Repository Stack
+
+The current repository includes implemented packages, examples, and documentation for the layers below. This is not a claim that AGS must own every layer in every deployment; compatible systems can provide optional implementation slots when they preserve the required governance functions.
 
 ```text
 Integration Adapters
@@ -394,7 +432,7 @@ Current version: v1.11.1
 
 v1.11.1 hardens the canonical declining closure ratio fixture and clarifies the snapshot-vs-temporal architecture language for Structural Babel Detection and Governance Absorption Capacity / Babel Velocity.
 
-The core AGS spine is working:
+The core implemented AGS spine currently includes:
 
 ```text
 Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Agency Fingerprint -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Structural Babel Detection -> Governance Absorption Capacity / Babel Velocity -> Evaluation Suite -> Developer CLI

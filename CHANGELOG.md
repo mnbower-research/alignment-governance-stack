@@ -190,19 +190,19 @@ Agency Fingerprints are not biometric identity, surveillance, legal certificatio
 
 ## v1.0.1 - Stabilization and Release Cleanup
 
-- Clarifies release history after the first complete stack milestone.
+- Clarifies release history after the first end-to-end stack milestone.
 - Adds full-stack demo examples and release documentation.
 - Aligns README, architecture, roadmap, CLI, and thesis documentation.
 - No runtime behavior changes.
 
-## v1.0.0 - First Complete Alignment Governance Stack
+## v1.0.0 - First End-to-End Alignment Governance Stack Snapshot
 
 - Adds Governance Memory / Internalization Layer for deterministic receipt-history analysis.
 - Produces human-reviewable recommendations for policy, hard boundaries, authority, participation, runtime binding, and eval expansion.
 - Adds `ags memory <receipts.json>` for local receipt-history summaries.
-- Marks the first complete AGS snapshot.
+- Marks the first end-to-end AGS snapshot.
 
-Note: v0.9.0 and v1.0.0 currently point to the same commit because Integration Adapters and Governance Memory were committed together. v0.9.0 should be read as the Integration Adapters milestone. v1.0.0 should be read as the first complete stack snapshot.
+Note: v0.9.0 and v1.0.0 currently point to the same commit because Integration Adapters and Governance Memory were committed together. v0.9.0 should be read as the Integration Adapters milestone. v1.0.0 should be read as the first end-to-end stack snapshot.
 
 ## v0.9.0 - Integration Adapters
 

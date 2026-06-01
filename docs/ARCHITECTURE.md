@@ -2,6 +2,8 @@
 
 Alignment Governance Stack separates proposal maturation from execution approval and runtime authorization.
 
+For the vendor-neutral reference architecture and implementation-slot vocabulary, see [Modular Architecture](MODULAR_ARCHITECTURE.md).
+
 ```text
 User goal
 -> Integration Adapters
@@ -37,9 +39,9 @@ PGDL -> AAG -> Runtime Binding -> Receipt
 
 PGDL matures the proposal before execution gating. AAG decides whether the proposed action should be allowed before execution. Runtime Binding verifies that the exact runtime action matches the issued permit. Receipts preserve proof of the governance path. Decision Closure Artifact is an additive audit artifact at the execution boundary; it does not redesign the runtime spine.
 
-## Full AGS Stack
+## Current Repository Stack Around The Spine
 
-The full stack around the runtime spine is:
+The current repository stack around the runtime spine is:
 
 ```text
 Integration Adapters

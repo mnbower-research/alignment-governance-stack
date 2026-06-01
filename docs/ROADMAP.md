@@ -1,6 +1,6 @@
 # Roadmap
 
-Alignment Governance Stack reached its first complete stack snapshot in v1.0.0. The roadmap below separates completed milestones, the current release, and likely future work without adding those future systems before they are requested.
+Alignment Governance Stack reached its first end-to-end governed-delegation snapshot in v1.0.0. The roadmap below separates released milestones, the current release, and likely future work without adding those future systems before they are requested.
 
 ## Scaffold
 
