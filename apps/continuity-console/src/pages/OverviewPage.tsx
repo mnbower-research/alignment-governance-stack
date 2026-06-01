@@ -4,14 +4,23 @@ import { PageHeader } from "../components/PageHeader";
 import { Panel } from "../components/Panel";
 import { StatusBadge } from "../components/StatusBadge";
 import { analyzeContinuity } from "../lib/continuityAnalysis";
+import type { ConsoleDataMode, EvidenceConfidence } from "../lib/evidenceProjection";
 import type { DeploymentManifest } from "../types/continuity";
 
 interface OverviewPageProps {
   deployment: DeploymentManifest;
+  mode?: ConsoleDataMode | undefined;
+  confidence?: EvidenceConfidence | undefined;
+  artifactCount?: number | undefined;
+  diagnosticCount?: number | undefined;
 }
 
-export function OverviewPage({ deployment }: OverviewPageProps): JSX.Element {
+export function OverviewPage({ deployment, mode = "sample", confidence, artifactCount, diagnosticCount }: OverviewPageProps): JSX.Element {
   const analysis = analyzeContinuity(deployment);
+  const sourceDetail =
+    mode === "local-evidence"
+      ? `${artifactCount ?? 0} artifacts, ${diagnosticCount ?? 0} diagnostics`
+      : "typed sample data";
 
   return (
     <>
@@ -19,10 +28,12 @@ export function OverviewPage({ deployment }: OverviewPageProps): JSX.Element {
         title="AGS Continuity Console"
         description="Visual control plane for governed delegation across authority, proposal, runtime, evidence, memory, and agency audit."
         deployment={deployment}
+        mode={mode}
+        confidence={confidence}
       />
       <section className="kpi-grid">
         <KpiCard label="Overall Continuity" value={`${analysis.continuityPercentage}%`} detail="covered layers and edges" tone="teal" />
-        <KpiCard label="Governance Functions" value={deployment.layers.length} detail="required layers modeled" tone="blue" />
+        <KpiCard label="Source Mode" value={mode === "local-evidence" ? "Evidence" : "Sample"} detail={sourceDetail} tone="blue" />
         <KpiCard label="Covered" value={`${analysis.layerCoverage}%`} detail={`${analysis.coveredLayerCount} layers connected or stronger`} tone="green" />
         <KpiCard label="Evidenced" value={`${analysis.evidencedPercentage}%`} detail={`${analysis.evidencedLayerCount} layers evidenced or stronger`} tone="purple" />
         <KpiCard label="Critical Gaps" value={analysis.criticalGapCount} detail="requires operator attention" tone="red" />
@@ -37,8 +48,17 @@ export function OverviewPage({ deployment }: OverviewPageProps): JSX.Element {
           </div>
         </Panel>
         <div className="side-stack">
-          <Panel title="Plugin Registry" eyebrow="local sample">
+          <Panel title={mode === "local-evidence" ? "Imported Evidence Counts" : "Plugin Registry"} eyebrow={mode === "local-evidence" ? "read-only snapshot" : "local sample"}>
             <div className="plugin-card-list">
+              {deployment.plugins.length === 0 ? (
+                <article className="plugin-card">
+                  <div>
+                    <h3>No live plugins in Local Evidence Mode</h3>
+                    <p>Imported artifacts are read-only evidence, not connected adapters.</p>
+                  </div>
+                  <StatusBadge label="Read Only" />
+                </article>
+              ) : null}
               {deployment.plugins.map((plugin) => (
                 <article className="plugin-card" key={plugin.id}>
                   <div>

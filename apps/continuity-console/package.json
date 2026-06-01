@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@alignment-governance-stack/continuity-ingest": "workspace:*",
     "@vitejs/plugin-react": "^5.1.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"

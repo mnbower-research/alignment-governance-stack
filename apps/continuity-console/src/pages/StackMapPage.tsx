@@ -4,15 +4,21 @@ import { GovernanceGraph } from "../components/GovernanceGraph";
 import { PageHeader } from "../components/PageHeader";
 import { Panel } from "../components/Panel";
 import { StatusBadge } from "../components/StatusBadge";
+import type { ConsoleDataMode, EvidenceConfidence } from "../lib/evidenceProjection";
+import type { NormalizedAgsArtifact } from "@alignment-governance-stack/continuity-ingest";
 import type { DeploymentManifest, GovernanceEdge, GovernanceLayer } from "../types/continuity";
 
 interface StackMapPageProps {
   deployment: DeploymentManifest;
+  mode?: ConsoleDataMode | undefined;
+  confidence?: EvidenceConfidence | undefined;
+  artifactsByLayer?: Map<string, NormalizedAgsArtifact[]> | undefined;
 }
 
-export function StackMapPage({ deployment }: StackMapPageProps): JSX.Element {
+export function StackMapPage({ deployment, mode = "sample", confidence, artifactsByLayer }: StackMapPageProps): JSX.Element {
   const [selectedLayer, setSelectedLayer] = useState<GovernanceLayer>(deployment.layers[0]!);
   const [selectedEdge, setSelectedEdge] = useState<GovernanceEdge | null>(deployment.edges[0] ?? null);
+  const selectedArtifacts = artifactsByLayer?.get(selectedLayer.id) ?? [];
 
   const selectedPlugins = useMemo(
     () => deployment.plugins.filter((plugin) => selectedLayer.pluginIds.includes(plugin.id)),
@@ -25,6 +31,8 @@ export function StackMapPage({ deployment }: StackMapPageProps): JSX.Element {
         title="Stack Map"
         description="Inspect governance layers, plugin attachments, and boundary edges without implying live integration where evidence is missing."
         deployment={deployment}
+        mode={mode}
+        confidence={confidence}
       />
       <section className="stack-map-grid">
         <Panel title="Expanded Continuity Graph" eyebrow="click a layer or edge">
@@ -53,6 +61,31 @@ export function StackMapPage({ deployment }: StackMapPageProps): JSX.Element {
                 ["Current status", selectedLayer.status],
               ]}
             />
+            {mode === "local-evidence" ? (
+              <div className="artifact-list">
+                <h4>Imported Provenance</h4>
+                {selectedArtifacts.length === 0 ? <p>No supported artifact is mapped to this layer.</p> : null}
+                {selectedArtifacts.map((artifact) => (
+                  <details key={artifact.id}>
+                    <summary>{artifact.summary}</summary>
+                    <DetailList
+                      items={[
+                        ["Artifact kind", artifact.kind],
+                        ["Artifact ID", artifact.id],
+                        ["Source path", artifact.provenance.sourcePath],
+                        ["SHA-256", artifact.provenance.sha256],
+                        ["Parser", `${artifact.provenance.parserId}@${artifact.provenance.parserVersion}`],
+                        ["Warnings", artifact.warnings.length > 0 ? artifact.warnings : ["None"]],
+                      ]}
+                    />
+                    <details>
+                      <summary>Raw JSON payload</summary>
+                      <pre className="raw-json">{JSON.stringify(artifact.payload, null, 2)}</pre>
+                    </details>
+                  </details>
+                ))}
+              </div>
+            ) : null}
           </Panel>
           {selectedEdge ? (
             <Panel title="Edge Detail" eyebrow="boundary inspection">

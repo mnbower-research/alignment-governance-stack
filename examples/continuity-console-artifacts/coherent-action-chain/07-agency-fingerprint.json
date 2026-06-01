@@ -1,0 +1,15 @@
+{
+  "version": "agency-fingerprint/v0.1",
+  "fingerprintId": "fingerprint-console-001",
+  "delegatedBy": "local-demo-authority",
+  "agentId": "agent-console-demo",
+  "workflowId": "workflow-console-readiness",
+  "runtimePermitHash": "sha256:runtime-binding-console-001",
+  "actionHash": "sha256:console-action-hash-001",
+  "timestamp": "2026-01-02T10:03:00.000Z",
+  "fingerprintHash": "sha256:fingerprint-console-001",
+  "metadata": {
+    "proposalId": "proposal-console-001"
+  }
+}
+

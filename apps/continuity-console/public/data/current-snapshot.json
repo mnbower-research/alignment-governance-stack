@@ -1,0 +1,489 @@
+{
+  "artifacts": [
+    {
+      "correlation": {
+        "proposalId": "proposal-console-001"
+      },
+      "id": "aag-decision:proposal-console-001:allow",
+      "kind": "aag-decision",
+      "payload": {
+        "decision": "allow",
+        "detectorResults": [
+          {
+            "detector": "missingApproval",
+            "reason": "No approval required for reversible internal draft.",
+            "triggered": false
+          }
+        ],
+        "proposal": {
+          "actionType": "create_draft",
+          "dataSensitivity": "low",
+          "environment": "local",
+          "externalFacing": false,
+          "id": "proposal-console-001",
+          "knownApproval": false,
+          "metadata": {
+            "workflowId": "workflow-console-readiness"
+          },
+          "requiresApproval": false,
+          "reversible": true,
+          "target": "docs/release-readiness.md",
+          "tool": "local-doc-writer",
+          "userRequest": "Draft an internal release readiness summary for AGS v1.11.1."
+        },
+        "reasonForDecision": "The proposal is scoped, reversible, internal, and low sensitivity.",
+        "receiptRequired": true
+      },
+      "provenance": {
+        "fileName": "02-aag-decision.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "parserId": "ags.aag-packet",
+        "parserVersion": "0.1.0",
+        "sha256": "cd0aa2add5824326dbbf6d79215b3cfb177933aba005c6fad3a32f3bbb8f29e1",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/02-aag-decision.json"
+      },
+      "summary": "AAG allow for proposal proposal-console-001",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "agentId": "agent-console-demo",
+        "fingerprintId": "fingerprint-console-001",
+        "permitHash": "sha256:runtime-binding-console-001",
+        "proposalId": "proposal-console-001",
+        "workflowId": "workflow-console-readiness"
+      },
+      "id": "agency-fingerprint:fingerprint-console-001",
+      "kind": "agency-fingerprint",
+      "payload": {
+        "actionHash": "sha256:console-action-hash-001",
+        "agentId": "agent-console-demo",
+        "delegatedBy": "local-demo-authority",
+        "fingerprintHash": "sha256:fingerprint-console-001",
+        "fingerprintId": "fingerprint-console-001",
+        "metadata": {
+          "proposalId": "proposal-console-001"
+        },
+        "runtimePermitHash": "sha256:runtime-binding-console-001",
+        "timestamp": "2026-01-02T10:03:00.000Z",
+        "version": "agency-fingerprint/v0.1",
+        "workflowId": "workflow-console-readiness"
+      },
+      "provenance": {
+        "fileName": "07-agency-fingerprint.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "occurredAt": "2026-01-02T10:03:00.000Z",
+        "parserId": "ags.agency-fingerprint",
+        "parserVersion": "0.1.0",
+        "sha256": "04a8ac36576d27bdbb7cfd8620ba0dbdcb38eda3609dea79b217e2737c6e03f7",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/07-agency-fingerprint.json"
+      },
+      "summary": "Agency fingerprint fingerprint-console-001 for agent agent-console-demo",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "agentId": "agent-console-demo",
+        "closureId": "closure-console-001",
+        "permitId": "permit-console-001",
+        "proposalId": "proposal-console-001"
+      },
+      "id": "decision-closure-artifact:closure-console-001",
+      "kind": "decision-closure-artifact",
+      "payload": {
+        "action": {
+          "actionId": "proposal-console-001",
+          "proposedByAgentId": "agent-console-demo",
+          "summary": "Create internal release readiness draft"
+        },
+        "artifactId": "closure-console-001",
+        "auditSummary": {
+          "summary": "Demo closure artifact for the continuity console local evidence path."
+        },
+        "authority": {
+          "authorityChainSummary": "Local demo authority for reversible internal documentation."
+        },
+        "conditions": [],
+        "createdAt": "2026-01-02T10:02:00.000Z",
+        "decision": {
+          "decision": "allow",
+          "reason": "The action remained scoped to an internal reversible draft."
+        },
+        "executionBoundary": {
+          "environment": "local",
+          "runtimeBindingHash": "sha256:runtime-binding-console-001",
+          "runtimePermitId": "permit-console-001"
+        },
+        "proof": {
+          "receiptHash": "sha256:receipt-console-001",
+          "runtimeBindingHash": "sha256:runtime-binding-console-001"
+        }
+      },
+      "provenance": {
+        "fileName": "06-decision-closure-artifact.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "occurredAt": "2026-01-02T10:02:00.000Z",
+        "parserId": "ags.decision-closure-artifact",
+        "parserVersion": "0.1.0",
+        "sha256": "d961874202665679e27ceaeca8b8ea9b5399539ac91700bdd251b86561b98473",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/06-decision-closure-artifact.json"
+      },
+      "summary": "Decision Closure Artifact for Create internal release readiness draft",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "permitId": "memory-console-001",
+        "proposalId": "proposal-console-001",
+        "receiptId": "memory-console-001"
+      },
+      "id": "governance-memory-summary:memory-console-001",
+      "kind": "governance-memory-summary",
+      "payload": {
+        "createdAt": "2026-01-02T10:04:00.000Z",
+        "id": "memory-console-001",
+        "metadata": {
+          "proposalId": "proposal-console-001"
+        },
+        "patterns": [
+          {
+            "count": 1,
+            "id": "pattern-safe-internal-draft",
+            "kind": "repeated_safe_allow",
+            "summary": "Internal reversible draft passed through PGDL, AAG, runtime binding, and receipt."
+          }
+        ],
+        "receiptCount": 1,
+        "recommendations": [
+          {
+            "id": "recommendation-review-public-claims",
+            "rationale": "The artifact chain supports internal drafting only.",
+            "status": "Requires Human Review",
+            "title": "Keep public claim review explicit"
+          }
+        ],
+        "summary": "Demo governance memory summary for one read-only imported receipt.",
+        "version": "ags.governance-memory.v1.0"
+      },
+      "provenance": {
+        "fileName": "08-governance-memory-summary.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "occurredAt": "2026-01-02T10:04:00.000Z",
+        "parserId": "ags.governance-memory-report",
+        "parserVersion": "0.1.0",
+        "sha256": "6691e007b625e774ccd963423caf179126e8cb605a8ad48eb59dd97d7d4e3074",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/08-governance-memory-summary.json"
+      },
+      "summary": "Governance Memory report with 1 receipts",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "proposalId": "proposal-console-001"
+      },
+      "id": "pgdl-review-packet:proposal-console-001",
+      "kind": "pgdl-review-packet",
+      "payload": {
+        "decision": "forward_to_aag",
+        "internalizedPrinciple": "Internal readiness drafts should preserve review before public claims.",
+        "objections": [
+          {
+            "category": "external_impact",
+            "message": "Keep the output internal until public claims are reviewed."
+          }
+        ],
+        "originalProposal": {
+          "actionType": "create_draft",
+          "dataSensitivity": "low",
+          "environment": "local",
+          "externalFacing": false,
+          "id": "proposal-console-001",
+          "knownApproval": false,
+          "metadata": {
+            "workflowId": "workflow-console-readiness"
+          },
+          "requiresApproval": false,
+          "reversible": true,
+          "target": "docs/release-readiness.md",
+          "tool": "local-doc-writer",
+          "userRequest": "Draft an internal release readiness summary for AGS v1.11.1."
+        },
+        "reasonForDecision": "The action remains a reversible internal draft.",
+        "resolvedProposal": {
+          "actionType": "create_draft",
+          "dataSensitivity": "low",
+          "environment": "local",
+          "externalFacing": false,
+          "id": "proposal-console-001",
+          "knownApproval": false,
+          "metadata": {
+            "workflowId": "workflow-console-readiness"
+          },
+          "requiresApproval": false,
+          "reversible": true,
+          "target": "docs/release-readiness.md",
+          "tool": "local-doc-writer",
+          "userRequest": "Draft an internal release readiness summary for AGS v1.11.1."
+        }
+      },
+      "provenance": {
+        "fileName": "01-pgdl-review.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "parserId": "ags.pgdl-packet",
+        "parserVersion": "0.1.0",
+        "sha256": "dc28abb7a8db5966c39ad05b285936f1e4386b47e8c0bb32bcc140182bbafffa",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/01-pgdl-review.json"
+      },
+      "summary": "PGDL forward_to_aag for proposal proposal-console-001",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "proposalId": "proposal-console-incomplete-001"
+      },
+      "id": "pgdl-review-packet:proposal-console-incomplete-001",
+      "kind": "pgdl-review-packet",
+      "payload": {
+        "decision": "escalate_to_human",
+        "internalizedPrinciple": "Public claims should not advance without reviewable authority and proof.",
+        "objections": [
+          {
+            "category": "external_impact",
+            "message": "External-facing claims require authority and provenance evidence."
+          }
+        ],
+        "originalProposal": {
+          "actionType": "draft_public_claim",
+          "dataSensitivity": "medium",
+          "environment": "local",
+          "externalFacing": true,
+          "id": "proposal-console-incomplete-001",
+          "knownApproval": false,
+          "metadata": {
+            "workflowId": "workflow-console-incomplete"
+          },
+          "requiresApproval": true,
+          "reversible": true,
+          "target": "public-blog",
+          "tool": "publishing-agent",
+          "userRequest": "Prepare an external announcement draft."
+        },
+        "reasonForDecision": "The action is external-facing and approval evidence is not present."
+      },
+      "provenance": {
+        "fileName": "01-pgdl-review-missing-aag.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "parserId": "ags.pgdl-packet",
+        "parserVersion": "0.1.0",
+        "sha256": "1386474c99203196ed86dd3e095eb866586189620717973b28e0c414abcd3b11",
+        "sourcePath": "examples/continuity-console-artifacts/incomplete-chain/01-pgdl-review-missing-aag.json"
+      },
+      "summary": "PGDL escalate_to_human for proposal proposal-console-incomplete-001",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "permitId": "receipt-console-001",
+        "proposalId": "proposal-console-001",
+        "receiptId": "receipt-console-001",
+        "workflowId": "workflow-console-readiness"
+      },
+      "id": "receipt:receipt-console-001",
+      "kind": "receipt",
+      "payload": {
+        "aag": {
+          "decision": "allow"
+        },
+        "createdAt": "2026-01-02T10:01:00.000Z",
+        "finalDecision": "allow",
+        "id": "receipt-console-001",
+        "metadata": {
+          "workflowId": "workflow-console-readiness"
+        },
+        "originalProposal": {
+          "actionType": "create_draft",
+          "dataSensitivity": "low",
+          "environment": "local",
+          "externalFacing": false,
+          "id": "proposal-console-001",
+          "knownApproval": false,
+          "metadata": {
+            "workflowId": "workflow-console-readiness"
+          },
+          "requiresApproval": false,
+          "reversible": true,
+          "target": "docs/release-readiness.md",
+          "tool": "local-doc-writer",
+          "userRequest": "Draft an internal release readiness summary for AGS v1.11.1."
+        },
+        "permit": {
+          "id": "permit-console-001"
+        },
+        "pgdl": {
+          "decision": "forward_to_aag"
+        },
+        "reasonForDecision": "The governed path completed for an internal draft.",
+        "receiptHash": "sha256:receipt-console-001",
+        "runtimeBinding": {
+          "decision": "execution_allowed"
+        },
+        "version": "ags.receipt.v0.1"
+      },
+      "provenance": {
+        "fileName": "05-receipt.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "occurredAt": "2026-01-02T10:01:00.000Z",
+        "parserId": "ags.receipt",
+        "parserVersion": "0.1.0",
+        "sha256": "bf5c95cd78961742c44fb111672756d2930d21bf924eed8a4447c42a9ced6b0c",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/05-receipt.json"
+      },
+      "summary": "Receipt receipt-console-001 recorded final decision allow",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "permitHash": "sha256:console-action-hash-001",
+        "permitId": "permit-console-001",
+        "proposalId": "proposal-console-001",
+        "workflowId": "workflow-console-readiness"
+      },
+      "id": "runtime-binding-result:permit-console-001",
+      "kind": "runtime-binding-result",
+      "payload": {
+        "allowed": true,
+        "decision": "execution_allowed",
+        "failures": [],
+        "permit": {
+          "aagDecision": "allow",
+          "actionHash": "sha256:console-action-hash-001",
+          "allowedAction": {
+            "actionType": "create_draft",
+            "dataSensitivity": "low",
+            "environment": "local",
+            "externalFacing": false,
+            "id": "proposal-console-001",
+            "knownApproval": false,
+            "metadata": {
+              "workflowId": "workflow-console-readiness"
+            },
+            "requiresApproval": false,
+            "reversible": true,
+            "target": "docs/release-readiness.md",
+            "tool": "local-doc-writer",
+            "userRequest": "Draft an internal release readiness summary for AGS v1.11.1."
+          },
+          "id": "permit-console-001",
+          "issuedAt": "2026-01-02T10:00:00.000Z",
+          "proposalId": "proposal-console-001",
+          "source": "aag"
+        },
+        "reasonForDecision": "The runtime action hash matched the active permit."
+      },
+      "provenance": {
+        "fileName": "04-runtime-binding-result.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "parserId": "ags.runtime-binding-result",
+        "parserVersion": "0.1.0",
+        "sha256": "1fbfff857b15ba2daf7b80f632e6478247a9b35ec0cfb039506641d1efb26353",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/04-runtime-binding-result.json"
+      },
+      "summary": "Runtime binding execution_allowed: The runtime action hash matched the active permit.",
+      "warnings": []
+    },
+    {
+      "correlation": {
+        "permitHash": "sha256:console-action-hash-001",
+        "permitId": "permit-console-001",
+        "proposalId": "proposal-console-001",
+        "receiptId": "permit-console-001",
+        "workflowId": "workflow-console-readiness"
+      },
+      "id": "runtime-permit:permit-console-001",
+      "kind": "runtime-permit",
+      "payload": {
+        "aagDecision": "allow",
+        "actionHash": "sha256:console-action-hash-001",
+        "allowedAction": {
+          "actionType": "create_draft",
+          "dataSensitivity": "low",
+          "environment": "local",
+          "externalFacing": false,
+          "id": "proposal-console-001",
+          "knownApproval": false,
+          "metadata": {
+            "workflowId": "workflow-console-readiness"
+          },
+          "requiresApproval": false,
+          "reversible": true,
+          "target": "docs/release-readiness.md",
+          "tool": "local-doc-writer",
+          "userRequest": "Draft an internal release readiness summary for AGS v1.11.1."
+        },
+        "id": "permit-console-001",
+        "issuedAt": "2026-01-02T10:00:00.000Z",
+        "metadata": {
+          "workflowId": "workflow-console-readiness"
+        },
+        "proposalId": "proposal-console-001",
+        "source": "aag"
+      },
+      "provenance": {
+        "fileName": "03-runtime-permit.json",
+        "importedAt": "2026-06-01T18:12:01.775Z",
+        "occurredAt": "2026-01-02T10:00:00.000Z",
+        "parserId": "ags.runtime-permit",
+        "parserVersion": "0.1.0",
+        "sha256": "f645d61b687c19f4c8d1b6b26984c332d491921f0e25dc761c3be757755e905c",
+        "sourcePath": "examples/continuity-console-artifacts/coherent-action-chain/03-runtime-permit.json"
+      },
+      "summary": "Runtime permit permit-console-001 for proposal proposal-console-001",
+      "warnings": []
+    }
+  ],
+  "deployment": {
+    "environment": "local",
+    "id": "local-ags-evidence",
+    "name": "Local AGS Evidence"
+  },
+  "diagnostics": [
+    {
+      "code": "artifact.malformed-json",
+      "message": "Expected ',' or '}' after property value in JSON at position 51 (line 3 column 1)",
+      "severity": "error",
+      "sourcePath": "examples/continuity-console-artifacts/malformed-json.json"
+    },
+    {
+      "code": "continuity-chain.missing-artifact",
+      "message": "Proposal proposal-console-incomplete-001 has no imported aag-decision artifact.",
+      "severity": "warning",
+      "sourcePath": "examples/continuity-console-artifacts/incomplete-chain/01-pgdl-review-missing-aag.json"
+    },
+    {
+      "code": "continuity-chain.missing-artifact",
+      "message": "Proposal proposal-console-incomplete-001 has no imported receipt artifact.",
+      "severity": "warning",
+      "sourcePath": "examples/continuity-console-artifacts/incomplete-chain/01-pgdl-review-missing-aag.json"
+    },
+    {
+      "code": "continuity-chain.missing-artifact",
+      "message": "Proposal proposal-console-incomplete-001 has no imported runtime-binding-result artifact.",
+      "severity": "warning",
+      "sourcePath": "examples/continuity-console-artifacts/incomplete-chain/01-pgdl-review-missing-aag.json"
+    },
+    {
+      "code": "continuity-chain.missing-artifact",
+      "message": "Proposal proposal-console-incomplete-001 has no imported runtime-permit artifact.",
+      "severity": "warning",
+      "sourcePath": "examples/continuity-console-artifacts/incomplete-chain/01-pgdl-review-missing-aag.json"
+    },
+    {
+      "code": "artifact.unsupported",
+      "message": "No Phase 2A parser recognized this JSON artifact.",
+      "severity": "warning",
+      "sourcePath": "examples/continuity-console-artifacts/unsupported-json.json"
+    }
+  ],
+  "generatedAt": "2026-06-01T18:12:01.775Z",
+  "schemaVersion": "ags.continuity-snapshot.v0.1"
+}

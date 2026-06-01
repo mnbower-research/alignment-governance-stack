@@ -90,4 +90,29 @@ describe("Continuity Console app", () => {
     expect(screen.getByRole("heading", { name: "Governance Memory" })).toBeTruthy();
     expect(screen.getByText("Governance Recommendations")).toBeTruthy();
   });
+
+  it("loads bundled Local Evidence Mode and makes approvals read-only", async () => {
+    const user = userEvent.setup();
+    window.fetch = async () =>
+      ({
+        ok: true,
+        json: async () => ({
+          schemaVersion: "ags.continuity-snapshot.v0.1",
+          generatedAt: "2026-01-02T00:00:00.000Z",
+          deployment: { id: "local", name: "Local Evidence", environment: "local" },
+          artifacts: [],
+          diagnostics: [],
+        }),
+      }) as Response;
+    render(<App />);
+    const navigation = screen.getByRole("navigation", { name: "Console navigation" });
+
+    await user.click(within(navigation).getByRole("button", { name: "Settings" }));
+    await user.click(screen.getByRole("button", { name: "Load bundled snapshot" }));
+    expect(screen.getByText("Local Evidence Mode")).toBeTruthy();
+
+    await user.click(within(navigation).getByRole("button", { name: "Approval Queue" }));
+    expect(screen.getByText(/Read-only view in Local Evidence Mode/)).toBeTruthy();
+    expect(screen.getAllByRole("button", { name: "Allow" })[0]).toHaveProperty("disabled", true);
+  });
 });

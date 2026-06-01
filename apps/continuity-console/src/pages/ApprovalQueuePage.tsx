@@ -3,19 +3,23 @@ import { KpiCard } from "../components/KpiCard";
 import { PageHeader } from "../components/PageHeader";
 import { Panel } from "../components/Panel";
 import { StatusBadge } from "../components/StatusBadge";
+import type { ConsoleDataMode, EvidenceConfidence } from "../lib/evidenceProjection";
 import { boolLabel } from "../lib/format";
 import type { ApprovalRequest, DeploymentManifest, ReceiptRecord } from "../types/continuity";
 
 interface ApprovalQueuePageProps {
   deployment: DeploymentManifest;
   initialRequests: ApprovalRequest[];
+  mode?: ConsoleDataMode | undefined;
+  confidence?: EvidenceConfidence | undefined;
 }
 
 type ApprovalAction = ApprovalRequest["state"];
 
-export function ApprovalQueuePage({ deployment, initialRequests }: ApprovalQueuePageProps): JSX.Element {
+export function ApprovalQueuePage({ deployment, initialRequests, mode = "sample", confidence }: ApprovalQueuePageProps): JSX.Element {
   const [requests, setRequests] = useState<ApprovalRequest[]>(initialRequests);
   const [receipts, setReceipts] = useState<ReceiptRecord[]>([]);
+  const readOnly = mode === "local-evidence";
 
   function applyAction(requestId: string, state: ApprovalAction): void {
     setRequests((currentRequests) =>
@@ -43,8 +47,10 @@ export function ApprovalQueuePage({ deployment, initialRequests }: ApprovalQueue
     <>
       <PageHeader
         title="Approval Queue"
-        description="Human review queue for sample actions. Phase 1 actions update local UI state and generate sample receipt entries only."
+        description={readOnly ? "Read-only view in Local Evidence Mode. Imported evidence cannot be approved, revised, escalated, blocked, or written back." : "Human review queue for sample actions. Actions update local UI state only."}
         deployment={deployment}
+        mode={mode}
+        confidence={confidence}
       />
       <section className="kpi-grid">
         <KpiCard label="Pending" value={requests.filter((request) => request.state === "Pending").length} detail="awaiting review" tone="amber" />
@@ -74,16 +80,17 @@ export function ApprovalQueuePage({ deployment, initialRequests }: ApprovalQueue
                 <p>{request.pgdlSummary}</p>
                 <div className="approval-actions">
                   <StatusBadge label={request.state} />
-                  <button type="button" onClick={() => applyAction(request.id, "Allowed")}>Allow</button>
-                  <button type="button" onClick={() => applyAction(request.id, "Revision Requested")}>Revise</button>
-                  <button type="button" onClick={() => applyAction(request.id, "Escalated")}>Escalate</button>
-                  <button type="button" onClick={() => applyAction(request.id, "Blocked")}>Block</button>
+                  <button type="button" disabled={readOnly} onClick={() => applyAction(request.id, "Allowed")}>Allow</button>
+                  <button type="button" disabled={readOnly} onClick={() => applyAction(request.id, "Revision Requested")}>Revise</button>
+                  <button type="button" disabled={readOnly} onClick={() => applyAction(request.id, "Escalated")}>Escalate</button>
+                  <button type="button" disabled={readOnly} onClick={() => applyAction(request.id, "Blocked")}>Block</button>
                 </div>
               </article>
             ))}
           </div>
         </Panel>
-        <Panel title="Sample Receipt Entries" eyebrow="local only">
+        <Panel title={readOnly ? "Read-Only Evidence Boundary" : "Sample Receipt Entries"} eyebrow={readOnly ? "no write-back" : "local only"}>
+          {readOnly ? <p>Local Evidence Mode does not mutate imported approvals, produce new receipts, or execute governed actions.</p> : null}
           <div className="receipt-list">
             {receipts.length === 0 ? <p>No local approval actions recorded yet.</p> : null}
             {receipts.map((receipt) => (

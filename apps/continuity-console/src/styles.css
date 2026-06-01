@@ -265,7 +265,9 @@ textarea {
 .stack-map-grid,
 .plugin-page-grid,
 .trace-grid,
-.approval-grid {
+.approval-grid,
+.settings-grid,
+.report-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 400px;
   gap: 18px;
@@ -471,6 +473,7 @@ textarea {
 
 .plugin-card-list,
 .finding-list,
+.gap-list,
 .signal-list,
 .recommendation-list,
 .receipt-list,
@@ -508,6 +511,7 @@ textarea {
 }
 
 .finding-list article,
+.gap-list article,
 .signal-list article,
 .recommendation-list article,
 .receipt-list article {
@@ -540,6 +544,60 @@ textarea {
   margin: 0;
   color: #e6eefc;
   line-height: 1.4;
+}
+
+.artifact-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(125, 147, 178, 0.14);
+}
+
+.artifact-list h4 {
+  margin: 0;
+}
+
+.artifact-list details,
+.drop-zone {
+  border: 1px solid rgba(125, 147, 178, 0.16);
+  border-radius: 8px;
+  background: rgba(8, 14, 25, 0.62);
+  padding: 12px;
+}
+
+.raw-json {
+  max-height: 340px;
+  overflow: auto;
+  border-radius: 8px;
+  background: rgba(5, 10, 20, 0.88);
+  color: #d9e6f8;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.gap-list {
+  margin-top: 18px;
+}
+
+.gap-list article > span,
+.gap-list code,
+.finding-list code {
+  color: #8ea0ba;
+}
+
+.drop-zone {
+  display: grid;
+  gap: 12px;
+  min-height: 130px;
+  place-items: center;
+  text-align: center;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 .drawer-panel {
@@ -728,6 +786,8 @@ textarea {
   .plugin-page-grid,
   .trace-grid,
   .approval-grid,
+  .settings-grid,
+  .report-grid,
   .audit-grid,
   .memory-grid {
     grid-template-columns: 1fr;

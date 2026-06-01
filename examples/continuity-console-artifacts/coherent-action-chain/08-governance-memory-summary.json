@@ -1,0 +1,27 @@
+{
+  "version": "ags.governance-memory.v1.0",
+  "id": "memory-console-001",
+  "createdAt": "2026-01-02T10:04:00.000Z",
+  "receiptCount": 1,
+  "patterns": [
+    {
+      "id": "pattern-safe-internal-draft",
+      "kind": "repeated_safe_allow",
+      "count": 1,
+      "summary": "Internal reversible draft passed through PGDL, AAG, runtime binding, and receipt."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "recommendation-review-public-claims",
+      "title": "Keep public claim review explicit",
+      "rationale": "The artifact chain supports internal drafting only.",
+      "status": "Requires Human Review"
+    }
+  ],
+  "summary": "Demo governance memory summary for one read-only imported receipt.",
+  "metadata": {
+    "proposalId": "proposal-console-001"
+  }
+}
+

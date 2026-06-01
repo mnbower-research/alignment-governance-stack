@@ -1,0 +1,34 @@
+{
+  "name": "@alignment-governance-stack/continuity-ingest",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "ags-continuity-ingest": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@alignment-governance-stack/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "vite": "^8.0.12",
+    "vitest": "^4.1.6"
+  }
+}

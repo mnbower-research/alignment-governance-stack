@@ -1,0 +1,28 @@
+{
+  "originalProposal": {
+    "id": "proposal-console-incomplete-001",
+    "userRequest": "Prepare an external announcement draft.",
+    "tool": "publishing-agent",
+    "actionType": "draft_public_claim",
+    "target": "public-blog",
+    "environment": "local",
+    "reversible": true,
+    "externalFacing": true,
+    "dataSensitivity": "medium",
+    "requiresApproval": true,
+    "knownApproval": false,
+    "metadata": {
+      "workflowId": "workflow-console-incomplete"
+    }
+  },
+  "objections": [
+    {
+      "category": "external_impact",
+      "message": "External-facing claims require authority and provenance evidence."
+    }
+  ],
+  "internalizedPrinciple": "Public claims should not advance without reviewable authority and proof.",
+  "decision": "escalate_to_human",
+  "reasonForDecision": "The action is external-facing and approval evidence is not present."
+}
+

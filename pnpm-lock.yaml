@@ -20,6 +20,9 @@ importers:
 
   apps/continuity-console:
     dependencies:
+      '@alignment-governance-stack/continuity-ingest':
+        specifier: workspace:*
+        version: link:../../packages/continuity-ingest
       '@vitejs/plugin-react':
         specifier: ^5.1.1
         version: 5.2.0(vite@8.0.12(@types/node@25.7.0))
@@ -209,6 +212,22 @@ importers:
         specifier: workspace:*
         version: link:../shared-types
     devDependencies:
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.12(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.6(@types/node@25.7.0)(jsdom@27.4.0)(vite@8.0.12(@types/node@25.7.0))
+
+  packages/continuity-ingest:
+    dependencies:
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.7.0
       vite:
         specifier: ^8.0.12
         version: 8.0.12(@types/node@25.7.0)

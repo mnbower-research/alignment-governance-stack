@@ -1,0 +1,40 @@
+{
+  "version": "ags.receipt.v0.1",
+  "id": "receipt-console-001",
+  "createdAt": "2026-01-02T10:01:00.000Z",
+  "originalProposal": {
+    "id": "proposal-console-001",
+    "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
+    "tool": "local-doc-writer",
+    "actionType": "create_draft",
+    "target": "docs/release-readiness.md",
+    "environment": "local",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {
+      "workflowId": "workflow-console-readiness"
+    }
+  },
+  "pgdl": {
+    "decision": "forward_to_aag"
+  },
+  "aag": {
+    "decision": "allow"
+  },
+  "permit": {
+    "id": "permit-console-001"
+  },
+  "runtimeBinding": {
+    "decision": "execution_allowed"
+  },
+  "finalDecision": "allow",
+  "reasonForDecision": "The governed path completed for an internal draft.",
+  "metadata": {
+    "workflowId": "workflow-console-readiness"
+  },
+  "receiptHash": "sha256:receipt-console-001"
+}
+

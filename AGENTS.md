@@ -309,4 +309,6 @@ Keep public language technical, grounded, and non-mystical. The biblical and hum
 - Do not treat mapped plugins as enforced plugins or registered plugins as safe.
 - Keep Human Agency Audit as the public-facing term.
 - Governance Memory recommendations must not silently mutate policy.
+- Imported Console evidence is read-only. The Console may normalize, display, filter, and export snapshots, but it must not edit source artifacts, mutate approvals, write policy updates, execute actions, or imply live enforcement.
+- Keep Sample Mode distinct from Local Evidence Mode. Sample data demonstrates the UI; Local Evidence Mode shows only what imported artifacts support.
 - Validate links, tests, type checks, builds, and available lint before summarizing changes.

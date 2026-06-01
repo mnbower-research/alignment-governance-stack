@@ -1,0 +1,5 @@
+{
+  "demo": true,
+  "description": "This JSON is valid but intentionally unsupported by Phase 2A parsers."
+}
+

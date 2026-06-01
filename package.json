@@ -15,7 +15,8 @@
     "cli:eval": "corepack pnpm --filter @alignment-governance-stack/cli ags eval",
     "demo:eval": "node packages/cli/dist/cli.js eval",
     "console:dev": "corepack pnpm --filter @alignment-governance-stack/continuity-console dev",
-    "console:build": "corepack pnpm --filter @alignment-governance-stack/continuity-console build"
+    "console:build": "corepack pnpm --filter @alignment-governance-stack/continuity-console build",
+    "console:sync": "node packages/continuity-ingest/dist/cli.js"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

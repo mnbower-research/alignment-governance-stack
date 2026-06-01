@@ -1,0 +1,30 @@
+{
+  "artifactId": "closure-console-001",
+  "createdAt": "2026-01-02T10:02:00.000Z",
+  "action": {
+    "actionId": "proposal-console-001",
+    "summary": "Create internal release readiness draft",
+    "proposedByAgentId": "agent-console-demo"
+  },
+  "executionBoundary": {
+    "environment": "local",
+    "runtimePermitId": "permit-console-001",
+    "runtimeBindingHash": "sha256:runtime-binding-console-001"
+  },
+  "authority": {
+    "authorityChainSummary": "Local demo authority for reversible internal documentation."
+  },
+  "decision": {
+    "decision": "allow",
+    "reason": "The action remained scoped to an internal reversible draft."
+  },
+  "conditions": [],
+  "proof": {
+    "receiptHash": "sha256:receipt-console-001",
+    "runtimeBindingHash": "sha256:runtime-binding-console-001"
+  },
+  "auditSummary": {
+    "summary": "Demo closure artifact for the continuity console local evidence path."
+  }
+}
+

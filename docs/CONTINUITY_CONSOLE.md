@@ -1,35 +1,101 @@
 # AGS Continuity Console
 
-The AGS Continuity Console is a local-first visual operator console for the Alignment Governance Stack. It is a Phase 1 dashboard shell for inspecting governed delegation across authority, substrate, semantic context, proposal formation, PGDL, AAG, runtime admissibility, execution binding, consequence, receipts, governance memory, and Human Agency Audit.
+The AGS Continuity Console is a local-first visual operator console for the Alignment Governance Stack. It inspects governed delegation across authority, substrate, semantic context, proposal formation, PGDL, AAG, runtime admissibility, execution binding, consequence, receipts, governance memory, and Human Agency Audit.
 
-The Console does not replace the AGS governance packages. It presents a visual control plane that can later consume live AGS outputs, plugin manifests, receipts, traces, and audit packets.
+The Console does not replace the AGS governance packages. It presents a visual control plane for local sample data and local imported evidence without claiming live integration, production validation, or enforcement.
 
 ## Relationship To AGS
 
-AGS is a modular reference architecture for governed delegation. The Console visualizes that architecture so a developer or organization can ask:
+AGS is a modular reference architecture for governed delegation. The Console helps a developer or organization ask:
 
 - Which required governance functions are present?
 - Which functions are missing, partial, degraded, or only declared?
-- Which plugins or external systems are mapped into the stack?
-- Which connections are observed, enforced, evidenced, tested, or red-teamed?
+- Which local artifacts support a layer, edge, trace event, or finding?
+- Which parser recognized an artifact, and what source hash proves the imported bytes?
 - Is human authority still meaningfully connected to consequence?
 
 ## Phase 1 Scope
 
-Phase 1 creates a local React, TypeScript, and Vite app under `apps/continuity-console`. It uses typed sample data for one deployment: `AGS Internal Agent Team`.
+Phase 1 created a local React, TypeScript, and Vite app under `apps/continuity-console`. It uses typed sample data for one deployment: `AGS Internal Agent Team`.
 
-Current pages:
+Sample Mode remains available and demonstrates the UI without implying live integrations.
 
-- Overview: KPI cards, 12-layer continuity graph, plugin registry summary, and critical gaps.
-- Stack Map: expanded layer and edge inspection with detail panels.
-- Continuity Gaps: structured placeholder for future gap workflow.
-- Live Action Trace: sample governed-action timeline and risk detail.
-- Approval Queue: local UI state updates for allow, revise, escalate, and block actions.
-- Human Agency Audit: sample agency scorecard, questions, radar visualization, findings, and priorities.
-- Governance Memory: sample receipt-history signals, recommendations, timeline, and Babel Velocity trend.
-- Plugins: local plugin registry with filters, manual add form, and JSON manifest import.
-- Reports: structured placeholder for future exports.
-- Settings: structured placeholder for local-only console settings.
+## Phase 2A Scope
+
+Phase 2A adds a deterministic local evidence pipeline:
+
+```text
+local AGS artifacts
+-> ingestion CLI
+-> normalized continuity snapshot JSON
+-> Console import
+-> evidence-backed graph
+-> evidence-backed gaps
+```
+
+The ingest package lives at `packages/continuity-ingest`. It reads local JSON files or directories, computes SHA-256 source hashes, runs supported parsers, correlates artifacts by proposal, permit, receipt, workflow, closure, fingerprint, and agent identifiers, and emits diagnostics for malformed or unsupported files.
+
+The normalized snapshot schema is versioned as:
+
+```text
+ags.continuity-snapshot.v0.1
+```
+
+The Console has two visible modes:
+
+- Sample Mode: typed demo data for the local UI.
+- Local Evidence Mode: read-only imported snapshots from AGS artifacts.
+
+## Supported Phase 2A Parsers
+
+Phase 2A includes parsers for AGS artifact shapes that exist in this repository or are represented by package types:
+
+- PGDL review packets
+- AAG decision packets
+- Runtime Binding permits
+- Runtime Binding results
+- Governance receipts
+- Decision Closure Artifacts
+- Agency Fingerprints
+- Governance Memory reports
+- Agency Chain maps
+- Babel Risk reports
+- Babel Velocity reports
+- Policy Profiles and Hard Boundary profiles
+- Authority Maps
+- Human Participation Quality results
+- Alignment gap report-like JSON when it has a report identifier and findings or gaps
+
+Babel Risk and Babel Velocity input fixtures are not treated as generated reports unless they use the report schema markers. Unsupported JSON receives an import diagnostic.
+
+## Local Sync
+
+Generate the bundled local snapshot from the demo fixtures:
+
+```bash
+corepack pnpm console:sync -- --source examples/continuity-console-artifacts --out apps/continuity-console/public/data/current-snapshot.json
+```
+
+Run the Console:
+
+```bash
+corepack pnpm console:dev
+```
+
+In Settings, choose Load bundled snapshot to enter Local Evidence Mode. You can also upload a normalized snapshot JSON file in the browser. Uploaded snapshots are stored only in `localStorage`.
+
+## Current Pages
+
+- Overview: KPI cards, 12-layer graph, source-mode badge, evidence confidence, and critical gaps.
+- Stack Map: layer and edge inspection with imported provenance, hashes, parser details, and raw JSON hidden behind expansion controls.
+- Continuity Gaps: deterministic evidence-backed findings with filters.
+- Live Action Trace: sample trace in Sample Mode; imported correlated trace with missing events visible in Local Evidence Mode.
+- Approval Queue: sample UI controls in Sample Mode; read-only in Local Evidence Mode.
+- Human Agency Audit: sample scorecard in Sample Mode; conservative insufficient-evidence posture unless direct imported evidence exists.
+- Governance Memory: sample signals in Sample Mode; imported summaries and human-review-only recommendations in Local Evidence Mode.
+- Plugins: local plugin registry for Sample Mode work.
+- Reports: local exports for snapshot JSON, continuity findings JSON, summary Markdown, and import diagnostics JSON.
+- Settings: bundled snapshot load, upload, clear, counts, and diagnostics.
 
 ## Current Limitations
 
@@ -40,75 +106,12 @@ Current pages:
 - No hosted SaaS infrastructure.
 - No live agent integrations.
 - No production deployment infrastructure.
+- No filesystem watcher in the browser.
+- No approval write-back.
+- No external action execution.
+- No automatic policy, authority, or participation-policy mutation.
 - Plugin registry entries do not imply safety, enforcement, testing, or production validation.
-- Governance Memory recommendations do not mutate policy.
-
-## Local Run Instructions
-
-Install dependencies if needed:
-
-```bash
-corepack pnpm install
-```
-
-Run the Console:
-
-```bash
-corepack pnpm --filter @alignment-governance-stack/continuity-console dev
-```
-
-Build the Console:
-
-```bash
-corepack pnpm --filter @alignment-governance-stack/continuity-console build
-```
-
-Run Console tests:
-
-```bash
-corepack pnpm --filter @alignment-governance-stack/continuity-console test
-```
-
-## Typed Continuity Model
-
-The Phase 1 model lives in `apps/continuity-console/src/types/continuity.ts`.
-
-It includes:
-
-- `GovernanceLayer`
-- `GovernanceEdge`
-- `ContinuityStatus`
-- `AdapterCategory`
-- `PluginManifest`
-- `DeploymentManifest`
-- `ContinuityFinding`
-- `TraceEvent`
-- `GovernedActionTrace`
-- `ApprovalRequest`
-- `ReceiptRecord`
-- `HumanAgencyAuditResult`
-- `GovernanceMemorySignal`
-- `GovernanceRecommendation`
-
-Sample data lives in `apps/continuity-console/src/data/sampleDeployment.ts`.
-
-## Continuity Analysis
-
-The Phase 1 analysis utility lives in `apps/continuity-console/src/lib/continuityAnalysis.ts`.
-
-It calculates:
-
-- layer coverage
-- edge coverage
-- continuity percentage
-- evidenced percentage
-- critical gap count
-- missing layers
-- partial layers
-- weak edges
-- recommended next steps
-
-The Overview dashboard derives KPI values from this utility rather than hardcoding the metrics directly.
+- Governance Memory recommendations require human review.
 
 ## Status Language
 
@@ -122,10 +125,18 @@ The Console must keep evidence-based status language precise:
 - `Red-Teamed` means bypass, drift, failure, or composition testing has been performed.
 - `Production-Validated` means production-grade deployment evidence exists.
 
-Do not treat mapped as enforced. Do not treat registered as safe. Do not treat sample data as live integration.
+Do not treat mapped as enforced. Do not treat local imported evidence as live connection. Do not treat sample data as production evidence.
 
-## Future Direction
+## Local Validation
 
-Future phases may connect the Console to live AGS package outputs, runtime traces, receipt stores, audit exporters, plugin SDKs, a continuity graph, retrofit workflow, and eventually a plugin marketplace.
+Useful commands:
 
-Those future directions remain intentionally deferred. Phase 1 is a local-first shell with realistic sample data and no production claims.
+```bash
+corepack pnpm install
+corepack pnpm --filter @alignment-governance-stack/continuity-ingest build
+corepack pnpm console:sync -- --source examples/continuity-console-artifacts --out apps/continuity-console/public/data/current-snapshot.json
+corepack pnpm --filter @alignment-governance-stack/continuity-console test
+corepack pnpm -r build
+corepack pnpm -r typecheck
+corepack pnpm -r test
+```

@@ -1,12 +1,15 @@
 import type { DeploymentManifest } from "../types/continuity";
+import type { ConsoleDataMode, EvidenceConfidence } from "../lib/evidenceProjection";
 
 interface PageHeaderProps {
   title: string;
   description: string;
   deployment: DeploymentManifest;
+  mode?: ConsoleDataMode | undefined;
+  confidence?: EvidenceConfidence | undefined;
 }
 
-export function PageHeader({ title, description, deployment }: PageHeaderProps): JSX.Element {
+export function PageHeader({ title, description, deployment, mode = "sample", confidence }: PageHeaderProps): JSX.Element {
   return (
     <header className="page-header">
       <div>
@@ -30,6 +33,16 @@ export function PageHeader({ title, description, deployment }: PageHeaderProps):
           <span>Last scan</span>
           <strong>{deployment.lastScanAt}</strong>
         </div>
+        <div className="scan-chip">
+          <span>Mode</span>
+          <strong>{mode === "local-evidence" ? "Local Evidence" : "Sample"}</strong>
+        </div>
+        {confidence ? (
+          <div className="scan-chip">
+            <span>Evidence confidence</span>
+            <strong>{confidence}</strong>
+          </div>
+        ) : null}
         <button type="button" className="primary-button">
           Rescan
         </button>

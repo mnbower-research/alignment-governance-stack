@@ -1,0 +1,28 @@
+{
+  "id": "permit-console-001",
+  "proposalId": "proposal-console-001",
+  "actionHash": "sha256:console-action-hash-001",
+  "allowedAction": {
+    "id": "proposal-console-001",
+    "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
+    "tool": "local-doc-writer",
+    "actionType": "create_draft",
+    "target": "docs/release-readiness.md",
+    "environment": "local",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {
+      "workflowId": "workflow-console-readiness"
+    }
+  },
+  "issuedAt": "2026-01-02T10:00:00.000Z",
+  "source": "aag",
+  "aagDecision": "allow",
+  "metadata": {
+    "workflowId": "workflow-console-readiness"
+  }
+}
+

@@ -109,7 +109,14 @@ Not every deployment needs the same implementation complexity. A low-risk local 
 
 ## AGS Continuity Console
 
-Phase 1 of the AGS Continuity Console is a local-first visual operator shell for inspecting the governed path from authority to consequence using typed sample data. It does not include live agent integrations, a backend, authentication, billing, or production deployment infrastructure. See [AGS Continuity Console](docs/CONTINUITY_CONSOLE.md).
+The AGS Continuity Console is a local-first visual operator shell for inspecting the governed path from authority to consequence. Phase 1 uses typed sample data. Phase 2A adds a deterministic local evidence ingest path that converts read-only AGS JSON artifacts into a normalized continuity snapshot for Local Evidence Mode.
+
+```bash
+corepack pnpm console:sync -- --source examples/continuity-console-artifacts --out apps/continuity-console/public/data/current-snapshot.json
+corepack pnpm console:dev
+```
+
+It does not include live agent integrations, a backend, authentication, billing, production deployment infrastructure, approval write-back, or automatic policy mutation. See [AGS Continuity Console](docs/CONTINUITY_CONSOLE.md).
 
 ## Public-Interest Commitment
 
