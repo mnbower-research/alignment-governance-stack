@@ -198,6 +198,15 @@ Integration Adapters
 - Structural Babel Detection for auditing whether capability and coordination are scaling faster than agency, discernment, authority clarity, accountability, and proof
 - Governance Absorption Capacity / Babel Velocity analysis for detecting whether meaningful human governance closure is keeping pace with risk-weighted agent decision throughput across time windows
 - Optional continuity checks inside Governance Reality Reports for asking whether governance remained coherent over time across receipts, decisions, approvals, authority, policy, and scope evidence
+- Local-first AGS Continuity Console
+- Read-only Local Evidence Mode
+- Versioned continuity snapshot schema
+- Deterministic local artifact ingestion CLI
+- SHA-256 artifact provenance
+- Parser registry with malformed and unsupported artifact diagnostics
+- Evidence-backed continuity-gap detection
+- Imported artifact trace reconstruction
+- Local JSON and Markdown continuity exports
 - Dogfood Workbench Eval Pack for realistic AGS development and enterprise financial-report workflows
 - Content Publishing Dogfood Agent for public voice, claims, provenance, approval, and runtime publishing checks
 - Content Publishing Governance Hardening for AGS public-claim agents, draft/publish boundaries, target-specific approvals, runtime substitution, and tone drift
@@ -226,6 +235,7 @@ Integration Adapters
 - `@alignment-governance-stack/cli`: dependency-light terminal CLI for local evals, governance checks, and receipt verification.
 - `@alignment-governance-stack/integration-adapters`: edge adapters for workflow systems, starting with n8n payload mappers and response helpers.
 - `@alignment-governance-stack/governance-memory`: deterministic receipt-history pattern detection and human-reviewable governance recommendations.
+- `@alignment-governance-stack/continuity-ingest`: deterministic read-only ingestion of local AGS artifacts into normalized continuity snapshots with parser provenance, SHA-256 source hashing, artifact correlation, and import diagnostics.
 
 ## Governance Memory
 
@@ -440,9 +450,9 @@ Licensed under the Apache License 2.0.
 
 ## Current Status
 
-Current version: v1.11.1
+Current version: v1.12.0
 
-v1.11.1 hardens the canonical declining closure ratio fixture and clarifies the snapshot-vs-temporal architecture language for Structural Babel Detection and Governance Absorption Capacity / Babel Velocity.
+v1.12.0 adds the local-first AGS Continuity Console and read-only local evidence-ingestion pipeline for normalized continuity snapshots, provenance, diagnostics, evidence-backed gaps, artifact-backed traces, and local exports.
 
 The core implemented AGS spine currently includes:
 
@@ -450,4 +460,6 @@ The core implemented AGS spine currently includes:
 Integration Adapters -> Company Alignment Profile Generator -> Alignment Gap Detector / Policy Conflict Analyzer -> Policy Profile with Hard Boundaries -> Authority Map / Approval Validation -> Human Participation Quality -> PGDL -> Policy Resolution -> AAG -> Runtime Binding -> Decision Closure Artifact -> Receipt -> Agency Fingerprint -> Governance Memory -> Agency Chain Mapper -> Governance Reality Reports / Audit Core -> Structural Babel Detection -> Governance Absorption Capacity / Babel Velocity -> Evaluation Suite -> Developer CLI
 ```
 
-No UI, database, auth, dashboard, LLM ingestion, SOP parser, approval storage, signatures, human identity verification, analytics dashboard, or persistent storage is included yet.
+The repository now includes a local-first AGS Continuity Console and a read-only local evidence-ingestion pipeline. The Console can visualize the governed path, inspect imported evidence, surface continuity gaps, reconstruct artifact-backed traces, and export local continuity reports.
+
+No hosted service, backend database, authentication system, billing layer, live agent integration, approval write-back, production persistence, or marketplace infrastructure is included yet.

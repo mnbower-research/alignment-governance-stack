@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.12.0 — AGS Continuity Console and Read-Only Evidence Ingestion
+
+Adds the local-first AGS Continuity Console and a deterministic read-only local evidence-ingestion pipeline.
+
+Highlights:
+- Adds a local-first visual console for inspecting the governed path from authority to consequence.
+- Adds Local Evidence Mode for read-only imported AGS artifacts.
+- Adds `@alignment-governance-stack/continuity-ingest` for normalized continuity snapshots with parser provenance, SHA-256 source hashing, artifact correlation, and import diagnostics.
+- Adds a deterministic local artifact ingestion CLI for generating bundled or operator-provided continuity snapshots.
+- Adds evidence-backed continuity-gap detection where imported artifacts support the finding.
+- Adds imported artifact trace reconstruction with missing stages shown conservatively.
+- Adds local JSON and Markdown continuity exports.
+- Documents the Console and evidence-ingestion boundary.
+
+Boundary:
+This release is local-first and read-only. It does not add a hosted service, backend database, authentication system, billing layer, live agent integration, approval write-back, production persistence, marketplace infrastructure, or production-readiness guarantee.
+
 ## v1.11.1 - Babel Velocity Fixture Hardening
 
 Hardens the canonical declining closure ratio example and clarifies the README architecture language for Structural Babel Detection and Governance Absorption Capacity.

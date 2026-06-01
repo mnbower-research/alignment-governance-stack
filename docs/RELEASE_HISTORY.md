@@ -28,7 +28,12 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.8.0 | Governance Continuity Findings | Adds optional continuity findings to Governance Reality Report; consolidates stale authority, receipt continuity, human review continuity, scope drift, policy reality mismatch, and governance maturity findings into existing audit flow | Current |
+| v1.12.0 | AGS Continuity Console and Read-Only Evidence Ingestion | Local-first Console plus read-only local artifact ingestion into normalized continuity snapshots, provenance, diagnostics, evidence-backed gaps, artifact-backed traces, and local exports | Current |
+| v1.11.1 | Babel Velocity Fixture Hardening | Canonical declining closure ratio fixture hardening and snapshot-vs-temporal architecture language clarification | Released |
+| v1.11.0 | Governance Absorption Capacity | Temporal Babel Velocity analysis over risk-weighted decision throughput and meaningful governance closure | Released |
+| v1.10.0 | Structural Babel Detection | Snapshot structural-risk reporting for capability and coordination outrunning agency, authority, accountability, and proof | Released |
+| v1.9.0 | Agency Fingerprints | Deterministic accountability-continuity fingerprints for delegated actions | Released |
+| v1.8.0 | Governance Continuity Findings | Adds optional continuity findings to Governance Reality Report; consolidates stale authority, receipt continuity, human review continuity, scope drift, policy reality mismatch, and governance maturity findings into existing audit flow | Released |
 | v1.7.2 | Content Publishing Depth Hardening | 30 calibrated publishing variants, closure completeness matrix, false-positive / false-negative examples, and report readability pass | Released |
 | v1.7.1 | Decision Closure Red-Team Hardening | Advanced closure proof failure scenario, required critical findings, and dogfood integration | Released |
 | v1.7.0 | Decision Closure Artifact | Execution-boundary proof object, validation findings, canonical hash, and CLI rendering | Released |
