@@ -40,6 +40,29 @@ describe("n8n integration adapter", () => {
     ).toThrow("target");
   });
 
+  it("preserves execution constraints from proposal and runtime fallback", () => {
+    const mapped = mapN8nActionToProposal({
+      proposal: {
+        ...safeProposal(),
+        executionConstraints: {
+          version: "execution-constraints/v0.1",
+          constraints: {
+            reportId: { type: "identifier", namespace: "report", value: "weekly_usage_summary" }
+          }
+        }
+      },
+      runtimeAction: {
+        metadata: { runtime: true }
+      }
+    });
+
+    expect(mapped.proposal.executionConstraints?.constraints.reportId).toMatchObject({
+      type: "identifier",
+      value: "weekly_usage_summary"
+    });
+    expect(mapped.runtimeAction?.executionConstraints).toEqual(mapped.proposal.executionConstraints);
+  });
+
   it("maps runtimeAction with fallback defaults", () => {
     const mapped = mapN8nActionToProposal({
       proposal: safeProposal(),
@@ -203,3 +226,4 @@ function authorityMap() {
     ]
   };
 }
+

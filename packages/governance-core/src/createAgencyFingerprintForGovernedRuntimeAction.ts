@@ -39,6 +39,11 @@ export function createAgencyFingerprintForGovernedRuntimeAction(
       ? { runtimePermitHash: fingerprintInput.runtimePermitHash }
       : packetHashes.runtimePermitHash !== undefined
         ? { runtimePermitHash: packetHashes.runtimePermitHash }
+        : {}),
+    ...(fingerprintInput.executionConstraintHash !== undefined
+      ? { executionConstraintHash: fingerprintInput.executionConstraintHash }
+      : packetHashes.executionConstraintHash !== undefined
+        ? { executionConstraintHash: packetHashes.executionConstraintHash }
         : {})
   } satisfies AgencyFingerprintInput);
 }
@@ -56,12 +61,16 @@ function derivePacketHashes(governance: GovernanceRuntimePacket): {
   pgdlPacketHash?: string;
   aagDecisionHash?: string;
   runtimePermitHash?: string;
+  executionConstraintHash?: string;
 } {
   return {
     ...(governance.pgdl !== undefined ? { pgdlPacketHash: hashGovernanceArtifact(governance.pgdl) } : {}),
     ...(governance.aag !== undefined ? { aagDecisionHash: hashGovernanceArtifact(governance.aag) } : {}),
     ...(governance.permit !== undefined
       ? { runtimePermitHash: hashGovernanceArtifact(governance.permit) }
+      : {}),
+    ...(governance.permit?.executionConstraintHash !== undefined
+      ? { executionConstraintHash: governance.permit.executionConstraintHash }
       : {})
   };
 }

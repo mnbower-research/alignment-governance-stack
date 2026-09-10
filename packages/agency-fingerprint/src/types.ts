@@ -14,6 +14,7 @@ export interface AgencyFingerprintInput {
   aagDecisionHash?: string;
   approvalRecordHash?: string;
   runtimePermitHash?: string;
+  executionConstraintHash?: string;
   actionHash: string;
   targetHash?: string;
   environment?: string;
@@ -38,6 +39,7 @@ export interface AgencyFingerprint {
   aagDecisionHash?: string;
   approvalRecordHash?: string;
   runtimePermitHash?: string;
+  executionConstraintHash?: string;
   actionHash: string;
   targetHash?: string;
   environment?: string;

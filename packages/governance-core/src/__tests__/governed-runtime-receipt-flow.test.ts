@@ -90,6 +90,42 @@ describe("runtime-bound governed flow with receipts", () => {
     expect(verifyGovernanceReceipt(result.receipt).valid).toBe(true);
   });
 
+  it("derives agency fingerprint execution constraint hash from the runtime permit", () => {
+    const proposal: AgentActionProposal = {
+      ...createSafeReportProposal(),
+      executionConstraints: {
+        version: "execution-constraints/v0.1",
+        constraints: {
+          reportId: { type: "identifier", namespace: "report", value: "weekly_usage_summary" }
+        }
+      }
+    };
+
+    const result = evaluateGovernedRuntimeActionWithReceipt({
+      proposal,
+      runtimeAction: proposal,
+      permitOptions: {
+        issuedAt: "2026-05-12T10:00:00.000Z"
+      },
+      receiptOptions: {
+        createdAt: "2026-05-12T10:00:01.000Z"
+      },
+      agencyFingerprintOptions: {
+        input: {
+          subjectHumanId: "human-founder-001",
+          subjectOrganizationId: "org-ags-labs",
+          delegatedBy: "human-founder-001",
+          agentId: "research-agent-1",
+          timestamp: "2026-05-12T10:00:02.000Z"
+        }
+      }
+    });
+
+    expect(result.governance.permit?.executionConstraintHash).toMatch(/^sha256:/);
+    expect(result.agencyFingerprint?.executionConstraintHash).toBe(result.governance.permit?.executionConstraintHash);
+    expect(verifyAgencyFingerprint(result.agencyFingerprint!).valid).toBe(true);
+  });
+
   it("produces a receipt when PGDL escalates before AAG", () => {
     const proposal: AgentActionProposal = {
       id: "unknown-production-override",
@@ -140,3 +176,4 @@ function createSafeReportProposal(): AgentActionProposal {
     metadata: {}
   };
 }
+

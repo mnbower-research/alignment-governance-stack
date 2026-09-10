@@ -124,6 +124,7 @@ export type GovernedRuntimeAgencyFingerprintInput = Omit<
   | "pgdlPacketHash"
   | "aagDecisionHash"
   | "runtimePermitHash"
+  | "executionConstraintHash"
 > &
   Partial<
     Pick<
@@ -134,6 +135,7 @@ export type GovernedRuntimeAgencyFingerprintInput = Omit<
       | "pgdlPacketHash"
       | "aagDecisionHash"
       | "runtimePermitHash"
+      | "executionConstraintHash"
     >
   >;
 

@@ -57,7 +57,7 @@ This preserves accountability without treating the agent as a moral person.
 
 - PGDL: contributes the proposal maturation packet hash.
 - AAG: contributes the gate decision hash.
-- Runtime Binding: contributes the runtime permit hash and verifies execution identity.
+- Runtime Binding: contributes the runtime permit hash, execution constraint hash when present, and verifies execution identity.
 - Receipts: store `agencyFingerprintId` and `agencyFingerprintHash` in receipt metadata when the integration path is used.
 - Authority Maps: contribute the authority map hash and approval-chain context.
 - Policy Profiles: contribute the policy profile hash used for action governance.
@@ -101,6 +101,7 @@ The fingerprint also does not prove the action was wise, ethical, compliant, or 
   "aagDecisionHash": "sha256:mock-aag-decision",
   "approvalRecordHash": "sha256:mock-founder-approval",
   "runtimePermitHash": "sha256:mock-runtime-permit",
+  "executionConstraintHash": "sha256:mock-execution-constraints",
   "actionHash": "sha256:mock-research-action",
   "targetHash": "sha256:mock-competitor-dataset",
   "environment": "staging",
@@ -131,6 +132,7 @@ const first = createAgencyFingerprint({
   pgdlPacketHash: "sha256:mock-pgdl-packet",
   aagDecisionHash: "sha256:mock-aag-decision",
   runtimePermitHash: "sha256:mock-runtime-permit",
+  executionConstraintHash: "sha256:mock-execution-constraints",
   actionHash: "sha256:mock-action",
   timestamp: "2026-05-26T12:00:00.000Z"
 });
@@ -148,3 +150,4 @@ const second = linkAgencyFingerprint(first, {
 
 const result = validateAgencyFingerprintChain([first, second]);
 ```
+

@@ -1,4 +1,5 @@
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
+import { compareExecutionConstraintSets } from "./constraints.js";
 import { createActionHash } from "./hashAction.js";
 import type {
   RuntimeBindingFailure,
@@ -53,6 +54,12 @@ export function validateRuntimePermit(
   }
 
   failures.push(...getFieldMismatchFailures(action, permit.allowedAction));
+  failures.push(
+    ...compareExecutionConstraintSets(
+      permit.executionConstraints ?? permit.allowedAction.executionConstraints,
+      action.executionConstraints
+    )
+  );
 
   if (failures.length > 0) {
     return deny(permit, failures);

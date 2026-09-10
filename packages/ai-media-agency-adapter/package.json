@@ -1,0 +1,38 @@
+{
+  "name": "@alignment-governance-stack/ai-media-agency-adapter",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@alignment-governance-stack/authority-map": "workspace:*",
+    "@alignment-governance-stack/agency-fingerprint": "workspace:*",
+    "@alignment-governance-stack/company-profile-generator": "workspace:*",
+    "@alignment-governance-stack/decision-closure": "workspace:*",
+    "@alignment-governance-stack/governance-core": "workspace:*",
+    "@alignment-governance-stack/human-participation": "workspace:*",
+    "@alignment-governance-stack/policy-profiles": "workspace:*",
+    "@alignment-governance-stack/receipts": "workspace:*",
+    "@alignment-governance-stack/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^8.0.12",
+    "vitest": "^4.1.6"
+  }
+}

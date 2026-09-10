@@ -71,6 +71,7 @@ export interface DecisionClosureExecutionBoundary {
   runtimePermitRequired: boolean;
   runtimePermitId?: string;
   runtimeBindingHash?: string;
+  executionConstraintHash?: string;
 }
 
 export interface DecisionClosureAuthority {
@@ -100,6 +101,7 @@ export interface DecisionClosureConditions {
   allowedTools?: string[];
   allowedTargets?: string[];
   prohibitedTargets?: string[];
+  executionConstraintSummary?: Record<string, unknown>;
   notes?: string[];
 }
 

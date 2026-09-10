@@ -65,6 +65,17 @@ describe("agency fingerprints", () => {
     expect(changed.fingerprintHash).not.toBe(baseline.fingerprintHash);
   });
 
+  it("includes the execution constraint hash in the fingerprint body", () => {
+    const baseline = createAgencyFingerprint(createInput());
+    const changed = createAgencyFingerprint({
+      ...createInput(),
+      executionConstraintHash: "hash:execution-constraints-2"
+    });
+
+    expect(baseline.executionConstraintHash).toBe("hash:execution-constraints");
+    expect(changed.fingerprintHash).not.toBe(baseline.fingerprintHash);
+  });
+
   it("fails validation when delegatedBy is missing", () => {
     const fingerprint = createAgencyFingerprint({
       ...createInput(),
@@ -192,6 +203,7 @@ function createInput(): AgencyFingerprintInput {
     aagDecisionHash: "hash:aag-decision",
     approvalRecordHash: "hash:approval-record",
     runtimePermitHash: "hash:runtime-permit",
+    executionConstraintHash: "hash:execution-constraints",
     actionHash: "hash:action-1",
     targetHash: "hash:target-1",
     environment: "staging",
@@ -201,3 +213,4 @@ function createInput(): AgencyFingerprintInput {
     }
   };
 }
+

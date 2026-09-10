@@ -45,7 +45,9 @@ AGS v0.9.0 does not ship a hosted API. Current supported integration paths are:
 - import and call `@alignment-governance-stack/integration-adapters` from an internal wrapper
 - later, call a hosted API wrapper that your deployment owns
 
-The adapter response is intentionally friendly to n8n’s JSON pipeline:
+Adapters should place execution-authoritative domain values in `AgentActionProposal.executionConstraints`; metadata is review context only. Only values represented as canonical bound execution constraints are protected as domain-specific execution-authoritative values by Runtime Binding. Ordinary metadata remains non-authoritative.
+
+The adapter response is intentionally friendly to n8nâ€™s JSON pipeline:
 
 ```json
 {
@@ -95,3 +97,4 @@ Likely future adapters include:
 - database tools
 - generic HTTP proxy
 - workflow-specific approval systems
+

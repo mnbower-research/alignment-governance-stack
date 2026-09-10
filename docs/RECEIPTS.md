@@ -29,6 +29,7 @@ Receipt v0.1 preserves:
 - what proposal was actually sent to AAG
 - what AAG decided
 - whether a runtime permit was issued
+- any runtime permit execution constraint hash and canonical constraints
 - whether a runtime action matched the permit
 - what the final AGS decision was
 - when the receipt was created
@@ -36,6 +37,7 @@ Receipt v0.1 preserves:
 
 Receipt hashes use Node `crypto` SHA-256 over canonical JSON. The canonical serializer recursively sorts object keys, preserves array order, removes undefined and function values from the hash representation, keeps null values, and excludes the top-level `receiptHash` field before hashing.
 
-Receipts do not execute actions, approve execution, write to disk, or store anything in a database. They are an in-memory proof artifact in v0.1.
+Receipts do not execute actions, approve execution, write to disk, or store anything in a database. Only values represented as canonical bound execution constraints are protected as domain-specific execution-authoritative values by Runtime Binding. Ordinary metadata remains non-authoritative. They are an in-memory proof artifact in v0.1.
 
 Future work can add persistent storage, signing, export formats, receipt-chain navigation, and dashboard views without changing the PGDL, AAG, or Runtime Binding responsibilities.
+

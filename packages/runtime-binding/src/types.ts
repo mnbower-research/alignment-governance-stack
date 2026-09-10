@@ -1,4 +1,7 @@
-import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
+import type {
+  AgentActionProposal,
+  ExecutionConstraintSet
+} from "@alignment-governance-stack/shared-types";
 
 export type RuntimeBindingDecision = "execution_allowed" | "execution_denied";
 
@@ -14,7 +17,14 @@ export type RuntimeBindingFailureCode =
   | "reversibility_mismatch"
   | "external_impact_mismatch"
   | "data_sensitivity_mismatch"
-  | "approval_requirement_mismatch";
+  | "approval_requirement_mismatch"
+  | "execution_constraint_missing"
+  | "execution_constraint_unexpected"
+  | "execution_constraint_value_mismatch"
+  | "execution_constraint_type_mismatch"
+  | "execution_constraint_range_expansion"
+  | "execution_constraint_set_expansion"
+  | "execution_constraint_time_window_expansion";
 
 export interface RuntimeBindingFailure {
   code: RuntimeBindingFailureCode;
@@ -27,6 +37,8 @@ export interface RuntimePermit {
   id: string;
   proposalId: string;
   actionHash: string;
+  executionConstraintHash?: string;
+  executionConstraints?: ExecutionConstraintSet;
   allowedAction: AgentActionProposal;
   issuedAt: string;
   expiresAt?: string;
@@ -62,4 +74,5 @@ export type RuntimeBindingActionField =
   | "externalFacing"
   | "dataSensitivity"
   | "requiresApproval"
-  | "knownApproval";
+  | "knownApproval"
+  | "executionConstraints";

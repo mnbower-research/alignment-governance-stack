@@ -37,6 +37,29 @@ describe("Decision Closure Artifact", () => {
     expect(canonicalizeDecisionClosureArtifact(artifact)).toBe(canonicalizeDecisionClosureArtifact(artifact));
   });
 
+  it("preserves execution constraint evidence in closure boundaries and conditions", () => {
+    const artifact = createDecisionClosureArtifact({
+      ...allowedInput(),
+      executionBoundary: {
+        ...allowedInput().executionBoundary,
+        executionConstraintHash: "sha256:constraint-hash"
+      },
+      conditions: {
+        ...allowedInput().conditions,
+        executionConstraintSummary: {
+          executionConstraintHash: "sha256:constraint-hash",
+          constraintKeys: ["budgetAmount", "budgetCurrency"]
+        }
+      }
+    });
+
+    expect(artifact.executionBoundary.executionConstraintHash).toBe("sha256:constraint-hash");
+    expect(artifact.conditions.executionConstraintSummary).toMatchObject({
+      executionConstraintHash: "sha256:constraint-hash"
+    });
+    expect(validateDecisionClosureArtifact(artifact).valid).toBe(true);
+  });
+
   it("validates a low-risk unsigned allowed artifact as valid", () => {
     const artifact = createDecisionClosureArtifact(allowedInput());
     const validation = validateDecisionClosureArtifact(artifact);
@@ -361,3 +384,4 @@ function ultimateBypassInput(): DecisionClosureArtifactInput {
     }
   };
 }
+

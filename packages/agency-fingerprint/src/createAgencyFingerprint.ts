@@ -51,6 +51,7 @@ function buildFingerprintBody(input: AgencyFingerprintInput): Omit<
     ...(input.aagDecisionHash !== undefined ? { aagDecisionHash: input.aagDecisionHash } : {}),
     ...(input.approvalRecordHash !== undefined ? { approvalRecordHash: input.approvalRecordHash } : {}),
     ...(input.runtimePermitHash !== undefined ? { runtimePermitHash: input.runtimePermitHash } : {}),
+    ...(input.executionConstraintHash !== undefined ? { executionConstraintHash: input.executionConstraintHash } : {}),
     actionHash: input.actionHash,
     ...(input.targetHash !== undefined ? { targetHash: input.targetHash } : {}),
     ...(input.environment !== undefined ? { environment: input.environment } : {}),

@@ -86,6 +86,43 @@ describe("runtime-bound governed flow", () => {
     expect(packet.finalDecision).toBe("execution_denied");
   });
 
+  it("binds PGDL revised execution constraints and denies the original constrained action", () => {
+    const proposal: AgentActionProposal = {
+      id: "external-email-send-with-recipient-constraint",
+      userRequest: "Send an update to the customer.",
+      tool: "email.send",
+      actionType: "send_email",
+      target: "external_customer",
+      environment: "staging",
+      reversible: false,
+      externalFacing: true,
+      dataSensitivity: "medium",
+      requiresApproval: true,
+      knownApproval: false,
+      executionConstraints: {
+        version: "execution-constraints/v0.1",
+        constraints: {
+          recipient: { type: "identifier", namespace: "crm.customer", value: "customer-123" },
+          channel: { type: "exact_string", value: "email" }
+        }
+      },
+      metadata: {}
+    };
+
+    const deniedPacket = evaluateGovernedRuntimeAction({ proposal, runtimeAction: proposal });
+    const allowedPacket = evaluateGovernedRuntimeAction({
+      proposal,
+      runtimeAction: deniedPacket.proposalSentToAag
+    });
+
+    expect(deniedPacket.pgdl?.decision).toBe("revise_before_aag");
+    expect(deniedPacket.permit?.executionConstraintHash).toMatch(/^sha256:/);
+    expect(deniedPacket.runtimeBinding?.allowed).toBe(false);
+    expect(deniedPacket.runtimeBinding?.failures.map((failure) => failure.code)).toContain("action_hash_mismatch");
+    expect(allowedPacket.runtimeBinding?.allowed).toBe(true);
+    expect(allowedPacket.finalDecision).toBe("execution_allowed");
+  });
+
   it("stops before permit when PGDL escalates", () => {
     const proposal: AgentActionProposal = {
       id: "unknown-production-override",
@@ -152,3 +189,4 @@ function createSafeReportProposal(): AgentActionProposal {
     metadata: {}
   };
 }
+

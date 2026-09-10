@@ -4,6 +4,7 @@ import type {
   AgentActionProposal,
   PgdlPacket
 } from "@alignment-governance-stack/shared-types";
+import { createRuntimePermit } from "@alignment-governance-stack/runtime-binding";
 import {
   createGovernanceReceipt,
   hashGovernanceReceipt,
@@ -79,6 +80,28 @@ describe("governance receipts", () => {
     expect(chained.receiptHash).not.toBe(base.receiptHash);
   });
 
+  it("preserves runtime permits with bound execution constraint evidence", () => {
+    const proposal = createConstrainedProposal();
+    const receipt = createGovernanceReceipt({
+      governancePacket: {
+        ...createGovernancePacket(),
+        originalProposal: proposal,
+        proposalSentToAag: proposal,
+        permit: createRuntimePermit(proposal, { issuedAt: "2026-05-12T10:00:00.000Z" }),
+        runtimeAction: proposal,
+        finalDecision: "execution_allowed"
+      },
+      createdAt: "2026-05-12T10:00:01.000Z"
+    });
+
+    expect(receipt.permit?.executionConstraintHash).toMatch(/^sha256:/);
+    expect(receipt.permit?.allowedAction.executionConstraints?.constraints.budgetAmount).toMatchObject({
+      type: "exact_number",
+      value: 25
+    });
+    expect(verifyGovernanceReceipt(receipt).valid).toBe(true);
+  });
+
   it("ignores object key order when hashing receipt-like objects", () => {
     const first = hashGovernanceReceipt({
       id: "receipt-key-order",
@@ -148,3 +171,23 @@ function createSafeReportProposal(): AgentActionProposal {
     metadata: {}
   };
 }
+
+function createConstrainedProposal(): AgentActionProposal {
+  return {
+    ...createSafeReportProposal(),
+    id: "constrained-simulated-spend",
+    tool: "ads.sandbox.create_campaign",
+    actionType: "create_paid_content_test",
+    target: "virtual-property-b/content-test-001/audience-segment-alpha",
+    requiresApproval: true,
+    knownApproval: true,
+    executionConstraints: {
+      version: "execution-constraints/v0.1",
+      constraints: {
+        budgetAmount: { type: "exact_number", value: 25 },
+        budgetCurrency: { type: "exact_string", value: "USD" }
+      }
+    }
+  };
+}
+

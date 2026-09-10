@@ -36,6 +36,7 @@ function normalizeProposal(
   const tool = requireString(source.tool ?? fallback?.tool, "tool");
   const actionType = requireString(source.actionType ?? fallback?.actionType, "actionType");
   const target = requireString(source.target ?? fallback?.target, "target");
+  const executionConstraints = source.executionConstraints ?? fallback?.executionConstraints;
 
   return {
     id: normalizeString(source.id ?? fallback?.id) ?? `n8n-action-${Date.now()}`,
@@ -49,6 +50,7 @@ function normalizeProposal(
     dataSensitivity: normalizeDataSensitivity(source.dataSensitivity ?? fallback?.dataSensitivity),
     requiresApproval: source.requiresApproval ?? fallback?.requiresApproval ?? false,
     knownApproval: source.knownApproval ?? fallback?.knownApproval ?? false,
+    ...(executionConstraints !== undefined ? { executionConstraints } : {}),
     metadata: {
       ...(inputMetadata ?? {}),
       ...(fallback?.metadata ?? {}),
