@@ -139,3 +139,7 @@ Original proposal
 ```
 
 Receipts do not execute actions and do not approve execution. They answer the audit question: what proof remains?
+
+## Context Admission
+
+The Semantic Context and Admissibility function now evaluates material inherited information before PGDL. Context must not outrun provenance. Optional context requests preserve existing callers; Context Admission never approves execution. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).

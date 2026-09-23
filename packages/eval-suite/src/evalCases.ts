@@ -1,3 +1,4 @@
+import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
 import { defaultAuthorityMap } from "@alignment-governance-stack/authority-map";
 import { defaultPolicyProfile } from "@alignment-governance-stack/policy-profiles";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
@@ -377,6 +378,8 @@ function createApprovalEvidence(approverRoleId: string) {
     id: `approval-${approverRoleId}`,
     approverId: "human-reviewer-1",
     approverRoleId,
-    approvedAt: "2026-05-14T09:00:00.000Z"
+    binding: createApprovalBinding(approvalRequiredReport),
+    approvedAt: "2026-05-14T09:00:00.000Z",
+    expiresAt: "2030-01-01T00:00:00.000Z"
   };
 }

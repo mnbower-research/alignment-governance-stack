@@ -28,14 +28,14 @@ export function StackMapPage({ deployment, mode = "sample", confidence, artifact
   return (
     <>
       <PageHeader
-        title="Stack Map"
+        title="Advanced Architecture Map"
         description="Inspect governance layers, plugin attachments, and boundary edges without implying live integration where evidence is missing."
         deployment={deployment}
         mode={mode}
         confidence={confidence}
       />
       <section className="stack-map-grid">
-        <Panel title="Expanded Continuity Graph" eyebrow="click a layer or edge">
+        <Panel title="Expanded Continuity Graph" eyebrow="advanced drill-down">
           <GovernanceGraph
             deployment={deployment}
             selectedLayerId={selectedLayer.id}
@@ -44,8 +44,8 @@ export function StackMapPage({ deployment, mode = "sample", confidence, artifact
             onEdgeSelect={setSelectedEdge}
           />
         </Panel>
-        <aside className="drawer-panel">
-          <Panel title="Layer Detail" eyebrow={`Layer ${selectedLayer.order}`}>
+        <aside className="drawer-panel stack-inspector">
+          <Panel title="Summary" eyebrow={`Layer ${selectedLayer.order}`}>
             <div className="drawer-title-row">
               <h3>{selectedLayer.name}</h3>
               <StatusBadge label={selectedLayer.status} />
@@ -53,23 +53,35 @@ export function StackMapPage({ deployment, mode = "sample", confidence, artifact
             <DetailList
               items={[
                 ["Purpose", selectedLayer.purpose],
-                ["Connected plugins", selectedPlugins.map((plugin) => plugin.name)],
-                ["Upstream dependencies", selectedLayer.upstreamDependencies],
-                ["Downstream guarantees", selectedLayer.downstreamGuarantees],
-                ["Evidence sources", selectedLayer.evidenceSources],
-                ["Known gaps", selectedLayer.knownGaps],
                 ["Current status", selectedLayer.status],
+                ["Imported artifact count", mode === "local-evidence" ? String(selectedArtifacts.length) : "Sample Mode"],
+                ["Confidence", confidence ?? (mode === "sample" ? "Partial" : "Insufficient")],
               ]}
             />
+          </Panel>
+          <Panel title="Why it matters" eyebrow="operator context">
+            <p>{selectedLayer.purpose}</p>
+          </Panel>
+          <Panel title="Evidence" eyebrow="visible proof">
+            <DetailList items={[["Evidence sources", selectedLayer.evidenceSources.length > 0 ? selectedLayer.evidenceSources : ["No evidence source attached"]]]} />
+          </Panel>
+          <Panel title="Known gaps" eyebrow="operator review">
+            <DetailList items={[["Known gaps", selectedLayer.knownGaps.length > 0 ? selectedLayer.knownGaps : ["No known gap listed"]]]} />
+          </Panel>
+          <Panel title="Recommended next step" eyebrow="human review">
+            <p>{selectedLayer.knownGaps.length > 0 ? "Review the listed gaps and attach supporting evidence before claiming the layer is verified." : "Keep this layer under ordinary review and inspect related evidence when the deployment changes."}</p>
+          </Panel>
+          <Panel title="Technical details" eyebrow="source, parser, hashes">
             {mode === "local-evidence" ? (
               <div className="artifact-list">
-                <h4>Imported Provenance</h4>
-                {selectedArtifacts.length === 0 ? <p>No supported artifact is mapped to this layer.</p> : null}
+                <h4>Related Artifacts</h4>
+                {selectedArtifacts.length === 0 ? <p>Not Demonstrated: no supported artifact is mapped to this layer.</p> : null}
                 {selectedArtifacts.map((artifact) => (
                   <details key={artifact.id}>
-                    <summary>{artifact.summary}</summary>
+                    <summary>{artifact.provenance.fileName}</summary>
                     <DetailList
                       items={[
+                        ["Summary", artifact.summary],
                         ["Artifact kind", artifact.kind],
                         ["Artifact ID", artifact.id],
                         ["Source path", artifact.provenance.sourcePath],
@@ -85,10 +97,19 @@ export function StackMapPage({ deployment, mode = "sample", confidence, artifact
                   </details>
                 ))}
               </div>
-            ) : null}
+            ) : <p>Sample Mode has no imported hashes, parser IDs, or source paths.</p>}
+          </Panel>
+          <Panel title="Assumptions and Guarantees" eyebrow="architecture claim hygiene">
+            <DetailList
+              items={[
+                ["Connected plugins", selectedPlugins.map((plugin) => plugin.name)],
+                ["Upstream dependencies", selectedLayer.upstreamDependencies],
+                ["Downstream guarantees", selectedLayer.downstreamGuarantees],
+              ]}
+            />
           </Panel>
           {selectedEdge ? (
-            <Panel title="Edge Detail" eyebrow="boundary inspection">
+            <Panel title="Edge Evidence" eyebrow="boundary inspection">
               <div className="drawer-title-row">
                 <h3>
                   {deployment.layers.find((layer) => layer.id === selectedEdge.sourceLayerId)?.shortName} to{" "}
@@ -111,6 +132,15 @@ export function StackMapPage({ deployment, mode = "sample", confidence, artifact
               />
             </Panel>
           ) : null}
+          <Panel title="Parser Diagnostics" eyebrow="layer scope">
+            <div className="state-grid">
+              <div>
+                <strong>Artifact warnings</strong>
+                <StatusBadge label={selectedArtifacts.some((artifact) => artifact.warnings.length > 0) ? "Partial" : "Not Demonstrated"} />
+              </div>
+            </div>
+            <p>{selectedArtifacts.some((artifact) => artifact.warnings.length > 0) ? "One or more related artifacts includes parser warnings." : "No parser warnings are attached to the selected layer artifacts."}</p>
+          </Panel>
         </aside>
       </section>
     </>

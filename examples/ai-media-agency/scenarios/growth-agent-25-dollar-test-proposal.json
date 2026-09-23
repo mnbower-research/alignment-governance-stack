@@ -1,0 +1,49 @@
+{
+  "id": "growth-agent-25-dollar-virtual-property-b-test",
+  "objectiveId": "objective-profitable-ai-influencer-properties",
+  "propertyId": "virtual-property-b",
+  "agentId": "growth-agent-001",
+  "agentRole": "growth_monetization",
+  "businessActionType": "paid_content_test",
+  "campaignId": "campaign-virtual-property-b-test-001",
+  "contentId": "content-test-001",
+  "platform": "sandbox-ads",
+  "tool": "ads.sandbox.create_campaign",
+  "actionType": "create_paid_content_test",
+  "target": "virtual-property-b/content-test-001/audience-segment-alpha",
+  "environment": "staging",
+  "budgetAmount": 25,
+  "budgetCurrency": "USD",
+  "expectedOutcome": "Simulate a USD 25 paid content test for Virtual Property B content-test-001 against audience segment alpha.",
+  "experimentWindow": {
+    "startsAt": "2026-09-10T10:00:00.000Z",
+    "endsAt": "2026-09-17T10:00:00.000Z"
+  },
+  "reversible": true,
+  "externalFacing": false,
+  "dataSensitivity": "low",
+  "requiresApproval": true,
+  "knownApproval": false,
+  "risk": {
+    "risks": [
+      "Could normalize spend-like action without exact CEO approval.",
+      "Could later be confused with live platform execution if not clearly simulation-only."
+    ],
+    "objections": [
+      "Budget and campaign details are metadata-only in the current Runtime Binding contract.",
+      "The test must not call an ad platform or use payment credentials."
+    ],
+    "alternatives": [
+      "Create a no-spend content draft.",
+      "Run organic-only simulated analytics.",
+      "Ask CEO to revise target or budget before simulation."
+    ],
+    "rollbackPlan": "No live side effects exist; delete or mark the simulation record superseded."
+  },
+  "metadata": {
+    "audience": "audience-segment-alpha",
+    "syntheticPersonaDisclosure": "Virtual Property B is a synthetic/AI identity.",
+    "phase": "1",
+    "simulationOnly": true
+  }
+}

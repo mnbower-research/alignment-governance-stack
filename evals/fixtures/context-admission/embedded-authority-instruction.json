@@ -1,0 +1,8 @@
+{
+  "id": "embedded-authority-instruction",
+  "inputPath": "examples/context-admission/embedded-authority-instruction.json",
+  "expectedDecision": "reject",
+  "expectedFindings": [
+    "content_not_authority"
+  ]
+}

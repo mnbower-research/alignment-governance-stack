@@ -1,0 +1,8 @@
+{
+  "id": "low-risk-reference",
+  "inputPath": "examples/context-admission/low-risk-reference.json",
+  "expectedDecision": "admit_restricted",
+  "expectedFindings": [
+    "authority_not_demonstrated"
+  ]
+}

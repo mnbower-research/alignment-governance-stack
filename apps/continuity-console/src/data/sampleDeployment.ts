@@ -585,6 +585,12 @@ export const sampleTrace: GovernedActionTrace = {
   scope: "draft-only, no external publishing",
   reversible: true,
   approvalSource: "Release owner approval, target-bound",
+  risks: [
+    { title: "Stale authority record", explanation: "Last review window is sample-only", severity: "Medium" },
+    { title: "Missing target binding", explanation: "One path lacks target-bound evidence", severity: "High" },
+    { title: "Scope drift watch", explanation: "Observed parameter variance", severity: "Medium" },
+    { title: "Receipt pending", explanation: "Evidence pipeline lagging", severity: "Low" },
+  ],
   events: [
     { id: "trace-1", label: "Proposal Received", status: "Observed", decision: "Accepted for review", timestamp: "09:01:11", payloadSummary: "Agent requested a draft announcement workflow." },
     { id: "trace-2", label: "PGDL Revision Requested", status: "Evidenced", decision: "Revise before AAG", timestamp: "09:01:19", payloadSummary: "PGDL objected to external-facing ambiguity." },

@@ -1,4 +1,5 @@
 import type { ArtifactParser } from "../types.js";
+import { contextAdmissionParser } from "./contextAdmissionParser.js";
 import { createArtifact, hasAgentActionShape, isRecord, isString } from "../parserHelpers.js";
 
 function decisionLike(value: unknown, allowed: string[]): boolean {
@@ -133,6 +134,7 @@ export const receiptParser: ArtifactParser = {
     );
   },
   parse(input, context) {
+    if (!receiptParser.canParse(input, "")) throw new Error("Incomplete receipt envelope.");
     const record = input as Record<string, unknown>;
     return [
       createArtifact(
@@ -144,6 +146,7 @@ export const receiptParser: ArtifactParser = {
         `Receipt ${String(record["id"])} recorded final decision ${String(record["finalDecision"])}`,
         isString(record["createdAt"]) ? record["createdAt"] : undefined,
       ),
+      ...(record["contextAdmission"] !== undefined ? contextAdmissionParser.parse(record["contextAdmission"], context) : []),
     ];
   },
 };

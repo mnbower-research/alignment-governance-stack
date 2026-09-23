@@ -267,7 +267,12 @@
     "approvedAt": "2026-05-14T09:00:00.000Z",
     "expiresAt": "2030-01-01T00:00:00.000Z",
     "approvalKind": "author_final_publish",
-    "reason": "Author owner reviewed the post scope, public claims, tone, provenance, and publication target."
+    "reason": "Author owner reviewed the post scope, public claims, tone, provenance, and publication target.",
+    "binding": {
+      "proposalId": "content-publish-approved-blog-post",
+      "userRequest": "Publish the reviewed AGS borrowed agency blog post to AlignmentTheory.org.",
+      "actionHash": "sha256:a08530b37e9636d3a26699658547b569899342713528e727edc15394a8f03331"
+    }
   },
   "humanParticipation": {
     "input": {
@@ -296,5 +301,8 @@
   "receiptOptions": {
     "id": "content-publish-approved-blog-post",
     "createdAt": "2026-05-14T12:02:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
   }
 }

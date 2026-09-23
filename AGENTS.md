@@ -14,6 +14,12 @@ Proposal must not outrun objection.
 
 Action must not outrun discernment.
 
+Execution must not outrun authorization.
+
+Memory must not outrun human review.
+
+Context must not outrun provenance.
+
 ## Alignment Spine
 
 The technical stack is mapped to a human and biblical developmental arc:
@@ -44,20 +50,15 @@ Keep public language technical, grounded, and non-mystical. The biblical and hum
 
 ## Technical Stack
 
-1. PGDL, Pre-Gate Deliberation Layer
-2. AAG, Agent Action Gate
-3. Runtime Binding
-4. Receipts
-5. Evals
-6. Policy Profiles
-7. Dashboard, later
-8. Integration Adapters, later
-9. Company Alignment Profile Generator, later
+Preserve the 12 functions documented in `docs/MODULAR_ARCHITECTURE.md`: Human and Organizational Authority; Governance Substrate; Semantic Context and Admissibility; Agent Reasoning and Proposal Formation; PGDL; AAG; Business-Level Runtime Admissibility; Machine-Level Execution Binding; Execution Environments and Consequence; Receipts and Evidence; Governance Memory and Internalization; Human Agency Audit.
+
+Context Admission implements Semantic Context and Admissibility; it is not a new top-level layer. Business-Level Runtime Admissibility remains an architectural function, not a separately implemented general-purpose package.
 
 ## Architecture Flow
 
 ```text
 User goal
+-> Context Admission for inherited material information
 -> Agent proposal
 -> PGDL
 -> Resolved proposal or escalation
@@ -66,6 +67,8 @@ User goal
 -> Runtime Binding
 -> Execution
 -> Receipt / audit trail
+-> Governance Memory under human review
+-> Human Agency Audit
 ```
 
 ## PGDL
@@ -144,7 +147,7 @@ Runtime Binding must prevent:
 
 Receipts preserve proof after decisions.
 
-Receipts should eventually answer:
+Receipts preserve supplied evidence for these questions (durable storage and external execution proof remain host responsibilities):
 
 - What was proposed?
 - What objections were raised?
@@ -165,27 +168,49 @@ Receipts should eventually answer:
 - Do not describe PGDL as conscious, sentient, alive, or self-aware.
 - Describe PGDL as a proposal maturation, objection, and discernment layer.
 
-## Initial Repository Target
+## Implemented Repository
 
 Use a TypeScript pnpm monorepo.
 
-Expected packages:
+Implemented packages (see README Package Map for responsibilities):
 
 - `packages/shared-types`
+- `packages/context-admission`
 - `packages/pgdl-core`
 - `packages/aag-core`
 - `packages/runtime-binding`
-
-Likely future packages:
-
+- `packages/governance-core`
 - `packages/receipts`
-- `packages/evals`
+- `packages/decision-closure`
+- `packages/agency-fingerprint`
+- `packages/eval-suite`
 - `packages/policy-profiles`
-- `packages/dashboard`
-- `packages/integrations`
-- `packages/alignment-profile-generator`
+- `packages/authority-map`
+- `packages/human-participation`
+- `packages/governance-memory`
+- `packages/agency-chain`
+- `packages/audit-core`
+- `packages/babel-risk`
+- `packages/integration-adapters`
+- `packages/ai-media-agency-adapter` (simulation only)
+- `packages/company-profile-generator`
+- `packages/continuity-ingest`
+- `packages/cli`
 
-Do not add future packages until requested.
+`apps/continuity-console` implements the local operator UI with separate Sample and read-only Local Evidence modes. Do not add speculative packages or new live adapters unless requested. Project milestone versions and individual package versions are separate; do not synchronize them automatically.
+
+## Governed Information Inheritance
+
+- A persistent artifact is a handoff across time. Persistence does not preserve authority.
+- Context Admission checks supplied evidence before material information becomes operational context; it never approves execution.
+- Keep source/validator/authority recognition and the evaluation clock host-controlled, separate from retrieved content.
+- Missing provenance is an evidence gap, not proof of maliciousness.
+- Prior admission, approval and validation do not automatically apply to another receiver, purpose, target or time.
+- Inspect ancestor restrictions and transformation lineage; do not launder restricted parents through summaries.
+- Preserve context references and digests in receipts and fingerprints, not full context payloads.
+- Governance Memory history is not automatically admissible operational memory.
+- Do not claim all model tokens, hidden dependencies, source identities, live revocations or semantic transformations are verified.
+- Imported Context Admission decisions are historical read-only evidence, not new approvals or live enforcement.
 
 ## Technical Standards
 
@@ -199,7 +224,7 @@ Do not add future packages until requested.
 - no unnecessary abstractions
 - no hidden LLM calls
 - no provider-specific code unless requested
-- no UI unless requested
+- no new UI unless requested; preserve the implemented Continuity Console
 - no database unless requested
 - no auth unless requested
 - no Stripe unless requested
@@ -233,6 +258,7 @@ Preserve these concepts as the repository evolves.
 - `dataSensitivity`
 - `requiresApproval`
 - `knownApproval`
+- `executionConstraints` (optional exact runtime constraints)
 - `metadata`
 
 ### PgdlObjection Categories

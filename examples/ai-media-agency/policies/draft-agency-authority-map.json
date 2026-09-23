@@ -1,0 +1,103 @@
+{
+  "id": "ai-media-agency.phase1.authority",
+  "name": "AI Media Agency Phase 1 Authority Map",
+  "version": "authority.map.ai-media-agency.phase1-draft",
+  "description": "DRAFT authority map. CEO is the only Phase 1 approval authority; operational agents may request approval but may not approve.",
+  "defaultApprovalTtlMinutes": 60,
+  "roles": [
+    {
+      "id": "ceo",
+      "label": "CEO / Human Principal",
+      "description": "Only Phase 1 approval authority with emergency stop, refuse, revise, halt, and escalation authority over all agency operations.",
+      "scopes": [
+        {
+          "id": "ceo_phase1_sandbox_spend",
+          "tool": "ads.sandbox.create_campaign",
+          "actionType": "create_paid_content_test",
+          "environment": "staging",
+          "externalFacing": false,
+          "reversible": true,
+          "maxDataSensitivity": "low",
+          "approvalKinds": ["simulated_spend_test"],
+          "notes": "Can approve exact single-use simulation-only spend tests up to USD 25."
+        },
+        {
+          "id": "ceo_phase1_emergency_stop",
+          "actionType": "emergency_stop",
+          "notes": "Can stop, refuse, revise, halt, or escalate any agency operation."
+        },
+        {
+          "id": "ceo_phase1_live_spend_review_owner",
+          "tool": "ads.live.create_campaign",
+          "environment": "production",
+          "externalFacing": true,
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries still block live spend."
+        },
+        {
+          "id": "ceo_phase1_public_post_review_owner",
+          "tool": "social.publish",
+          "externalFacing": true,
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries still block public posting."
+        },
+        {
+          "id": "ceo_phase1_external_dm_review_owner",
+          "tool": "social.dm.send",
+          "externalFacing": true,
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries still block external direct messages."
+        },
+        {
+          "id": "ceo_phase1_credential_access_review_owner",
+          "tool": "credentials.access",
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries still block credential access."
+        },
+        {
+          "id": "ceo_phase1_policy_mutation_review_owner",
+          "tool": "policy.modify",
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries still block operational-agent policy mutation."
+        },
+        {
+          "id": "ceo_phase1_agent_self_approval_review_owner",
+          "tool": "approval.self",
+          "actionType": "approve_own_action",
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; operational agents may not approve their own proposals."
+        },
+        {
+          "id": "ceo_phase1_synthetic_identity_review_owner",
+          "actionType": "impersonate_real_person",
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries block unconsented real-person impersonation."
+        },
+        {
+          "id": "ceo_phase1_fabricated_claims_review_owner",
+          "actionType": "fabricate_human_experience_claim",
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries block fabricated human credentials and experience claims."
+        },
+        {
+          "id": "ceo_phase1_sensitive_data_review_owner",
+          "dataSensitivity": "high",
+          "targetIncludes": "sensitive_personal_data",
+          "approvalKinds": ["blocked_surface_review"],
+          "notes": "Review/refuse/escalate owner only; Phase 1 hard boundaries block sensitive personal data workflows."
+        }
+      ],
+      "canOverrideHardBoundaries": false,
+      "metadata": {
+        "phase": "1",
+        "onlyApprovalAuthority": true
+      }
+    }
+  ],
+  "metadata": {
+    "status": "draft_for_ceo_review",
+    "humanReviewed": false,
+    "phase": "1",
+    "operationalAgentsMayApprove": false
+  }
+}

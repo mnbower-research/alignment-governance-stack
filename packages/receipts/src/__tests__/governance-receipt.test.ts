@@ -191,3 +191,10 @@ function createConstrainedProposal(): AgentActionProposal {
   };
 }
 
+
+// A hash alone must not turn an incomplete envelope into complete evidence.
+it("rejects a self-hashed receipt without its required envelope", async () => {
+  const { hashGovernanceReceipt, verifyGovernanceReceipt } = await import("../index.js");
+  const value = { version: "ags.receipt.v0.1", finalDecision: "blocked_by_policy" };
+  expect(verifyGovernanceReceipt({ ...value, receiptHash: hashGovernanceReceipt(value) } as never).valid).toBe(false);
+});

@@ -151,3 +151,7 @@ const second = linkAgencyFingerprint(first, {
 const result = validateAgencyFingerprintChain([first, second]);
 ```
 
+
+## Material context lineage
+
+The optional `contextLineageDigest` binds the recorded receiving-use admission and material artifact lineage alongside delegated authority. Governance Core derives it from its admission result. Fingerprints hold a digest, not a second provenance database; admission content is kept out of the fingerprint. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).

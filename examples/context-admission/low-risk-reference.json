@@ -1,0 +1,50 @@
+{
+  "evaluatedAt": "2026-09-19T12:00:00.000Z",
+  "requestedUse": {
+    "purpose": "prepare-report",
+    "mode": "reference",
+    "receiverAgentId": "agent-b",
+    "trustDomain": "organization-a"
+  },
+  "policy": {
+    "id": "local-context-policy",
+    "trustedSourceIds": [
+      "research-store"
+    ],
+    "trustedValidatorIds": [
+      "review-service"
+    ],
+    "trustedAuthorityIds": [
+      "report-owner"
+    ],
+    "requireValidation": false
+  },
+  "materialArtifactIds": [
+    "artifact-x"
+  ],
+  "artifacts": [
+    {
+      "id": "artifact-x",
+      "artifactType": "observation",
+      "content": "Prior workflow observations for the weekly report.",
+      "contentHash": "sha256:239054f34743aba71cbcb38043fa4b322138945c6a6ff14f26d5ec693fc1b531",
+      "revoked": false,
+      "createdAt": "2026-09-18T12:00:00.000Z",
+      "expiresAt": "2026-09-20T12:00:00.000Z",
+      "dataSensitivity": "low",
+      "permittedUses": [
+        "prepare-report"
+      ],
+      "provenance": {
+        "sourceId": "research-store",
+        "producerAgentId": "agent-a",
+        "trustDomain": "organization-a",
+        "workflowId": "completed-workflow-a",
+        "receiptRefs": [
+          "prior-workflow-receipt"
+        ]
+      }
+    }
+  ],
+  "validationEvidence": []
+}

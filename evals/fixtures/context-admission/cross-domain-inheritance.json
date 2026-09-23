@@ -1,0 +1,9 @@
+{
+  "id": "cross-domain-inheritance",
+  "inputPath": "examples/context-admission/cross-domain-inheritance.json",
+  "expectedDecision": "require_human_review",
+  "expectedFindings": [
+    "trust_domain_crossing",
+    "authority_not_demonstrated"
+  ]
+}

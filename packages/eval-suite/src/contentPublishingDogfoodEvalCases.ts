@@ -1,3 +1,4 @@
+import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
 import type { ApprovalEvidence, AuthorityMap } from "@alignment-governance-stack/authority-map";
 import type { PolicyProfile } from "@alignment-governance-stack/policy-profiles";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
@@ -419,6 +420,7 @@ function createPublishingApprovalEvidence(approverRoleId: string): ApprovalEvide
     id: `content-publishing-approval-${approverRoleId}`,
     approverId: "author-human-reviewer",
     approverRoleId,
+    binding: createApprovalBinding(publishApprovedBlogPost),
     approvedAt: "2026-05-14T09:00:00.000Z",
     expiresAt: "2030-01-01T00:00:00.000Z",
     approvalKind: "author_final_publish",

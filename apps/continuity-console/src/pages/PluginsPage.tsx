@@ -4,6 +4,7 @@ import { PageHeader } from "../components/PageHeader";
 import { Panel } from "../components/Panel";
 import { StatusBadge } from "../components/StatusBadge";
 import { writeStoredPlugins } from "../lib/pluginStorage";
+import type { ConsoleDataMode, EvidenceConfidence } from "../lib/evidenceProjection";
 import type { AdapterCategory, DeploymentManifest, PluginManifest } from "../types/continuity";
 
 const adapterCategories: AdapterCategory[] = [
@@ -24,13 +25,16 @@ interface PluginsPageProps {
   deployment: DeploymentManifest;
   plugins: PluginManifest[];
   setPlugins: (plugins: PluginManifest[]) => void;
+  mode?: ConsoleDataMode | undefined;
+  confidence?: EvidenceConfidence | undefined;
 }
 
-export function PluginsPage({ deployment, plugins, setPlugins }: PluginsPageProps): JSX.Element {
+export function PluginsPage({ deployment, plugins, setPlugins, mode = "sample", confidence }: PluginsPageProps): JSX.Element {
   const [selectedPlugin, setSelectedPlugin] = useState<PluginManifest | null>(plugins[0] ?? null);
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [layerFilter, setLayerFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [healthFilter, setHealthFilter] = useState("All");
   const [manifestText, setManifestText] = useState("");
   const [formName, setFormName] = useState("");
   const [formCategory, setFormCategory] = useState<AdapterCategory>("Policy Adapter");
@@ -41,9 +45,10 @@ export function PluginsPage({ deployment, plugins, setPlugins }: PluginsPageProp
         const matchesCategory = categoryFilter === "All" || plugin.adapterCategory === categoryFilter;
         const matchesLayer = layerFilter === "All" || plugin.layersCovered.includes(layerFilter);
         const matchesStatus = statusFilter === "All" || plugin.integrationStatus === statusFilter;
-        return matchesCategory && matchesLayer && matchesStatus;
+        const matchesHealth = healthFilter === "All" || plugin.healthStatus === healthFilter;
+        return matchesCategory && matchesLayer && matchesStatus && matchesHealth;
       }),
-    [categoryFilter, layerFilter, plugins, statusFilter],
+    [categoryFilter, healthFilter, layerFilter, plugins, statusFilter],
   );
 
   function updatePlugins(nextPlugins: PluginManifest[]): void {
@@ -103,15 +108,22 @@ export function PluginsPage({ deployment, plugins, setPlugins }: PluginsPageProp
     }
   }
 
+  if (mode === "local-evidence") return <>
+    <PageHeader title="Plugins" description="Imported evidence does not establish installed plugins or live integration health." deployment={deployment} mode={mode} confidence={confidence} />
+    <Panel title="Plugin Evidence" eyebrow="not demonstrated"><p>No installed-plugin inventory was imported. The sample and browser registry are available only in Sample Mode.</p></Panel>
+  </>;
+
   return (
     <>
       <PageHeader
         title="Plugins"
         description="Local registry for manually adding and viewing plugin manifests. This is not a marketplace and does not certify plugin safety."
         deployment={deployment}
+        mode={mode}
+        confidence={confidence}
       />
       <section className="plugin-page-grid">
-        <Panel title="Installed Plugins" eyebrow="local registry">
+        <Panel title="Registered Manifests" eyebrow="local registry">
           <div className="filter-row">
             <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)}>
               <option>All</option>
@@ -133,15 +145,24 @@ export function PluginsPage({ deployment, plugins, setPlugins }: PluginsPageProp
                 <option key={status}>{status}</option>
               ))}
             </select>
+            <select value={healthFilter} onChange={(event) => setHealthFilter(event.target.value)}>
+              <option>All</option>
+              {["Healthy", "Warning", "Degraded", "Offline"].map((status) => (
+                <option key={status}>{status}</option>
+              ))}
+            </select>
           </div>
           <div className="plugin-card-list large">
             {filteredPlugins.map((plugin) => (
               <button type="button" className="plugin-card selectable" key={plugin.id} onClick={() => setSelectedPlugin(plugin)}>
+                <span className="plugin-icon" aria-hidden="true">{plugin.name.slice(0, 1)}</span>
                 <div>
                   <h3>{plugin.name}</h3>
-                  <p>{plugin.description}</p>
+                  <p>{plugin.adapterCategory} - {plugin.layersCovered.length} layers - last verified {plugin.lastVerifiedAt}</p>
                 </div>
+                <StatusBadge label={plugin.healthStatus} />
                 <StatusBadge label={plugin.integrationStatus} />
+                <span aria-hidden="true">&gt;</span>
               </button>
             ))}
           </div>
@@ -177,31 +198,12 @@ export function PluginsPage({ deployment, plugins, setPlugins }: PluginsPageProp
           </Panel>
           {selectedPlugin ? (
             <Panel title="Plugin Detail" eyebrow={selectedPlugin.adapterCategory}>
-              <DetailList
-                items={[
-                  ["ID", selectedPlugin.id],
-                  ["Version", selectedPlugin.version],
-                  ["Vendor", selectedPlugin.vendor],
-                  ["Layers covered", selectedPlugin.layersCovered],
-                  ["Inputs received", selectedPlugin.inputsReceived],
-                  ["Outputs returned", selectedPlugin.outputsReturned],
-                  ["Permissions required", selectedPlugin.permissionsRequired],
-                  ["Actions allowed", selectedPlugin.actionsAllowed],
-                  ["Actions prohibited", selectedPlugin.actionsProhibited],
-                  ["Authority source", selectedPlugin.authoritySource],
-                  ["Failure behavior", selectedPlugin.failureBehavior],
-                  ["Evidence generated", selectedPlugin.evidenceGenerated],
-                  ["Reversibility", selectedPlugin.reversibility],
-                  ["Revocation path", selectedPlugin.revocationPath],
-                  ["Upstream assumptions", selectedPlugin.upstreamAssumptions],
-                  ["Downstream guarantees", selectedPlugin.downstreamGuarantees],
-                  ["Health", selectedPlugin.healthStatus],
-                  ["Integration status", selectedPlugin.integrationStatus],
-                  ["Test status", selectedPlugin.testStatus],
-                  ["Red-team status", selectedPlugin.redTeamStatus],
-                  ["Last verified", selectedPlugin.lastVerifiedAt],
-                ]}
-              />
+              <div className="detail-section-grid">
+                <DetailList items={[["Identity", `${selectedPlugin.name} ${selectedPlugin.version}`], ["Vendor", selectedPlugin.vendor], ["Category", selectedPlugin.adapterCategory]]} />
+                <DetailList items={[["Scope", selectedPlugin.layersCovered], ["Permissions", selectedPlugin.permissionsRequired], ["Inputs", selectedPlugin.inputsReceived], ["Outputs", selectedPlugin.outputsReturned]]} />
+                <DetailList items={[["Evidence", selectedPlugin.evidenceGenerated], ["Failure Behavior", selectedPlugin.failureBehavior], ["Reversibility", selectedPlugin.reversibility], ["Revocation", selectedPlugin.revocationPath]]} />
+                <DetailList items={[["Assumptions", selectedPlugin.upstreamAssumptions], ["Guarantees", selectedPlugin.downstreamGuarantees], ["Test Status", selectedPlugin.testStatus], ["Red-Team Status", selectedPlugin.redTeamStatus], ["Last Verified", selectedPlugin.lastVerifiedAt]]} />
+              </div>
             </Panel>
           ) : null}
         </div>

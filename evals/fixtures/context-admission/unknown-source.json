@@ -1,0 +1,8 @@
+{
+  "id": "unknown-source",
+  "inputPath": "examples/context-admission/unknown-source.json",
+  "expectedDecision": "require_validation",
+  "expectedFindings": [
+    "source_unknown"
+  ]
+}

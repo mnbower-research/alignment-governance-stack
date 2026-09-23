@@ -1,3 +1,5 @@
+import { assertEmbeddedEvidence } from "./evidenceValidation.js";
+import { assertArtifactShape, assertNestedShapes } from "./artifactShape.js";
 import { readdir, readFile, stat, writeFile, mkdir } from "node:fs/promises";
 import { basename, dirname, extname, relative, resolve } from "node:path";
 import { sha256Hex } from "./hash.js";
@@ -72,6 +74,13 @@ function chainDiagnostics(artifacts: NormalizedAgsArtifact[]): ImportDiagnostic[
 
   for (const [proposalId, proposalArtifacts] of artifactsByProposal) {
     const kinds = new Set(proposalArtifacts.map((artifact) => artifact.kind));
+    const receipts = proposalArtifacts.filter(a => a.kind === "receipt");
+    const terminalDenials = new Set(["execution_denied", "blocked_by_policy", "blocked_by_aag", "rejected_before_gate", "policy_invalid"]);
+    if (receipts.length && receipts.every(a => terminalDenials.has(String((a.payload as Record<string, unknown>).finalDecision)))) continue;
+    for (const a of receipts) {
+      const r = a.payload as Record<string, unknown>;
+      for (const [field, kind] of Object.entries({ pgdl: "pgdl-review-packet", aag: "aag-decision", permit: "runtime-permit", runtimeBinding: "runtime-binding-result" } as const)) if (r[field]) kinds.add(kind);
+    }
     const sourcePath = proposalArtifacts[0]?.provenance.sourcePath;
     const expectedKinds = [
       "pgdl-review-packet",
@@ -142,6 +151,7 @@ export async function generateContinuitySnapshot(
         sha256,
         importedAt,
       });
+      for (const artifact of parsedArtifacts) { assertArtifactShape(artifact.kind, artifact.payload); assertNestedShapes(artifact.payload); assertEmbeddedEvidence(artifact.payload); }
       artifacts.push(...parsedArtifacts);
     } catch (error) {
       diagnostics.push({

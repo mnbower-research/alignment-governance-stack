@@ -41,3 +41,7 @@ Receipts do not execute actions, approve execution, write to disk, or store anyt
 
 Future work can add persistent storage, signing, export formats, receipt-chain navigation, and dashboard views without changing the PGDL, AAG, or Runtime Binding responsibilities.
 
+
+## Context dependencies
+
+Optional `contextAdmission` evidence records material artifact IDs/digests, source and authority references, transformations, receiving use, time, findings and decision. Hashing covers this additive field; older receipts remain verifiable. Artifact content is not embedded in admission evidence. Recorded admission is not approval for later reuse. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).

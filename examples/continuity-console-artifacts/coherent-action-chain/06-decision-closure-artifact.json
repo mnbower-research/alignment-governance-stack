@@ -1,30 +1,49 @@
 {
+  "artifactType": "decision_closure",
+  "artifactVersion": "1.0",
   "artifactId": "closure-console-001",
-  "createdAt": "2026-01-02T10:02:00.000Z",
+  "createdAt": "2026-01-02T10:01:00.000Z",
   "action": {
     "actionId": "proposal-console-001",
-    "summary": "Create internal release readiness draft",
-    "proposedByAgentId": "agent-console-demo"
+    "actionType": "generate_report",
+    "summary": "Generate a weekly summary report.",
+    "toolName": "report.generate",
+    "target": "weekly_summary",
+    "sensitivity": "low",
+    "reversibility": "reversible"
   },
   "executionBoundary": {
-    "environment": "local",
-    "runtimePermitId": "permit-console-001",
-    "runtimeBindingHash": "sha256:runtime-binding-console-001"
+    "boundaryId": "console-example-boundary",
+    "boundaryType": "simulation",
+    "reachedAt": "2026-01-02T10:01:00.000Z",
+    "runtimePermitRequired": true,
+    "runtimePermitId": "permit-proposal-console-001-607ea405-7f2b-46fc-b7ac-43e7dc99593a"
   },
   "authority": {
-    "authorityChainSummary": "Local demo authority for reversible internal documentation."
+    "authoritySource": "example-policy",
+    "authorityValid": true,
+    "authorityReason": "Illustrative internal report only; no external execution."
   },
   "decision": {
-    "decision": "allow",
-    "reason": "The action remained scoped to an internal reversible draft."
+    "outcome": "allow",
+    "reason": "Historical example authorization only.",
+    "ruleIds": [],
+    "humanReviewRequired": false,
+    "humanReviewPresent": false
   },
-  "conditions": [],
+  "conditions": {
+    "scope": "Internal report only."
+  },
   "proof": {
-    "receiptHash": "sha256:receipt-console-001",
-    "runtimeBindingHash": "sha256:runtime-binding-console-001"
+    "receiptHash": "e13fd23758e860058aa5d4c55fbb478b8652f5b83b6609889311243e32dd367e",
+    "canonicalHash": "5d2d9e6c74eb2440393c4a6029014a3fce48798a69600814d30adedf2e299402",
+    "integrityStatus": "unsigned"
   },
   "auditSummary": {
-    "summary": "Demo closure artifact for the continuity console local evidence path."
+    "readableWithoutSystemAccess": true,
+    "summary": "Authorization evidence; completed execution is not demonstrated.",
+    "unresolvedQuestions": [],
+    "theaterSignals": [],
+    "remediationHints": []
   }
 }
-

@@ -1,0 +1,8 @@
+{
+  "id": "circular-lineage",
+  "inputPath": "examples/context-admission/circular-lineage.json",
+  "expectedDecision": "reject",
+  "expectedFindings": [
+    "circular_lineage"
+  ]
+}

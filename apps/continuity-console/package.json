@@ -23,7 +23,11 @@
     "@types/react-dom": "^19.2.3",
     "jsdom": "^27.2.0",
     "typescript": "^5.6.3",
-    "vite": "^8.0.12",
-    "vitest": "^4.1.6"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.11",
+    "@alignment-governance-stack/receipts": "workspace:*",
+    "@alignment-governance-stack/governance-core": "workspace:*",
+    "@alignment-governance-stack/context-admission": "workspace:*",
+    "@types/node": "^25.6.0"
   }
 }

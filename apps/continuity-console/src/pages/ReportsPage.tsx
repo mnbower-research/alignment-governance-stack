@@ -1,6 +1,7 @@
 import type { ContinuitySnapshot } from "@alignment-governance-stack/continuity-ingest";
 import { PageHeader } from "../components/PageHeader";
 import { Panel } from "../components/Panel";
+import { StatusBadge } from "../components/StatusBadge";
 import type { ConsoleDataMode, EvidenceConfidence, EvidenceGapFinding } from "../lib/evidenceProjection";
 import { summarizeSnapshot } from "../lib/evidenceProjection";
 import { stableStringify } from "../lib/stableJson";
@@ -26,6 +27,41 @@ function download(name: string, content: string, type: string): void {
 
 export function ReportsPage({ deployment, snapshot, gaps, mode = "sample", confidence }: ReportsPageProps): JSX.Element {
   const diagnostics = snapshot?.diagnostics ?? [];
+  const generatedAt = snapshot?.generatedAt ?? deployment.lastScanAt;
+  const reportCards = [
+    {
+      title: "Export Continuity Snapshot JSON",
+      description: "Download the active normalized continuity snapshot for local review.",
+      type: "application/json",
+      button: "Export snapshot JSON",
+      file: "ags-continuity-snapshot.json",
+      content: snapshot ? stableStringify(snapshot) : "{}",
+    },
+    {
+      title: "Export Continuity Findings JSON",
+      description: "Download deterministic continuity findings generated from the active view.",
+      type: "application/json",
+      button: "Export findings JSON",
+      file: "ags-continuity-findings.json",
+      content: stableStringify(gaps),
+    },
+    {
+      title: "Export Diagnostics JSON",
+      description: "Download parser and import diagnostics without changing source evidence.",
+      type: "application/json",
+      button: "Export diagnostics JSON",
+      file: "ags-continuity-diagnostics.json",
+      content: stableStringify(diagnostics),
+    },
+    {
+      title: "Export Continuity Summary Markdown",
+      description: "Download a local Markdown summary suitable for human review.",
+      type: "text/markdown",
+      button: "Export summary Markdown",
+      file: "ags-continuity-summary.md",
+      content: snapshot ? summarizeSnapshot(snapshot) : "# AGS Continuity Snapshot Summary\n\nNo local evidence snapshot loaded.\n",
+    },
+  ];
 
   return (
     <>
@@ -37,38 +73,20 @@ export function ReportsPage({ deployment, snapshot, gaps, mode = "sample", confi
         confidence={confidence}
       />
       <section className="report-grid">
-        <Panel title="Normalized Snapshot JSON" eyebrow="read-only import">
-          <button
-            type="button"
-            onClick={() => download("ags-continuity-snapshot.json", snapshot ? stableStringify(snapshot) : "{}", "application/json")}
-          >
-            Export snapshot JSON
-          </button>
-        </Panel>
-        <Panel title="Continuity Findings JSON" eyebrow="deterministic gaps">
-          <button type="button" onClick={() => download("ags-continuity-findings.json", stableStringify(gaps), "application/json")}>
-            Export findings JSON
-          </button>
-        </Panel>
-        <Panel title="Continuity Summary Markdown" eyebrow="operator summary">
-          <button
-            type="button"
-            onClick={() =>
-              download(
-                "ags-continuity-summary.md",
-                snapshot ? summarizeSnapshot(snapshot) : "# AGS Continuity Snapshot Summary\n\nNo local evidence snapshot loaded.\n",
-                "text/markdown",
-              )
-            }
-          >
-            Export summary Markdown
-          </button>
-        </Panel>
-        <Panel title="Import Diagnostics JSON" eyebrow="warnings and errors">
-          <button type="button" onClick={() => download("ags-continuity-diagnostics.json", stableStringify(diagnostics), "application/json")}>
-            Export diagnostics JSON
-          </button>
-        </Panel>
+        {reportCards.map((card) => (
+          <Panel title={card.title} eyebrow="local export" key={card.title}>
+            <p className="panel-copy">{card.description}</p>
+            <dl className="compact-summary-list">
+              <div><dt>File type</dt><dd>{card.type}</dd></div>
+              <div><dt>Source mode</dt><dd>{mode === "local-evidence" ? "Local Evidence Mode" : "Sample Mode"}</dd></div>
+              <div><dt>Generated</dt><dd>{generatedAt}</dd></div>
+              <div><dt>Evidence confidence</dt><dd><StatusBadge label={confidence ?? (mode === "sample" ? "Partial" : "Insufficient")} /></dd></div>
+            </dl>
+            <button type="button" className="primary-button" onClick={() => download(card.file, card.content, card.type)}>
+              {card.button}
+            </button>
+          </Panel>
+        ))}
       </section>
     </>
   );

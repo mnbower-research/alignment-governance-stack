@@ -1,11 +1,11 @@
 {
   "proposal": {
     "id": "proposal-console-001",
-    "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
-    "tool": "local-doc-writer",
-    "actionType": "create_draft",
-    "target": "docs/release-readiness.md",
-    "environment": "local",
+    "userRequest": "Generate a weekly summary report.",
+    "tool": "report.generate",
+    "actionType": "generate_report",
+    "target": "weekly_summary",
+    "environment": "dev",
     "reversible": true,
     "externalFacing": false,
     "dataSensitivity": "low",
@@ -15,15 +15,8 @@
       "workflowId": "workflow-console-readiness"
     }
   },
-  "detectorResults": [
-    {
-      "detector": "missingApproval",
-      "triggered": false,
-      "reason": "No approval required for reversible internal draft."
-    }
-  ],
+  "detectorResults": [],
   "decision": "allow",
-  "reasonForDecision": "The proposal is scoped, reversible, internal, and low sensitivity.",
+  "reasonForDecision": "Proceed with the proposed action.",
   "receiptRequired": true
 }
-

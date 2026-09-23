@@ -23,6 +23,9 @@ export function validateRuntimePermit(
   }
 
   const failures: RuntimeBindingFailure[] = [];
+  if (!Number.isFinite(Date.parse(options.now ?? new Date().toISOString()))) {
+    failures.push({ code: "invalid_clock", reason: "Execution denied because the host evaluation clock is invalid." });
+  }
 
   if (permit.aagDecision !== "allow") {
     failures.push({
@@ -139,7 +142,8 @@ function isExpired(expiresAt: string, now: string | undefined): boolean {
   const expiresAtDate = new Date(expiresAt);
   const nowDate = new Date(now ?? new Date().toISOString());
 
-  return Number.isNaN(expiresAtDate.getTime()) || expiresAtDate.getTime() < nowDate.getTime();
+  // Authorization windows are half-open: valid only while now < expiresAt.
+  return Number.isNaN(expiresAtDate.getTime()) || expiresAtDate.getTime() <= nowDate.getTime();
 }
 
 function deny(permit: RuntimePermit | undefined, failures: RuntimeBindingFailure[]): RuntimeBindingResult {

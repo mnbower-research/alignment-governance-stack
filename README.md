@@ -11,6 +11,7 @@ Proposal must not outrun objection.
 Action must not outrun discernment.
 Execution must not outrun authorization.
 Memory must not outrun human review.
+Context must not outrun provenance.
 ```
 
 ## Quick Mental Model
@@ -102,6 +103,7 @@ Not every deployment needs the same implementation complexity. A low-risk local 
 ## Documentation
 
 - [Modular Architecture](docs/MODULAR_ARCHITECTURE.md)
+- [Governed Information Inheritance](docs/GOVERNED_INFORMATION_INHERITANCE.md)
 - [Adapter Model](docs/ADAPTER_MODEL.md)
 - [Ecosystem Map](docs/ECOSYSTEM_MAP.md)
 - [Human Agency Audit](docs/HUMAN_AGENCY_AUDIT.md)
@@ -109,7 +111,7 @@ Not every deployment needs the same implementation complexity. A low-risk local 
 
 ## AGS Continuity Console
 
-The AGS Continuity Console is a local-first visual operator shell for inspecting the governed path from authority to consequence. Phase 1 uses typed sample data. Phase 2A adds a deterministic local evidence ingest path that converts read-only AGS JSON artifacts into a normalized continuity snapshot for Local Evidence Mode.
+The AGS Continuity Console is a local-first visual operator shell for inspecting the governed path from authority to consequence. Its default Simple Operator Mode answers what the agent wanted to do, whether it was allowed, whether execution matched the permission, and whether the outcome can be proven. Material blocks, escalations, context failures, runtime mismatches, and evidence gaps remain visible. `Show technical details` restores the complete technical navigation, timelines, hashes, provenance, raw artifacts, and 12-layer architecture. Phase 1 uses typed sample data. Phase 2A adds a deterministic local evidence ingest path that converts read-only AGS JSON artifacts into a normalized continuity snapshot for Local Evidence Mode.
 
 ```bash
 corepack pnpm console:sync -- --source examples/continuity-console-artifacts --out apps/continuity-console/public/data/current-snapshot.json
@@ -133,6 +135,7 @@ Integration Adapters
 -> Policy Profile with Hard Boundaries
 -> Authority Map / Approval Validation
 -> Human Participation Quality
+-> Context Admission for material inherited information
 -> PGDL
 -> Policy Resolution
 -> AAG
@@ -158,6 +161,7 @@ Integration Adapters
 - Approval Validation checks whether supplied approval evidence is valid, current, and in scope.
 - Human Participation Quality evaluates whether approval looked like meaningful participation or likely rubber-stamping.
 - PGDL matures agent proposals before execution gating.
+- Context Admission evaluates supplied provenance, temporal handoffs, transformation lineage, permitted use and receiving authority before inherited information becomes operational context. It implements Semantic Context and Admissibility, not a new top-level layer.
 - Policy Resolution applies organization-specific rules to the proposal that PGDL intends to send to AAG.
 - AAG evaluates whether a proposed action should be allowed before execution.
 - Runtime Binding verifies the exact runtime action matches the permitted action.
@@ -217,6 +221,8 @@ Integration Adapters
 ## Package Map
 
 - `@alignment-governance-stack/shared-types`: shared TypeScript types for proposals, decisions, risk, packets, and receipts.
+- `@alignment-governance-stack/context-admission`: deterministic admission of supplied context artifacts for an exact receiving use, with evidence-gap findings and content-free lineage digests.
+- `@alignment-governance-stack/ai-media-agency-adapter`: simulation-only mapping of agency proposals into the governance stack; no live executor.
 - `@alignment-governance-stack/pgdl-core`: deterministic Pre-Gate Deliberation Layer proposal maturation.
 - `@alignment-governance-stack/aag-core`: canonical Agent Action Gate integration.
 - `@alignment-governance-stack/runtime-binding`: exact-action permit creation and runtime validation.
@@ -240,6 +246,8 @@ Integration Adapters
 ## Governance Memory
 
 Governance Memory analyzes receipts over time and recommends improvements for humans to review. It can identify repeated PGDL revisions, hard boundary blocks, missing authority approvals, rubber-stamp signals, runtime substitutions, invalid policies, repeated safe allows, and other governance patterns.
+
+Stored history is not automatically admissible operational context. A persistent artifact is a handoff across time; prior approval, validation and authority must be evaluated for the receiving use. See [Governed Information Inheritance](docs/GOVERNED_INFORMATION_INHERITANCE.md).
 
 It does not silently mutate Policy Profiles, Hard Boundaries, Authority Maps, or Human Participation policies.
 
@@ -450,9 +458,11 @@ Licensed under the Apache License 2.0.
 
 ## Current Status
 
-Current version: v1.12.0
+Current version: v1.13.0
 
-v1.12.0 adds the local-first AGS Continuity Console and read-only local evidence-ingestion pipeline for normalized continuity snapshots, provenance, diagnostics, evidence-backed gaps, artifact-backed traces, and local exports.
+v1.13.0 adds Governed Information Inheritance and deterministic Context Admission within Semantic Context and Admissibility, with optional governance integration, receipt/fingerprint lineage, temporal handoff evidence, a local CLI and read-only Console inspection.
+
+Project release milestones are separate from individual package versions. The private root stays at `0.1.0`; workspace packages retain their existing independently introduced versions (for example Governance Memory `1.0.0` and Integration Adapters `0.9.0`). `ags version` reports the CLI package version. See [version semantics](docs/RELEASE_HISTORY.md#version-semantics).
 
 The core implemented AGS spine currently includes:
 

@@ -29,6 +29,7 @@ export function GovernanceGraph({
       {deployment.layers.map((layer, index) => {
         const nextEdge = deployment.edges.find((edge) => edge.sourceLayerId === layer.id);
         const isSelected = selectedLayerId === layer.id;
+        const edgeClass = nextEdge?.status.toLowerCase().replaceAll(" ", "-");
 
         return (
           <div className="graph-row" key={layer.id}>
@@ -54,7 +55,7 @@ export function GovernanceGraph({
             {nextEdge && index < deployment.layers.length - 1 ? (
               <button
                 type="button"
-                className={`edge-line edge-${nextEdge.status.toLowerCase()} ${selectedEdgeId === nextEdge.id ? "selected" : ""}`}
+                className={`edge-line edge-${edgeClass} ${selectedEdgeId === nextEdge.id ? "selected" : ""}`}
                 onClick={() => onEdgeSelect?.(nextEdge)}
                 aria-label={`Inspect edge from ${layer.name}`}
               >

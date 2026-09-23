@@ -1,6 +1,7 @@
 export type AgencyFingerprintVersion = "agency-fingerprint/v0.1";
 
 export interface AgencyFingerprintInput {
+  contextLineageDigest?: string;
   subjectHumanId?: string;
   subjectOrganizationId?: string;
   delegatedBy: string;
@@ -24,6 +25,7 @@ export interface AgencyFingerprintInput {
 }
 
 export interface AgencyFingerprint {
+  contextLineageDigest?: string;
   version: AgencyFingerprintVersion;
   fingerprintId: string;
   subjectHumanId?: string;

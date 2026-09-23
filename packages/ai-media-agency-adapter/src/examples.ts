@@ -1,3 +1,5 @@
+import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
+import { mapAgencyProposalToActionProposal } from "./mapAgencyProposalToActionProposal.js";
 import type { ApprovalEvidence } from "@alignment-governance-stack/authority-map";
 import type { HumanParticipationInput } from "@alignment-governance-stack/human-participation";
 import type { ExecutionConstraintSet } from "@alignment-governance-stack/shared-types";
@@ -108,6 +110,7 @@ export function createExactCeoApprovalEvidence(
     id: "approval-ceo-virtual-property-b-25-dollar-test",
     approverId: "ceo-human-principal",
     approverRoleId: "ceo",
+    binding: createApprovalBinding(mapAgencyProposalToActionProposal(createGrowthAgent25DollarSandboxTestProposal())),
     approvedAt: "2026-09-10T09:30:00.000Z",
     approvalKind: "simulated_spend_test",
     reason:

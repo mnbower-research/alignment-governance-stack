@@ -5,17 +5,17 @@
   "receiptCount": 1,
   "patterns": [
     {
-      "id": "pattern-safe-internal-draft",
+      "id": "pattern-internal-report-review",
       "kind": "repeated_safe_allow",
       "count": 1,
-      "summary": "Internal reversible draft passed through PGDL, AAG, runtime binding, and receipt."
+      "summary": "Internal reversible report received recorded PGDL, AAG, runtime binding, and receipt decisions; execution is not independently proven."
     }
   ],
   "recommendations": [
     {
       "id": "recommendation-review-public-claims",
       "title": "Keep public claim review explicit",
-      "rationale": "The artifact chain supports internal drafting only.",
+      "rationale": "The artifact chain records internal report authorization only.",
       "status": "Requires Human Review"
     }
   ],
@@ -24,4 +24,3 @@
     "proposalId": "proposal-console-001"
   }
 }
-

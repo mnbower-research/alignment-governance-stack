@@ -11,6 +11,7 @@ Integration Adapters
 -> Policy Profile with Hard Boundaries
 -> Authority Map / Approval Validation
 -> Human Participation Quality
+-> Context Admission (Semantic Context and Admissibility)
 -> PGDL
 -> Policy Resolution
 -> AAG
@@ -28,7 +29,8 @@ Integration Adapters
 
 | Version | Milestone | Layer Added | Status |
 | --- | --- | --- | --- |
-| v1.12.0 | AGS Continuity Console and Read-Only Evidence Ingestion | Local-first Console plus read-only local artifact ingestion into normalized continuity snapshots, provenance, diagnostics, evidence-backed gaps, artifact-backed traces, and local exports | Current |
+| v1.13.0 | Governed Information Inheritance and Context Admission | Deterministic implementation of Semantic Context and Admissibility, receiving-use checks and temporal lineage evidence | Current |
+| v1.12.0 | AGS Continuity Console and Read-Only Evidence Ingestion | Local-first Console plus read-only local artifact ingestion into normalized continuity snapshots, provenance, diagnostics, evidence-backed gaps, artifact-backed traces, and local exports | Released |
 | v1.11.1 | Babel Velocity Fixture Hardening | Canonical declining closure ratio fixture hardening and snapshot-vs-temporal architecture language clarification | Released |
 | v1.11.0 | Governance Absorption Capacity | Temporal Babel Velocity analysis over risk-weighted decision throughput and meaningful governance closure | Released |
 | v1.10.0 | Structural Babel Detection | Snapshot structural-risk reporting for capability and coordination outrunning agency, authority, accountability, and proof | Released |
@@ -68,3 +70,7 @@ v0.9.0 and v1.0.0 currently point to the same commit because Integration Adapter
 - v1.0.0 is the first end-to-end AGS snapshot, including Governance Memory.
 
 Future releases should avoid bundling multiple milestones into one commit or tag when possible, so the release ladder remains easy to audit.
+
+## Version semantics
+
+Project milestones in README, CHANGELOG and this ladder describe repository-wide capabilities. They are separate from package versions: the private root remains `0.1.0`, most foundation packages remain `0.1.0`, Integration Adapters is `0.9.0`, and Governance Memory is `1.0.0`. This existing mixed-version convention is preserved for v1.13.0 rather than synchronizing every manifest. The root description now describes the implemented stack instead of the initial scaffold. `ags version` reports the CLI package version, not the project milestone. No tag or package publication is implied by local release documentation.

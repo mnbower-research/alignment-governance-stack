@@ -38,5 +38,15 @@ If approval is valid, or authority is not required, the proposal continues to AA
 
 ## Future Work
 
-Future versions can add approval workflow UI, durable approval storage, signatures, human participation quality checks, and rubber-stamp detection.
+Future versions can add approval workflow UI, durable approval storage, and signatures. Human participation quality and rubber-stamp detection already exist in the human-participation package.
 
+
+## v1.13.0 approval binding and freshness
+
+New approval evidence must include `binding: createApprovalBinding(reviewedAction)`. The reviewed action is the materially reviewed proposal after any PGDL revision. The binding includes proposal ID, user purpose, and the canonical runtime action hash, including target and execution constraints. `knownApproval` is excluded as a review-result flag; approval does not bind or authorize arbitrary metadata. Budget, platform, and other consequential values must use `executionConstraints`.
+
+Legacy unbound approvals fail closed. Approval requires valid `approvedAt` and either valid explicit `expiresAt` or the Authority Map's positive `defaultApprovalTtlMinutes`. Explicit expiry overrides the default TTL. Future-dated approval, invalid clocks, invalid expiration, changed purpose/target/constraints, and expired approval fail validation. The validity interval is half-open: `approvedAt <= now < expiresAt`.
+
+The validation result includes `validUntil`; governed runtime permits cannot outlive it. The runtime uses its trusted host clock for approval and Context Admission evaluation. Historical replay requires an explicit host clock, never a timestamp taken from imported evidence. Supplying approval evidence without an Authority Map cannot establish current approval. These checks do not authenticate the human identity or store/revoke approvals.
+
+Explicit human `reject`, `escalate`, and `request_revision` stop direct execution regardless of participation quality. A future attempt needs a new governed review; this release has no implicit supersession path.

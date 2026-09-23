@@ -36,7 +36,7 @@ const evidencedStatuses: ContinuityStatus[] = [
   "Production-Validated",
 ];
 
-const weakStatuses: ContinuityStatus[] = ["Missing", "Partial", "Degraded", "Declared", "Mapped"];
+const weakStatuses: ContinuityStatus[] = ["Not Demonstrated", "Missing", "Partial", "Degraded", "Declared", "Mapped"];
 
 function percent(part: number, whole: number): number {
   if (whole === 0) {
@@ -51,7 +51,7 @@ export function analyzeContinuity(deployment: DeploymentManifest): ContinuityAna
   const evidencedLayers = deployment.layers.filter((layer) => evidencedStatuses.includes(layer.status));
   const coveredEdges = deployment.edges.filter((edge) => coveredStatuses.includes(edge.status));
   const evidencedEdges = deployment.edges.filter((edge) => evidencedStatuses.includes(edge.evidenceStatus));
-  const missingLayers = deployment.layers.filter((layer) => layer.status === "Missing");
+  const missingLayers = deployment.layers.filter((layer) => layer.status === "Missing" || layer.status === "Not Demonstrated");
   const partialLayers = deployment.layers.filter((layer) =>
     ["Partial", "Degraded", "Declared", "Mapped"].includes(layer.status),
   );

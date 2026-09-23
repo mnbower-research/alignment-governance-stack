@@ -11,7 +11,9 @@
     "dataSensitivity": "high",
     "requiresApproval": true,
     "knownApproval": true,
-    "metadata": { "source": "redteam_eval_pack" }
+    "metadata": {
+      "source": "redteam_eval_pack"
+    }
   },
   "policyProfile": {
     "id": "redteam.receipt-history.policy",
@@ -20,7 +22,16 @@
     "defaultMode": "balanced",
     "receiptRequired": true,
     "hardBoundaries": [
-      { "id": "never_delete_receipt_history", "label": "Never delete receipt history", "when": { "targetIncludes": "receipts/history" }, "effect": "block", "reason": "Receipt history is audit evidence.", "source": "manual_policy" }
+      {
+        "id": "never_delete_receipt_history",
+        "label": "Never delete receipt history",
+        "when": {
+          "targetIncludes": "receipts/history"
+        },
+        "effect": "block",
+        "reason": "Receipt history is audit evidence.",
+        "source": "manual_policy"
+      }
     ]
   },
   "approvalEvidence": {
@@ -28,7 +39,18 @@
     "approverId": "security-reviewer",
     "approverRoleId": "security_admin",
     "approvedAt": "2026-05-14T09:00:00.000Z",
-    "expiresAt": "2030-01-01T00:00:00.000Z"
+    "expiresAt": "2030-01-01T00:00:00.000Z",
+    "binding": {
+      "proposalId": "redteam-policy-block-approval-override-attempt",
+      "userRequest": "Archive receipt history after approval.",
+      "actionHash": "sha256:35efa2f0668fd6577a517e61028e40e3f6b8a3ccb7aaa454a571ec6cb44731ba"
+    }
   },
-  "receiptOptions": { "id": "redteam-policy-block-approval-override-attempt", "createdAt": "2026-05-14T12:11:00.000Z" }
+  "receiptOptions": {
+    "id": "redteam-policy-block-approval-override-attempt",
+    "createdAt": "2026-05-14T12:11:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
+  }
 }

@@ -11,7 +11,9 @@
     "dataSensitivity": "low",
     "requiresApproval": true,
     "knownApproval": true,
-    "metadata": { "source": "dogfood_workbench" }
+    "metadata": {
+      "source": "dogfood_workbench"
+    }
   },
   "policyProfile": {
     "id": "ags.dogfood.policy",
@@ -22,7 +24,10 @@
     "approvalRules": [
       {
         "id": "release_drafts_need_release_review",
-        "when": { "tool": "draft.create", "actionType": "create_draft_for_review" },
+        "when": {
+          "tool": "draft.create",
+          "actionType": "create_draft_for_review"
+        },
         "requiresApproval": true,
         "approverRole": "release_admin",
         "reason": "External release or communication drafts require release authority review in dogfood workflows."
@@ -38,7 +43,11 @@
         "id": "release_admin",
         "label": "Release Admin",
         "scopes": [
-          { "id": "release_draft_review", "tool": "draft.create", "actionType": "create_draft_for_review" }
+          {
+            "id": "release_draft_review",
+            "tool": "draft.create",
+            "actionType": "create_draft_for_review"
+          }
         ]
       }
     ]
@@ -48,11 +57,18 @@
     "approverId": "dogfood-human-reviewer",
     "approverRoleId": "release_admin",
     "approvedAt": "2026-05-14T09:00:00.000Z",
-    "expiresAt": "2026-06-13T09:00:00.000Z"
+    "expiresAt": "2026-06-13T09:00:00.000Z",
+    "binding": {
+      "proposalId": "dogfood-rubber-stamp-release-approval",
+      "userRequest": "Publish CLI package to npm.",
+      "actionHash": "sha256:33f65cab90c61c6844c5db4e0f97d960a90fe0c62aae53a20073a56f6941a263"
+    }
   },
   "humanParticipation": {
     "input": {
-      "context": { "highRisk": true },
+      "context": {
+        "highRisk": true
+      },
       "presentedContext": {
         "objectionsPresented": false,
         "alternativesPresented": false,
@@ -67,5 +83,8 @@
   "receiptOptions": {
     "id": "dogfood-rubber-stamp-release-approval",
     "createdAt": "2026-05-14T10:08:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
   }
 }

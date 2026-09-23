@@ -1,3 +1,5 @@
+import { assertEmbeddedEvidence } from "./evidenceValidation.js";
+import { assertArtifactShape, assertNestedShapes } from "./artifactShape.js";
 import { basename } from "node:path";
 import { correlateArtifact } from "./correlation.js";
 import type {
@@ -33,6 +35,9 @@ export function createArtifact(
   occurredAt?: string,
   warnings: string[] = [],
 ): NormalizedAgsArtifact {
+  assertEmbeddedEvidence(payload);
+  assertArtifactShape(kind, payload);
+  assertNestedShapes(payload);
   return {
     id: `${kind}:${artifactId}`,
     kind,

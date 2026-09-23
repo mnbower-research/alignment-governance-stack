@@ -148,7 +148,7 @@ describe("AI media agency adapter", () => {
     expect(response.governance.approvalValidation?.decision).toBe("approval_valid");
     expect(response.governance.participationQuality?.decision).toBe("meaningful_participation");
     expect(response.governance.aag?.decision).toBe("allow");
-    expect(response.governance.permit?.expiresAt).toBe("2026-09-10T11:00:00.000Z");
+    expect(response.governance.permit?.expiresAt).toBe("2026-09-10T10:30:00.000Z");
     expect(response.governance.permit?.executionConstraintHash).toMatch(/^sha256:/);
     expect(response.governance.permit?.allowedAction.executionConstraints?.constraints.budgetAmount).toMatchObject({
       type: "exact_number",
@@ -258,6 +258,7 @@ describe("AI media agency adapter", () => {
         },
         policy: phase1HumanParticipationPolicy
       },
+      validationOptions,
       receiptOptions: { id: "agency-rubber-stamp-denied", createdAt: "2026-09-10T10:08:00.000Z" }
     });
 

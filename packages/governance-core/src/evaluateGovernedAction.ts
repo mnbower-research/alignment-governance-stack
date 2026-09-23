@@ -1,4 +1,6 @@
 import { evaluateAag } from "@alignment-governance-stack/aag-core";
+import { evaluateContextAdmission, validateContextAdmissionEvidence } from "@alignment-governance-stack/context-admission";
+import { createActionHash } from "@alignment-governance-stack/runtime-binding";
 import { validateApproval } from "@alignment-governance-stack/authority-map";
 import { evaluateParticipationQuality } from "@alignment-governance-stack/human-participation";
 import {
@@ -6,7 +8,7 @@ import {
   validatePolicyProfile
 } from "@alignment-governance-stack/policy-profiles";
 import { evaluatePgdl } from "@alignment-governance-stack/pgdl-core";
-import type { AagPacket, AgentActionProposal } from "@alignment-governance-stack/shared-types";
+import type { AagPacket, AgentActionProposal, ContextAdmissionEvidence } from "@alignment-governance-stack/shared-types";
 import type {
   EvaluateGovernedActionInput,
   GovernanceFinalDecision,
@@ -26,7 +28,36 @@ export function evaluateGovernedAction(
   input: AgentActionProposal | EvaluateGovernedActionInput
 ): GovernancePacket {
   const normalizedInput = normalizeInput(input);
+  const contextAdmission = normalizedInput.contextAdmission === undefined
+    ? undefined : evaluateContextAdmission(normalizedInput.contextAdmission);
+  const packet = evaluateWithContext(normalizedInput, contextAdmission);
+  return { ...packet, ...(contextAdmission !== undefined ? { contextAdmission } : {}) };
+}
+
+function evaluateWithContext(
+  normalizedInput: EvaluateGovernedActionInput,
+  contextAdmission?: ContextAdmissionEvidence
+): GovernancePacket {
   const { proposal, policyProfile, authorityMap, approvalEvidence, humanParticipation } = normalizedInput;
+  const humanDecision = humanParticipation?.input?.humanResponse?.decision;
+  if (humanDecision === "reject" || humanDecision === "escalate" || humanDecision === "request_revision") {
+    return {
+      originalProposal: proposal,
+      finalDecision: humanDecision === "reject" ? "rejected_before_gate"
+        : "escalated_before_gate",
+      reasonForDecision: `Human decision ${humanDecision} prevents direct execution. A new governed review is required.`
+    };
+  }
+  // Only the freshly evaluated host request may satisfy this gate. Imported reports
+  // cannot supply this function through JSON or substitute for the receiving policy.
+  const validateContext = (action: AgentActionProposal, evidence: ContextAdmissionEvidence): boolean => {
+    const now = Date.parse(normalizedInput.contextAdmission!.evaluatedAt);
+    return evidence === contextAdmission && validateContextAdmissionEvidence(evidence) &&
+      evidence.findings.length === 0 && evidence.requestedUse.action?.actionHash === createActionHash(action) &&
+      evidence.requestedUse.receiverAgentId === normalizedInput.contextAdmission!.requestedUse.receiverAgentId &&
+      Date.parse(evidence.evaluatedAt) <= now && evidence.validUntil !== undefined &&
+      Date.parse(evidence.validUntil) > now;
+  };
 
   if (policyProfile !== undefined) {
     const policyProfileValidation = validatePolicyProfile(policyProfile);
@@ -41,7 +72,7 @@ export function evaluateGovernedAction(
     }
   }
 
-  const pgdl = evaluatePgdl(proposal);
+  const pgdl = evaluatePgdl(proposal, contextAdmission);
 
   if (pgdl.decision === "reject_before_aag") {
     return {
@@ -97,6 +128,10 @@ export function evaluateGovernedAction(
       };
     }
 
+    if (approvalEvidence !== undefined && authorityMap === undefined) {
+      return { originalProposal: proposal, finalDecision: "approval_required_by_authority", reasonForDecision: "Supplied approval evidence requires a host Authority Map; it cannot establish current approval by itself." };
+    }
+
     if (authorityMap !== undefined) {
       const approvalValidation = validateApproval(
         authorityMap,
@@ -104,6 +139,7 @@ export function evaluateGovernedAction(
         approvalEvidence,
         {
           policyRequiresApproval: resolvedPolicy.requiresApproval,
+          ...(normalizedInput.now !== undefined ? { now: normalizedInput.now } : {}),
           policyReasons: resolvedPolicy.reasons
         }
       );
@@ -146,7 +182,7 @@ export function evaluateGovernedAction(
       const policyAwareProposal = resolvedPolicy.requiresApproval
         ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
         : proposalSentToAag;
-      const aag = evaluateAag(policyAwareProposal);
+      const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext);
 
       return {
         originalProposal: proposal,
@@ -185,7 +221,7 @@ export function evaluateGovernedAction(
       };
     }
 
-    const aag = evaluateAag(policyAwareProposal);
+    const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext);
 
     return {
       originalProposal: proposal,
@@ -199,11 +235,16 @@ export function evaluateGovernedAction(
     };
   }
 
+  if (approvalEvidence !== undefined && authorityMap === undefined) {
+    return { originalProposal: proposal, finalDecision: "approval_required_by_authority", reasonForDecision: "Supplied approval evidence requires a host Authority Map; it cannot establish current approval by itself." };
+  }
+
   if (authorityMap !== undefined) {
     const approvalValidation = validateApproval(
       authorityMap,
       proposalSentToAag,
-      approvalEvidence
+      approvalEvidence,
+      normalizedInput.now !== undefined ? { now: normalizedInput.now } : {}
     );
 
     if (!approvalValidation.valid) {
@@ -238,7 +279,7 @@ export function evaluateGovernedAction(
       };
     }
 
-    const aag = evaluateAag(proposalSentToAag);
+    const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext);
 
     return {
       originalProposal: proposal,
@@ -270,7 +311,7 @@ export function evaluateGovernedAction(
     };
   }
 
-  const aag = evaluateAag(proposalSentToAag);
+  const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext);
 
   return {
     originalProposal: proposal,

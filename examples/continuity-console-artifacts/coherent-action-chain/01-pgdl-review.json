@@ -1,11 +1,11 @@
 {
   "originalProposal": {
     "id": "proposal-console-001",
-    "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
-    "tool": "local-doc-writer",
-    "actionType": "create_draft",
-    "target": "docs/release-readiness.md",
-    "environment": "local",
+    "userRequest": "Generate a weekly summary report.",
+    "tool": "report.generate",
+    "actionType": "generate_report",
+    "target": "weekly_summary",
+    "environment": "dev",
     "reversible": true,
     "externalFacing": false,
     "dataSensitivity": "low",
@@ -15,30 +15,7 @@
       "workflowId": "workflow-console-readiness"
     }
   },
-  "objections": [
-    {
-      "category": "external_impact",
-      "message": "Keep the output internal until public claims are reviewed."
-    }
-  ],
-  "internalizedPrinciple": "Internal readiness drafts should preserve review before public claims.",
-  "resolvedProposal": {
-    "id": "proposal-console-001",
-    "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
-    "tool": "local-doc-writer",
-    "actionType": "create_draft",
-    "target": "docs/release-readiness.md",
-    "environment": "local",
-    "reversible": true,
-    "externalFacing": false,
-    "dataSensitivity": "low",
-    "requiresApproval": false,
-    "knownApproval": false,
-    "metadata": {
-      "workflowId": "workflow-console-readiness"
-    }
-  },
+  "objections": [],
   "decision": "forward_to_aag",
-  "reasonForDecision": "The action remains a reversible internal draft."
+  "reasonForDecision": "The proposal has no PGDL objections and can be forwarded to AAG."
 }
-

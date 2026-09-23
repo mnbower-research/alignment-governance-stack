@@ -1,16 +1,49 @@
 import type {
   AagDetectorResult,
   AagPacket,
-  AgentActionProposal
+  AgentActionProposal,
+  ContextAdmissionEvidence
 } from "@alignment-governance-stack/shared-types" with { "resolution-mode": "import" };
 import { evaluateAction } from "./actionGate/evaluateAction";
 import type { ActionGateInput, GateDetectorResult } from "./actionGate/types";
 
-export function evaluateAag(proposal: AgentActionProposal): AagPacket {
+/** Host-supplied check of fresh admission, exact action, integrity, receiver and validity.
+ * Serialized historical reports alone cannot authorize material context use.
+ * Governance Core supplies this check; standalone hosts must implement the same trust boundary.
+ */
+export type ContextAdmissionValidator = (proposal: AgentActionProposal, evidence: ContextAdmissionEvidence) => boolean;
+
+export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: ContextAdmissionEvidence, validateContext?: ContextAdmissionValidator): AagPacket {
+  const use = contextAdmission?.requestedUse;
+  const action = use?.action;
+  const unresolved = contextAdmission !== undefined && (
+    contextAdmission.decision !== "admit" || use?.mode !== "operational" ||
+    validateContext?.(proposal, contextAdmission) !== true ||
+    action?.proposalId !== proposal.id || action?.tool !== proposal.tool ||
+    action?.actionType !== proposal.actionType || action?.target !== proposal.target ||
+    action?.environment !== proposal.environment
+  );
+  if (unresolved && contextAdmission !== undefined) {
+    return {
+      proposal,
+      contextAdmission,
+      decision: "block",
+      receiptRequired: true,
+      reasonForDecision: "Material context admission is unresolved or does not cover this exact action use.",
+      detectorResults: [{
+        detector: "contextAdmission",
+        triggered: true,
+        severity: "high",
+        recommendedDecision: "block",
+        reason: "Resolve inherited context and obtain admission for this action before execution gating."
+      }]
+    };
+  }
   const actionGateInput = toActionGateInput(proposal);
   const result = evaluateAction(actionGateInput);
 
   return {
+    ...(contextAdmission !== undefined ? { contextAdmission } : {}),
     proposal,
     detectorResults: result.detectorResults.filter((detectorResult) => detectorResult.triggered).map(toAagDetectorResult),
     decision: result.decision,

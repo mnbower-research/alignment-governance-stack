@@ -99,3 +99,7 @@ The input file must be a JSON array of governance receipt objects.
 - policy update pull requests
 - eval generation from repeated patterns
 - v1.1 eval-suite coverage for Governance Memory
+
+## Inherited information
+
+Governance Memory storage/history is not automatically admissible operational context. Receipts and recommendations can remain stored while stale, revoked, restricted, unapproved or irrelevant to a new use. Evaluate retrieved history through Context Admission before treating it as material operational context. Recommendations still require human review and never silently mutate policy. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).

@@ -1,0 +1,8 @@
+{
+  "id": "valid-information-invalid-use",
+  "inputPath": "examples/context-admission/valid-information-invalid-use.json",
+  "expectedDecision": "reject",
+  "expectedFindings": [
+    "use_not_permitted"
+  ]
+}

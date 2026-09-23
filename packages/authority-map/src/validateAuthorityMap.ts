@@ -24,6 +24,8 @@ export function validateAuthorityMap(authorityMap: AuthorityMap): AuthorityMapVa
     return { valid: false, errors };
   }
 
+  if (authorityMap.defaultApprovalTtlMinutes !== undefined && (!Number.isFinite(authorityMap.defaultApprovalTtlMinutes) || authorityMap.defaultApprovalTtlMinutes <= 0)) errors.push("Approval TTL must be a positive finite number.");
+
   const roleIds = new Set<string>();
 
   for (const role of authorityMap.roles) {

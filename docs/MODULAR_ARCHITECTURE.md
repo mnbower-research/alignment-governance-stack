@@ -29,6 +29,8 @@ Required governance functions are the load-bearing spine of a complete deploymen
 
    The shared meaning and governed-context function. It covers object boundaries, lineage, admissible interpretation, and the context needed to prevent agents or workflows from acting on distorted or invalid representations.
 
+   Implemented in v1.13.0 by `context-admission` for supplied artifacts and evidence. A persistent artifact is a handoff across time; admission checks receiving use, provenance, authority, validity and transformation lineage. It does not grant execution approval or claim universal model-token enforcement. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).
+
 4. Agent Reasoning and Proposal Formation
 
    The planning and proposal function. It covers drafting, orchestration, tool selection, workflow planning, and proposed next actions before those proposals are challenged or gated.

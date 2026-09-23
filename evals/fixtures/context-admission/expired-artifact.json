@@ -1,0 +1,8 @@
+{
+  "id": "expired-artifact",
+  "inputPath": "examples/context-admission/expired-artifact.json",
+  "expectedDecision": "reject",
+  "expectedFindings": [
+    "context_expired"
+  ]
+}

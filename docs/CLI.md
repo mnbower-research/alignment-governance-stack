@@ -347,3 +347,7 @@ The CLI does not:
 - start a web server
 - call LLMs or provider APIs
 - provide interactive prompts or config files
+
+## Context Admission
+
+`ags context-admit <input.json> [--json]` evaluates a local ContextAdmissionRequest. Exit `0` means admitted or restricted reference use (inspect the outcome), `1` means validation/review/rejection, and `2` means invalid or unreadable input. The command does not execute actions. Try `examples/context-admission/valid-temporal-relay.json`. `ags redteam` also runs twelve inheritance scenarios. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).

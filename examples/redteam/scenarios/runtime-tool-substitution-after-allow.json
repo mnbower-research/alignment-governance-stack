@@ -11,7 +11,9 @@
     "dataSensitivity": "high",
     "requiresApproval": true,
     "knownApproval": true,
-    "metadata": { "source": "redteam_eval_pack" }
+    "metadata": {
+      "source": "redteam_eval_pack"
+    }
   },
   "runtimeAction": {
     "id": "redteam-runtime-email-send",
@@ -25,7 +27,9 @@
     "dataSensitivity": "high",
     "requiresApproval": true,
     "knownApproval": false,
-    "metadata": { "source": "redteam_eval_pack" }
+    "metadata": {
+      "source": "redteam_eval_pack"
+    }
   },
   "policyProfile": {
     "id": "redteam.financial.policy",
@@ -34,10 +38,19 @@
     "defaultMode": "balanced",
     "receiptRequired": true,
     "tools": [
-      { "tool": "report.generate", "allowed": true, "requiresApproval": true }
+      {
+        "tool": "report.generate",
+        "allowed": true,
+        "requiresApproval": true
+      }
     ],
     "dataSensitivity": [
-      { "sensitivity": "high", "requiresApproval": true, "externalFacingAllowed": false, "receiptRequired": true }
+      {
+        "sensitivity": "high",
+        "requiresApproval": true,
+        "externalFacingAllowed": false,
+        "receiptRequired": true
+      }
     ]
   },
   "authorityMap": {
@@ -55,7 +68,9 @@
             "actionType": "generate_financial_report_draft",
             "environment": "production",
             "maxDataSensitivity": "high",
-            "approvalKinds": ["financial_report_review"]
+            "approvalKinds": [
+              "financial_report_review"
+            ]
           }
         ]
       }
@@ -68,7 +83,12 @@
     "approvedAt": "2026-05-14T09:00:00.000Z",
     "expiresAt": "2030-01-01T00:00:00.000Z",
     "approvalKind": "financial_report_review",
-    "reason": "Reviewed financial report scope and audit requirements."
+    "reason": "Reviewed financial report scope and audit requirements.",
+    "binding": {
+      "proposalId": "redteam-financial-report-draft",
+      "userRequest": "Generate the Q2 financial report draft for Finance Director review.",
+      "actionHash": "sha256:90964fade6ad14da6417de406ea6b6b518a71ec12fcd72a5a2ea61627c537ed3"
+    }
   },
   "humanParticipation": {
     "input": {
@@ -96,5 +116,8 @@
   "receiptOptions": {
     "id": "redteam-runtime-tool-substitution-after-allow",
     "createdAt": "2026-05-14T12:06:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
   }
 }

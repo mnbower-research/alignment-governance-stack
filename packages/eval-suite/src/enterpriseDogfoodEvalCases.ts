@@ -1,3 +1,4 @@
+import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
 import type { ApprovalEvidence, AuthorityMap } from "@alignment-governance-stack/authority-map";
 import type { PolicyProfile } from "@alignment-governance-stack/policy-profiles";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
@@ -360,6 +361,7 @@ function createEnterpriseApprovalEvidence(approverRoleId: string): ApprovalEvide
     id: `enterprise-finance-approval-${approverRoleId}`,
     approverId: "finance-human-reviewer",
     approverRoleId,
+    binding: createApprovalBinding(safeFinancialReportDraft),
     approvedAt: "2026-05-14T09:00:00.000Z",
     expiresAt: "2030-01-01T00:00:00.000Z",
     approvalKind: "financial_report_review",

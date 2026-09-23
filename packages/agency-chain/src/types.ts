@@ -5,6 +5,7 @@ export type AgencyChainAuditMode =
   | "workflow_review";
 
 export type AgencyChainLinkType =
+  | "information_handoff"
   | "human_authority"
   | "organizational_policy"
   | "hard_boundary"
@@ -99,6 +100,7 @@ export interface AgencyChainMap {
 }
 
 export interface AgencyChainInput {
+  contextAdmissions?: import("@alignment-governance-stack/shared-types").ContextAdmissionEvidence[];
   subject: AgencyChainSubject;
   auditMode?: AgencyChainAuditMode;
   chainId?: string;

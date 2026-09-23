@@ -1,3 +1,4 @@
+import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
 import { describe, expect, it } from "vitest";
 import type { ApprovalEvidence } from "@alignment-governance-stack/authority-map";
 import { defaultAuthorityMap } from "@alignment-governance-stack/authority-map";
@@ -144,8 +145,9 @@ function createApprovalEvidence(): ApprovalEvidence {
     id: "approval-1",
     approverId: "user-1",
     approverRoleId: "business_owner",
-    approvedAt: "2026-05-14T09:00:00.000Z",
-    expiresAt: "2026-06-13T09:00:00.000Z"
+    binding: createApprovalBinding(createApprovalRequiredReportProposal()),
+    expiresAt: "2030-01-01T00:00:00.000Z",
+    approvedAt: "2026-05-14T09:00:00.000Z"
   };
 }
 

@@ -36,6 +36,7 @@ function buildFingerprintBody(input: AgencyFingerprintInput): Omit<
 > {
   return {
     version: "agency-fingerprint/v0.1",
+    ...(input.contextLineageDigest !== undefined ? { contextLineageDigest: input.contextLineageDigest } : {}),
     ...(input.subjectHumanId !== undefined ? { subjectHumanId: input.subjectHumanId } : {}),
     ...(input.subjectOrganizationId !== undefined
       ? { subjectOrganizationId: input.subjectOrganizationId }

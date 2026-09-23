@@ -26,3 +26,7 @@ node packages/cli/dist/cli.js memory examples/redteam/receipts/noisy-receipt-his
 ## Boundaries
 
 Red-team evals do not execute real actions, call networks, mutate files outside the examples, store data, or provide a hosted service. They are local regression cases for governance behavior.
+
+## Governed Information Inheritance
+
+`ags redteam` additionally runs twelve Context Admission scenarios: valid temporal relay, unknown source, expired/revoked artifacts, transformation laundering, cross-domain inheritance, prior-approval reuse, embedded authority instructions, circular lineage, invalid purpose, restricted low-risk reference use and inert malicious text. See [examples](../examples/context-admission/README.md).

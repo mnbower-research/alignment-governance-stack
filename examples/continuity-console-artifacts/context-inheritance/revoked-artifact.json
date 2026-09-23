@@ -1,0 +1,68 @@
+{
+  "version": "context-admission/v0.1",
+  "evaluatedAt": "2026-09-19T12:00:00.000Z",
+  "validUntil": "2026-09-19T13:00:00.000Z",
+  "requestedUse": {
+    "purpose": "prepare-report",
+    "mode": "operational",
+    "receiverAgentId": "agent-b",
+    "trustDomain": "organization-a",
+    "action": {
+      "proposalId": "context-report",
+      "tool": "report.generate",
+      "actionType": "generate_report",
+      "target": "weekly_summary",
+      "environment": "dev",
+      "actionHash": "sha256:70c1fed9c64d5b56c55c54108a5c4c5d11d5dce86a95e302b2dd86608750bccb"
+    }
+  },
+  "policyId": "local-context-policy",
+  "policyDigest": "sha256:f2002ac4f7893d1e91b24350ca7a48d1f4b61670684673945bf549a354b4aa60",
+  "materialArtifactIds": [
+    "artifact-x"
+  ],
+  "artifacts": [
+    {
+      "artifactId": "artifact-x",
+      "artifactType": "observation",
+      "contentHash": "sha256:239054f34743aba71cbcb38043fa4b322138945c6a6ff14f26d5ec693fc1b531",
+      "provenance": {
+        "sourceId": "research-store",
+        "producerAgentId": "agent-a",
+        "authorityId": "report-owner",
+        "trustDomain": "organization-a",
+        "workflowId": "completed-workflow-a",
+        "receiptRefs": [
+          "prior-workflow-receipt"
+        ]
+      },
+      "createdAt": "2026-09-18T12:00:00.000Z",
+      "expiresAt": "2026-09-20T12:00:00.000Z",
+      "revoked": true,
+      "parentArtifactIds": [],
+      "transformations": [],
+      "priorAdmissionRefs": [],
+      "evidenceRefs": [
+        "review-authority",
+        "review-validation"
+      ],
+      "evidenceDigest": "sha256:d9b06f4682f4c620250dc512858ce4a6cf46646f9fd7b6d1cf23bac965aeef19",
+      "permittedUses": [
+        "prepare-report"
+      ],
+      "dataSensitivity": "low"
+    }
+  ],
+  "findings": [
+    {
+      "artifactId": "artifact-x",
+      "code": "context_revoked",
+      "decision": "reject",
+      "reason": "The supplied state explicitly revokes this artifact even though it remains available."
+    }
+  ],
+  "decision": "reject",
+  "reasonForDecision": "artifact-x: The supplied state explicitly revokes this artifact even though it remains available.",
+  "contextLineageDigest": "sha256:1daa886960eabd958ec6b36d3d1ff6f7ef7de98519707952a97634dfbae49c34",
+  "admissionId": "context-1daa886960eabd95"
+}

@@ -1,15 +1,14 @@
 {
   "version": "agency-fingerprint/v0.1",
-  "fingerprintId": "fingerprint-console-001",
+  "subjectOrganizationId": "console-example",
   "delegatedBy": "local-demo-authority",
   "agentId": "agent-console-demo",
   "workflowId": "workflow-console-readiness",
-  "runtimePermitHash": "sha256:runtime-binding-console-001",
-  "actionHash": "sha256:console-action-hash-001",
-  "timestamp": "2026-01-02T10:03:00.000Z",
-  "fingerprintHash": "sha256:fingerprint-console-001",
+  "actionHash": "sha256:70c1fed9c64d5b56c55c54108a5c4c5d11d5dce86a95e302b2dd86608750bccb",
+  "timestamp": "2026-01-02T10:01:00.000Z",
   "metadata": {
     "proposalId": "proposal-console-001"
-  }
+  },
+  "fingerprintId": "agency-fingerprint-a536a6601f74f1de",
+  "fingerprintHash": "a536a6601f74f1de9e83d27e4d7dd4a33deacde65fd5a426c3132df6682d292c"
 }
-

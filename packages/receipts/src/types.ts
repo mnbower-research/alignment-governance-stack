@@ -17,6 +17,7 @@ import type { HumanParticipationResult } from "@alignment-governance-stack/human
 export type GovernanceReceiptVersion = "ags.receipt.v0.1";
 
 export interface ReceiptGovernancePacket {
+  contextAdmission?: import("@alignment-governance-stack/shared-types").ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;
   pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;
@@ -41,6 +42,7 @@ export interface GovernanceReceiptInput {
 }
 
 export interface GovernanceReceipt {
+  contextAdmission?: import("@alignment-governance-stack/shared-types").ContextAdmissionEvidence;
   id: string;
   version: GovernanceReceiptVersion;
   createdAt: string;

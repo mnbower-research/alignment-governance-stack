@@ -57,3 +57,7 @@ corepack pnpm -r test
 
 Future versions can add a dependency-free CLI, dashboard views, regression history, fixture loading from JSON, and a larger real-world scenario library.
 
+
+## Context Admission evals
+
+`runContextAdmissionEvalSuite` and `ags redteam` cover twelve deterministic inheritance scenarios, including all ten adversarial/temporal scenarios and two positive controls. See [example catalog](../examples/context-admission/README.md).

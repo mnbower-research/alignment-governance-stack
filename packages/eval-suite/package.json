@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@alignment-governance-stack/authority-map": "workspace:*",
+    "@alignment-governance-stack/context-admission": "workspace:*",
     "@alignment-governance-stack/decision-closure": "workspace:*",
     "@alignment-governance-stack/governance-core": "workspace:*",
     "@alignment-governance-stack/governance-memory": "workspace:*",
@@ -32,7 +33,7 @@
     "@alignment-governance-stack/shared-types": "workspace:*"
   },
   "devDependencies": {
-    "vite": "^8.0.12",
-    "vitest": "^4.1.6"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.11"
   }
 }

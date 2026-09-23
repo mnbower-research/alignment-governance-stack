@@ -11,7 +11,9 @@
     "dataSensitivity": "high",
     "requiresApproval": true,
     "knownApproval": true,
-    "metadata": { "source": "enterprise_financial_report_golden_path" }
+    "metadata": {
+      "source": "enterprise_financial_report_golden_path"
+    }
   },
   "runtimeAction": {
     "id": "enterprise-quarterly-financial-report-safe-path",
@@ -25,7 +27,9 @@
     "dataSensitivity": "high",
     "requiresApproval": true,
     "knownApproval": true,
-    "metadata": { "source": "enterprise_financial_report_golden_path" }
+    "metadata": {
+      "source": "enterprise_financial_report_golden_path"
+    }
   },
   "policyProfile": {
     "id": "enterprise.financial-report.policy",
@@ -34,7 +38,11 @@
     "defaultMode": "balanced",
     "receiptRequired": true,
     "tools": [
-      { "tool": "report.generate", "allowed": true, "requiresApproval": true }
+      {
+        "tool": "report.generate",
+        "allowed": true,
+        "requiresApproval": true
+      }
     ],
     "environments": [
       {
@@ -45,14 +53,23 @@
     "approvalRules": [
       {
         "id": "financial_report_generation_requires_finance_authority",
-        "when": { "tool": "report.generate", "actionType": "generate_financial_report_draft", "dataSensitivity": "high" },
+        "when": {
+          "tool": "report.generate",
+          "actionType": "generate_financial_report_draft",
+          "dataSensitivity": "high"
+        },
         "requiresApproval": true,
         "approverRole": "finance_director",
         "reason": "High-sensitivity financial report drafts require finance authority review."
       }
     ],
     "dataSensitivity": [
-      { "sensitivity": "high", "requiresApproval": true, "externalFacingAllowed": false, "receiptRequired": true }
+      {
+        "sensitivity": "high",
+        "requiresApproval": true,
+        "externalFacingAllowed": false,
+        "receiptRequired": true
+      }
     ]
   },
   "authorityMap": {
@@ -70,7 +87,9 @@
             "actionType": "generate_financial_report_draft",
             "environment": "production",
             "maxDataSensitivity": "high",
-            "approvalKinds": ["financial_report_review"]
+            "approvalKinds": [
+              "financial_report_review"
+            ]
           }
         ]
       }
@@ -83,7 +102,12 @@
     "approvedAt": "2026-05-14T09:00:00.000Z",
     "expiresAt": "2030-01-01T00:00:00.000Z",
     "approvalKind": "financial_report_review",
-    "reason": "Finance Director reviewed the Q2 report-generation scope, sensitivity, and audit trail requirements."
+    "reason": "Finance Director reviewed the Q2 report-generation scope, sensitivity, and audit trail requirements.",
+    "binding": {
+      "proposalId": "enterprise-quarterly-financial-report-safe-path",
+      "userRequest": "Generate the Q2 financial report draft for Finance Director review.",
+      "actionHash": "sha256:90964fade6ad14da6417de406ea6b6b518a71ec12fcd72a5a2ea61627c537ed3"
+    }
   },
   "humanParticipation": {
     "input": {
@@ -111,5 +135,8 @@
   "receiptOptions": {
     "id": "enterprise-quarterly-financial-report-safe-path",
     "createdAt": "2026-05-14T11:00:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "id": "revoked-artifact",
+  "inputPath": "examples/context-admission/revoked-artifact.json",
+  "expectedDecision": "reject",
+  "expectedFindings": [
+    "context_revoked"
+  ]
+}

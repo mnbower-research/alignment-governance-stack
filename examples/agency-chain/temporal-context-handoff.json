@@ -1,0 +1,69 @@
+{
+  "subject": {
+    "auditScope": "Agent A to artifact X to Agent B: temporal information inheritance only"
+  },
+  "links": [],
+  "contextAdmissions": [
+    {
+      "version": "context-admission/v0.1",
+      "evaluatedAt": "2026-09-19T12:00:00.000Z",
+      "validUntil": "2026-09-19T13:00:00.000Z",
+      "requestedUse": {
+        "purpose": "prepare-report",
+        "mode": "operational",
+        "receiverAgentId": "agent-b",
+        "trustDomain": "organization-a",
+        "action": {
+          "proposalId": "context-report",
+          "tool": "report.generate",
+          "actionType": "generate_report",
+          "target": "weekly_summary",
+          "environment": "dev",
+          "actionHash": "sha256:70c1fed9c64d5b56c55c54108a5c4c5d11d5dce86a95e302b2dd86608750bccb"
+        }
+      },
+      "policyId": "local-context-policy",
+      "policyDigest": "sha256:f2002ac4f7893d1e91b24350ca7a48d1f4b61670684673945bf549a354b4aa60",
+      "materialArtifactIds": [
+        "artifact-x"
+      ],
+      "artifacts": [
+        {
+          "artifactId": "artifact-x",
+          "artifactType": "observation",
+          "contentHash": "sha256:239054f34743aba71cbcb38043fa4b322138945c6a6ff14f26d5ec693fc1b531",
+          "provenance": {
+            "sourceId": "research-store",
+            "producerAgentId": "agent-a",
+            "authorityId": "report-owner",
+            "trustDomain": "organization-a",
+            "workflowId": "completed-workflow-a",
+            "receiptRefs": [
+              "prior-workflow-receipt"
+            ]
+          },
+          "createdAt": "2026-09-18T12:00:00.000Z",
+          "expiresAt": "2026-09-20T12:00:00.000Z",
+          "revoked": false,
+          "parentArtifactIds": [],
+          "transformations": [],
+          "priorAdmissionRefs": [],
+          "evidenceRefs": [
+            "review-authority",
+            "review-validation"
+          ],
+          "evidenceDigest": "sha256:d9b06f4682f4c620250dc512858ce4a6cf46646f9fd7b6d1cf23bac965aeef19",
+          "permittedUses": [
+            "prepare-report"
+          ],
+          "dataSensitivity": "low"
+        }
+      ],
+      "findings": [],
+      "decision": "admit",
+      "reasonForDecision": "Supplied evidence supports this receiving use at the evaluation time. This is not execution approval.",
+      "contextLineageDigest": "sha256:818005afc38de915f4e11d470a6151f07e6de7f6e689d155ee285d431518e67e",
+      "admissionId": "context-818005afc38de915"
+    }
+  ]
+}

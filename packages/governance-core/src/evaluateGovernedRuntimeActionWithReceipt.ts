@@ -9,6 +9,10 @@ import type {
 export function evaluateGovernedRuntimeActionWithReceipt(
   input: EvaluateGovernedRuntimeActionWithReceiptInput
 ): GovernanceRuntimePacketWithReceipt {
+  if (input.contextAdmission !== undefined && input.agencyFingerprintOptions !== undefined &&
+      input.contextAdmission.requestedUse.receiverAgentId !== input.agencyFingerprintOptions.input.agentId) {
+    throw new Error("Agency fingerprint agent must match the admitted context receiver.");
+  }
   const governance = evaluateGovernedRuntimeAction(input);
   const agencyFingerprint =
     input.agencyFingerprintOptions !== undefined

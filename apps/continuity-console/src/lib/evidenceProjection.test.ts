@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { projectSnapshot } from "./evidenceProjection";
+import { importedTraceVerdict, projectSnapshot } from "./evidenceProjection";
 import type { ContinuitySnapshot } from "@alignment-governance-stack/continuity-ingest";
 
 const snapshot: ContinuitySnapshot = {
@@ -46,9 +46,37 @@ describe("projectSnapshot", () => {
 
     expect(projection.deployment.name).toBe("Demo Evidence");
     expect(projection.deployment.layers.find((layer) => layer.id === "layer-5")?.status).toBe("Partial");
-    expect(projection.deployment.layers.find((layer) => layer.id === "layer-6")?.status).toBe("Missing");
+    expect(projection.deployment.layers.find((layer) => layer.id === "layer-6")?.status).toBe("Not Demonstrated");
     expect(projection.gaps.some((gap) => gap.title === "Incomplete governed action chain")).toBe(true);
+    expect(projection.gaps.find((gap) => gap.title === "Incomplete governed action chain")?.status).toBe("Missing");
     expect(projection.trace.events.some((event) => event.kind === "aag-decision" && event.missing)).toBe(true);
   });
 });
 
+describe("imported verdict semantics", () => {
+  function trace(aag: string, allowed: boolean, finalDecision: string) {
+    const base = projectSnapshot(snapshot).trace;
+    base.events = ([
+      ["aag-decision", { decision: aag }],
+      ["runtime-binding-result", { allowed }],
+      ["receipt", { finalDecision }]
+    ] as const).map(([kind, payload]) => ({ ...base.events[0]!, kind, missing: false,
+      artifact: { ...snapshot.artifacts[0]!, kind, payload } }));
+    return base;
+  }
+  it.each([
+    ["block", true, "execution_allowed"],
+    ["allow", false, "execution_allowed"],
+    ["allow", true, "execution_denied"]
+  ] as const)("never labels a complete denied chain allowed", (aag, allowed, decision) => {
+    expect(importedTraceVerdict(trace(aag, allowed, decision))).toBe("Execution denied");
+  });
+  it("does not claim historical permission from an unverified receipt", () => {
+    expect(importedTraceVerdict(trace("allow", true, "execution_allowed"))).toBe("Receipt integrity not verified");
+  });
+  it("does not infer permission from presence alone", () => {
+    const value = trace("allow", true, "execution_allowed");
+    for (const event of value.events) event.artifact!.payload = {};
+    expect(importedTraceVerdict(value)).toBe("Receipt integrity not verified");
+  });
+});

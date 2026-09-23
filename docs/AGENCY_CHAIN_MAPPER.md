@@ -138,3 +138,7 @@ Governance Reality Report integration example:
 - It does not determine legal compliance.
 - It does not assign blame.
 - It identifies evidence gaps and audit questions requiring human verification.
+
+## Information handoffs
+
+Optional `contextAdmissions` inputs map recorded Context Admission evidence to `information_handoff` links and existing audit findings. Links preserve producer -> artifact -> receiver, creation/review times, transformations and context-lineage digests. Missing provenance, non-transferred authority, transformation gaps and stale/revoked context remain explicit findings. Digest/shape validation is not authentication or a new admission. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md).

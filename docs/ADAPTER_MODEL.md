@@ -6,6 +6,8 @@ An adapter should make its boundary explicit: what it receives, what it returns,
 
 Adapters should make composition explicit rather than silently inheriting permissions or authority from the external systems they connect.
 
+For inherited information, a substrate or orchestration adapter should construct a `ContextAdmissionRequest` using trusted host policy and current evidence, call admission before supplying material context to reasoning, and pass the request to Governance Core for dependent proposals. Artifact text must not populate authority, validator trust, policy or approval fields. Prior decisions are historical references. See [Governed Information Inheritance](GOVERNED_INFORMATION_INHERITANCE.md) for exact-use and temporal handoff boundaries. Existing adapters are not automatically upgraded to enforce this optional contract.
+
 | Adapter Category | Purpose |
 | --- | --- |
 | Substrate Adapter | Supplies identity, policy, semantic context, lineage, or authority information |

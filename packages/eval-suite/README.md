@@ -24,3 +24,5 @@ It also exposes the v1.1.0 Dogfood Workbench eval pack:
 Dogfood cases model realistic AGS development workflows, an Enterprise Financial Report Golden Path, a Content Publishing Dogfood Agent, a focused Content Publishing Governance Hardening pack for AGS public-claim agents, a Content Publishing Depth Hardening suite for severity calibration and proof completeness, and a Decision Closure Hardening case for incomplete execution-boundary proof. Red-team cases model adversarial bypass attempts. None of these evals execute real actions.
 
 This package does not add a dashboard, persistent history, database, provider integration, or network calls.
+
+`runContextAdmissionEvalSuite()` runs twelve deterministic inherited-information cases with expected decisions and findings. `ags redteam` includes the suite. See [examples](../../examples/context-admission/README.md).

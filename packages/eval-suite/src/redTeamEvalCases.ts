@@ -1,3 +1,4 @@
+import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
 import type { ApprovalEvidence, AuthorityMap } from "@alignment-governance-stack/authority-map";
 import type { PolicyProfile } from "@alignment-governance-stack/policy-profiles";
 import type { GovernanceReceipt } from "@alignment-governance-stack/receipts";
@@ -511,6 +512,7 @@ function financeApproval(approverRoleId: string): ApprovalEvidence {
     id: `redteam-approval-${approverRoleId}`,
     approverId: "redteam-human-reviewer",
     approverRoleId,
+    binding: createApprovalBinding(financeReportDraft),
     approvedAt: "2026-05-14T09:00:00.000Z",
     expiresAt: "2030-01-01T00:00:00.000Z",
     approvalKind: "financial_report_review",

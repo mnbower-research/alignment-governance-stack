@@ -62,3 +62,5 @@ const proposal = {
 ```
 
 Changing `metadata.ticket` does not deny execution. Changing `executionConstraints.constraints.region.value`, widening `releaseWindow`, or adding an unexpected constraint changes the action hash and produces a constraint-specific denial.
+
+Runtime clocks must be parseable. Invalid clocks fail closed even for permits without expiry. Expiration is exclusive (`now < expiresAt`), consistent with Context Admission and approval validation. Runtime Binding proves authorization of a supplied action, not completed external execution.

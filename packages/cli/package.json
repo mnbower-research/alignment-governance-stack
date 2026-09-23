@@ -30,6 +30,7 @@
     "@alignment-governance-stack/audit-core": "workspace:*",
     "@alignment-governance-stack/babel-risk": "workspace:*",
     "@alignment-governance-stack/company-profile-generator": "workspace:*",
+    "@alignment-governance-stack/context-admission": "workspace:*",
     "@alignment-governance-stack/decision-closure": "workspace:*",
     "@alignment-governance-stack/eval-suite": "workspace:*",
     "@alignment-governance-stack/governance-core": "workspace:*",
@@ -39,7 +40,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "vite": "^8.0.12",
-    "vitest": "^4.1.6"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.11"
   }
 }

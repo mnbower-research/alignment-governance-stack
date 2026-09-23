@@ -1,5 +1,6 @@
 import type {
   AgentActionProposal,
+  ContextAdmissionEvidence,
   PgdlDecision,
   PgdlObjection,
   PgdlPacket
@@ -11,7 +12,23 @@ import { generateObjections } from "./modules/objectionGenerator.js";
 import { analyzeProposal } from "./modules/proposalAnalyzer.js";
 import { defaultPgdlPolicy } from "./policies/defaultPgdlPolicy.js";
 
-export function evaluatePgdl(proposal: AgentActionProposal): PgdlPacket {
+export function evaluatePgdl(proposal: AgentActionProposal, contextAdmission?: ContextAdmissionEvidence): PgdlPacket {
+  if (contextAdmission !== undefined && contextAdmission.decision !== "admit" && contextAdmission.decision !== "admit_restricted") {
+    return {
+      originalProposal: proposal,
+      contextAdmission,
+      objections: [{
+        category: "scope",
+        severity: "high",
+        message: "Material context is unresolved.",
+        question: "Is inherited information admissible for this proposal?",
+        reason: contextAdmission.reasonForDecision,
+        suggestedRevision: "Resolve context provenance, validity and receiving-use authority before maturing this proposal."
+      }],
+      decision: contextAdmission.decision === "reject" ? "reject_before_aag" : "escalate_to_human",
+      reasonForDecision: contextAdmission.reasonForDecision
+    };
+  }
   const analysis = analyzeProposal(proposal, defaultPgdlPolicy);
   const objections = generateObjections(proposal, analysis);
   const complianceTheaterObjection = detectComplianceTheater(proposal);
@@ -25,6 +42,7 @@ export function evaluatePgdl(proposal: AgentActionProposal): PgdlPacket {
   const decision = resolveDiscernment(proposal, objections, resolvedProposal);
 
   const packet: PgdlPacket = {
+    ...(contextAdmission !== undefined ? { contextAdmission } : {}),
     originalProposal: proposal,
     objections,
     decision,

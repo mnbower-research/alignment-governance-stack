@@ -38,6 +38,8 @@ export interface ApprovalEvidence {
   approverId: string;
   approverRoleId: string;
   approvedAt: string;
+  /** Exact reviewed use. Legacy unbound evidence is not current approval. */
+  binding?: { proposalId: string; userRequest: string; actionHash: string };
   expiresAt?: string;
   approvalKind?: string;
   reason?: string;
@@ -57,10 +59,13 @@ export type ApprovalValidationDecision =
   | "approval_role_unknown"
   | "approval_out_of_scope"
   | "approval_expired"
+  | "approval_invalid"
+  | "approval_binding_mismatch"
   | "approval_not_required"
   | "authority_map_invalid";
 
 export interface ApprovalValidationResult {
+  validUntil?: string;
   valid: boolean;
   decision: ApprovalValidationDecision;
   reasons: string[];
@@ -73,4 +78,3 @@ export interface AuthorityMapValidationResult {
   valid: boolean;
   errors: string[];
 }
-

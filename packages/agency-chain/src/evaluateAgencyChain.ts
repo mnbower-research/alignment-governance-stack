@@ -1,3 +1,5 @@
+import { validateContextAdmissionEvidence } from "@alignment-governance-stack/context-admission";
+import { mapContextAdmissionToAgencyLinks, contextAdmissionToAgencyIssues } from "./contextHandoffs.js";
 import type {
   AgencyChainInput,
   AgencyChainIssue,
@@ -9,6 +11,7 @@ import type {
 } from "./types.js";
 
 const linkTypes: readonly AgencyChainLinkType[] = [
+  "information_handoff",
   "human_authority",
   "organizational_policy",
   "hard_boundary",
@@ -37,8 +40,8 @@ export function createAgencyChainMap(input: AgencyChainInput): AgencyChainMap {
     throw new Error(validation.errors.map((error) => `${error.path}: ${error.message}`).join("\n"));
   }
 
-  const links = input.links;
-  const issues = evaluateAgencyChainIssues(input);
+  const links = [...input.links, ...(input.contextAdmissions ?? []).flatMap(mapContextAdmissionToAgencyLinks)];
+  const issues = [...evaluateAgencyChainIssues({ ...input, links }), ...(input.contextAdmissions ?? []).flatMap(contextAdmissionToAgencyIssues)];
 
   return {
     subject: input.subject,
@@ -62,6 +65,10 @@ export function validateAgencyChainInput(input: unknown): AgencyChainValidationR
 
   if (!isRecord(input)) {
     return { valid: false, errors: [{ path: "$", message: "Agency chain input must be an object." }] };
+  }
+
+  if (input.contextAdmissions !== undefined && (!Array.isArray(input.contextAdmissions) || !input.contextAdmissions.every(validateContextAdmissionEvidence))) {
+    errors.push({ path: "$.contextAdmissions", message: "Context admission evidence must have valid shape and digest; imported evidence is not a live admission." });
   }
 
   if (!isRecord(input.subject)) {

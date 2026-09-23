@@ -110,9 +110,10 @@ describe("runtime-bound governed flow", () => {
     };
 
     const deniedPacket = evaluateGovernedRuntimeAction({ proposal, runtimeAction: proposal });
+    expect(deniedPacket.proposalSentToAag).toBeDefined();
     const allowedPacket = evaluateGovernedRuntimeAction({
       proposal,
-      runtimeAction: deniedPacket.proposalSentToAag
+      runtimeAction: deniedPacket.proposalSentToAag!
     });
 
     expect(deniedPacket.pgdl?.decision).toBe("revise_before_aag");

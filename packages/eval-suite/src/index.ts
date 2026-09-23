@@ -1,4 +1,5 @@
 export * from "./types.js";
+export * from "./contextAdmissionEvalCases.js";
 export * from "./contentPublishingDogfoodEvalCases.js";
 export * from "./contentPublishingDepthHardeningEvalCases.js";
 export * from "./contentPublishingHardeningEvalCases.js";

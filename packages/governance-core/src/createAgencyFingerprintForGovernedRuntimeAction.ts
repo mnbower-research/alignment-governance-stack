@@ -11,12 +11,18 @@ import type {
 export function createAgencyFingerprintForGovernedRuntimeAction(
   input: CreateGovernanceAgencyFingerprintInput
 ): AgencyFingerprint {
+  if (input.governance.contextAdmission !== undefined &&
+      input.governance.contextAdmission.requestedUse.receiverAgentId !== input.fingerprintInput.agentId) {
+    throw new Error("Agency fingerprint agent must match the admitted context receiver.");
+  }
   const action = selectFingerprintedAction(input.governance);
   const packetHashes = derivePacketHashes(input.governance);
   const fingerprintInput = input.fingerprintInput;
 
   return createAgencyFingerprint({
     ...fingerprintInput,
+    ...(input.governance.contextAdmission !== undefined
+      ? { contextLineageDigest: input.governance.contextAdmission.contextLineageDigest } : {}),
     actionHash:
       fingerprintInput.actionHash ??
       input.governance.permit?.actionHash ??

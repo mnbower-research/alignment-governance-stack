@@ -1,5 +1,7 @@
 import type {
   AagPacket,
+  ContextAdmissionRequest,
+  ContextAdmissionEvidence,
   AgentActionProposal,
   PgdlPacket
 } from "@alignment-governance-stack/shared-types";
@@ -45,6 +47,9 @@ export type GovernanceFinalDecision =
   | "execution_denied";
 
 export interface EvaluateGovernedActionInput {
+  /** Trusted host evaluation clock. Omit for the current time. */
+  now?: string;
+  contextAdmission?: ContextAdmissionRequest;
   proposal: AgentActionProposal;
   policyProfile?: PolicyProfile;
   authorityMap?: AuthorityMap;
@@ -56,6 +61,7 @@ export interface EvaluateGovernedActionInput {
 }
 
 export interface GovernancePacket {
+  contextAdmission?: ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;
   pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;
@@ -69,6 +75,7 @@ export interface GovernancePacket {
 }
 
 export interface EvaluateGovernedRuntimeActionInput {
+  contextAdmission?: ContextAdmissionRequest;
   proposal: AgentActionProposal;
   policyProfile?: PolicyProfile;
   authorityMap?: AuthorityMap;
@@ -95,6 +102,7 @@ export interface EvaluateGovernedRuntimeActionWithReceiptInput extends EvaluateG
 }
 
 export interface GovernanceRuntimePacket {
+  contextAdmission?: ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;
   pgdl?: PgdlPacket;
   proposalSentToAag?: AgentActionProposal;

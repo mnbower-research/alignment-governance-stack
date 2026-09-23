@@ -1,0 +1,6 @@
+{
+  "id": "malicious-text-as-inert-data",
+  "inputPath": "examples/context-admission/malicious-text-as-inert-data.json",
+  "expectedDecision": "admit",
+  "expectedFindings": []
+}

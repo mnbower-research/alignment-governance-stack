@@ -1,29 +1,33 @@
 export type PageId =
-  | "overview"
-  | "stack-map"
-  | "continuity-gaps"
-  | "live-action-trace"
-  | "approval-queue"
-  | "human-agency-audit"
-  | "governance-memory"
+  | "home"
+  | "workbench"
+  | "flows"
+  | "runs"
+  | "findings"
+  | "approvals"
   | "plugins"
+  | "audits"
   | "reports"
-  | "settings";
+  | "settings"
+  | "stack-map"
+  | "human-agency-audit"
+  | "governance-memory";
 
 export interface NavigationItem {
   id: PageId;
   label: string;
+  icon: string;
 }
 
 export const navigationItems: NavigationItem[] = [
-  { id: "overview", label: "Overview" },
-  { id: "stack-map", label: "Stack Map" },
-  { id: "continuity-gaps", label: "Continuity Gaps" },
-  { id: "live-action-trace", label: "Live Action Trace" },
-  { id: "approval-queue", label: "Approval Queue" },
-  { id: "human-agency-audit", label: "Human Agency Audit" },
-  { id: "governance-memory", label: "Governance Memory" },
-  { id: "plugins", label: "Plugins" },
-  { id: "reports", label: "Reports" },
-  { id: "settings", label: "Settings" },
+  { id: "home", label: "Home", icon: "home" },
+  { id: "workbench", label: "Workbench", icon: "workbench" },
+  { id: "flows", label: "Flows", icon: "layers" },
+  { id: "runs", label: "Runs", icon: "pulse" },
+  { id: "findings", label: "Findings", icon: "alert" },
+  { id: "approvals", label: "Approvals", icon: "review" },
+  { id: "plugins", label: "Plugins", icon: "plugin" },
+  { id: "audits", label: "Audits", icon: "agency" },
+  { id: "reports", label: "Reports", icon: "report" },
+  { id: "settings", label: "Settings", icon: "settings" },
 ];

@@ -12,7 +12,7 @@ interface SettingsPageProps {
   snapshot: ContinuitySnapshot | null;
   mode: ConsoleDataMode;
   confidence?: EvidenceConfidence | undefined;
-  onSnapshotLoad: (snapshot: ContinuitySnapshot) => void;
+  onSnapshotLoad: (read: () => Promise<ContinuitySnapshot>) => Promise<boolean>;
   onSnapshotClear: () => void;
 }
 
@@ -32,17 +32,17 @@ function countKinds(snapshot: ContinuitySnapshot | null): Array<[string, number]
 export function SettingsPage({ deployment, snapshot, mode, confidence, onSnapshotLoad, onSnapshotClear }: SettingsPageProps): JSX.Element {
   const [message, setMessage] = useState<string>("No import action this session.");
   const kindCounts = useMemo(() => countKinds(snapshot), [snapshot]);
+  const warningCount = snapshot?.diagnostics.filter((diagnostic) => diagnostic.severity === "warning").length ?? 0;
+  const errorCount = snapshot?.diagnostics.filter((diagnostic) => diagnostic.severity === "error").length ?? 0;
 
   async function loadBundledSnapshot(): Promise<void> {
     try {
-      const response = await fetch("/data/current-snapshot.json", { cache: "no-store" });
-      if (!response.ok) {
-        setMessage(`Bundled snapshot load failed with HTTP ${response.status}.`);
-        return;
-      }
-
-      onSnapshotLoad((await response.json()) as ContinuitySnapshot);
-      setMessage("Loaded bundled read-only snapshot.");
+      const loaded = await onSnapshotLoad(async () => {
+        const response = await fetch("/data/current-snapshot.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`Bundled snapshot load failed with HTTP ${response.status}.`);
+        return await response.json() as ContinuitySnapshot;
+      });
+      if (loaded) setMessage("Loaded bundled read-only snapshot.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Bundled snapshot load failed.");
     }
@@ -50,9 +50,8 @@ export function SettingsPage({ deployment, snapshot, mode, confidence, onSnapsho
 
   async function loadUploadedFile(file: File): Promise<void> {
     try {
-      const text = await file.text();
-      onSnapshotLoad(JSON.parse(text) as ContinuitySnapshot);
-      setMessage(`Loaded uploaded snapshot: ${file.name}.`);
+      const loaded = await onSnapshotLoad(async () => JSON.parse(await file.text()) as ContinuitySnapshot);
+      if (loaded) setMessage(`Loaded uploaded snapshot: ${file.name}.`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Uploaded snapshot import failed.");
     }
@@ -68,7 +67,7 @@ export function SettingsPage({ deployment, snapshot, mode, confidence, onSnapsho
         confidence={confidence}
       />
       <section className="settings-grid">
-        <Panel title="Data Mode" eyebrow="local only">
+        <Panel title="Current Data Source" eyebrow="local only">
           <DetailList
             items={[
               ["Current mode", mode === "local-evidence" ? "Local Evidence Mode" : "Sample Mode"],
@@ -83,6 +82,9 @@ export function SettingsPage({ deployment, snapshot, mode, confidence, onSnapsho
           <div className="approval-actions">
             <button type="button" onClick={() => void loadBundledSnapshot()}>
               Load bundled snapshot
+            </button>
+            <button type="button" onClick={() => void loadBundledSnapshot()}>
+              Reload bundled snapshot
             </button>
             <button type="button" onClick={onSnapshotClear}>
               Clear to Sample Mode
@@ -105,6 +107,17 @@ export function SettingsPage({ deployment, snapshot, mode, confidence, onSnapsho
           </label>
           <p>No filesystem watcher, backend, approval write-back, or live agent connection is used.</p>
         </Panel>
+        <Panel title="Schema Metadata" eyebrow="active snapshot">
+          <DetailList
+            items={[
+              ["Bundled snapshot", "/data/current-snapshot.json"],
+              ["Schema", snapshot?.schemaVersion ?? "Not loaded"],
+              ["Generated", snapshot?.generatedAt ?? "Not loaded"],
+              ["Storage", "Browser localStorage only"],
+              ["Read-only behavior", "No approval write-back or policy mutation"],
+            ]}
+          />
+        </Panel>
         <Panel title="Artifact Counts" eyebrow="by kind">
           <div className="state-grid">
             {kindCounts.map(([kind, count]) => (
@@ -116,7 +129,7 @@ export function SettingsPage({ deployment, snapshot, mode, confidence, onSnapsho
             {kindCounts.length === 0 ? <p>No snapshot loaded.</p> : null}
           </div>
         </Panel>
-        <Panel title="Import Diagnostics" eyebrow="warnings and errors">
+        <Panel title="Diagnostics" eyebrow={`${warningCount} warnings, ${errorCount} errors`}>
           <div className="finding-list">
             {snapshot?.diagnostics.map((diagnostic, index) => (
               <article key={`${diagnostic.code}-${index}`}>

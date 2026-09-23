@@ -18,11 +18,14 @@
   "objections": [
     {
       "category": "external_impact",
-      "message": "External-facing claims require authority and provenance evidence."
+      "message": "External-facing claims require authority and provenance evidence.",
+      "severity": "high",
+      "question": "Who reviewed the external claim?",
+      "reason": "Approval evidence is absent.",
+      "suggestedRevision": "Request human review before advancing."
     }
   ],
   "internalizedPrinciple": "Public claims should not advance without reviewable authority and proof.",
   "decision": "escalate_to_human",
   "reasonForDecision": "The action is external-facing and approval evidence is not present."
 }
-

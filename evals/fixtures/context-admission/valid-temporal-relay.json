@@ -1,0 +1,6 @@
+{
+  "id": "valid-temporal-relay",
+  "inputPath": "examples/context-admission/valid-temporal-relay.json",
+  "expectedDecision": "admit",
+  "expectedFindings": []
+}

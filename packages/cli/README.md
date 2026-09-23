@@ -34,3 +34,5 @@ The CLI does not execute governed actions. It runs deterministic local checks ag
 `ags dogfood` reports Internal Dogfood, Enterprise Golden Path, Content Publishing Dogfood, Content Publishing Hardening, Content Publishing Depth Hardening, and Decision Closure Hardening counts. `ags redteam` runs adversarial bypass regression cases. `ags gaps` runs the Alignment Gap Detector and exits `2` when high or critical gaps require human review.
 
 See `docs/CLI.md` for examples and exit codes.
+
+`ags context-admit <input.json> [--json]` evaluates supplied context and provenance locally. Exit codes: 0 admitted/restricted, 1 validation/review/rejection, 2 invalid input. Admission is not execution approval. `ags redteam` includes Context Admission scenarios.

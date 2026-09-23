@@ -2,16 +2,16 @@
   "decision": "execution_allowed",
   "allowed": true,
   "permit": {
-    "id": "permit-console-001",
+    "id": "permit-proposal-console-001-607ea405-7f2b-46fc-b7ac-43e7dc99593a",
     "proposalId": "proposal-console-001",
-    "actionHash": "sha256:console-action-hash-001",
+    "actionHash": "sha256:70c1fed9c64d5b56c55c54108a5c4c5d11d5dce86a95e302b2dd86608750bccb",
     "allowedAction": {
       "id": "proposal-console-001",
-      "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
-      "tool": "local-doc-writer",
-      "actionType": "create_draft",
-      "target": "docs/release-readiness.md",
-      "environment": "local",
+      "userRequest": "Generate a weekly summary report.",
+      "tool": "report.generate",
+      "actionType": "generate_report",
+      "target": "weekly_summary",
+      "environment": "dev",
       "reversible": true,
       "externalFacing": false,
       "dataSensitivity": "low",
@@ -21,11 +21,10 @@
         "workflowId": "workflow-console-readiness"
       }
     },
-    "issuedAt": "2026-01-02T10:00:00.000Z",
+    "issuedAt": "2026-01-02T10:01:00.000Z",
     "source": "aag",
     "aagDecision": "allow"
   },
   "failures": [],
-  "reasonForDecision": "The runtime action hash matched the active permit."
+  "reasonForDecision": "Runtime action exactly matches a valid permit."
 }
-

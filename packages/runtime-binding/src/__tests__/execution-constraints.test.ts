@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { AgentActionProposal, ExecutionConstraintSet } from "@alignment-governance-stack/shared-types";
+import type { AgentActionProposal, ExecutionConstraint, ExecutionConstraintSet } from "@alignment-governance-stack/shared-types";
 import {
   bindActionToPermit,
   createActionHash,
@@ -37,7 +37,7 @@ describe("Runtime Binding execution constraints", () => {
     expect(permit.allowedAction.executionConstraints).toEqual(action.executionConstraints);
   });
 
-  it.each([
+  it.each<[string, string, ExecutionConstraint]>([
     ["budget amount", "budgetAmount", { type: "exact_number", value: 250 }],
     ["budget currency", "budgetCurrency", { type: "exact_string", value: "EUR" }],
     ["platform", "platform", { type: "exact_string", value: "tiktok" }],
@@ -60,10 +60,7 @@ describe("Runtime Binding execution constraints", () => {
 
   it("denies missing bound constraints", () => {
     const permittedAction = createAgencyAction();
-    const runtimeAction = {
-      ...permittedAction,
-      executionConstraints: undefined
-    };
+    const { executionConstraints: _constraints, ...runtimeAction } = permittedAction;
     const permit = createRuntimePermit(permittedAction);
 
     const result = validateRuntimePermit(runtimeAction, permit);

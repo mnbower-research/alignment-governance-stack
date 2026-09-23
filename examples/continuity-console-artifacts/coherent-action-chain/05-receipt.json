@@ -1,14 +1,14 @@
 {
-  "version": "ags.receipt.v0.1",
   "id": "receipt-console-001",
+  "version": "ags.receipt.v0.1",
   "createdAt": "2026-01-02T10:01:00.000Z",
   "originalProposal": {
     "id": "proposal-console-001",
-    "userRequest": "Draft an internal release readiness summary for AGS v1.11.1.",
-    "tool": "local-doc-writer",
-    "actionType": "create_draft",
-    "target": "docs/release-readiness.md",
-    "environment": "local",
+    "userRequest": "Generate a weekly summary report.",
+    "tool": "report.generate",
+    "actionType": "generate_report",
+    "target": "weekly_summary",
+    "environment": "dev",
     "reversible": true,
     "externalFacing": false,
     "dataSensitivity": "low",
@@ -19,22 +19,135 @@
     }
   },
   "pgdl": {
-    "decision": "forward_to_aag"
+    "originalProposal": {
+      "id": "proposal-console-001",
+      "userRequest": "Generate a weekly summary report.",
+      "tool": "report.generate",
+      "actionType": "generate_report",
+      "target": "weekly_summary",
+      "environment": "dev",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "workflowId": "workflow-console-readiness"
+      }
+    },
+    "objections": [],
+    "decision": "forward_to_aag",
+    "reasonForDecision": "The proposal has no PGDL objections and can be forwarded to AAG."
+  },
+  "proposalSentToAag": {
+    "id": "proposal-console-001",
+    "userRequest": "Generate a weekly summary report.",
+    "tool": "report.generate",
+    "actionType": "generate_report",
+    "target": "weekly_summary",
+    "environment": "dev",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {
+      "workflowId": "workflow-console-readiness"
+    }
   },
   "aag": {
-    "decision": "allow"
+    "proposal": {
+      "id": "proposal-console-001",
+      "userRequest": "Generate a weekly summary report.",
+      "tool": "report.generate",
+      "actionType": "generate_report",
+      "target": "weekly_summary",
+      "environment": "dev",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "workflowId": "workflow-console-readiness"
+      }
+    },
+    "detectorResults": [],
+    "decision": "allow",
+    "reasonForDecision": "Proceed with the proposed action.",
+    "receiptRequired": true
   },
   "permit": {
-    "id": "permit-console-001"
+    "id": "permit-proposal-console-001-607ea405-7f2b-46fc-b7ac-43e7dc99593a",
+    "proposalId": "proposal-console-001",
+    "actionHash": "sha256:70c1fed9c64d5b56c55c54108a5c4c5d11d5dce86a95e302b2dd86608750bccb",
+    "allowedAction": {
+      "id": "proposal-console-001",
+      "userRequest": "Generate a weekly summary report.",
+      "tool": "report.generate",
+      "actionType": "generate_report",
+      "target": "weekly_summary",
+      "environment": "dev",
+      "reversible": true,
+      "externalFacing": false,
+      "dataSensitivity": "low",
+      "requiresApproval": false,
+      "knownApproval": false,
+      "metadata": {
+        "workflowId": "workflow-console-readiness"
+      }
+    },
+    "issuedAt": "2026-01-02T10:01:00.000Z",
+    "source": "aag",
+    "aagDecision": "allow"
+  },
+  "runtimeAction": {
+    "id": "proposal-console-001",
+    "userRequest": "Generate a weekly summary report.",
+    "tool": "report.generate",
+    "actionType": "generate_report",
+    "target": "weekly_summary",
+    "environment": "dev",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {
+      "workflowId": "workflow-console-readiness"
+    }
   },
   "runtimeBinding": {
-    "decision": "execution_allowed"
+    "decision": "execution_allowed",
+    "allowed": true,
+    "permit": {
+      "id": "permit-proposal-console-001-607ea405-7f2b-46fc-b7ac-43e7dc99593a",
+      "proposalId": "proposal-console-001",
+      "actionHash": "sha256:70c1fed9c64d5b56c55c54108a5c4c5d11d5dce86a95e302b2dd86608750bccb",
+      "allowedAction": {
+        "id": "proposal-console-001",
+        "userRequest": "Generate a weekly summary report.",
+        "tool": "report.generate",
+        "actionType": "generate_report",
+        "target": "weekly_summary",
+        "environment": "dev",
+        "reversible": true,
+        "externalFacing": false,
+        "dataSensitivity": "low",
+        "requiresApproval": false,
+        "knownApproval": false,
+        "metadata": {
+          "workflowId": "workflow-console-readiness"
+        }
+      },
+      "issuedAt": "2026-01-02T10:01:00.000Z",
+      "source": "aag",
+      "aagDecision": "allow"
+    },
+    "failures": [],
+    "reasonForDecision": "Runtime action exactly matches a valid permit."
   },
-  "finalDecision": "allow",
-  "reasonForDecision": "The governed path completed for an internal draft.",
-  "metadata": {
-    "workflowId": "workflow-console-readiness"
-  },
-  "receiptHash": "sha256:receipt-console-001"
+  "finalDecision": "execution_allowed",
+  "reasonForDecision": "Runtime action matched the issued permit. Execution may proceed.",
+  "receiptHash": "e13fd23758e860058aa5d4c55fbb478b8652f5b83b6609889311243e32dd367e"
 }
-

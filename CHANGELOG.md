@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.13.0 - Governed Information Inheritance and Context Admission
+
+- Implements Semantic Context and Admissibility with deterministic, local `context-admission` and shared artifact/provenance/use/evidence types.
+- Checks source recognition, integrity, expiration, revocation, purpose, receiving authority, domain transfer, validation, transformations and ancestor lineage. Prior approval and embedded instructions do not grant current authority.
+- Adds optional admission before PGDL in Governance Core, context-aware PGDL/AAG decisions, runtime permit expiry caps, content-free receipt evidence and Agency Fingerprint lineage digests.
+- Adds information/temporal handoffs to Agency Chain mapping and existing Human Agency Audit findings.
+- Adds read-only Context Admission ingestion and semantic-continuity inspection in the Console's Runs view.
+- Adds `ags context-admit`, twelve deterministic inheritance eval scenarios, adversarial integration tests and local fixtures.
+- Includes the Console navigation/layout refresh, Flows/Audits/Workbench sample views, static module/profile artifacts, and isolated conformance reference resolvers.
+- Hardens default runtime clocks, canonical action-use binding, operational validation defaults, content-free import schemas, fingerprint receiver consistency, and the standalone AAG trust boundary. Existing callers without context remain supported; historical reports alone now fail closed.
+- Separates imported decision verdicts from trace completeness and removes sample approval, memory and plugin claims from Local Evidence Mode.
+- Adds default Simple Operator Mode with four plain-language run questions, conservative Context Admission/PGDL/AAG/Runtime Binding/Receipt explanations, always-visible material findings, and a global technical-detail disclosure control.
+- Updates repository instructions and documents separate project milestone/package version semantics.
+- Applies compatible development-tool audit fixes (Vite/Vitest and vulnerable transitive browser-mapping dependencies) and repairs strict typing in existing runtime test fixtures.
+
+Boundary: supplied evidence only; no issuer authentication, live revocation service, automatic semantic verification, network execution, model-token interception, Console enforcement, or silent policy mutation. Context Admission does not replace PGDL, AAG, Runtime Binding or existing evidence systems.
+
+Principle: Context must not outrun provenance.
+
 ## v1.12.0 — AGS Continuity Console and Read-Only Evidence Ingestion
 
 Adds the local-first AGS Continuity Console and a deterministic read-only local evidence-ingestion pipeline.

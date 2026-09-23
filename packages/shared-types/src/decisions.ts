@@ -1,5 +1,6 @@
 import type { AgentActionProposal } from "./actionProposal.js";
 import type { RiskLevel } from "./risk.js";
+import type { ContextAdmissionEvidence } from "./contextAdmission.js";
 
 export type PgdlDecision =
   | "forward_to_aag"
@@ -28,6 +29,7 @@ export interface PgdlObjection {
 }
 
 export interface PgdlPacket {
+  contextAdmission?: ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;
   objections: PgdlObjection[];
   internalizedPrinciple?: string;
@@ -48,6 +50,7 @@ export interface AagDetectorResult {
 }
 
 export interface AagPacket {
+  contextAdmission?: ContextAdmissionEvidence;
   proposal: AgentActionProposal;
   detectorResults: AagDetectorResult[];
   decision: AagDecision;

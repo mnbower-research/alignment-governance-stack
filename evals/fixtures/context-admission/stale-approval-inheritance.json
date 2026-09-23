@@ -1,0 +1,8 @@
+{
+  "id": "stale-approval-inheritance",
+  "inputPath": "examples/context-admission/stale-approval-inheritance.json",
+  "expectedDecision": "reject",
+  "expectedFindings": [
+    "approval_not_transferable"
+  ]
+}

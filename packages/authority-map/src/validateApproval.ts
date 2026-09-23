@@ -1,4 +1,5 @@
 import type { AgentActionProposal, DataSensitivity } from "@alignment-governance-stack/shared-types";
+import { createActionHash } from "@alignment-governance-stack/runtime-binding";
 import type {
   ApprovalEvidence,
   ApprovalValidationResult,
@@ -21,6 +22,11 @@ export interface ValidateApprovalOptions extends ResolveRequiredAuthorityOptions
   now?: string;
 }
 
+/** Bind the reviewed use using the canonical execution contract; approval status is a result, not reviewed scope. */
+export function createApprovalBinding(action: AgentActionProposal): NonNullable<ApprovalEvidence["binding"]> {
+  return { proposalId: action.id, userRequest: action.userRequest, actionHash: createActionHash({ ...action, knownApproval: false }) };
+}
+
 export function validateApproval(
   authorityMap: AuthorityMap,
   action: AgentActionProposal,
@@ -37,6 +43,10 @@ export function validateApproval(
       reasons: [`Authority map is invalid: ${authorityMapValidation.errors.join(" ")}`],
       requiredAuthority
     };
+  }
+
+  if (options.now !== undefined && !Number.isFinite(Date.parse(options.now))) {
+    return { valid: false, decision: "approval_invalid", reasons: ["Invalid host approval evaluation clock."], requiredAuthority };
   }
 
   if (!requiredAuthority.required && approvalEvidence === undefined) {
@@ -78,17 +88,28 @@ export function validateApproval(
   }
 
   const now = new Date(options.now ?? new Date().toISOString());
-
-  if (approvalEvidence.expiresAt !== undefined && now > new Date(approvalEvidence.expiresAt)) {
+  const approvedAt = Date.parse(approvalEvidence.approvedAt);
+  const expiry = approvalEvidence.expiresAt !== undefined ? Date.parse(approvalEvidence.expiresAt)
+    : authorityMap.defaultApprovalTtlMinutes !== undefined ? approvedAt + authorityMap.defaultApprovalTtlMinutes * 60_000 : NaN;
+  if (![now.getTime(), approvedAt, expiry].every(Number.isFinite)) {
+    return { valid: false, decision: "approval_invalid", reasons: ["Approval requires valid timestamps and an explicit expiry or policy default TTL."], requiredAuthority };
+  }
+  if (now.getTime() >= expiry) {
     return {
       valid: false,
       decision: "approval_expired",
-      reasons: [`Approval expired at ${approvalEvidence.expiresAt}.`],
+      reasons: [`Approval expired at ${new Date(expiry).toISOString()}.`],
       matchedRoleId: role.id,
       requiredAuthority
     };
   }
+  if (approvedAt > now.getTime() || expiry <= approvedAt) {
+    return { valid: false, decision: "approval_invalid", reasons: ["Approval is future-dated or has an invalid validity window."], requiredAuthority };
+  }
 
+  if (options.approvalKind !== undefined && options.approvalKind !== approvalEvidence.approvalKind) {
+    return { valid: false, decision: "approval_out_of_scope", reasons: ["The supplied approval kind does not match the required review."], requiredAuthority };
+  }
   const approvalKind = options.approvalKind ?? approvalEvidence.approvalKind;
   const matchedScopes = role.scopes.filter((scope) => matchesScope(scope, action, approvalKind));
 
@@ -102,9 +123,15 @@ export function validateApproval(
     };
   }
 
+  const expectedBinding = createApprovalBinding(action);
+  if (!approvalEvidence.binding || Object.entries(expectedBinding).some(([key, value]) => approvalEvidence.binding?.[key as keyof typeof expectedBinding] !== value)) {
+    return { valid: false, decision: "approval_binding_mismatch", reasons: ["Approval does not bind this exact proposal, purpose, target and execution constraints."], requiredAuthority };
+  }
+
   return {
     valid: true,
     decision: "approval_valid",
+    validUntil: new Date(expiry).toISOString(),
     reasons: [`Approval was supplied by authorized role ${role.id}.`],
     matchedRoleId: role.id,
     matchedScopeIds: matchedScopes.map((scope) => scope.id),
@@ -153,7 +180,7 @@ function matchesApprovalKind(
   approvalKinds: string[] | undefined,
   approvalKind: string | undefined
 ): boolean {
-  return approvalKind === undefined || approvalKinds === undefined || approvalKinds.includes(approvalKind);
+  return approvalKinds === undefined || (approvalKind !== undefined && approvalKinds.includes(approvalKind));
 }
 
 function getSensitivityRank(sensitivity: DataSensitivity): number {

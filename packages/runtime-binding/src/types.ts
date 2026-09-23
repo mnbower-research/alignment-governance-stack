@@ -9,6 +9,7 @@ export type RuntimeBindingFailureCode =
   | "missing_permit"
   | "permit_not_allowed"
   | "expired_permit"
+  | "invalid_clock"
   | "action_hash_mismatch"
   | "tool_mismatch"
   | "action_type_mismatch"

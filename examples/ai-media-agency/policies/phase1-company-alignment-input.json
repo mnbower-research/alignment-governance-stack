@@ -1,0 +1,225 @@
+{
+  "id": "ai-media-agency-phase-1",
+  "name": "AGS-Governed AI Media Agency Phase 1",
+  "organization": "AGS AI Media Agency",
+  "description": "Simulation-only agency governance profile for discovering, launching, testing, and scaling AI-influencer properties under CEO authority.",
+  "values": [
+    {
+      "id": "ceo-authority",
+      "label": "CEO authority remains final",
+      "governanceImplication": "Every spend-like action requires CEO approval and emergency-stop authority."
+    },
+    {
+      "id": "simulation-before-live",
+      "label": "Simulation before live execution",
+      "governanceImplication": "No network execution, public posting, external direct messages, or credentials in Phase 1."
+    },
+    {
+      "id": "synthetic-identity-honesty",
+      "label": "Synthetic identity honesty",
+      "governanceImplication": "AI personas must not impersonate real people or fabricate human credentials, purchases, testimonials, personal results, or real-world experiences."
+    }
+  ],
+  "roles": [
+    {
+      "id": "ceo",
+      "label": "CEO / Human Principal",
+      "canApprove": ["external_facing", "production", "high_sensitivity"],
+      "notes": "Ultimate authority with stop, refuse, revise, halt, and escalation authority over all agency operations."
+    },
+    {
+      "id": "chief_of_staff",
+      "label": "Chief of Staff Orchestrator",
+      "notes": "May request approval and coordinate work, but may not grant approval."
+    },
+    {
+      "id": "growth_agent",
+      "label": "Growth & Monetization Agent",
+      "notes": "May propose spend-like tests, but may not grant approval or execute live spend."
+    }
+  ],
+  "tools": [
+    {
+      "tool": "ads.sandbox.create_campaign",
+      "label": "Sandbox ad campaign simulator",
+      "allowed": true,
+      "requiresApproval": true,
+      "externalFacing": false,
+      "environments": ["staging"],
+      "maxDataSensitivity": "low",
+      "notes": "Simulation-only paid content test proposal surface."
+    },
+    {
+      "tool": "ads.live.create_campaign",
+      "label": "Live ad campaign creation",
+      "allowed": false,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "blockedEnvironments": ["production"],
+      "notes": "Live spend is out of scope for Phase 1."
+    },
+    {
+      "tool": "social.publish",
+      "label": "Public social publishing",
+      "allowed": false,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "notes": "Public posting is out of scope for Phase 1."
+    },
+    {
+      "tool": "social.dm.send",
+      "label": "External direct messaging",
+      "allowed": false,
+      "requiresApproval": true,
+      "externalFacing": true,
+      "notes": "External direct messages are out of scope for Phase 1."
+    },
+    {
+      "tool": "credentials.access",
+      "label": "Credential access",
+      "allowed": false,
+      "destructive": true,
+      "notes": "Payment and social-platform credentials are out of scope for Phase 1."
+    },
+    {
+      "tool": "policy.modify",
+      "label": "Governance policy mutation",
+      "allowed": false,
+      "destructive": true,
+      "notes": "Operational agents and LLMs may not mutate governance policy at runtime."
+    }
+  ],
+  "dataClasses": [
+    {
+      "id": "public_market_research",
+      "label": "Public market research",
+      "sensitivity": "low",
+      "externalSharingAllowed": true
+    },
+    {
+      "id": "synthetic_persona_profile",
+      "label": "Synthetic persona profile",
+      "sensitivity": "medium",
+      "externalSharingAllowed": false,
+      "requiresApproval": true,
+      "notes": "Synthetic personas must be represented as synthetic/AI identities."
+    },
+    {
+      "id": "sensitive_personal_data",
+      "label": "Sensitive personal data",
+      "sensitivity": "high",
+      "externalSharingAllowed": false,
+      "requiresApproval": true,
+      "notes": "Sensitive-personal-data workflows are out of scope for Phase 1."
+    }
+  ],
+  "environments": [
+    {
+      "id": "staging",
+      "label": "Staging / Simulation",
+      "productionLike": false,
+      "requiresApprovalForExternalFacing": true,
+      "requiresApprovalForHighSensitivity": true
+    },
+    {
+      "id": "production",
+      "label": "Production / Live Platforms",
+      "productionLike": true,
+      "requiresApprovalForIrreversible": true,
+      "requiresApprovalForExternalFacing": true,
+      "requiresApprovalForHighSensitivity": true,
+      "notes": "Production and live platform execution are out of scope for Phase 1."
+    }
+  ],
+  "decisionBoundaries": [
+    {
+      "id": "all_spend_requires_ceo_approval",
+      "label": "Every spend-like action requires CEO approval",
+      "tool": "ads.sandbox.create_campaign",
+      "actionType": "create_paid_content_test",
+      "environment": "staging",
+      "externalFacing": false,
+      "reversible": true,
+      "dataSensitivity": "low",
+      "requiresHumanApproval": true,
+      "approverRole": "ceo"
+    },
+    {
+      "id": "never_live_spend_phase_1",
+      "label": "No live spend in Phase 1",
+      "tool": "ads.live.create_campaign",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_public_post_phase_1",
+      "label": "No public posting in Phase 1",
+      "tool": "social.publish",
+      "externalFacing": true,
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_external_dm_phase_1",
+      "label": "No external direct messages in Phase 1",
+      "tool": "social.dm.send",
+      "externalFacing": true,
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_credential_access_phase_1",
+      "label": "No payment or social-platform credential access",
+      "tool": "credentials.access",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_policy_mutation_by_agents",
+      "label": "Operational agents and LLMs may not mutate governance policy",
+      "tool": "policy.modify",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_agent_self_approval",
+      "label": "Agents may not approve their own proposals",
+      "tool": "approval.self",
+      "actionType": "approve_own_action",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_real_person_impersonation",
+      "label": "No unconsented real-person likeness or impersonation",
+      "actionType": "impersonate_real_person",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_fabricated_human_claims",
+      "label": "No fabricated human credentials or experiences",
+      "actionType": "fabricate_human_experience_claim",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    },
+    {
+      "id": "never_out_of_scope_sensitive_domains",
+      "label": "No Phase 1 political, medical, financial, adult, or sensitive personal workflows",
+      "dataSensitivity": "high",
+      "targetIncludes": "sensitive_personal_data",
+      "requiresHumanApproval": true,
+      "neverAutomate": true
+    }
+  ],
+  "defaultMode": "strict",
+  "metadata": {
+    "status": "draft_for_ceo_review",
+    "phase": "1",
+    "simulationOnly": true,
+    "maxSimulatedSpendPerAction": 25,
+    "maxSimulatedSpendCurrency": "USD",
+    "initialExperimentBudgetContext": 200,
+    "liveActionBlocker": "Budget and related business fields are metadata-only until future canonical runtime binding work."
+  }
+}

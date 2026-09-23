@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
 import {
+  createApprovalBinding,
   defaultAuthorityMap,
   validateApproval,
   validateAuthorityMap
 } from "../index.js";
 import type { ApprovalEvidence, AuthorityMap } from "../types.js";
+
+const VALID_APPROVAL_REVIEW_TIME = "2026-05-20T10:00:00.000Z";
 
 describe("authority map", () => {
   it("validates the default authority map", () => {
@@ -69,7 +72,7 @@ describe("authority map", () => {
       defaultAuthorityMap,
       createHighSensitivityProductionAction(),
       createApprovalEvidence({ approverRoleId: "security_admin" }),
-      { now: "2026-05-12T10:00:00.000Z" }
+      { now: VALID_APPROVAL_REVIEW_TIME }
     );
 
     expect(result.valid).toBe(true);
@@ -82,7 +85,8 @@ describe("authority map", () => {
     const result = validateApproval(
       defaultAuthorityMap,
       createDatabaseDeleteAction(),
-      createApprovalEvidence({ approverRoleId: "communications_admin" })
+      createApprovalEvidence({ approverRoleId: "communications_admin" }),
+      { now: VALID_APPROVAL_REVIEW_TIME }
     );
 
     expect(result.valid).toBe(false);
@@ -97,7 +101,8 @@ describe("authority map", () => {
         target: "employee_records",
         requiresApproval: true
       },
-      createApprovalEvidence({ approverRoleId: "hr_admin" })
+      createApprovalEvidence({ approverRoleId: "hr_admin", binding: createApprovalBinding({ ...createSafeReportAction(), target: "employee_records", requiresApproval: true }) }),
+      { now: VALID_APPROVAL_REVIEW_TIME }
     );
 
     expect(result.valid).toBe(true);
@@ -113,7 +118,8 @@ describe("authority map", () => {
         dataSensitivity: "medium",
         requiresApproval: true
       },
-      createApprovalEvidence({ approverRoleId: "data_steward" })
+      createApprovalEvidence({ approverRoleId: "data_steward", binding: createApprovalBinding({ ...createSafeReportAction(), dataSensitivity: "medium", requiresApproval: true }) }),
+      { now: VALID_APPROVAL_REVIEW_TIME }
     );
     const highResult = validateApproval(
       authorityMap,
@@ -122,7 +128,8 @@ describe("authority map", () => {
         dataSensitivity: "high",
         requiresApproval: true
       },
-      createApprovalEvidence({ approverRoleId: "data_steward" })
+      createApprovalEvidence({ approverRoleId: "data_steward" }),
+      { now: VALID_APPROVAL_REVIEW_TIME }
     );
 
     expect(mediumResult.valid).toBe(true);
@@ -176,6 +183,7 @@ function createApprovalEvidence(
     id: "approval-1",
     approverId: "user-1",
     approverRoleId: "business_owner",
+    binding: createApprovalBinding(createHighSensitivityProductionAction()),
     approvedAt: "2026-05-14T09:00:00.000Z",
     expiresAt: "2026-06-13T09:00:00.000Z",
     ...overrides

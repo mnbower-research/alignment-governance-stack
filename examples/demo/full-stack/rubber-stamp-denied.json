@@ -38,7 +38,12 @@
     "approverId": "human-reviewer-1",
     "approverRoleId": "business_owner",
     "approvedAt": "2026-05-14T09:00:00.000Z",
-    "expiresAt": "2026-06-13T09:00:00.000Z"
+    "expiresAt": "2026-06-13T09:00:00.000Z",
+    "binding": {
+      "proposalId": "demo-approval-required-report",
+      "userRequest": "Generate a weekly internal usage report.",
+      "actionHash": "sha256:7ddc02887cb28e124adb4d82c090f2d96b11b16c8010a677a2a910055b85aa9d"
+    }
   },
   "humanParticipation": {
     "input": {
@@ -54,5 +59,8 @@
   "receiptOptions": {
     "id": "demo-rubber-stamp-denied",
     "createdAt": "2026-05-14T10:03:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
   }
 }

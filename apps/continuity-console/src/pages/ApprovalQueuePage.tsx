@@ -22,6 +22,7 @@ export function ApprovalQueuePage({ deployment, initialRequests, mode = "sample"
   const readOnly = mode === "local-evidence";
 
   function applyAction(requestId: string, state: ApprovalAction): void {
+    if (readOnly) return;
     setRequests((currentRequests) =>
       currentRequests.map((request) => (request.id === requestId ? { ...request, state } : request)),
     );
@@ -43,22 +44,34 @@ export function ApprovalQueuePage({ deployment, initialRequests, mode = "sample"
     ]);
   }
 
+  if (readOnly) return <>
+    <PageHeader title="Approvals" description="Imported artifacts are historical evidence, not a current approval queue." deployment={deployment} mode={mode} confidence={confidence} />
+    <div className="read-only-banner" role="status">Read-only evidence mode. Approval execution is intentionally disabled.</div>
+    <Panel title="Approval Queue" eyebrow="not demonstrated"><p>No current approval queue is imported. Inspect historical approval evidence in Runs.</p></Panel>
+  </>;
+
   return (
     <>
       <PageHeader
-        title="Approval Queue"
+        title="Approvals"
         description={readOnly ? "Read-only view in Local Evidence Mode. Imported evidence cannot be approved, revised, escalated, blocked, or written back." : "Human review queue for sample actions. Actions update local UI state only."}
         deployment={deployment}
         mode={mode}
         confidence={confidence}
       />
+      {readOnly ? (
+        <div className="read-only-banner" role="status">
+          Read-only evidence mode. Approval execution is intentionally disabled.
+        </div>
+      ) : null}
       <section className="kpi-grid">
-        <KpiCard label="Pending" value={requests.filter((request) => request.state === "Pending").length} detail="awaiting review" tone="amber" />
-        <KpiCard label="High Risk" value={requests.filter((request) => request.riskLevel === "High").length} detail="needs careful authority review" tone="red" />
-        <KpiCard label="Receipts" value={receipts.length} detail="local UI decisions recorded" tone="teal" />
+        <KpiCard label="Pending" value={requests.filter((request) => request.state === "Pending").length} detail="awaiting review" tone="amber" icon="P" />
+        <KpiCard label="High Risk" value={requests.filter((request) => request.riskLevel === "High").length} detail="needs careful authority review" tone="red" icon="!" />
+        <KpiCard label="Receipts Generated" value={receipts.length} detail="local UI decisions recorded" tone="teal" icon="RC" />
+        <KpiCard label="Average Review Time" value={readOnly ? "N/A" : "2m 14s"} detail={readOnly ? "not computed from imports" : "sample local queue"} tone="blue" icon="T" />
       </section>
       <section className="approval-grid">
-        <Panel title="Pending Actions" eyebrow="sample queue">
+        <Panel title="Pending Actions" eyebrow={readOnly ? "read-only queue" : "sample queue"}>
           <div className="approval-list">
             {requests.map((request) => (
               <article className="approval-item" key={request.id}>
@@ -73,6 +86,7 @@ export function ApprovalQueuePage({ deployment, initialRequests, mode = "sample"
                   <div><dt>Agent</dt><dd>{request.requestingAgent}</dd></div>
                   <div><dt>Workflow</dt><dd>{request.workflow}</dd></div>
                   <div><dt>Target</dt><dd>{request.target}</dd></div>
+                  <div><dt>Scope</dt><dd>{request.action}</dd></div>
                   <div><dt>Reversible</dt><dd>{boolLabel(request.reversible)}</dd></div>
                   <div><dt>Authority</dt><dd>{request.authoritySource}</dd></div>
                   <div><dt>Time</dt><dd>{request.timestamp}</dd></div>

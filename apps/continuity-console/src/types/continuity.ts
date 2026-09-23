@@ -1,4 +1,5 @@
 export type ContinuityStatus =
+  | "Not Demonstrated"
   | "Missing"
   | "Declared"
   | "Mapped"
@@ -123,6 +124,7 @@ export interface GovernedActionTrace {
   reversible: boolean;
   approvalSource: string;
   events: TraceEvent[];
+  risks?: Array<{ title: string; explanation: string; severity: RiskLevel }>;
 }
 
 export interface ApprovalRequest {

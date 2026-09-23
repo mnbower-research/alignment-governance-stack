@@ -1,4 +1,5 @@
 export type ArtifactKind =
+  | "context-admission"
   | "pgdl-review-packet"
   | "aag-decision"
   | "runtime-permit"

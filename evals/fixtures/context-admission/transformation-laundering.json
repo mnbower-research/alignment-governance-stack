@@ -1,0 +1,8 @@
+{
+  "id": "transformation-laundering",
+  "inputPath": "examples/context-admission/transformation-laundering.json",
+  "expectedDecision": "require_validation",
+  "expectedFindings": [
+    "transformation_parent_missing"
+  ]
+}

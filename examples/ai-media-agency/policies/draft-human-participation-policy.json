@@ -1,0 +1,18 @@
+{
+  "id": "ai-media-agency.phase1.human-participation",
+  "name": "AI Media Agency Phase 1 Human Participation Policy",
+  "version": "human.participation.ai-media-agency.phase1-draft",
+  "minReasonLengthForHighRisk": 40,
+  "minReviewSecondsForHighRisk": 30,
+  "minReviewSecondsDefault": 5,
+  "requireReasonForHighRisk": true,
+  "requireContextForHighRisk": true,
+  "requireAlternativesForHighRisk": true,
+  "requireObjectionsForHighRisk": true,
+  "metadata": {
+    "status": "draft_for_ceo_review",
+    "humanReviewed": false,
+    "phase": "1",
+    "requiredContext": "objective, agent, property, campaign, content, platform, audience/target, exact budget, experiment window, expected outcome, risks, objections, alternatives, rollback, and data sensitivity"
+  }
+}

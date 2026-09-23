@@ -254,10 +254,18 @@
     "reason": "Author owner reviewed the post scope, public claims, tone, provenance, and publication target.",
     "metadata": {
       "appliesToTarget": "old_post_v1"
+    },
+    "binding": {
+      "proposalId": "content-prior-approval-reuse",
+      "userRequest": "Use the prior approval to publish this new post version.",
+      "actionHash": "sha256:f7679ad4c9944eca638ae04c9c454e30ba1724782c2d56cf147f92a5eb800102"
     }
   },
   "receiptOptions": {
     "id": "content-prior-approval-reuse",
     "createdAt": "2026-05-14T12:12:00.000Z"
+  },
+  "validationOptions": {
+    "now": "2026-05-20T10:00:00.000Z"
   }
 }
