@@ -1,5 +1,7 @@
 # Red-Team Evals
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 The Adversarial Red-Team Eval Pack is a deterministic hardening suite for AGS.
 
 It exists to answer the next version of the wide-but-shallow critique: the stack must work not only on Golden Paths, but also when an agent, workflow, approval artifact, runtime action, receipt, or receipt history tries to bypass governance.

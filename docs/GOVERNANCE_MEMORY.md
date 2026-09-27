@@ -1,5 +1,7 @@
 # Governance Memory / Internalization Layer
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Governance Memory is the deterministic continuity layer for AGS.
 
 It answers:

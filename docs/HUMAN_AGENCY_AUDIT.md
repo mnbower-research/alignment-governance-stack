@@ -1,5 +1,7 @@
 # Human Agency Audit
 
+Terminology: Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 The Human Agency Audit is the capstone evaluation layer of the Alignment Governance Stack. Its purpose is not merely to determine whether a system is secure, compliant, or technically controlled. It asks whether the complete system preserves meaningful human agency across delegated action.
 
 Security can be strong while agency becomes weak. Compliance steps can exist while review becomes procedural. The Human Agency Audit evaluates whether authority, judgment, participation, refusal power, accountability, and responsibility remain live at the point where delegated systems create consequence.

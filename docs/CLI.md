@@ -1,5 +1,7 @@
 # Developer CLI
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 The AGS CLI provides a dependency-light local entry point for evals, governance checks, audit reports, and receipt verification.
 
 It answers the v0.8.0 developer question:

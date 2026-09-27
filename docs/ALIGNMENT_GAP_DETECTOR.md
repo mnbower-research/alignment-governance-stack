@@ -1,5 +1,7 @@
 # Alignment Gap Detector
 
+Terminology: Alignment Governance Stack (AGS). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 The Alignment Gap Detector / Policy Conflict Analyzer is a deterministic diagnostic layer for company governance inputs.
 
 It answers:

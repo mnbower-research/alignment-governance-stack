@@ -1,6 +1,8 @@
-# PGDL
+# Pre-Gate Deliberation Layer (PGDL)
 
-PGDL means Pre-Gate Deliberation Layer.
+PGDL is the structured pre-authorization challenge layer within the Alignment Governance Stack (AGS). It examines a proposed interpretation or trajectory before it reaches the Agent Action Gate (AAG), the consequential authorization boundary.
+
+PGDL should challenge semantic drift, scope expansion, weak or disputed evidence, uncertainty, proposal laundering, conflicts, and other reasons a proposal may require revision. This architectural responsibility does not imply that the current deterministic rules detect every such problem. See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
 
 PGDL asks: "What kind of action should be proposed in the first place?"
 

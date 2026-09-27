@@ -1,5 +1,7 @@
 # Receipts
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Receipts preserve proof after PGDL, AAG, runtime binding, and execution decisions.
 
 Receipts should eventually answer what was proposed, what objections were raised, what changed, who approved it, what was allowed or blocked, what action ran, and whether runtime execution matched the permit.

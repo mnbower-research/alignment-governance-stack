@@ -1,5 +1,7 @@
 # Authority Map
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Authority Map is the AGS layer that answers:
 
 > Who is allowed to approve what?

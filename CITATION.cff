@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use Alignment Governance Stack, please cite this repository and identify the release or commit used."
+type: software
+title: Alignment Governance Stack
+authors:
+  - family-names: Bower
+    given-names: Michael
+repository-code: "https://github.com/mnbower-research/alignment-governance-stack"
+license: Apache-2.0

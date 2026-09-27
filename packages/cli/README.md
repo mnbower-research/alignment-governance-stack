@@ -1,5 +1,7 @@
 # AGS CLI
 
+Terminology: Alignment Governance Stack (AGS). See the [canonical architectural concepts](../../docs/MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Dependency-light developer CLI for local Alignment Governance Stack evals, governance checks, and receipt verification.
 
 ```bash

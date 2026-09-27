@@ -1,5 +1,7 @@
 # Governed Information Inheritance
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Context must not outrun provenance.
 
 A persistent artifact is a handoff across time. An agent can terminate while its output remains available to another agent, session, workflow, organization, tool, file, database, memory store, or web consumer. Persistence does not preserve authority, validity, scope, interpretation, or permission to reuse information. Availability is not admissibility. Stored is not trusted. Remembered is not authorized.

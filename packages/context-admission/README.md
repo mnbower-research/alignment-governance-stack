@@ -1,5 +1,7 @@
 # Context Admission
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](../../docs/MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Deterministic implementation of AGS Semantic Context and Admissibility. Evaluates supplied material artifacts, provenance, transformation lineage and current receiving-use evidence without executing actions or reading artifact text as instructions.
 
 ```ts

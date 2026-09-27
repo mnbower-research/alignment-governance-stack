@@ -1,5 +1,7 @@
 # AGS Continuity Console
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 ## Context Admission evidence (v1.13.0)
 
 Local Evidence Mode recognizes `context-admission/v0.1` records, including context evidence embedded in receipts. Runs shows a Semantic continuity panel with producer -> persistent artifact -> receiving agent, creation/review times, permitted purpose, transformations, parent lineage, recorded findings and dependent action. A persistent artifact can be a handoff across time. Semantic continuity concerns provenance and admissible meaning; runtime continuity concerns the authorized action matching the executed action.

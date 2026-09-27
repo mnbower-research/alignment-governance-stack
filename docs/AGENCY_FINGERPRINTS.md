@@ -1,5 +1,7 @@
 # Agency Fingerprints
 
+Terminology: Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Agency Fingerprints are not biometric identity. They are accountability fingerprints for delegated AI action. They bind an agent's action to the human or organizational authority chain under which it acted.
 
 Agents borrow authority. Fingerprints preserve the chain.

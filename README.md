@@ -1,6 +1,8 @@
 # Alignment Governance Stack
 
-The Alignment Governance Stack is open-source public-interest infrastructure for agentic AI. It is runtime governance infrastructure and human agency infrastructure: anti-Babel architecture for agentic AI systems that separates company policy, authority validation, human participation quality, proposal maturation, execution gating, runtime authorization, and proof.
+The Alignment Governance Stack (AGS) is open-source public-interest infrastructure for agentic AI. It is runtime governance infrastructure and human agency infrastructure: anti-Babel architecture for agentic AI systems that separates company policy, authority validation, human participation quality, proposal maturation, execution gating, runtime authorization, and proof.
+
+Within this overall architecture, the Pre-Gate Deliberation Layer (PGDL) challenges and matures proposed trajectories before authorization; the Agent Action Gate (AAG) determines legitimate permission to proceed. Runtime Binding constrains the authorized execution, and Receipts preserve supplied evidence. See the [canonical architectural concepts](docs/MODULAR_ARCHITECTURE.md#core-architectural-concepts).
 
 In practical governance terms, anti-Babel architecture means delegated power remains under discernment, authority, constraint, and evidence instead of scaling beyond meaningful human agency.
 
@@ -99,6 +101,10 @@ Human and Organizational Authority
 ```
 
 Not every deployment needs the same implementation complexity. A low-risk local workflow may use lightweight adapters and local receipts, while a high-risk enterprise deployment may require stronger identity, policy, runtime-control, evidence, and audit systems. What should remain intact is the relevant governance function for the risk profile: the path from authority to consequence must remain governed.
+
+## Stewardship and Citation
+
+See [Origin and Stewardship](ORIGIN_AND_STEWARDSHIP.md), the [Canonical Architecture](docs/MODULAR_ARCHITECTURE.md), and [Citation](CITATION.cff) for project lineage, architectural terminology, and attribution.
 
 ## Documentation
 

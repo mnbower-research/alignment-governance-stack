@@ -1,5 +1,7 @@
 # Continuity Ingest
 
+Terminology: Alignment Governance Stack (AGS). See the [canonical architectural concepts](../../docs/MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Local, deterministic ingestion for AGS Continuity Console evidence snapshots.
 
 This package reads local JSON artifacts, normalizes supported AGS shapes into a versioned read-only snapshot, preserves source hashes and parser provenance, and records diagnostics for malformed or unsupported files.

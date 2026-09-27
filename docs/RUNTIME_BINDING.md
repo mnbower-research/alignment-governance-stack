@@ -1,5 +1,7 @@
 # Runtime Binding
 
+Terminology: Alignment Governance Stack (AGS); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Runtime Binding validates that the actual action being executed matches a valid permit.
 
 It must prevent approved proposal drift, tool substitution, target substitution, scope expansion, stale approvals, and execution without a valid permit.

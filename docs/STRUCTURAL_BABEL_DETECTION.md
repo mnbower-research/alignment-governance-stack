@@ -1,5 +1,7 @@
 # Structural Babel Detection
 
+Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
+
 Structural Babel Detection is a deterministic audit layer for identifying potential Babel-shaped structural risk in delegated AI systems.
 
 Babel risk is structural, not merely behavioral. Bad outputs are often downstream of collapsed coordination capacity. Structural Babel Detection asks whether capability and coordination are scaling faster than agency, discernment, authority clarity, and accountability.
