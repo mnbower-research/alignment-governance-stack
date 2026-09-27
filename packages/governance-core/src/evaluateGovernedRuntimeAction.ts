@@ -19,6 +19,7 @@ export function evaluateGovernedRuntimeAction(
     return { originalProposal: input.proposal, finalDecision: "execution_denied", reasonForDecision: "Invalid requested permit expiration; no permit issued." };
   }
   const governedPacket = evaluateGovernedAction({
+    ...(input.assurance ? { assurance: input.assurance } : {}),
     now: runtimeNow,
     ...(input.contextAdmission !== undefined ? { contextAdmission: {
       ...input.contextAdmission,
@@ -56,6 +57,8 @@ export function evaluateGovernedRuntimeAction(
     : requestedExpiry !== undefined && Date.parse(requestedExpiry) < Date.parse(contextExpiry) ? requestedExpiry : contextExpiry;
   const permit = createRuntimePermit(governedPacket.proposalSentToAag, {
     ...input.permitOptions,
+    ...(input.assurance ? { assurance: input.assurance } : {}),
+    ...(governedPacket.aag ? { aagPacket: governedPacket.aag } : {}),
     issuedAt: runtimeNow,
     ...(expiresAt !== undefined ? { expiresAt } : {})
   });
@@ -71,7 +74,7 @@ export function evaluateGovernedRuntimeAction(
   }
 
   const runtimeBinding = bindActionToPermit(input.runtimeAction, permit,
-    { ...input.validationOptions, now: runtimeNow });
+    { ...input.validationOptions, ...(input.assurance ? { assurance: input.validationOptions?.assurance ?? input.assurance } : {}), now: runtimeNow });
 
   if (runtimeBinding.allowed) {
     return {

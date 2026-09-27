@@ -5,6 +5,8 @@ import type {
   ContextAdmissionEvidence
 } from "@alignment-governance-stack/shared-types" with { "resolution-mode": "import" };
 import { evaluateAction } from "./actionGate/evaluateAction";
+import { evaluateAssurance } from "@alignment-governance-stack/assurance";
+import type { AssuranceInput, AssuranceEvidence } from "@alignment-governance-stack/shared-types" with { "resolution-mode": "import" };
 import type { ActionGateInput, GateDetectorResult } from "./actionGate/types";
 
 /** Host-supplied check of fresh admission, exact action, integrity, receiver and validity.
@@ -13,7 +15,19 @@ import type { ActionGateInput, GateDetectorResult } from "./actionGate/types";
  */
 export type ContextAdmissionValidator = (proposal: AgentActionProposal, evidence: ContextAdmissionEvidence) => boolean;
 
-export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: ContextAdmissionEvidence, validateContext?: ContextAdmissionValidator): AagPacket {
+export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: ContextAdmissionEvidence, validateContext?: ContextAdmissionValidator, assuranceInput?: AssuranceInput): AagPacket {
+  let assurance: AssuranceEvidence | undefined;
+  if (proposal.assuranceRequirement !== undefined || assuranceInput !== undefined) {
+    let failure: string | undefined;
+    try {
+      if (!proposal.assuranceRequirement || !assuranceInput) throw new Error("Mandatory assurance requires a host-selected policy reference and current assurance inputs.");
+      assurance = evaluateAssurance(proposal, assuranceInput);
+      if (assurance.decision !== "satisfied") failure = `Required assurance is ${assurance.decision}.`;
+    } catch (error) { failure = error instanceof Error ? error.message : "Invalid assurance inputs."; }
+    if (failure) return { proposal, ...(contextAdmission ? { contextAdmission } : {}), ...(assurance ? { assurance } : {}),
+      decision: "block", receiptRequired: true, reasonForDecision: failure,
+      detectorResults: [{ detector: "assurance", triggered: true, severity: "high", recommendedDecision: "block", reason: failure }] };
+  }
   const use = contextAdmission?.requestedUse;
   const action = use?.action;
   const unresolved = contextAdmission !== undefined && (
@@ -26,6 +40,7 @@ export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: Co
   if (unresolved && contextAdmission !== undefined) {
     return {
       proposal,
+      ...(assurance ? { assurance } : {}),
       contextAdmission,
       decision: "block",
       receiptRequired: true,
@@ -43,6 +58,7 @@ export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: Co
   const result = evaluateAction(actionGateInput);
 
   return {
+    ...(assurance ? { assurance } : {}),
     ...(contextAdmission !== undefined ? { contextAdmission } : {}),
     proposal,
     detectorResults: result.detectorResults.filter((detectorResult) => detectorResult.triggered).map(toAagDetectorResult),

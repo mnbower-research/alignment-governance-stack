@@ -1,0 +1,52 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { renderToStaticMarkup } from "react-dom/server";
+import { expect, it, beforeAll, afterAll, vi } from "vitest";
+import { webcrypto } from "node:crypto";
+import { evaluateGovernedRuntimeActionWithReceipt } from "@alignment-governance-stack/governance-core";
+import { evaluateAssurance } from "@alignment-governance-stack/assurance";
+import { defaultParsers } from "@alignment-governance-stack/continuity-ingest";
+import { validateSnapshotEvidence } from "@alignment-governance-stack/continuity-ingest/browser";
+import { AssurancePanel } from "../components/AssurancePanel";
+import { projectSnapshot } from "./evidenceProjection";
+import { buildImportedOperatorSummary } from "./operatorSummary";
+import type { AssuranceEvaluationRequest } from "@alignment-governance-stack/shared-types";
+beforeAll(() => vi.stubGlobal("crypto", webcrypto));
+afterAll(() => vi.unstubAllGlobals());
+it("keeps assurance denials visible in Simple Mode, technical details and exported findings", async () => {
+  const request = JSON.parse(readFileSync(resolve("../../examples/assurance/denial-history.json"), "utf8")) as AssuranceEvaluationRequest;
+  const { receipt } = evaluateGovernedRuntimeActionWithReceipt({ proposal: request.action, runtimeAction: request.action, assurance: request.assurance, validationOptions: { now: request.assurance.evaluatedAt } });
+  const parser = defaultParsers.find(p => p.canParse(receipt, "receipt.json"))!;
+  const artifacts = parser.parse(receipt, { sourcePath: "receipt.json", fileName: "evidence.json", sha256: "a".repeat(64), importedAt: request.assurance.evaluatedAt });
+  const snapshot = await validateSnapshotEvidence({ schemaVersion: "ags.continuity-snapshot.v0.1", generatedAt: request.assurance.evaluatedAt, deployment: { id: "test", name: "Local test", environment: "local" }, artifacts, diagnostics: [] });
+  const projection = projectSnapshot(snapshot);
+  const summary = buildImportedOperatorSummary(projection.trace, projection.gaps);
+  expect(summary.answers[1].answer).toBe("No"); expect(summary.answers[2].answer).toBe("Not proven");
+  expect(projection.gaps.some(g => g.title === "Unresolved validator refusals")).toBe(true);
+  const reports = projection.trace.events.flatMap(e => e.artifact ? [e.artifact] : []);
+  const simple = renderToStaticMarkup(<AssurancePanel artifacts={reports} technical={false} />);
+  expect(simple).toContain("review-validator-3"); expect(simple).toContain("Human required"); expect(simple).not.toContain("Assurance technical details");
+  expect(renderToStaticMarkup(<AssurancePanel artifacts={reports} technical />)).toContain("Assurance technical details");
+  expect(renderToStaticMarkup(<AssurancePanel artifacts={[]} technical={false} />)).toBe("");
+});
+it("keeps a documented runtime assurance rejection complete without treating prior satisfaction as a conflict", async () => {
+  const request = JSON.parse(readFileSync(resolve("../../examples/assurance/low-risk.json"), "utf8")) as AssuranceEvaluationRequest;
+  const current = structuredClone(request.assurance); current.validators[0]!.revoked = true;
+  const { receipt } = evaluateGovernedRuntimeActionWithReceipt({ proposal: request.action, runtimeAction: request.action, assurance: request.assurance,
+    validationOptions: { now: request.assurance.evaluatedAt, assurance: current } });
+  const parser = defaultParsers.find(p => p.canParse(receipt, "receipt.json"))!;
+  const artifacts = parser.parse(receipt, { sourcePath: "runtime-denial.json", fileName: "receipt.json", sha256: "b".repeat(64), importedAt: request.assurance.evaluatedAt });
+  const snapshot = await validateSnapshotEvidence({ schemaVersion: "ags.continuity-snapshot.v0.1", generatedAt: request.assurance.evaluatedAt,
+    deployment: { id: "test", name: "Local test", environment: "local" }, artifacts, diagnostics: [] });
+  const projection = projectSnapshot(snapshot);
+  const summary = buildImportedOperatorSummary(projection.trace, projection.gaps);
+  expect(summary.answers[1].answer).toBe("No"); expect(summary.answers[2].answer).toBe("Not proven");
+  expect(summary.answers[3].answer).toBe("Complete decision evidence");
+  expect(summary.findings.some(f => f.explanation.includes("attestation_revoked"))).toBe(true);
+  const unlinked = evaluateAssurance(request.action, { ...current, caseId: "another-case" });
+  const assuranceParser = defaultParsers.find(p => p.canParse(unlinked, "assurance.json"))!;
+  const extras = assuranceParser.parse(unlinked, { sourcePath: "unlinked-assurance.json", fileName: "assurance.json", sha256: "c".repeat(64), importedAt: current.evaluatedAt });
+  const mixed = await validateSnapshotEvidence({ ...snapshot, artifacts: [...snapshot.artifacts, ...extras] });
+  const mixedProjection = projectSnapshot(mixed);
+  expect(buildImportedOperatorSummary(mixedProjection.trace, mixedProjection.gaps).answers[3].answer).toBe("Not completely");
+});

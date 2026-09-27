@@ -6,6 +6,7 @@ import type {
 export type RuntimeBindingDecision = "execution_allowed" | "execution_denied";
 
 export type RuntimeBindingFailureCode =
+  | "assurance_invalid"
   | "missing_permit"
   | "permit_not_allowed"
   | "expired_permit"
@@ -35,6 +36,7 @@ export interface RuntimeBindingFailure {
 }
 
 export interface RuntimePermit {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceEvidence;
   id: string;
   proposalId: string;
   actionHash: string;
@@ -49,6 +51,8 @@ export interface RuntimePermit {
 }
 
 export interface RuntimeBindingResult {
+  /** Fresh assurance evaluation at this boundary, distinct from the permit's earlier evaluation. */
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceEvidence;
   decision: RuntimeBindingDecision;
   allowed: boolean;
   permit?: RuntimePermit;
@@ -57,16 +61,20 @@ export interface RuntimeBindingResult {
 }
 
 export interface CreateRuntimePermitOptions {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceInput;
+  aagPacket?: import("@alignment-governance-stack/shared-types").AagPacket;
   issuedAt?: string;
   expiresAt?: string;
   metadata?: Record<string, unknown>;
 }
 
 export interface ValidateRuntimePermitOptions {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceInput;
   now?: string;
 }
 
 export type RuntimeBindingActionField =
+  | "assuranceRequirement"
   | "tool"
   | "actionType"
   | "target"

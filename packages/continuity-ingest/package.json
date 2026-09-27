@@ -30,7 +30,8 @@
   "dependencies": {
     "@alignment-governance-stack/context-admission": "workspace:*",
     "@alignment-governance-stack/shared-types": "workspace:*",
-    "@alignment-governance-stack/receipts": "workspace:*"
+    "@alignment-governance-stack/receipts": "workspace:*",
+    "@alignment-governance-stack/assurance": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",

@@ -109,6 +109,7 @@ See [Origin and Stewardship](ORIGIN_AND_STEWARDSHIP.md), the [Canonical Architec
 ## Documentation
 
 - [Modular Architecture](docs/MODULAR_ARCHITECTURE.md)
+- [Risk-Scaled Assurance (v1.14 candidate)](docs/RISK_SCALED_ASSURANCE.md)
 - [Governed Information Inheritance](docs/GOVERNED_INFORMATION_INHERITANCE.md)
 - [Adapter Model](docs/ADAPTER_MODEL.md)
 - [Ecosystem Map](docs/ECOSYSTEM_MAP.md)
@@ -231,6 +232,7 @@ Integration Adapters
 - `@alignment-governance-stack/ai-media-agency-adapter`: simulation-only mapping of agency proposals into the governance stack; no live executor.
 - `@alignment-governance-stack/pgdl-core`: deterministic Pre-Gate Deliberation Layer proposal maturation.
 - `@alignment-governance-stack/aag-core`: canonical Agent Action Gate integration.
+- `@alignment-governance-stack/assurance`: risk-scaled validation requirements, declared validator independence, and refusal preservation for host-designated actions (v1.14 candidate).
 - `@alignment-governance-stack/runtime-binding`: exact-action permit creation and runtime validation.
 - `@alignment-governance-stack/decision-closure`: deterministic Decision Closure Artifact generation, validation, hashing, summaries, and Markdown rendering.
 - `@alignment-governance-stack/agency-fingerprint`: deterministic accountability fingerprints that bind delegated actions to authority chains, workflow scope, runtime permits, and receipt metadata.

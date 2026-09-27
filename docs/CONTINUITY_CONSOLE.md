@@ -2,6 +2,10 @@
 
 Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
 
+## Risk-scaled assurance (v1.14 candidate)
+
+Runs displays imported assurance evidence in both Simple and Technical views: declared risk, required reviews, accepted validators and groups, mandatory human review, unresolved and resolved refusals, and the recorded validity window. All material assurance findings also appear in the shared findings and export path. Satisfaction is historical validation evidence, not current authority or execution proof. See [Risk-Scaled Assurance](RISK_SCALED_ASSURANCE.md).
+
 ## Context Admission evidence (v1.13.0)
 
 Local Evidence Mode recognizes `context-admission/v0.1` records, including context evidence embedded in receipts. Runs shows a Semantic continuity panel with producer -> persistent artifact -> receiving agent, creation/review times, permitted purpose, transformations, parent lineage, recorded findings and dependent action. A persistent artifact can be a handoff across time. Semantic continuity concerns provenance and admissible meaning; runtime continuity concerns the authorized action matching the executed action.

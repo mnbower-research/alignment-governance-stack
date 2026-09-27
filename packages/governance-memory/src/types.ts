@@ -9,6 +9,11 @@ export interface GovernanceMemoryInput {
 }
 
 export type GovernancePatternType =
+  | "repeated_assurance_denial"
+  | "repeated_assurance_escalation"
+  | "repeated_assurance_gap"
+  | "repeated_validator_disagreement"
+  | "repeated_independence_failure"
   | "repeated_pgdl_revision"
   | "repeated_policy_block"
   | "repeated_hard_boundary_block"

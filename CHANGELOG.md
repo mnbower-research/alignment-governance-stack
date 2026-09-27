@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — v1.14 Risk-Scaled Assurance and Independent Validation
+
+- Adds declared risk vectors, monotone assurance requirements, validator attestations, structural independence slots, and explicit refusal resolution.
+- Integrates mandatory assurance into AAG and Runtime Binding for host-selected protected actions; legacy v1.13 paths remain compatible.
+- Preserves assurance evidence in receipts, read-only Console imports and findings, and human-reviewable Governance Memory patterns.
+- Adds deterministic assurance evaluation CLI inputs, examples, and adversarial composition tests.
+- Assurance does not grant authority, establish objective truth, authenticate identities, or prove external execution. Hosts remain responsible for policy coverage, complete history, current identity/revocation information, and the final mutation boundary.
+
 ## v1.13.0 - Governed Information Inheritance and Context Admission
 
 - Implements Semantic Context and Admissibility with deterministic, local `context-admission` and shared artifact/provenance/use/evidence types.

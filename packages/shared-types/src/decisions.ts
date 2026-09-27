@@ -50,6 +50,7 @@ export interface AagDetectorResult {
 }
 
 export interface AagPacket {
+  assurance?: import("./assurance.js").AssuranceEvidence;
   contextAdmission?: ContextAdmissionEvidence;
   proposal: AgentActionProposal;
   detectorResults: AagDetectorResult[];

@@ -77,6 +77,7 @@ export interface SnapshotProjection {
 }
 
 const kindLayerMap: Record<ArtifactKind, string[]> = {
+  "assurance-evidence": ["layer-6"],
   "context-admission": ["layer-3"],
   "pgdl-review-packet": ["layer-5"],
   "aag-decision": ["layer-6"],
@@ -98,6 +99,7 @@ const kindLayerMap: Record<ArtifactKind, string[]> = {
 };
 
 const traceKindOrder: Array<{ kind: ArtifactKind; label: string }> = [
+  { kind: "assurance-evidence", label: "Risk-scaled assurance" },
   { kind: "pgdl-review-packet", label: "PGDL review" },
   { kind: "aag-decision", label: "AAG decision" },
   { kind: "runtime-permit", label: "Runtime permit" },
@@ -269,7 +271,7 @@ function expandEmbeddedArtifacts(artifacts: NormalizedAgsArtifact[]): Normalized
     expanded.push(artifact);
     if (!artifact.payload || typeof artifact.payload !== "object") return;
     const payload = artifact.payload as Record<string, unknown>;
-    const embedded: Record<string, ArtifactKind> = { contextAdmission: "context-admission", pgdl: "pgdl-review-packet", aag: "aag-decision", permit: "runtime-permit", runtimeBinding: "runtime-binding-result" };
+    const embedded: Record<string, ArtifactKind> = { assurance: "assurance-evidence", contextAdmission: "context-admission", pgdl: "pgdl-review-packet", aag: "aag-decision", permit: "runtime-permit", runtimeBinding: "runtime-binding-result" };
     for (const [field, kind] of Object.entries(embedded)) {
       const child = payload[field];
       if (!child || typeof child !== "object") continue;
@@ -300,6 +302,7 @@ function buildTrace(snapshot: ContinuitySnapshot): ImportedTrace {
   const contextAdmissions = correlatedArtifacts.filter(item => item.kind === "context-admission");
   const events = traceKindOrder.flatMap((traceKind): ImportedTraceEvent[] => {
     const artifacts = correlatedArtifacts.filter(item => item.kind === traceKind.kind);
+    if (!artifacts.length && traceKind.kind === "assurance-evidence") return [];
     if (!artifacts.length) return [{ id: `missing-${traceKind.kind}`, label: traceKind.label, kind: traceKind.kind,
       status: "Missing", timestamp: "Not imported", summary: "No matching artifact was imported for this stage.", missing: true }];
     return artifacts.map((artifact, index) => ({ id: `${artifact.id}:${index}`, label: traceKind.label, kind: artifact.kind,

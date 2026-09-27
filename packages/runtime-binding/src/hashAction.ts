@@ -3,6 +3,7 @@ import { canonicalizeExecutionConstraintSet, sha256Stable } from "./constraints.
 import type { RuntimeBindingActionField } from "./types.js";
 
 const actionHashFields: RuntimeBindingActionField[] = [
+  "assuranceRequirement",
   "tool",
   "actionType",
   "target",
@@ -21,6 +22,7 @@ export function createActionHash(action: AgentActionProposal): string {
 
 export function getCanonicalAction(action: AgentActionProposal): Partial<Record<RuntimeBindingActionField, unknown>> {
   return {
+    ...(action.assuranceRequirement !== undefined ? { assuranceRequirement: action.assuranceRequirement } : {}),
     tool: action.tool,
     actionType: action.actionType,
     target: action.target,

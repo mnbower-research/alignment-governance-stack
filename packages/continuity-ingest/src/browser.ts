@@ -1,4 +1,5 @@
 import { validateContextAdmissionEvidenceAsync } from "@alignment-governance-stack/context-admission/browser";
+import { verifyAssuranceEvidenceAsync, verifyValidatorAttestationAsync } from "@alignment-governance-stack/assurance/browser";
 import { verifyGovernanceReceiptAsync, canonicalizeForHash, sha256HexAsync } from "@alignment-governance-stack/receipts/browser";
 import { assertArtifactShape, assertNestedShapes, record } from "./artifactShape.js";
 import { correlateArtifact } from "./correlation.js";
@@ -10,6 +11,8 @@ export function hasVerifiedReceipt(value: unknown): boolean {
 async function validateTree(value: unknown): Promise<void> {
   if (!value || typeof value !== "object") return;
   const record = value as Record<string, unknown>;
+  if (record.version === "assurance-attestation/v0.1" && !await verifyValidatorAttestationAsync(value)) throw new Error("Invalid validator attestation integrity or schema.");
+  if (record.version === "assurance-evidence/v0.1" && !await verifyAssuranceEvidenceAsync(value)) throw new Error("Invalid assurance evidence integrity or schema.");
   if (record.version === "context-admission/v0.1" && !await validateContextAdmissionEvidenceAsync(value))
     throw new Error("Context Admission evidence has invalid content-free shape or digest.");
   if (record.version === "ags.receipt.v0.1" && !await verifyGovernanceReceiptAsync(value))
@@ -21,6 +24,7 @@ async function validateTree(value: unknown): Promise<void> {
     if (fingerprintHash !== hash || fingerprintId !== `agency-fingerprint-${hash.slice(0, 16)}`) throw new Error("Fingerprint integrity verification failed.");
   }
   for (const [key, child] of Object.entries(record)) {
+    if (key === "assurance" && child !== undefined && !await verifyAssuranceEvidenceAsync(child)) throw new Error("Invalid nested assurance evidence.");
     if (key === "contextAdmission" && child !== undefined && !await validateContextAdmissionEvidenceAsync(child))
       throw new Error("Nested Context Admission evidence has invalid content-free shape or digest.");
     await validateTree(child);

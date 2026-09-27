@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ContextInheritancePanel } from "../components/ContextInheritancePanel";
+import { AssurancePanel } from "../components/AssurancePanel";
 import { DetailList } from "../components/DetailList";
 import { KpiCard } from "../components/KpiCard";
 import { PageHeader } from "../components/PageHeader";
@@ -168,6 +169,7 @@ function ImportedTraceView({ deployment, trace, confidence, operatorSummary, sho
         confidence={confidence}
       />
       <SimpleOperatorSummary summary={operatorSummary} onOpenFindings={() => onNavigate("findings")} />
+      <AssurancePanel artifacts={trace.events.flatMap(event => event.artifact ? [event.artifact] : [])} technical={showTechnicalDetails} />
       {showTechnicalDetails ? (
       <div className="technical-detail-region" aria-label="Technical details">
       <ContextInheritancePanel artifacts={trace.contextAdmissions ?? []} />

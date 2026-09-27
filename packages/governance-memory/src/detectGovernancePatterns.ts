@@ -19,6 +19,18 @@ export function detectGovernancePatterns(
 ): GovernancePattern[] {
   const minOccurrences = options.minOccurrences ?? 2;
   const patterns: GovernancePattern[] = [];
+  const assuranceRules: Array<[GovernancePatternType, (r: GovernanceReceipt) => boolean]> = [
+    ["repeated_assurance_denial", r => (r.assurance?.unresolvedDenialIds.length ?? 0) > 0],
+    ["repeated_assurance_escalation", r => r.assurance?.decision === "escalate"],
+    ["repeated_assurance_gap", r => r.assurance?.findings.some(f => ["evidence_missing", "risk_unknown", "mandatory_human_missing"].includes(f.code)) === true],
+    ["repeated_validator_disagreement", r => r.assurance?.attestations.some(a => a.verdict === "deny") === true && r.assurance.attestations.some(a => a.verdict === "approve")],
+    ["repeated_independence_failure", r => r.assurance?.findings.some(f => ["duplicate_validator", "independent_slots_missing", "identity_conflict"].includes(f.code)) === true]
+  ];
+  for (const [type, filter] of assuranceRules) addGroupedPattern(patterns, {
+    receipts, minOccurrences, type, severity: "high", filter,
+    key: r => `${actionKey(r)}|${r.assurance?.binding.riskLevel ?? "unknown"}`,
+    summary: count => `${count} recorded assurance events: ${type}. Recurrence establishes neither authority nor truth; human policy review is required.`
+  });
 
   addGroupedPattern(patterns, {
     receipts,

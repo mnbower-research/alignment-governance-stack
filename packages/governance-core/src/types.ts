@@ -47,6 +47,7 @@ export type GovernanceFinalDecision =
   | "execution_denied";
 
 export interface EvaluateGovernedActionInput {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceInput;
   /** Trusted host evaluation clock. Omit for the current time. */
   now?: string;
   contextAdmission?: ContextAdmissionRequest;
@@ -61,6 +62,7 @@ export interface EvaluateGovernedActionInput {
 }
 
 export interface GovernancePacket {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceEvidence;
   contextAdmission?: ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;
   pgdl?: PgdlPacket;
@@ -75,6 +77,7 @@ export interface GovernancePacket {
 }
 
 export interface EvaluateGovernedRuntimeActionInput {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceInput;
   contextAdmission?: ContextAdmissionRequest;
   proposal: AgentActionProposal;
   policyProfile?: PolicyProfile;
@@ -102,6 +105,7 @@ export interface EvaluateGovernedRuntimeActionWithReceiptInput extends EvaluateG
 }
 
 export interface GovernanceRuntimePacket {
+  assurance?: import("@alignment-governance-stack/shared-types").AssuranceEvidence;
   contextAdmission?: ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;
   pgdl?: PgdlPacket;

@@ -27,6 +27,12 @@ function createRecommendation(pattern: GovernancePattern): GovernanceRecommendat
 
 function recommendationTypeForPattern(pattern: GovernancePattern): GovernanceRecommendationType {
   switch (pattern.type) {
+    case "repeated_assurance_denial":
+    case "repeated_assurance_escalation":
+    case "repeated_assurance_gap":
+    case "repeated_validator_disagreement":
+    case "repeated_independence_failure":
+      return "review_policy_profile";
     case "repeated_pgdl_revision":
       return "review_policy_profile";
     case "repeated_policy_block":

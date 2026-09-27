@@ -31,7 +31,7 @@ export function evaluateGovernedAction(
   const contextAdmission = normalizedInput.contextAdmission === undefined
     ? undefined : evaluateContextAdmission(normalizedInput.contextAdmission);
   const packet = evaluateWithContext(normalizedInput, contextAdmission);
-  return { ...packet, ...(contextAdmission !== undefined ? { contextAdmission } : {}) };
+  return { ...packet, ...(packet.aag?.assurance ? { assurance: packet.aag.assurance } : {}), ...(contextAdmission !== undefined ? { contextAdmission } : {}) };
 }
 
 function evaluateWithContext(
@@ -39,6 +39,9 @@ function evaluateWithContext(
   contextAdmission?: ContextAdmissionEvidence
 ): GovernancePacket {
   const { proposal, policyProfile, authorityMap, approvalEvidence, humanParticipation } = normalizedInput;
+  const assurance = normalizedInput.assurance === undefined ? undefined : {
+    ...normalizedInput.assurance, evaluatedAt: normalizedInput.now ?? new Date().toISOString()
+  };
   const humanDecision = humanParticipation?.input?.humanResponse?.decision;
   if (humanDecision === "reject" || humanDecision === "escalate" || humanDecision === "request_revision") {
     return {
@@ -182,7 +185,7 @@ function evaluateWithContext(
       const policyAwareProposal = resolvedPolicy.requiresApproval
         ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
         : proposalSentToAag;
-      const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext);
+      const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext, assurance);
 
       return {
         originalProposal: proposal,
@@ -221,7 +224,7 @@ function evaluateWithContext(
       };
     }
 
-    const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext);
+    const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext, assurance);
 
     return {
       originalProposal: proposal,
@@ -279,7 +282,7 @@ function evaluateWithContext(
       };
     }
 
-    const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext);
+    const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext, assurance);
 
     return {
       originalProposal: proposal,
@@ -311,7 +314,7 @@ function evaluateWithContext(
     };
   }
 
-  const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext);
+  const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext, assurance);
 
   return {
     originalProposal: proposal,

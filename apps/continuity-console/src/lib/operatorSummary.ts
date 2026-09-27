@@ -222,7 +222,16 @@ export function buildImportedOperatorSummary(trace: ImportedTrace, gaps: Evidenc
     const r = record(a.payload); const binding = record(r?.runtimeBinding);
     return r?.finalDecision === "execution_denied" && binding?.decision === "execution_denied" && binding.allowed === false;
   });
-  const conflict = actionConflict || [...decisionsByKind.values()].some(values => values.size > 1) ||
+  // A verified receipt can explicitly record earlier satisfaction followed by boundary rejection.
+  // Unlinked standalone reports still conflict; no latest-record or first-record inference is used.
+  const linkedAssuranceDigests = new Set(receipts.flatMap(a => {
+    const r = record(a.payload); const boundary = record(record(r?.runtimeBinding)?.assurance);
+    if (record(r?.assurance)?.decision !== "satisfied" || !boundary || boundary.decision === "satisfied") return [];
+    return [record(r?.assurance)?.digest, boundary.digest];
+  }).filter((digest): digest is string => typeof digest === "string"));
+  const linkedAssuranceTransition = validReceipts && coherentRuntimeDenial && linkedAssuranceDigests.size > 0 &&
+    ofKind("assurance-evidence").every(a => linkedAssuranceDigests.has(String(record(a.payload)?.digest)));
+  const conflict = actionConflict || [...decisionsByKind.entries()].some(([key, values]) => values.size > 1 && !(linkedAssuranceTransition && key.endsWith(":assurance-evidence"))) ||
     (finalDenied && !coherentRuntimeDenial && (aags.some(a => decisionFrom(a) === "allow") || bindings.some(a => record(a.payload)?.allowed === true))) ||
     material.some(f => ["Contradictory runtime result", "Impossible permit chronology", "Runtime action differs from permit", "Runtime failures recorded"].includes(f.title)) ||
     (stageDenied && receiptDecisions.some(d => d === "execution_allowed"));
@@ -243,7 +252,7 @@ export function buildImportedOperatorSummary(trace: ImportedTrace, gaps: Evidenc
 function sameReviewedAction(left: unknown, right: unknown): boolean {
   const a = record(left); const b = record(right);
   if (!a || !b) return false;
-  const fields = ["id", "userRequest", "tool", "actionType", "target", "environment", "reversible", "externalFacing", "dataSensitivity", "requiresApproval", "knownApproval", "executionConstraints"];
+  const fields = ["id", "userRequest", "tool", "actionType", "target", "environment", "reversible", "externalFacing", "dataSensitivity", "requiresApproval", "knownApproval", "executionConstraints", "assuranceRequirement"];
   const stable = (v: unknown): string => JSON.stringify(v, (_key, value: unknown) => {
     const r = record(value); return r ? Object.fromEntries(Object.keys(r).sort().map(k => [k,r[k]])) : value;
   });

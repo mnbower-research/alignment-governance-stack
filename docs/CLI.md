@@ -4,6 +4,8 @@ Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL
 
 The AGS CLI provides a dependency-light local entry point for evals, governance checks, audit reports, and receipt verification.
 
+The v1.14 candidate also provides `ags assurance-evaluate <input.json> [--json]`. Inputs contain `action` and host-supplied `assurance` fields. Exit codes are 0 for satisfied assurance, 1 for unresolved assurance, and 2 for malformed or unreadable input. This command evaluates historical supplied evidence and does not authorize execution. See [Risk-Scaled Assurance](RISK_SCALED_ASSURANCE.md) and the [assurance examples](../examples/assurance/README.md).
+
 It answers the v0.8.0 developer question:
 
 ```text

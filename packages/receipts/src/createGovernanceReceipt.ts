@@ -23,6 +23,9 @@ function buildReceiptBody(
   createdAt: string
 ): Omit<GovernanceReceipt, "id" | "receiptHash"> {
   const packet = input.governancePacket;
+  if (packet.aag?.assurance !== undefined && canonicalizeForHash(packet.assurance) !== canonicalizeForHash(packet.aag.assurance)) {
+    throw new Error("AAG assurance must match the canonical run evidence.");
+  }
   for (const stage of [packet.pgdl, packet.aag]) {
     if (stage?.contextAdmission !== undefined &&
         (packet.contextAdmission === undefined || canonicalizeForHash(stage.contextAdmission) !== canonicalizeForHash(packet.contextAdmission))) {
@@ -32,6 +35,7 @@ function buildReceiptBody(
 
   return {
     version: "ags.receipt.v0.1",
+    ...(packet.assurance ? { assurance: packet.assurance } : {}),
     ...(packet.contextAdmission !== undefined ? { contextAdmission: packet.contextAdmission } : {}),
     createdAt,
     ...(input.previousReceiptHash !== undefined ? { previousReceiptHash: input.previousReceiptHash } : {}),

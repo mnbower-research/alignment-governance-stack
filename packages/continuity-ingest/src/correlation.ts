@@ -10,6 +10,10 @@ function stringValue(value: unknown): string | undefined {
 
 export function correlateArtifact(payload: unknown): ArtifactCorrelation {
   const record = asRecord(payload);
+  if (record.version === "assurance-evidence/v0.1") {
+    const proposalId = stringValue(asRecord(record.binding).proposalId);
+    return proposalId ? { proposalId } : {};
+  }
   const originalProposal = asRecord(record["originalProposal"]);
   const proposal = asRecord(record["proposal"]);
   const allowedAction = asRecord(record["allowedAction"]);

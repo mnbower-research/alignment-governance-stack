@@ -13,3 +13,4 @@ export { runRedTeamCommand } from "./commands/redteam.js";
 export { runReceiptCommand } from "./commands/receipt.js";
 export { runClosureCommand } from "./commands/closure.js";
 export { runContextAdmitCommand } from "./commands/contextAdmit.js";
+export { runAssuranceEvaluateCommand } from "./commands/assuranceEvaluate.js";

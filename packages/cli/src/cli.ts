@@ -7,6 +7,7 @@ import { runBabelRiskCommand } from "./commands/babelRisk.js";
 import { runBabelVelocityCommand } from "./commands/babelVelocity.js";
 import { runClosureCommand } from "./commands/closure.js";
 import { runContextAdmitCommand } from "./commands/contextAdmit.js";
+import { runAssuranceEvaluateCommand } from "./commands/assuranceEvaluate.js";
 import { runDogfoodCommand } from "./commands/dogfood.js";
 import { runEvalCommand } from "./commands/eval.js";
 import { runGapsCommand } from "./commands/gaps.js";
@@ -74,6 +75,7 @@ export function runCli(args: string[]): CliResult {
     }
 
     if (command === "context-admit") return runContextAdmitCommand(rest);
+    if (command === "assurance-evaluate") return runAssuranceEvaluateCommand(rest);
 
     if (command === "babel-risk") {
       return runBabelRiskCommand(rest);

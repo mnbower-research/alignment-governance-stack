@@ -1,0 +1,287 @@
+{
+  "action": {
+    "id": "assurance-example",
+    "userRequest": "Generate an internal operational report",
+    "tool": "report.generate",
+    "actionType": "generate_report",
+    "target": "reports/internal",
+    "environment": "staging",
+    "reversible": true,
+    "externalFacing": false,
+    "dataSensitivity": "low",
+    "requiresApproval": false,
+    "knownApproval": false,
+    "metadata": {},
+    "assuranceRequirement": {
+      "policyId": "risk-scaled-assurance",
+      "policyVersion": "1"
+    },
+    "executionConstraints": {
+      "version": "execution-constraints/v0.1",
+      "constraints": {
+        "amount": {
+          "type": "exact_number",
+          "value": 500
+        },
+        "resource": {
+          "type": "identifier",
+          "value": "account-a"
+        },
+        "scope": {
+          "type": "exact_string",
+          "value": "internal"
+        }
+      }
+    }
+  },
+  "assurance": {
+    "caseId": "operations-review-1",
+    "authorityDomain": "operations",
+    "risk": {
+      "consequenceSeverity": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "irreversibility": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "uncertainty": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "blastRadius": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "sensitivity": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "financialExposure": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "externalConsequence": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "authorityDomainSensitivity": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "contextConfidence": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      },
+      "novelty": {
+        "value": "low",
+        "source": "host_supplied",
+        "evidenceRefs": [
+          "risk-review"
+        ]
+      }
+    },
+    "policy": {
+      "id": "risk-scaled-assurance",
+      "version": "1",
+      "materialDimensions": [
+        "consequenceSeverity",
+        "irreversibility",
+        "uncertainty",
+        "blastRadius",
+        "sensitivity",
+        "financialExposure",
+        "externalConsequence",
+        "authorityDomainSensitivity",
+        "contextConfidence",
+        "novelty"
+      ],
+      "requirements": {
+        "low": {
+          "minimumAttestations": 1,
+          "slots": [],
+          "distinctGroups": true,
+          "mandatoryHuman": false,
+          "unanimity": true,
+          "denialBlocks": true,
+          "requiredEvidence": [
+            "review"
+          ],
+          "maxAgeMs": 3600000,
+          "ttlMs": 3600000,
+          "sequence": [],
+          "onInsufficient": "request_validation"
+        },
+        "medium": {
+          "minimumAttestations": 2,
+          "slots": [],
+          "distinctGroups": true,
+          "mandatoryHuman": false,
+          "unanimity": true,
+          "denialBlocks": true,
+          "requiredEvidence": [
+            "review"
+          ],
+          "maxAgeMs": 1800000,
+          "ttlMs": 1800000,
+          "sequence": [],
+          "onInsufficient": "request_validation"
+        },
+        "high": {
+          "minimumAttestations": 3,
+          "slots": [],
+          "distinctGroups": true,
+          "mandatoryHuman": true,
+          "unanimity": true,
+          "denialBlocks": true,
+          "requiredEvidence": [
+            "review"
+          ],
+          "maxAgeMs": 900000,
+          "ttlMs": 900000,
+          "sequence": [],
+          "onInsufficient": "request_validation"
+        },
+        "critical": {
+          "minimumAttestations": 4,
+          "slots": [],
+          "distinctGroups": true,
+          "mandatoryHuman": true,
+          "unanimity": true,
+          "denialBlocks": true,
+          "requiredEvidence": [
+            "review"
+          ],
+          "maxAgeMs": 300000,
+          "ttlMs": 300000,
+          "sequence": [],
+          "onInsufficient": "request_validation"
+        }
+      },
+      "denialExpiry": "persist",
+      "resolutionRoles": {}
+    },
+    "validators": [
+      {
+        "id": "validator-0",
+        "subjectId": "subject-0",
+        "type": "human",
+        "roles": [
+          "reviewer",
+          "supervisor"
+        ],
+        "authorityDomains": [
+          "operations"
+        ],
+        "independenceGroup": "group-0",
+        "revoked": false
+      },
+      {
+        "id": "validator-1",
+        "subjectId": "subject-1",
+        "type": "agent",
+        "roles": [
+          "reviewer",
+          "supervisor"
+        ],
+        "authorityDomains": [
+          "operations"
+        ],
+        "independenceGroup": "group-1",
+        "revoked": false
+      },
+      {
+        "id": "validator-2",
+        "subjectId": "subject-2",
+        "type": "agent",
+        "roles": [
+          "reviewer",
+          "supervisor"
+        ],
+        "authorityDomains": [
+          "operations"
+        ],
+        "independenceGroup": "group-2",
+        "revoked": false
+      },
+      {
+        "id": "validator-3",
+        "subjectId": "subject-3",
+        "type": "agent",
+        "roles": [
+          "reviewer",
+          "supervisor"
+        ],
+        "authorityDomains": [
+          "operations"
+        ],
+        "independenceGroup": "group-3",
+        "revoked": false
+      }
+    ],
+    "attestations": [
+      {
+        "id": "review-validator-0",
+        "validatorId": "validator-0",
+        "validatorType": "human",
+        "role": "reviewer",
+        "authorityDomain": "operations",
+        "independenceGroup": "group-0",
+        "verdict": "approve",
+        "binding": {
+          "caseId": "operations-review-1",
+          "authorityDomain": "operations",
+          "proposalId": "assurance-example",
+          "target": "reports/internal",
+          "actionDigest": "sha256:92bc4c9f47ee42c68b2d9cdfe4cbbb24871a8cb78b7a1ced7e75cf80dc7f6398",
+          "riskDigest": "sha256:d7b51f5fc103031f524cb28dab301e0613b0a1b455d6b3173583635c9dc47ec0",
+          "policyDigest": "sha256:187762690e5b37d1389a65cc563a95f791f972073130156f06826f5d5e475206",
+          "requirementDigest": "sha256:19d79563e7b9c8d236f933174e171151be0fd3c69f12f813c9af5a273f455adb",
+          "riskLevel": "low"
+        },
+        "policyVersion": "1",
+        "evidenceRefs": [
+          "review"
+        ],
+        "createdAt": "2026-09-23T11:59:00.000Z",
+        "expiresAt": "2026-09-23T12:30:00.000Z",
+        "revoked": false,
+        "rationale": "Review of the supplied operational evidence.",
+        "lineage": [],
+        "version": "assurance-attestation/v0.1",
+        "digest": "sha256:259e3c32a5b219587fdc2de65082426137491106bddbcedd651044735705f0c0"
+      }
+    ],
+    "resolutions": [],
+    "historyComplete": true,
+    "evaluatedAt": "2026-09-23T12:00:00.000Z"
+  }
+}

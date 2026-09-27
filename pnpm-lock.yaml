@@ -37,6 +37,9 @@ importers:
         specifier: ^19.2.1
         version: 19.2.6(react@19.2.6)
     devDependencies:
+      '@alignment-governance-stack/assurance':
+        specifier: workspace:*
+        version: link:../../packages/assurance
       '@alignment-governance-stack/context-admission':
         specifier: workspace:*
         version: link:../../packages/context-admission
@@ -46,6 +49,9 @@ importers:
       '@alignment-governance-stack/receipts':
         specifier: workspace:*
         version: link:../../packages/receipts
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       '@testing-library/react':
         specifier: ^16.3.0
         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -76,6 +82,9 @@ importers:
 
   packages/aag-core:
     dependencies:
+      '@alignment-governance-stack/assurance':
+        specifier: workspace:*
+        version: link:../assurance
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -159,6 +168,22 @@ importers:
         specifier: ^4.1.11
         version: 4.1.11(@types/node@25.7.0)(jsdom@27.4.0)(vite@8.0.16(@types/node@25.7.0))
 
+  packages/assurance:
+    dependencies:
+      '@alignment-governance-stack/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.7.0
+      vite:
+        specifier: ^8.0.16
+        version: 8.0.16(@types/node@25.7.0)
+      vitest:
+        specifier: ^4.1.11
+        version: 4.1.11(@types/node@25.7.0)(jsdom@27.4.0)(vite@8.0.16(@types/node@25.7.0))
+
   packages/audit-core:
     dependencies:
       '@alignment-governance-stack/authority-map':
@@ -221,6 +246,9 @@ importers:
       '@alignment-governance-stack/agency-chain':
         specifier: workspace:*
         version: link:../agency-chain
+      '@alignment-governance-stack/assurance':
+        specifier: workspace:*
+        version: link:../assurance
       '@alignment-governance-stack/audit-core':
         specifier: workspace:*
         version: link:../audit-core
@@ -305,6 +333,9 @@ importers:
 
   packages/continuity-ingest:
     dependencies:
+      '@alignment-governance-stack/assurance':
+        specifier: workspace:*
+        version: link:../assurance
       '@alignment-governance-stack/context-admission':
         specifier: workspace:*
         version: link:../context-admission
@@ -389,6 +420,9 @@ importers:
       '@alignment-governance-stack/agency-fingerprint':
         specifier: workspace:*
         version: link:../agency-fingerprint
+      '@alignment-governance-stack/assurance':
+        specifier: workspace:*
+        version: link:../assurance
       '@alignment-governance-stack/authority-map':
         specifier: workspace:*
         version: link:../authority-map
@@ -534,6 +568,9 @@ importers:
 
   packages/runtime-binding:
     dependencies:
+      '@alignment-governance-stack/assurance':
+        specifier: workspace:*
+        version: link:../assurance
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types

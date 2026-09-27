@@ -1,5 +1,6 @@
 import type { ArtifactParser } from "./types.js";
 import { contextAdmissionParser } from "./parsers/contextAdmissionParser.js";
+import { assuranceParser } from "./parsers/assuranceParser.js";
 import {
   aagPacketParser,
   pgdlPacketParser,
@@ -20,6 +21,7 @@ import {
 import { authorityMapParser, humanParticipationParser, policyProfileParser } from "./parsers/configParsers.js";
 
 export const defaultParsers: ArtifactParser[] = [
+  assuranceParser,
   contextAdmissionParser,
   pgdlPacketParser,
   aagPacketParser,

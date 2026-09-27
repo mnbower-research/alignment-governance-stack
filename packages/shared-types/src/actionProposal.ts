@@ -99,6 +99,8 @@ export interface ExecutionConstraintSet {
 }
 
 export interface AgentActionProposal {
+  /** Host-selected mandatory assurance policy; omission is the legacy v1.13 path. */
+  assuranceRequirement?: import("./assurance.js").AssuranceRequirementRef;
   id: string;
   userRequest: string;
   tool: string;

@@ -1,6 +1,7 @@
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
 import { compareExecutionConstraintSets } from "./constraints.js";
 import { createActionHash } from "./hashAction.js";
+import { evaluateAssurance, assuranceDigest, verifyAssuranceEvidence } from "@alignment-governance-stack/assurance";
 import type {
   RuntimeBindingFailure,
   RuntimeBindingResult,
@@ -23,6 +24,20 @@ export function validateRuntimePermit(
   }
 
   const failures: RuntimeBindingFailure[] = [];
+  let assurance: RuntimeBindingResult["assurance"];
+  if (action.assuranceRequirement || permit.allowedAction.assuranceRequirement || permit.assurance || options.assurance) {
+    try {
+      if (!action.assuranceRequirement || !options.assurance || !verifyAssuranceEvidence(permit.assurance)) throw new Error("Current host assurance input and intact permit evidence are required.");
+      const current = evaluateAssurance(action, { ...options.assurance, evaluatedAt: options.now ?? new Date().toISOString() });
+      assurance = current;
+      const prior = permit.assurance;
+      if (prior.decision !== "satisfied" || !prior.validUntil || Date.parse(prior.validUntil) <= Date.parse(current.evaluatedAt) || Date.parse(prior.evaluatedAt) > Date.parse(current.evaluatedAt) ||
+          current.decision !== "satisfied" || assuranceDigest(current.binding) !== assuranceDigest(prior.binding) ||
+          prior.acceptedAttestationIds.some(id => current.rejectedAttestations.some(r => r.id === id && r.reasons.some(reason => reason !== "duplicate_validator"))) ||
+          prior.attestations.some(a => !current.attestations.some(b => b.id === a.id && b.digest === a.digest)) ||
+          assuranceDigest(prior.validators) !== assuranceDigest(current.validators)) throw new Error("Assurance expired, was revoked, lost history, or materially changed; reevaluation is required.");
+    } catch (error) { failures.push({ code: "assurance_invalid", reason: error instanceof Error ? error.message : "Assurance validation failed." }); }
+  }
   if (!Number.isFinite(Date.parse(options.now ?? new Date().toISOString()))) {
     failures.push({ code: "invalid_clock", reason: "Execution denied because the host evaluation clock is invalid." });
   }
@@ -65,10 +80,11 @@ export function validateRuntimePermit(
   );
 
   if (failures.length > 0) {
-    return deny(permit, failures);
+    return { ...deny(permit, failures), ...(assurance ? { assurance } : {}) };
   }
 
   return {
+    ...(assurance ? { assurance } : {}),
     decision: "execution_allowed",
     allowed: true,
     permit,

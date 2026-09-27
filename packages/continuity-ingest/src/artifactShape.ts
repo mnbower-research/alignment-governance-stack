@@ -17,6 +17,7 @@ export function assertArtifactShape(kind: ArtifactKind, value: unknown): void {
   const r = value;
   let valid = false;
   switch (kind) {
+    case "assurance-evidence": valid = r.version === "assurance-evidence/v0.1"; break;
     case "pgdl-review-packet": valid = actionShape(r.originalProposal) && objects(r.objections) && r.objections.every(o => fields(o, ["category", "message", "severity", "question", "reason", "suggestedRevision"])) &&
       ["forward_to_aag", "revise_before_aag", "escalate_to_human", "reject_before_aag"].includes(String(r.decision)) && text(r.reasonForDecision) &&
       (r.resolvedProposal === undefined || actionShape(r.resolvedProposal)); break;

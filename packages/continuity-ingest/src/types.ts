@@ -1,4 +1,5 @@
 export type ArtifactKind =
+  | "assurance-evidence"
   | "context-admission"
   | "pgdl-review-packet"
   | "aag-decision"

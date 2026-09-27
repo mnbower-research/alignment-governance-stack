@@ -13,6 +13,17 @@ export function materialEvidenceFindings(artifacts: NormalizedAgsArtifact[]): Op
   const visit = (value: unknown, path: string): void => {
     if (Array.isArray(value)) { value.forEach((v,i) => visit(v, `${path}[${i}]`)); return; }
     const r = record(value); if (!r) return;
+    const reviewed = record(r.proposal) ?? record(r.proposalSentToAag) ?? record(r.originalProposal);
+    if (reviewed?.assuranceRequirement && ["allow", "allowed_by_aag", "execution_allowed"].includes(String(r.finalDecision ?? r.decision)) && !r.assurance)
+      add("Mandatory assurance evidence missing", `${path}: the action requires assurance but the positive decision contains no assurance record.`);
+    if (r.version === "assurance-evidence/v0.1") {
+      if (r.decision !== "satisfied") add("Required assurance not satisfied", `${path}: ${r.decision}. Assurance does not grant authority.`, r.decision === "blocked" ? "danger" : "warning");
+      if (Array.isArray(r.unresolvedDenialIds) && r.unresolvedDenialIds.length) add("Unresolved validator refusals", `${path}: ${r.unresolvedDenialIds.join(", ")}. Later approvals do not erase these refusals.`);
+      if (r.decision === "satisfied" && (typeof r.validUntil !== "string" || Date.parse(r.validUntil) <= Date.now())) add("Historical assurance expired", `${path}: the recorded assurance does not establish current validity.`, "warning");
+      for (const f of Array.isArray(r.findings) ? r.findings : []) { const finding = record(f); if (finding) add("Assurance finding", `${path}: ${finding.code}: ${finding.reason}`, "warning"); }
+      // The report explicitly distinguishes resolved refusal history from active refusals.
+      return;
+    }
     const decision = typeof r.decision === "string" ? r.decision : record(r.decision)?.outcome;
     if (denied.has(String(decision))) add("Denial recorded", `${path}: ${decision}. ${r.reasonForDecision ?? r.reason ?? record(r.decision)?.reason ?? "Inspect the supplied decision."}`);
     if (denied.has(String(r.finalDecision))) add("Denial recorded", `${path}: ${r.finalDecision}. ${r.reasonForDecision ?? "Inspect the supplied final decision."}`);

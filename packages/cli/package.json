@@ -36,7 +36,8 @@
     "@alignment-governance-stack/governance-core": "workspace:*",
     "@alignment-governance-stack/governance-memory": "workspace:*",
     "@alignment-governance-stack/receipts": "workspace:*",
-    "@alignment-governance-stack/shared-types": "workspace:*"
+    "@alignment-governance-stack/shared-types": "workspace:*",
+    "@alignment-governance-stack/assurance": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",

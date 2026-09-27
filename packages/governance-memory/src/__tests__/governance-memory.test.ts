@@ -8,6 +8,21 @@ import {
 } from "../index.js";
 
 describe("governance memory", () => {
+  it.each([
+    ["repeated_assurance_denial", { unresolvedDenialIds: ["refusal"] }],
+    ["repeated_assurance_escalation", { decision: "escalate" }],
+    ["repeated_assurance_gap", { findings: [{ code: "risk_unknown" }] }],
+    ["repeated_validator_disagreement", { attestations: [{ verdict: "deny" }, { verdict: "approve" }] }],
+    ["repeated_independence_failure", { findings: [{ code: "identity_conflict" }] }]
+  ] as const)("records %s for human review without changing supplied policy", (pattern, changes) => {
+    const assurance = { binding: { riskLevel: "high" }, policy: { version: "unchanged" }, unresolvedDenialIds: [], findings: [], attestations: [], ...changes } as unknown as NonNullable<GovernanceReceipt["assurance"]>;
+    const receipts = [receipt("assurance-1", {}), receipt("assurance-2", {})].map(r => ({ ...r, assurance }));
+    const before = JSON.stringify(receipts);
+    const result = analyzeReceiptHistory({ receipts });
+    expect(result.patterns.some(p => p.type === pattern)).toBe(true);
+    expect(result.recommendations.some(r => r.type === "review_policy_profile")).toBe(true);
+    expect(JSON.stringify(receipts)).toBe(before);
+  });
   it("empty receipt history returns no patterns and no recommendations", () => {
     const report = analyzeReceiptHistory({ receipts: [] });
 
