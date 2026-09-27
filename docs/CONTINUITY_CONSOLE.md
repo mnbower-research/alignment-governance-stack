@@ -2,7 +2,7 @@
 
 Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
 
-## Risk-scaled assurance (v1.14 candidate)
+## Risk-scaled assurance (v1.14.0)
 
 Runs displays imported assurance evidence in both Simple and Technical views: declared risk, required reviews, accepted validators and groups, mandatory human review, unresolved and resolved refusals, and the recorded validity window. All material assurance findings also appear in the shared findings and export path. Satisfaction is historical validation evidence, not current authority or execution proof. See [Risk-Scaled Assurance](RISK_SCALED_ASSURANCE.md).
 

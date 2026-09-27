@@ -2,7 +2,7 @@
 
 Terminology: Alignment Governance Stack (AGS); Pre-Gate Deliberation Layer (PGDL); Agent Action Gate (AAG). See the [canonical architectural concepts](MODULAR_ARCHITECTURE.md#core-architectural-concepts).
 
-v1.14 candidate principle: **the required strength of assurance must scale with consequence**.
+v1.14.0 principle: **the required strength of assurance must scale with consequence**.
 
 Context Admission decides whether supplied inherited information is admissible for a receiving use. Assurance evaluates the validation burden of a proposed action. Authority determines who can authorize its consequence. None implies the others. Consensus does not create authority; approval does not establish truth; denial does not establish falsehood.
 

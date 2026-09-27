@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — v1.14 Risk-Scaled Assurance and Independent Validation
+## v1.14.0 — 2026-09-27 — Risk-Scaled Assurance and Independent Validation
 
 - Adds declared risk vectors, monotone assurance requirements, validator attestations, structural independence slots, and explicit refusal resolution.
 - Integrates mandatory assurance into AAG and Runtime Binding for host-selected protected actions; legacy v1.13 paths remain compatible.

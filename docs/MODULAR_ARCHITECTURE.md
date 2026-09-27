@@ -130,7 +130,7 @@ Required governance functions are the load-bearing spine of a complete deploymen
 
    The execution decision gate. AAG authorizes, revises, escalates, or blocks proposed actions based on authority, scope, reversibility, approval, sensitive data exposure, runtime safety, and audit expectations.
 
-   The v1.14 candidate adds [Risk-Scaled Assurance](RISK_SCALED_ASSURANCE.md) as an AAG supporting package for host-designated actions. It checks declared risk, required validator roles and independence, freshness, and refusal resolution. Assurance is distinct from context admissibility and action authority; it is not a thirteenth architectural function. Runtime Binding reevaluates current assurance at the execution boundary.
+   The v1.14.0 adds [Risk-Scaled Assurance](RISK_SCALED_ASSURANCE.md) as an AAG supporting package for host-designated actions. It checks declared risk, required validator roles and independence, freshness, and refusal resolution. Assurance is distinct from context admissibility and action authority; it is not a thirteenth architectural function. Runtime Binding reevaluates current assurance at the execution boundary.
 
 7. Business-Level Runtime Admissibility
 
