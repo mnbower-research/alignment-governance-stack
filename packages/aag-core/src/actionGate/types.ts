@@ -126,6 +126,7 @@ export type ActionGateInput = {
     payload?: Record<string, unknown>;
     reversible?: boolean;
     externalFacing?: boolean;
+    requiresApproval?: boolean;
   };
   sourceProfile?: {
     systemObjective?: string;

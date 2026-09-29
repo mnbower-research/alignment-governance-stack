@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased ? Core correctness hardening
+
+- Preserves explicit policy/proposal approval requirements through AAG.
+- Defaults empty findings to insufficient evidence/low confidence and distinguishes supplied execution claims from permission or denial.
+- Enforces inclusive permit issuance and exclusive optional expiry, rejecting malformed or reversed windows.
+- Requires successful runtime binding before n8n returns proceed; forwards supplied context and assurance controls.
+- **Intentional compatibility change:** binds nonempty JSON proposal metadata in runtime/approval/context hashes and assurance review. Changed metadata requires renewed authorization; empty metadata retains prior hashes. Receipt/permit annotations remain separate. See [migration and verification notes](docs/CORE_CORRECTNESS_HARDENING.md).
+
 ## v1.14.0 — 2026-09-27 — Risk-Scaled Assurance and Independent Validation
 
 - Adds declared risk vectors, monotone assurance requirements, validator attestations, structural independence slots, and explicit refusal resolution.

@@ -11,7 +11,10 @@ export type RuntimeBindingFailureCode =
   | "permit_not_allowed"
   | "expired_permit"
   | "invalid_clock"
+  | "invalid_permit_window"
+  | "permit_not_yet_valid"
   | "action_hash_mismatch"
+  | "invalid_action"
   | "tool_mismatch"
   | "action_type_mismatch"
   | "target_mismatch"
@@ -84,4 +87,5 @@ export type RuntimeBindingActionField =
   | "dataSensitivity"
   | "requiresApproval"
   | "knownApproval"
-  | "executionConstraints";
+  | "executionConstraints"
+  | "metadata";

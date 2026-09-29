@@ -1,4 +1,5 @@
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
+import { assertActionMetadata } from "@alignment-governance-stack/shared-types";
 import { canonicalizeExecutionConstraintSet, sha256Stable } from "./constraints.js";
 import type { RuntimeBindingActionField } from "./types.js";
 
@@ -13,7 +14,8 @@ const actionHashFields: RuntimeBindingActionField[] = [
   "dataSensitivity",
   "requiresApproval",
   "knownApproval",
-  "executionConstraints"
+  "executionConstraints",
+  "metadata"
 ];
 
 export function createActionHash(action: AgentActionProposal): string {
@@ -21,6 +23,7 @@ export function createActionHash(action: AgentActionProposal): string {
 }
 
 export function getCanonicalAction(action: AgentActionProposal): Partial<Record<RuntimeBindingActionField, unknown>> {
+  assertActionMetadata(action.metadata);
   return {
     ...(action.assuranceRequirement !== undefined ? { assuranceRequirement: action.assuranceRequirement } : {}),
     tool: action.tool,
@@ -32,6 +35,9 @@ export function getCanonicalAction(action: AgentActionProposal): Partial<Record<
     dataSensitivity: action.dataSensitivity,
     requiresApproval: action.requiresApproval,
     knownApproval: action.knownApproval,
+    // Arbitrary metadata may be consumed by executors or gate detectors. Freeze it
+    // conservatively; only an empty object retains the legacy hash projection.
+    ...(Object.keys(action.metadata).length > 0 ? { metadata: action.metadata } : {}),
     ...(action.executionConstraints !== undefined
       ? { executionConstraints: canonicalizeExecutionConstraintSet(action.executionConstraints) }
       : {})

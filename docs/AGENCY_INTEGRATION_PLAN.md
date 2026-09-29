@@ -377,7 +377,7 @@ Receipt: records the denied substitution attempt.
 
 - The Phase 1 agency adapter is implemented for simulation only; it has no live executor.
 - Draft agency policy, authority-map and participation fixtures exist; they are not adopted live policy.
-- Domain-named budget/spend fields are not first-class proposal properties. Canonical `executionConstraints` can bind exact business values; descriptive metadata remains unbound.
+- Domain-named budget/spend fields are not first-class proposal properties. Canonical `executionConstraints` can bind exact business values; proposal metadata is conservatively bound as well; mutable observation annotations belong in receipt/permit metadata.
 - Runtime Binding hashes core fields and canonical execution constraints, but not metadata. Live adapters must populate and validate budget, platform, property, campaign, audience, and content constraints before side effects.
 - No business-level runtime admissibility component is implemented for live budget caps, current campaign state, experiment quotas, or property-specific constraints.
 - No approval capture UI or durable approval store exists.

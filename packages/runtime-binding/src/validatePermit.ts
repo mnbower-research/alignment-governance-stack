@@ -24,11 +24,21 @@ export function validateRuntimePermit(
   }
 
   const failures: RuntimeBindingFailure[] = [];
+  const now = options.now ?? new Date().toISOString();
+  const nowMs = Date.parse(now);
+  const issuedAtMs = Date.parse(permit.issuedAt);
+  const expiresAtMs = permit.expiresAt === undefined ? undefined : Date.parse(permit.expiresAt);
+  if (!Number.isFinite(issuedAtMs) || (expiresAtMs !== undefined &&
+      (!Number.isFinite(expiresAtMs) || expiresAtMs <= issuedAtMs))) {
+    failures.push({ code: "invalid_permit_window", reason: "Execution denied because the permit temporal window is invalid." });
+  } else if (issuedAtMs > nowMs) {
+    failures.push({ code: "permit_not_yet_valid", reason: "Execution denied because the permit has not been issued yet." });
+  }
   let assurance: RuntimeBindingResult["assurance"];
   if (action.assuranceRequirement || permit.allowedAction.assuranceRequirement || permit.assurance || options.assurance) {
     try {
       if (!action.assuranceRequirement || !options.assurance || !verifyAssuranceEvidence(permit.assurance)) throw new Error("Current host assurance input and intact permit evidence are required.");
-      const current = evaluateAssurance(action, { ...options.assurance, evaluatedAt: options.now ?? new Date().toISOString() });
+      const current = evaluateAssurance(action, { ...options.assurance, evaluatedAt: now });
       assurance = current;
       const prior = permit.assurance;
       if (prior.decision !== "satisfied" || !prior.validUntil || Date.parse(prior.validUntil) <= Date.parse(current.evaluatedAt) || Date.parse(prior.evaluatedAt) > Date.parse(current.evaluatedAt) ||
@@ -38,7 +48,7 @@ export function validateRuntimePermit(
           assuranceDigest(prior.validators) !== assuranceDigest(current.validators)) throw new Error("Assurance expired, was revoked, lost history, or materially changed; reevaluation is required.");
     } catch (error) { failures.push({ code: "assurance_invalid", reason: error instanceof Error ? error.message : "Assurance validation failed." }); }
   }
-  if (!Number.isFinite(Date.parse(options.now ?? new Date().toISOString()))) {
+  if (!Number.isFinite(nowMs)) {
     failures.push({ code: "invalid_clock", reason: "Execution denied because the host evaluation clock is invalid." });
   }
 
@@ -51,16 +61,22 @@ export function validateRuntimePermit(
     });
   }
 
-  if (permit.expiresAt !== undefined && isExpired(permit.expiresAt, options.now)) {
+  if (permit.expiresAt !== undefined && isExpired(permit.expiresAt, now)) {
     failures.push({
       code: "expired_permit",
       reason: "Execution denied because the runtime permit is expired.",
-      expected: `expires after ${options.now ?? new Date().toISOString()}`,
+      expected: `expires after ${now}`,
       actual: permit.expiresAt
     });
   }
 
-  const runtimeActionHash = createActionHash(action);
+  let runtimeActionHash: string;
+  try {
+    runtimeActionHash = createActionHash(action);
+  } catch (error) {
+    failures.push({ code: "invalid_action", reason: error instanceof Error ? error.message : "Invalid runtime action." });
+    return deny(permit, failures);
+  }
 
   if (runtimeActionHash !== permit.actionHash) {
     failures.push({

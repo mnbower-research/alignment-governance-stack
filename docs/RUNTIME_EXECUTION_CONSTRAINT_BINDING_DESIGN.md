@@ -1,5 +1,7 @@
 # Runtime Execution Constraint Binding Design
 
+> Historical design note: the original decision to leave proposal metadata unbound is superseded by [Core correctness hardening](CORE_CORRECTNESS_HARDENING.md). Nonempty proposal metadata is now conservatively bound alongside typed constraints. The original rationale below is retained as design history.
+
 ## Problem
 
 Runtime Binding currently binds canonical `AgentActionProposal` fields such as tool, action type, target, environment, reversibility, external-facing status, data sensitivity, and approval flags. Domain-specific consequential constraints such as budget, currency, platform, property, campaign, content, audience, deployment region, or communication recipient can appear in metadata, but metadata is not execution-authoritative.

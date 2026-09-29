@@ -32,7 +32,7 @@ describe("content publishing dogfood eval suite", () => {
   });
 
   it("safe internal draft is execution_allowed", () => {
-    expect(runEvalCase(getCase("content-safe-internal-draft")).actual.finalDecision).toBe("execution_allowed");
+    expect(runEvalCase(getCase("content-safe-internal-draft")).actual.finalDecision).toBe("approval_required_by_aag");
   });
 
   it("approved blog publish is execution_allowed", () => {

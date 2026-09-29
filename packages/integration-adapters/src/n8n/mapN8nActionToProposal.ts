@@ -19,6 +19,8 @@ export function mapN8nActionToProposal(input: N8nActionInput): N8nMappedGovernan
 
   return {
     proposal,
+    ...(input.contextAdmission !== undefined ? { contextAdmission: input.contextAdmission } : {}),
+    ...(input.assurance !== undefined ? { assurance: input.assurance } : {}),
     ...(runtimeAction !== undefined ? { runtimeAction } : {}),
     ...(input.policyProfile !== undefined ? { policyProfile: input.policyProfile } : {}),
     ...(input.authorityMap !== undefined ? { authorityMap: input.authorityMap } : {}),
@@ -37,6 +39,7 @@ function normalizeProposal(
   const actionType = requireString(source.actionType ?? fallback?.actionType, "actionType");
   const target = requireString(source.target ?? fallback?.target, "target");
   const executionConstraints = source.executionConstraints ?? fallback?.executionConstraints;
+  const assuranceRequirement = source.assuranceRequirement ?? fallback?.assuranceRequirement;
 
   return {
     id: normalizeString(source.id ?? fallback?.id) ?? `n8n-action-${Date.now()}`,
@@ -51,6 +54,7 @@ function normalizeProposal(
     requiresApproval: source.requiresApproval ?? fallback?.requiresApproval ?? false,
     knownApproval: source.knownApproval ?? fallback?.knownApproval ?? false,
     ...(executionConstraints !== undefined ? { executionConstraints } : {}),
+    ...(assuranceRequirement !== undefined ? { assuranceRequirement } : {}),
     metadata: {
       ...(inputMetadata ?? {}),
       ...(fallback?.metadata ?? {}),

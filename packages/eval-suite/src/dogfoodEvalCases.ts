@@ -1,3 +1,4 @@
+import { evaluateGovernedAction } from "@alignment-governance-stack/governance-core";
 import { createApprovalBinding } from "@alignment-governance-stack/authority-map";
 import type { ApprovalEvidence, AuthorityMap } from "@alignment-governance-stack/authority-map";
 import type { PolicyProfile } from "@alignment-governance-stack/policy-profiles";
@@ -451,7 +452,7 @@ function createApprovalEvidence(approverRoleId: string): ApprovalEvidence {
     id: `dogfood-approval-${approverRoleId}`,
     approverId: "dogfood-human-reviewer",
     approverRoleId,
-    binding: createApprovalBinding({ ...rubberStampRelease, tool: "draft.create", actionType: "create_draft_for_review", reversible: true, externalFacing: false, requiresApproval: false, knownApproval: false }),
+    binding: createApprovalBinding(evaluateGovernedAction(rubberStampRelease).pgdl!.resolvedProposal!),
     approvedAt: "2026-05-14T09:00:00.000Z",
     expiresAt: "2030-01-01T00:00:00.000Z"
   };

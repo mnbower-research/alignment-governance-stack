@@ -9,7 +9,7 @@ import {
 } from "../index.js";
 
 describe("Runtime Binding execution constraints", () => {
-  it("keeps proposals without execution constraints backward compatible", () => {
+  it("denies metadata-only parameter insertion without execution constraints", () => {
     const action = createReportAction();
     const runtimeAction = {
       ...action,
@@ -23,7 +23,7 @@ describe("Runtime Binding execution constraints", () => {
     const result = validateRuntimePermit(runtimeAction, permit);
 
     expect(permit.executionConstraintHash).toBeUndefined();
-    expect(result.allowed).toBe(true);
+    expect(result.allowed).toBe(false);
   });
 
   it("allows an exact action with bound execution constraints", () => {
@@ -159,7 +159,7 @@ describe("Runtime Binding execution constraints", () => {
     expect(hashExecutionConstraintSet(first.executionConstraints!)).toBe(hashExecutionConstraintSet(second.executionConstraints!));
   });
 
-  it("does not deny ordinary metadata mutations when bound constraints are unchanged", () => {
+  it("denies metadata mutations even when bound constraints are unchanged", () => {
     const permittedAction = createAgencyAction();
     const runtimeAction = {
       ...permittedAction,
@@ -173,7 +173,7 @@ describe("Runtime Binding execution constraints", () => {
 
     const result = validateRuntimePermit(runtimeAction, permit);
 
-    expect(result.allowed).toBe(true);
+    expect(result.allowed).toBe(false);
   });
 
   it("changes the action hash when a bound constraint changes", () => {

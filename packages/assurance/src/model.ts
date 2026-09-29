@@ -8,7 +8,8 @@ export function canonicalAssurance(value: unknown): string {
     ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) : item);
 }
 export function reviewedAction(action: AgentActionProposal): unknown {
-  const { metadata: _metadata, knownApproval: _approval, ...bound } = action;
+  const { metadata, knownApproval: _approval, ...fields } = action;
+  const bound = { ...fields, ...(Object.keys(metadata).length > 0 ? { metadata } : {}) };
   return bound;
 }
 export function evaluateRisk(action: AgentActionProposal, supplied: RiskVector, policy: AssurancePolicy): { risk: RiskVector; level: AssuranceRiskLevel | "unknown"; unknown: RiskDimension[] } {

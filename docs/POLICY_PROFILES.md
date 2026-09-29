@@ -58,7 +58,7 @@ For valid profiles, PGDL still runs first. Policy resolution is applied to the p
 - `revise_before_aag` resolves policy against PGDL's resolved proposal.
 - PGDL escalation and rejection still stop before AAG.
 
-If policy resolution explicitly blocks the proposal, governance-core returns `blocked_by_policy` and does not run AAG. If policy resolution requires approval, governance-core includes policy context on the cloned AAG proposal metadata and continues to AAG. Policy approval requirements do not replace AAG.
+If policy resolution explicitly blocks the proposal, governance-core returns `blocked_by_policy` and does not run AAG. If policy resolution requires approval, governance-core passes an explicit host policy approval requirement to AAG, whose missing-approval detector enforces it alongside the proposal requirement. The action metadata is not mutated. Policy approval requirements do not replace AAG.
 
 ## Future Work
 

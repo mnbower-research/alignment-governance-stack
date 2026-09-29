@@ -36,7 +36,7 @@ export function createRuntimePermit(
     allowedAction: {
       ...action,
       ...(executionConstraints !== undefined ? { executionConstraints } : {}),
-      metadata: { ...action.metadata }
+      metadata: structuredClone(action.metadata)
     },
     issuedAt,
     source: "aag",

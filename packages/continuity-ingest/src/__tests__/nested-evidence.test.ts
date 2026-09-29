@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { evaluateContextAdmission } from "@alignment-governance-stack/context-admission";
 import { createGovernanceReceipt } from "@alignment-governance-stack/receipts";
 import { findParser, generateContinuitySnapshot } from "../index.js";
@@ -50,7 +51,7 @@ describe("nested content-free evidence", () => {
     expect(result.diagnostics[0]?.severity).toBe("error");
   });
   it("imports the coherent fixture with valid receipt and fingerprint digests", async () => {
-    const generated = await generateContinuitySnapshot({ sourcePaths: [new URL("../../../../examples/continuity-console-artifacts/coherent-action-chain", import.meta.url).pathname.replace(/^\/(\w:)/, "$1")] });
+    const generated = await generateContinuitySnapshot({ sourcePaths: [fileURLToPath(new URL("../../../../examples/continuity-console-artifacts/coherent-action-chain", import.meta.url))] });
     const checked = await validateSnapshotEvidence(generated.snapshot);
     expect(checked.artifacts).toHaveLength(8);
     expect(checked.diagnostics).toEqual([]);

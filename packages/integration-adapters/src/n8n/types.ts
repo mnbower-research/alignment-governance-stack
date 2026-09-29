@@ -13,6 +13,8 @@ export interface N8nActionInput {
   authorityMap?: unknown;
   approvalEvidence?: unknown;
   humanParticipation?: unknown;
+  contextAdmission?: EvaluateGovernedRuntimeActionWithReceiptInput["contextAdmission"];
+  assurance?: EvaluateGovernedRuntimeActionWithReceiptInput["assurance"];
   metadata?: Record<string, unknown>;
 }
 
@@ -23,6 +25,8 @@ export interface N8nMappedGovernanceInput {
   authorityMap?: unknown;
   approvalEvidence?: unknown;
   humanParticipation?: unknown;
+  contextAdmission?: EvaluateGovernedRuntimeActionWithReceiptInput["contextAdmission"];
+  assurance?: EvaluateGovernedRuntimeActionWithReceiptInput["assurance"];
 }
 
 export type N8nGovernanceNextStep =

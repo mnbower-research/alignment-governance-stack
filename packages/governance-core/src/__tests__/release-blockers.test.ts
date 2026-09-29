@@ -48,7 +48,7 @@ describe("release blocker public contracts", () => {
     request.artifacts[0]!.expiresAt = now; request.evaluatedAt = now;
     expect(evaluateContextAdmission(request).decision).toBe("reject");
     expect(validateApproval(map, action, { ...approval(), approvedAt: "2026-09-19T11:55:00.000Z" }, { now }).decision).toBe("approval_expired");
-    const permit = createRuntimePermit(action, { expiresAt: now });
+    const permit = createRuntimePermit(action, { issuedAt: "2026-09-19T11:00:00.000Z", expiresAt: now });
     expect(validateRuntimePermit(action, permit, { now }).allowed).toBe(false);
     expect(validateRuntimePermit(action, permit, { now: "2026-09-19T11:59:59.999Z" }).allowed).toBe(true);
   });

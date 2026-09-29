@@ -15,7 +15,10 @@ import type { ActionGateInput, GateDetectorResult } from "./actionGate/types";
  */
 export type ContextAdmissionValidator = (proposal: AgentActionProposal, evidence: ContextAdmissionEvidence) => boolean;
 
-export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: ContextAdmissionEvidence, validateContext?: ContextAdmissionValidator, assuranceInput?: AssuranceInput): AagPacket {
+/** The optional policy requirement is trusted host policy, not proposal metadata.
+ * It can add an approval requirement but cannot remove the proposal's requirement.
+ */
+export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: ContextAdmissionEvidence, validateContext?: ContextAdmissionValidator, assuranceInput?: AssuranceInput, policyRequiresApproval = false): AagPacket {
   let assurance: AssuranceEvidence | undefined;
   if (proposal.assuranceRequirement !== undefined || assuranceInput !== undefined) {
     let failure: string | undefined;
@@ -54,7 +57,7 @@ export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: Co
       }]
     };
   }
-  const actionGateInput = toActionGateInput(proposal);
+  const actionGateInput = toActionGateInput(proposal, policyRequiresApproval);
   const result = evaluateAction(actionGateInput);
 
   return {
@@ -68,7 +71,7 @@ export function evaluateAag(proposal: AgentActionProposal, contextAdmission?: Co
   };
 }
 
-export function toActionGateInput(proposal: AgentActionProposal): ActionGateInput {
+export function toActionGateInput(proposal: AgentActionProposal, policyRequiresApproval = false): ActionGateInput {
   return {
     userRequest: proposal.userRequest,
     proposedAction: {
@@ -77,7 +80,8 @@ export function toActionGateInput(proposal: AgentActionProposal): ActionGateInpu
       target: proposal.target,
       payload: getPayload(proposal.metadata),
       reversible: proposal.reversible,
-      externalFacing: proposal.externalFacing
+      externalFacing: proposal.externalFacing,
+      requiresApproval: proposal.requiresApproval || policyRequiresApproval
     },
     context: {
       userApproved: proposal.knownApproval,

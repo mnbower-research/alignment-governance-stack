@@ -12,7 +12,7 @@ Runtime Binding does not mature proposals or decide policy. It validates that ex
 
 Runtime Binding v0.1 validates exact permitted execution. It prevents proposal or action drift after AAG by binding a runtime action to a permit for a specific action shape.
 
-The action hash uses deterministic SHA-256 over enforcement-relevant fields: tool, action type, target, environment, reversibility, external impact, data sensitivity, approval requirement, known approval, and canonical execution constraints when supplied.
+The action hash uses deterministic SHA-256 over enforcement-relevant fields: tool, action type, target, environment, reversibility, external impact, data sensitivity, approval requirement, known approval, assurance requirements, canonical execution constraints when supplied, and nonempty proposal metadata.
 
 Runtime Binding denies missing permits, expired permits, hash mismatches, tool or action substitution, target or environment substitution, external-facing escalation, sensitive-data escalation, approval-state changes, missing constraints, unexpected constraints, constraint type substitution, constraint value substitution, numeric range expansion, string-set expansion, and time-window expansion.
 
@@ -26,9 +26,9 @@ Runtime Binding does not execute actions and does not replace AAG.
 
 Supported constraint types include exact strings, exact numbers, exact booleans, enums, identifiers, timestamps, numeric ranges, time windows, string sets, and structured JSON objects. They are intentionally domain-neutral: an adapter may bind ad budget, campaign id, deployment service id, model id, region, publish channel, or any other execution-relevant value without changing the core `AgentActionProposal` schema.
 
-Only values represented as canonical bound execution constraints are protected as domain-specific execution-authoritative values by Runtime Binding. Ordinary metadata remains non-authoritative.
+Use canonical execution constraints for typed domain parameters. Nonempty proposal metadata is also conservatively hashed because detectors and executors may consume arbitrary keys; hashing metadata does not grant it authority.
 
-Metadata is still useful for review, receipt readability, dashboards, and adapter-specific context. It must not be treated as a runtime guard unless the same value is promoted into `executionConstraints`.
+Proposal metadata must contain only finite, acyclic plain JSON values. Put mutable observation annotations in permit or receipt metadata. Executors must consume the reviewed bound values at the final side-effect boundary; Core cannot discover parameters omitted by a host.
 
 ## Example
 
@@ -63,6 +63,6 @@ const proposal = {
 };
 ```
 
-Changing `metadata.ticket` does not deny execution. Changing `executionConstraints.constraints.region.value`, widening `releaseWindow`, or adding an unexpected constraint changes the action hash and produces a constraint-specific denial.
+Changing `metadata.ticket` now denies execution. Move mutable tickets/annotations to permit or receipt metadata, or obtain a new authorization. Changing `executionConstraints.constraints.region.value`, widening `releaseWindow`, or adding an unexpected constraint changes the action hash and produces a constraint-specific denial.
 
-Runtime clocks must be parseable. Invalid clocks fail closed even for permits without expiry. Expiration is exclusive (`now < expiresAt`), consistent with Context Admission and approval validation. Runtime Binding proves authorization of a supplied action, not completed external execution.
+Runtime clocks must be parseable. Invalid clocks fail closed even for permits without expiry. Issuance is inclusive (`issuedAt <= now`), and an optional expiration is exclusive (`now < expiresAt`). Missing/invalid issuance, malformed expiration, and empty/reversed windows fail closed, consistent with Context Admission and approval validation. Runtime Binding proves authorization of a supplied action, not completed external execution.

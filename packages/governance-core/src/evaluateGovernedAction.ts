@@ -182,15 +182,12 @@ function evaluateWithContext(
         };
       }
 
-      const policyAwareProposal = resolvedPolicy.requiresApproval
-        ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
-        : proposalSentToAag;
-      const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext, assurance);
+      const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext, assurance, resolvedPolicy.requiresApproval);
 
       return {
         originalProposal: proposal,
         pgdl,
-        proposalSentToAag: policyAwareProposal,
+        proposalSentToAag,
         resolvedPolicy,
         approvalValidation,
         ...(participationQuality !== undefined ? { participationQuality } : {}),
@@ -199,10 +196,6 @@ function evaluateWithContext(
         reasonForDecision: `PGDL allowed a proposal to reach AAG. Policy profile resolved before AAG. Authority validation passed before AAG. ${aag.reasonForDecision}`
       };
     }
-
-    const policyAwareProposal = resolvedPolicy.requiresApproval
-      ? addPolicyMetadata(proposalSentToAag, resolvedPolicy)
-      : proposalSentToAag;
 
     const participationQuality = evaluateParticipationIfSupplied({
       humanParticipation,
@@ -224,12 +217,12 @@ function evaluateWithContext(
       };
     }
 
-    const aag = evaluateAag(policyAwareProposal, contextAdmission, validateContext, assurance);
+    const aag = evaluateAag(proposalSentToAag, contextAdmission, validateContext, assurance, resolvedPolicy.requiresApproval);
 
     return {
       originalProposal: proposal,
       pgdl,
-      proposalSentToAag: policyAwareProposal,
+      proposalSentToAag,
       resolvedPolicy,
       ...(participationQuality !== undefined ? { participationQuality } : {}),
       aag,
@@ -343,21 +336,6 @@ function isEvaluateGovernedActionInput(
   input: AgentActionProposal | EvaluateGovernedActionInput
 ): input is EvaluateGovernedActionInput {
   return "proposal" in input;
-}
-
-function addPolicyMetadata(
-  proposal: AgentActionProposal,
-  resolvedPolicy: NonNullable<GovernancePacket["resolvedPolicy"]>
-): AgentActionProposal {
-  return {
-    ...proposal,
-    metadata: {
-      ...proposal.metadata,
-      policyRequiresApproval: true,
-      policyReasons: [...resolvedPolicy.reasons],
-      policyMatchedRules: [...resolvedPolicy.matchedRules]
-    }
-  };
 }
 
 function evaluateParticipationIfSupplied(input: {

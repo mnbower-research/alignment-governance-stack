@@ -38,6 +38,10 @@ function getApprovalReasons(input: ActionGateInput): string[] {
   const reasons: string[] = [];
   const actionText = getActionText(input);
 
+  if (input.proposedAction.requiresApproval) {
+    reasons.push("The proposal or governing policy explicitly requires approval.");
+  }
+
   if (input.proposedAction.externalFacing) {
     reasons.push("The proposed action is external-facing.");
   }

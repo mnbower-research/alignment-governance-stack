@@ -217,7 +217,7 @@ function createPosture(
 
 function inferOverallStatus(findings: AuditFinding[]): GovernanceRealityReport["posture"]["overallStatus"] {
   if (findings.length === 0) {
-    return "strongly_supported";
+    return "insufficient_evidence";
   }
 
   if (findings.some((finding) => finding.severity === "critical" || finding.severity === "high")) {
@@ -237,7 +237,7 @@ function inferOverallStatus(findings: AuditFinding[]): GovernanceRealityReport["
 
 function inferConfidence(findings: AuditFinding[]): GovernanceRealityReport["posture"]["confidence"] {
   if (findings.length === 0) {
-    return "medium";
+    return "low";
   }
 
   if (findings.some((finding) => finding.confidence === "high")) {

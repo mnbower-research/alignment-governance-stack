@@ -4,7 +4,7 @@ This guide describes how the AI media agency adapter should migrate business-spe
 
 ## Rule
 
-Only values represented as canonical bound execution constraints are protected as domain-specific execution-authoritative values by Runtime Binding. Ordinary metadata remains non-authoritative.
+Typed domain parameters belong in canonical execution constraints. Correctness hardening additionally binds all nonempty proposal metadata conservatively; metadata does not itself grant authority.
 
 Keep metadata for human readability and receipts, but do not rely on it as an execution guard. If a value must not drift between approval and execution, put it in `AgentActionProposal.executionConstraints`.
 
@@ -52,7 +52,7 @@ executionConstraints: {
 
 When AAG allows a proposal, Runtime Binding stores the canonical constraint set and `executionConstraintHash` on the runtime permit. A runtime action that changes budget, currency, platform, property, campaign, content, audience, or experiment window is denied with `action_hash_mismatch` plus a specific execution-constraint failure code.
 
-A metadata-only change remains non-authoritative by design. If the bound constraint is unchanged, mutating a metadata copy of the same value does not deny execution. Auditors should treat the bound constraint value as the source of truth.
+A metadata-only change now denies runtime binding even when constraints are unchanged. Executors must use the reviewed constraints, and duplicate metadata values must not become a path around them. Move mutable annotations to receipt/permit metadata; obtain new approval for changed proposal metadata.
 
 ## Receipts, Fingerprints, And Closure
 

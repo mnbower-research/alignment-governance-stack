@@ -4,3 +4,4 @@ export * from "./risk.js";
 export * from "./receipts.js";
 export * from "./contextAdmission.js";
 export * from "./assurance.js";
+export { assertActionMetadata } from "./actionMetadata.js";

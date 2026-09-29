@@ -12,6 +12,8 @@ export interface IntegrationActionInput {
   dataSensitivity?: DataSensitivity;
   requiresApproval?: boolean;
   knownApproval?: boolean;
+  executionConstraints?: import("@alignment-governance-stack/shared-types").ExecutionConstraintSet;
+  assuranceRequirement?: import("@alignment-governance-stack/shared-types").AssuranceRequirementRef;
   metadata?: Record<string, unknown>;
 }
 

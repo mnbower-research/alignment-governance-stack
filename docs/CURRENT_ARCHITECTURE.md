@@ -220,7 +220,7 @@ The repository includes tests for:
 ## Important Implementation Nuances
 
 - The canonical proposal schema is intentionally compact. Descriptive business context may travel through typed adapter inputs and metadata. Consequential budget, platform, property and content values must use canonical `executionConstraints` for exact runtime binding.
-- Runtime Binding currently hashes and compares canonical action fields only: tool, action type, target, environment, reversibility, external-facing status, data sensitivity, approval booleans, and canonical `executionConstraints`. Proposal `metadata` is preserved in permits and receipts but is not part of the runtime action hash or field-mismatch checks.
+- Runtime Binding hashes tool, action type, target, environment, reversibility, external-facing status, data sensitivity, approval booleans, assurance requirements, canonical `executionConstraints`, and nonempty JSON proposal `metadata`. Metadata changes now deny runtime binding; mutable annotations belong in permit/receipt metadata.
 - `governance-core` currently resolves policy after PGDL revision, against the proposal that would reach AAG.
 - Hard boundaries stop before authority and participation checks.
 - Authority validation only runs when an authority map is supplied.

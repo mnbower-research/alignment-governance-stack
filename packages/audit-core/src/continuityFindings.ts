@@ -1106,8 +1106,10 @@ function fallbackRoleIds(authorityMap: GovernanceAuthorityMap | undefined): Set<
 }
 
 function isExecuted(event: NormalizedGovernanceEvent): boolean {
-  const final = `${event.finalDecision ?? ""} ${event.finalOutcome ?? ""}`.toLowerCase();
-  return event.executedAt !== undefined || final.includes("execut") || final.includes("allowed");
+  // These are supplied execution claims, not independent proof of consequence.
+  // Permission and denial labels never imply that a tool actually ran.
+  return (event.executedAt !== undefined && Number.isFinite(Date.parse(event.executedAt))) ||
+    [event.finalDecision, event.finalOutcome].some(value => value?.trim().toLowerCase() === "executed");
 }
 
 function isConsequential(event: NormalizedGovernanceEvent): boolean {

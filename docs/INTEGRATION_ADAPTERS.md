@@ -45,7 +45,9 @@ AGS v0.9.0 does not ship a hosted API. Current supported integration paths are:
 - import and call `@alignment-governance-stack/integration-adapters` from an internal wrapper
 - later, call a hosted API wrapper that your deployment owns
 
-Adapters should place execution-authoritative domain values in `AgentActionProposal.executionConstraints`; metadata is review context only. Only values represented as canonical bound execution constraints are protected as domain-specific execution-authoritative values by Runtime Binding. Ordinary metadata remains non-authoritative.
+Adapters should place execution-authoritative domain values in `AgentActionProposal.executionConstraints`. Nonempty proposal metadata is also conservatively bound. The host must faithfully map all consequential parameters into this contract and execute the checked values. The n8n adapter forwards supplied Context Admission, assurance and assurance requirements; it does not invent these controls when omitted.
+
+`allowed: true` and `nextStep: "proceed"` require `execution_allowed` with a supplied runtime action and successful matching runtime-binding evidence. `allowed_by_aag` alone returns `allowed: false`, `nextStep: "stop"`; supply the actual runtime action for validation. A proceed response is permission, not proof that execution occurred.
 
 The adapter response is intentionally friendly to n8nâ€™s JSON pipeline:
 

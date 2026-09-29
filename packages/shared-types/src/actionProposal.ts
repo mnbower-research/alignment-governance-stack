@@ -113,5 +113,8 @@ export interface AgentActionProposal {
   requiresApproval: boolean;
   knownApproval: boolean;
   executionConstraints?: ExecutionConstraintSet;
+  /** JSON-only proposal data, conservatively bound because executors may consume it.
+   * Put mutable observation annotations in receipt/permit metadata instead.
+   */
   metadata: Record<string, unknown>;
 }

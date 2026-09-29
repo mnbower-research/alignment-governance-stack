@@ -15,4 +15,4 @@ Phase 1 constraints:
 - every spend-like action requires CEO approval
 - maximum simulated spend per action is USD 25
 
-Budget, platform, property, campaign, content, audience, and experiment-window values are preserved in proposal metadata for review and receipts, but current AGS Runtime Binding does not hash or compare metadata. Live execution requires future canonical binding work.
+Budget, platform, property, campaign, content, audience, and experiment-window values use canonical execution constraints. Nonempty proposal metadata is also conservatively bound after correctness hardening. The adapter remains a simulation; live execution requires faithful host integration at the actual mutation boundary.

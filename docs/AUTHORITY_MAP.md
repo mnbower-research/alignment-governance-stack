@@ -45,7 +45,7 @@ Future versions can add approval workflow UI, durable approval storage, and sign
 
 ## v1.13.0 approval binding and freshness
 
-New approval evidence must include `binding: createApprovalBinding(reviewedAction)`. The reviewed action is the materially reviewed proposal after any PGDL revision. The binding includes proposal ID, user purpose, and the canonical runtime action hash, including target and execution constraints. `knownApproval` is excluded as a review-result flag; approval does not bind or authorize arbitrary metadata. Budget, platform, and other consequential values must use `executionConstraints`.
+New approval evidence must include `binding: createApprovalBinding(reviewedAction)`. The reviewed action is the materially reviewed proposal after any PGDL revision. The binding includes proposal ID, user purpose, and the canonical runtime action hash, including target, execution constraints and nonempty proposal metadata. `knownApproval` is excluded as a review-result flag. Metadata binding freezes supplied values; it does not establish their legitimacy. Prefer typed `executionConstraints` for budget, platform and other consequential values. Metadata-bearing approvals created before correctness hardening require fresh review and binding.
 
 Legacy unbound approvals fail closed. Approval requires valid `approvedAt` and either valid explicit `expiresAt` or the Authority Map's positive `defaultApprovalTtlMinutes`. Explicit expiry overrides the default TTL. Future-dated approval, invalid clocks, invalid expiration, changed purpose/target/constraints, and expired approval fail validation. The validity interval is half-open: `approvedAt <= now < expiresAt`.
 
