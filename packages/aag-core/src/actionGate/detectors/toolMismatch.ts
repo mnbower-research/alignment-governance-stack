@@ -8,6 +8,7 @@ type ToolExpectation = {
   actionPattern: RegExp;
   description: string;
   toolPattern: RegExp;
+  deployment?: true;
 };
 
 const destructiveMismatchPattern =
@@ -26,6 +27,7 @@ const expectations: ToolExpectation[] = [
   },
   {
     actionPattern: /\b(deploy|release|rollback)\b/i,
+    deployment: true,
     description: "deployment, CI, cloud, infrastructure, shell, or terminal tool",
     toolPattern:
       /\b(deploy|ci|cd|cloud|vercel|netlify|aws|gcp|azure|k8s|kubernetes|terraform|shell|terminal|cli)\b/i,
@@ -59,8 +61,9 @@ export const detectToolMismatch: GateDetector = (
     .join(" ")
     .replace(/[_-]/g, " ");
   const tool = input.proposedAction.tool;
+  const deploymentText = deploymentIntentText(input);
   const expectation = expectations.find((item) =>
-    item.actionPattern.test(actionText),
+    item.actionPattern.test(item.deployment ? deploymentText : actionText),
   );
 
   if (!expectation || expectation.toolPattern.test(tool)) {
@@ -91,6 +94,27 @@ export const detectToolMismatch: GateDetector = (
     recommendedDecision: "revise_action",
   };
 };
+
+function deploymentIntentText(input: ActionGateInput): string {
+  const action = input.proposedAction;
+  // These exact contracts identify content fields, not executable instructions.
+  // Unknown action/tool pairs retain the conservative existing interpretation.
+  const editorial =
+    (action.actionType === "publish_blog_post" && action.tool === "blog.publish") ||
+    (action.actionType === "create_internal_content_draft" && action.tool === "draft.create");
+  const payload = { ...action.payload };
+  if (editorial) {
+    for (const field of ["title", "body"] as const) {
+      if (typeof payload[field] === "string") {
+        // Only the overloaded word is excluded, only for the deployment check.
+        // Commands, configuration, target, action type, deploy and rollback remain.
+        payload[field] = payload[field].replace(/\brelease\b/gi, "");
+      }
+    }
+  }
+  return [action.actionType, action.target, stringifyPayload(payload)]
+    .filter(Boolean).join(" ").replace(/[_-]/g, " ");
+}
 
 function stringifyPayload(payload: Record<string, unknown> | undefined): string {
   if (!payload) {
