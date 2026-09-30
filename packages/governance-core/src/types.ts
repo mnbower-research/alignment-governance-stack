@@ -77,6 +77,8 @@ export interface GovernancePacket {
 }
 
 export interface EvaluateGovernedRuntimeActionInput {
+  /** Re-evaluated after AAG and before any permit is issued. */
+  currentStanding?: import("@alignment-governance-stack/authority-map").StandingRequest;
   assurance?: import("@alignment-governance-stack/shared-types").AssuranceInput;
   contextAdmission?: ContextAdmissionRequest;
   proposal: AgentActionProposal;
@@ -105,6 +107,7 @@ export interface EvaluateGovernedRuntimeActionWithReceiptInput extends EvaluateG
 }
 
 export interface GovernanceRuntimePacket {
+  standing?: import("@alignment-governance-stack/authority-map").StandingEvaluation;
   assurance?: import("@alignment-governance-stack/shared-types").AssuranceEvidence;
   contextAdmission?: ContextAdmissionEvidence;
   originalProposal: AgentActionProposal;

@@ -8,3 +8,5 @@ This package answers who is allowed to approve what. It does not execute actions
 
 Delegation Formation adds provisional intent, explicit exact-envelope confirmation, bounded established delegations, current-authority checks and revocation. See [Delegation Formation](../../docs/DELEGATION_FORMATION.md) for the host trust boundary and additive integration path. Inference may clarify intent; it may not manufacture permission.
 
+
+Current Standing optionally checks confirmed conditions against current supplied evidence before runtime permission. See [Current Standing](../../docs/CURRENT_STANDING.md).

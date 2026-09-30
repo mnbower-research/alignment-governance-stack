@@ -6,3 +6,5 @@ export * from "./validateApproval.js";
 export * from "./delegationTypes.js";
 export * from "./delegationFormation.js";
 
+export * from "./standingTypes.js";
+export * from "./currentStanding.js";

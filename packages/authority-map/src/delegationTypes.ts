@@ -54,6 +54,8 @@ export interface DelegationProposal {
   delegationRights: "none";
   approvalRequirement: "confirmed_exact_actions";
   standing: boolean;
+  /** Optional confirmed conditions; distinct from the recurrence flag above. */
+  currentStanding?: import("./standingTypes.js").StandingContract;
   validFrom: string;
   expiresAt: string;
   /** Absolute half-open windows. Hosts expand calendars before confirmation. */

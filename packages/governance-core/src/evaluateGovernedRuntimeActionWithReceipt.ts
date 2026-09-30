@@ -29,6 +29,8 @@ export function evaluateGovernedRuntimeActionWithReceipt(
           agencyFingerprintHash: agencyFingerprint.fingerprintHash
         }
       : input.receiptOptions?.metadata;
+  const boundMetadata = input.currentStanding === undefined ? receiptMetadata
+    : { ...receiptMetadata, currentStanding: governance.standing ?? { state: "standing_unresolved", code: "standing_evaluation_unavailable" } };
   const receipt = createGovernanceReceipt({
     governancePacket: governance,
     ...(input.receiptOptions?.id !== undefined ? { id: input.receiptOptions.id } : {}),
@@ -36,7 +38,7 @@ export function evaluateGovernedRuntimeActionWithReceipt(
     ...(input.receiptOptions?.previousReceiptHash !== undefined
       ? { previousReceiptHash: input.receiptOptions.previousReceiptHash }
       : {}),
-    ...(receiptMetadata !== undefined ? { metadata: receiptMetadata } : {})
+    ...(boundMetadata !== undefined ? { metadata: boundMetadata } : {})
   });
 
   return {

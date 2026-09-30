@@ -1,3 +1,4 @@
+import { evaluateCurrentStanding } from "@alignment-governance-stack/authority-map";
 import {
   bindActionToPermit,
   createRuntimePermit
@@ -18,7 +19,7 @@ export function evaluateGovernedRuntimeAction(
   if (input.permitOptions?.expiresAt !== undefined && !Number.isFinite(Date.parse(input.permitOptions.expiresAt))) {
     return { originalProposal: input.proposal, finalDecision: "execution_denied", reasonForDecision: "Invalid requested permit expiration; no permit issued." };
   }
-  const governedPacket = evaluateGovernedAction({
+  const governedPacket: GovernanceRuntimePacket = evaluateGovernedAction({
     ...(input.assurance ? { assurance: input.assurance } : {}),
     now: runtimeNow,
     ...(input.contextAdmission !== undefined ? { contextAdmission: {
@@ -31,6 +32,24 @@ export function evaluateGovernedRuntimeAction(
     ...(input.approvalEvidence !== undefined ? { approvalEvidence: input.approvalEvidence } : {}),
     ...(input.humanParticipation !== undefined ? { humanParticipation: input.humanParticipation } : {})
   });
+
+  if (input.currentStanding !== undefined) {
+    const attemptedRuntime = input.runtimeAction === undefined ? {} : { runtimeAction: input.runtimeAction };
+    try {
+      if (input.contextAdmission !== undefined && input.contextAdmission.requestedUse.receiverAgentId !== input.currentStanding.host.delegateId)
+        throw new Error("Context receiver and standing receiver differ");
+      governedPacket.standing = evaluateCurrentStanding({ ...input.currentStanding,
+        host: { ...input.currentStanding.host, now: runtimeNow },
+        action: governedPacket.proposalSentToAag ?? input.proposal });
+      if (governedPacket.standing.state !== "standing_valid") return { ...governedPacket, ...attemptedRuntime,
+        finalDecision: "execution_denied", reasonForDecision: "Current Standing does not support runtime permission." };
+      if (input.runtimeAction !== undefined && evaluateCurrentStanding({ ...input.currentStanding,
+        host: { ...input.currentStanding.host, now: runtimeNow }, action: input.runtimeAction }).state !== "standing_valid")
+        return { ...governedPacket, ...attemptedRuntime, finalDecision: "execution_denied", reasonForDecision: "Runtime action is outside current standing; no permit issued." };
+    } catch {
+      return { ...governedPacket, ...attemptedRuntime, finalDecision: "execution_denied", reasonForDecision: "Invalid Current Standing inputs; no permit issued." };
+    }
+  }
 
   if (governedPacket.finalDecision !== "allowed_by_aag") {
     return {
@@ -50,7 +69,7 @@ export function evaluateGovernedRuntimeAction(
   }
 
   const context = governedPacket.contextAdmission;
-  const expiries = [context?.validUntil, governedPacket.approvalValidation?.validUntil].filter((value): value is string => value !== undefined);
+  const expiries = [context?.validUntil, governedPacket.approvalValidation?.validUntil, governedPacket.standing?.standingValidUntil].filter((value): value is string => value !== undefined);
   const contextExpiry = expiries.sort((a, b) => Date.parse(a) - Date.parse(b))[0];
   const requestedExpiry = input.permitOptions?.expiresAt;
   const expiresAt = contextExpiry === undefined ? requestedExpiry

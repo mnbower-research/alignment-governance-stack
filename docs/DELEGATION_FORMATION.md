@@ -70,3 +70,7 @@ The delegation JSON guard rejects sparse arrays, named array properties, symbol 
 Provenance pointers into the embedded Human Expression must resolve to an own JSON location, regardless of the origin-kind label. Invalid JSON Pointer escapes and nonexistent paths fail establishment. The empty pointer resolves to the whole expression. A pointer to a different existing field is structurally valid, but does not prove that field entails the claimed interpretation or permission. Non-expression sources are explicitly external to this artifact: host inventory recognition is required, while pointer resolution and authentication remain host-owned and unverified by Core. No external reference is silently upgraded to structurally resolved evidence.
 
 These changes do not revoke previously issued runtime permits, authenticate identity, interpret human intent, learn preferences, schedule tasks, count uses, or issue transitive delegation. Hosts must still supply complete current history and wire the opt-in preflight into execution.
+
+## Optional Current Standing
+
+A delegation may additionally confirm action-specific current-state conditions using `currentStanding`. This does not change the recurrence meaning of `standing`. See [Current Standing](CURRENT_STANDING.md) for fresh evidence evaluation, the opt-in permit boundary, and remaining host responsibilities.
