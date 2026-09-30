@@ -10,3 +10,5 @@ Delegation Formation adds provisional intent, explicit exact-envelope confirmati
 
 
 Current Standing optionally checks confirmed conditions against current supplied evidence before runtime permission. See [Current Standing](../../docs/CURRENT_STANDING.md).
+
+Confirmed execution-revalidation tolerances support the opt-in governance execution boundary. See [Execution-Time Revalidation](../../docs/EXECUTION_TIME_REVALIDATION.md).

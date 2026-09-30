@@ -1,3 +1,4 @@
+import { validateExecutionRevalidationPolicy } from "./executionRevalidationPolicy.js";
 import { assertJson } from "./jsonBoundary.js";
 import { validateStandingContract } from "./standingContract.js";
 import type { AgentActionProposal } from "@alignment-governance-stack/shared-types";
@@ -119,6 +120,7 @@ function validateProposal(p: DelegationProposal, host: DelegationHostContext): v
   assertJson(host.revocations);
   if (!Array.isArray(host.revocations)) throw new Error("Complete revocation history required");
   delegationFormationState(p.expression, p.intent);
+  if (p.executionRevalidation !== undefined) validateExecutionRevalidationPolicy(p.executionRevalidation);
   if (p.currentStanding !== undefined) validateStandingContract(p.currentStanding, p.permittedActions);
   if (p.version !== "delegation-proposal/v1" || !p.id || !p.delegateId || !p.intent.objective || !p.intent.id
     || !["low", "high"].includes(host.minimumConsequence)

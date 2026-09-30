@@ -99,3 +99,7 @@ A maximum age is a confirmed tolerance, not a guarantee that reality stays const
 Absent `currentStanding`, legacy behavior remains unchanged. Existing Delegation Formation, approval, AAG, Context Admission, Runtime Binding and receipt schemas are reused; the new optional contract does not alter old envelope hashes. New canonical types are exported from authority-map. No package versions or architecture numbering change.
 
 Phase 2 questions are authenticated evidence/version protocols, atomic execution preconditions, live revocation, a first-class permit-to-standing reference without circular hashing, richer contradiction handling and preregistered evaluation of host integrations. These should follow independent adversarial review of this deterministic foundation, rather than expansion into a general rules engine.
+
+## Optional execution boundary
+
+[Execution-Time Revalidation](EXECUTION_TIME_REVALIDATION.md) rechecks an existing permit against newly supplied authority/history and standing observations before consequence. It preserves the remaining host-authentication and atomicity limitations.

@@ -8,3 +8,5 @@ export * from "./delegationFormation.js";
 
 export * from "./standingTypes.js";
 export * from "./currentStanding.js";
+export * from "./executionRevalidationPolicy.js";
+export { assertJson as assertCanonicalDelegationJson } from "./jsonBoundary.js";

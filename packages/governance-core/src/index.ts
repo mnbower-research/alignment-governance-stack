@@ -3,3 +3,6 @@ export * from "./evaluateGovernedAction.js";
 export * from "./evaluateGovernedRuntimeAction.js";
 export * from "./evaluateGovernedRuntimeActionWithReceipt.js";
 export * from "./createAgencyFingerprintForGovernedRuntimeAction.js";
+export * from "./executionRevalidationTypes.js";
+export * from "./issueRevalidatedPermit.js";
+export * from "./revalidateExecution.js";

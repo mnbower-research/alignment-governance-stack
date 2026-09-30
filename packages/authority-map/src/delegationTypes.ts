@@ -56,6 +56,8 @@ export interface DelegationProposal {
   standing: boolean;
   /** Optional confirmed conditions; distinct from the recurrence flag above. */
   currentStanding?: import("./standingTypes.js").StandingContract;
+  /** Explicit opt-in; bound by the same whole-envelope confirmation. */
+  executionRevalidation?: import("./executionRevalidationPolicy.js").ExecutionRevalidationPolicy;
   validFrom: string;
   expiresAt: string;
   /** Absolute half-open windows. Hosts expand calendars before confirmation. */
