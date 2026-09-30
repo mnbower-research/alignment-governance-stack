@@ -6,3 +6,5 @@ Deterministic authority mapping and approval validation for Alignment Governance
 
 This package answers who is allowed to approve what. It does not execute actions, store approvals, sign approvals, or replace AAG.
 
+Delegation Formation adds provisional intent, explicit exact-envelope confirmation, bounded established delegations, current-authority checks and revocation. See [Delegation Formation](../../docs/DELEGATION_FORMATION.md) for the host trust boundary and additive integration path. Inference may clarify intent; it may not manufacture permission.
+

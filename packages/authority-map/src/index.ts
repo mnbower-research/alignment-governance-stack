@@ -3,4 +3,6 @@ export * from "./defaultAuthorityMap.js";
 export * from "./validateAuthorityMap.js";
 export * from "./resolveRequiredAuthority.js";
 export * from "./validateApproval.js";
+export * from "./delegationTypes.js";
+export * from "./delegationFormation.js";
 
