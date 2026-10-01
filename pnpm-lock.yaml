@@ -460,13 +460,22 @@ importers:
 
   packages/governance-memory:
     dependencies:
+      '@alignment-governance-stack/authority-map':
+        specifier: workspace:*
+        version: link:../authority-map
       '@alignment-governance-stack/receipts':
         specifier: workspace:*
         version: link:../receipts
+      '@alignment-governance-stack/runtime-binding':
+        specifier: workspace:*
+        version: link:../runtime-binding
       '@alignment-governance-stack/shared-types':
         specifier: workspace:*
         version: link:../shared-types
     devDependencies:
+      '@alignment-governance-stack/governance-core':
+        specifier: workspace:*
+        version: link:../governance-core
       '@types/node':
         specifier: ^25.6.0
         version: 25.7.0

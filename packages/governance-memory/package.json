@@ -22,11 +22,14 @@
   },
   "dependencies": {
     "@alignment-governance-stack/receipts": "workspace:*",
-    "@alignment-governance-stack/shared-types": "workspace:*"
+    "@alignment-governance-stack/shared-types": "workspace:*",
+    "@alignment-governance-stack/authority-map": "workspace:*",
+    "@alignment-governance-stack/runtime-binding": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
     "vite": "^8.0.16",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "@alignment-governance-stack/governance-core": "workspace:*"
   }
 }

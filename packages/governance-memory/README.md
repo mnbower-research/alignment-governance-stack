@@ -1,5 +1,7 @@
 # Governance Memory
 
+Opt-in internalization APIs (`createMemoryObservation`, `evaluateInternalization`, `verifyInternalization`, `proposeMemoryAssistedIntent`) preserve receipt-bound preference, procedure and routine evidence. See [Phase 1 architecture and trust boundaries](../../docs/GOVERNANCE_MEMORY_INTERNALIZATION.md).
+
 Deterministic receipt-history analysis for the Alignment Governance Stack.
 
 Governance Memory reads governance receipts over time, detects repeated patterns, and produces human-reviewable recommendations for Policy Profiles, Hard Boundaries, Authority Maps, Human Participation policies, Runtime Binding investigation, and eval expansion.
