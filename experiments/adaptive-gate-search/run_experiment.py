@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import hashlib
 import json
 import random
@@ -317,8 +318,9 @@ def run_experiment(
         exist_ok=True,
     )
 
-    with output_path.open(
-        "w",
+    with gzip.open(
+        output_path,
+        "wt",
         newline="",
         encoding="utf-8",
     ) as handle:
@@ -403,7 +405,7 @@ def parse_args() -> argparse.Namespace:
         base_dir
         / "results"
         / "raw"
-        / "ictf_adaptive_gate_search_raw.csv"
+        / "ictf_adaptive_gate_search_raw.csv.gz"
     )
 
     parser = argparse.ArgumentParser(
@@ -465,6 +467,9 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+
 
 
 
