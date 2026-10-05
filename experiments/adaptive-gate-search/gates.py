@@ -59,7 +59,7 @@ class UnstructuredGate:
     def __init__(
         self,
         grid_size: int = 256,
-        invalid_cell_escape_rate: float = 0.02,
+        invalid_cell_escape_rate: float = 0.05,
         seed: int = 20261004,
     ) -> None:
         if grid_size <= 0:
