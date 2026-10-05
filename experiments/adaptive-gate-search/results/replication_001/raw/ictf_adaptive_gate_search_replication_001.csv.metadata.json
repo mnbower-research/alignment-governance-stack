@@ -1,0 +1,37 @@
+{
+  "experiment": "ICTF Adaptive Gate Search",
+  "protocol_version": "0.1",
+  "preregistration_tag": "ictf-adaptive-gate-search-prereg-v0.1",
+  "calibration_tag": "ictf-adaptive-gate-search-calibration-v0.1",
+  "proposer_specification_tag": "ictf-adaptive-gate-search-proposers-v0.1",
+  "git_commit": "be8f6df3f3fe689c4eebfc30ebceea76bd961c7d",
+  "created_utc": "2026-10-05T19:59:27.937145+00:00",
+  "master_seed": 20261005,
+  "trials_per_condition": 10000,
+  "budgets": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "geometries": [
+    "structured",
+    "unstructured"
+  ],
+  "proposers": [
+    "random",
+    "nonadaptive",
+    "binary",
+    "score"
+  ],
+  "raw_output": "C:\\Users\\micha\\Desktop\\AGS - Workspace\\ags-enterprise-canonical\\experiments\\adaptive-gate-search\\results\\replication_001\\raw\\ictf_adaptive_gate_search_replication_001.csv.gz",
+  "episode_count": 720000,
+  "termination": "first false admission or exhausted budget",
+  "g_star_visibility": "held-out evaluator only",
+  "phase_1_observability": "O=1 for false admissions by construction"
+}
