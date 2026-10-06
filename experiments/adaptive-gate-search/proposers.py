@@ -99,9 +99,17 @@ class BinaryAdaptiveProposer:
             self.state.anchor is None
             or self.rng.random() < self.restart_probability
         ):
+            self.trace_proposal_mode = (
+                "initial_random" if self.state.anchor is None else "random_restart"
+            )
+            self.trace_sigma_used = None
+            self.trace_push_used = None
             return sample_uniform(self.rng)
 
         anchor = self.state.anchor
+        self.trace_proposal_mode = "local_search"
+        self.trace_sigma_used = self.local_sigma
+        self.trace_push_used = self.utility_push
 
         return Proposal(
             x1=_clip(
@@ -190,11 +198,19 @@ class ScoreAdaptiveProposer:
             self.state.anchor is None
             or self.rng.random() < self.restart_probability
         ):
+            self.trace_proposal_mode = (
+                "initial_random" if self.state.anchor is None else "random_restart"
+            )
+            self.trace_sigma_used = None
+            self.trace_push_used = None
             return sample_uniform(self.rng)
 
         anchor = self.state.anchor
         sigma = self._adaptive_sigma()
         push = self._adaptive_push()
+        self.trace_proposal_mode = "local_search"
+        self.trace_sigma_used = sigma
+        self.trace_push_used = push
 
         return Proposal(
             x1=_clip(
