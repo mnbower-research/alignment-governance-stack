@@ -1,0 +1,256 @@
+{
+  "benchmark_name": "ICTF Trace Benchmark 001",
+  "benchmark_version": "001",
+  "protocol_version": "0.1",
+  "master_seed": 20261006,
+  "trials_per_condition": 10000,
+  "fixed_horizon": 256,
+  "derived_prefix_budgets": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "geometries": [
+    "structured",
+    "unstructured"
+  ],
+  "proposers": [
+    "random",
+    "nonadaptive",
+    "binary",
+    "score"
+  ],
+  "total_episode_count": 80000,
+  "maximum_possible_trace_row_count": 20480000,
+  "continuation_after_first_escape": "all episodes continue through interaction 256; first indices immutable",
+  "post_escape_interpretation": "counterfactual continuation for mechanism analysis only",
+  "g_star_visibility": "held-out evaluator only, after proposer feedback; never supplied to proposer",
+  "feedback_semantics": "observe gets admission for all; random/nonadaptive ignore it; only score gets score",
+  "source_plans": [
+    "TRACE_BENCHMARK_PLAN_001.md",
+    "TRACE_BENCHMARK_AMENDMENT_001.md",
+    "TRACE_BENCHMARK_AMENDMENT_002.md"
+  ],
+  "seed_derivation": "historical stable_seed(master_seed, geometry, proposer, 256, zero_based_episode_id)",
+  "episode_identity": "(geometry, proposer, episode_id); episode_id is condition-local, zero-based",
+  "csv_null": "empty cell; uninitialized anchor utility -inf serialized as null",
+  "schema": [
+    {
+      "name": "benchmark_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "protocol_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "master_seed",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "episode_seed",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "episode_id",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "geometry",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "proposer",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "maximum_budget",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "total_interaction_index",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "invalid_query_index",
+      "type": "integer",
+      "nullable": true
+    },
+    {
+      "name": "prior_valid_query_count",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "prior_invalid_query_count",
+      "type": "integer",
+      "nullable": false
+    },
+    {
+      "name": "x1",
+      "type": "float",
+      "nullable": false
+    },
+    {
+      "name": "x2",
+      "type": "float",
+      "nullable": false
+    },
+    {
+      "name": "utility",
+      "type": "float",
+      "nullable": false
+    },
+    {
+      "name": "true_admissible",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "independently_invalid",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "gate_admitted",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "gate_score",
+      "type": "float",
+      "nullable": false
+    },
+    {
+      "name": "false_admission",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "escaped_previously",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "is_first_false_admission",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "first_escape_interaction_index",
+      "type": "integer",
+      "nullable": true
+    },
+    {
+      "name": "first_escape_invalid_query_index",
+      "type": "integer",
+      "nullable": true
+    },
+    {
+      "name": "feedback_admitted",
+      "type": "boolean_0_1",
+      "nullable": false
+    },
+    {
+      "name": "feedback_score",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "proposal_mode",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "anchor_x1_before",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "anchor_x2_before",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "anchor_utility_before",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "last_admitted_before",
+      "type": "boolean_0_1",
+      "nullable": true
+    },
+    {
+      "name": "last_score_before",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "sigma_used",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "push_used",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "anchor_x1_after",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "anchor_x2_after",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "anchor_utility_after",
+      "type": "float",
+      "nullable": true
+    },
+    {
+      "name": "last_admitted_after",
+      "type": "boolean_0_1",
+      "nullable": true
+    },
+    {
+      "name": "last_score_after",
+      "type": "float",
+      "nullable": true
+    }
+  ],
+  "git_commit": "5ae32fbac8e028134482fdda5b74437978c73388",
+  "created_utc": "2026-10-06T05:10:55.135978+00:00",
+  "raw_output": "C:\\Users\\micha\\Desktop\\AGS - Workspace\\ags-enterprise-canonical\\experiments\\adaptive-gate-search\\results\\trace_benchmark_001\\raw\\ictf_adaptive_gate_search_trace_001.csv.gz",
+  "source_sha256": {
+    "TRACE_BENCHMARK_PLAN_001.md": "8357f9be2d70cd4941b67f5b8f645773c78eea0d791ab37fe597863b882c9350",
+    "TRACE_BENCHMARK_AMENDMENT_001.md": "a69c2d50605274c92318baaff9a5ba19a2e78aa164f8b8bf0344d055d9b296c3",
+    "TRACE_BENCHMARK_AMENDMENT_002.md": "bd9186b9a9cac441014678bc0149314aaa1c99ec7a0fcafc3fff6a0ec947c320",
+    "trace_run_experiment.py": "665f7a7755f2a087e6d683eb3ee1a390f721b00ed2cc58eb73ee727c3660cf21",
+    "trace_analysis.py": "1cea56c4616bdbb94223cb37cb00f83ac57b429449f658f9b82c5be511de3840",
+    "proposers.py": "b96a844467dfcbd8595e8c3503e0ef8904f1a389168be0acab0b574707837fbc",
+    "gates.py": "f6e9526992fa78a005f719ef3c9825e2c6cf635dc40a2003b342fcd433bfa2ac",
+    "environment.py": "223675f4678a7028f5c9675f4578d94ea17a06573870e3518675d37c8c13aa0d",
+    "run_experiment.py": "33b43b30ebc8644ed858dab43377f909353df6c9c145dc309c32443422d58dd9"
+  },
+  "status": "complete",
+  "rows_written": 20480000
+}
