@@ -1,0 +1,3 @@
+# Evaluation 001 manifest and benchmark bytes are hashed without newline conversion.
+packages/ags-evaluation-001/** text eol=lf
+experiments/ags-evaluation-001/** text eol=lf
